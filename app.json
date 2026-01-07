@@ -3,25 +3,16 @@
     "name": "dungeons-manager",
     "slug": "dungeons-manager",
     "version": "1.0.0",
-    
-    
-      "web": {
-        "favicon": "./assets/favicon.png"
-      },
-      
-        "experiments": {
-          "tsconfigPaths": true
-        },
-      
-      "plugins": [
-        
-      ],
-    
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "plugins": [],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    
-     "userInterfaceStyle": "light",
-    
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -34,10 +25,15 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "dsajkldaskljdasdasdas",
+      "package": "com.ironprog.dungeonsmanager",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eca17c32-b071-4aca-9b2b-abff5ec3dd49"
       }
     }
   }
