@@ -1,29 +1,31 @@
-/* eslint-env node */
-const { defineConfig } = require('eslint/config');
-const expoConfig = require('eslint-config-expo/flat');
+import js from '@eslint/js';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
 
-module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
+export default [
+  js.configs.recommended,
+
+  ...tseslint.configs.recommended,
+
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      react,
+      'react-hooks': reactHooks,
+      prettier,
+    },
+    rules: {
+      // React
+      'react/react-in-jsx-scope': 'off',
+
+      // 🔥 ESSENCIAL
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+
+      // Prettier
+      'prettier/prettier': 'warn',
+    },
   },
-  extends: [
-    'eslint:recommended',
-
-    // React / React Native
-    'plugin:react/recommended',
-
-    // TypeScript (remove if JS only)
-    'plugin:@typescript-eslint/recommended',
-
-    // ⬇️ MUST BE LAST
-    'plugin:prettier/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react', '@typescript-eslint'],
-  rules: {
-    'react/react-in-jsx-scope': 'off', // Expo / React 17+
-  },
-};
+];
