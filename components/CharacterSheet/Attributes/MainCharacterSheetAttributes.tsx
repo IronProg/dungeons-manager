@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import ReactNativeModal from 'react-native-modal';
 import { AttributesForm } from './AttributesForm';
 import { Attribute, Character } from 'types/character';
+import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 
 type MainCharacterSheetAttributes = {
   character: Character;
@@ -11,14 +12,14 @@ type MainCharacterSheetAttributes = {
 export const MainCharacterSheetAttributes = ({
   character,
 }: MainCharacterSheetAttributes) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
   return (
     <>
       <View className="flex bg-gray-100 rounded-lg">
         <View className="flex flex-row flex-wrap justify-between flex-wrap p-2 gap-y-2">
           <AttributeCard
-            openModal={() => setModalOpen(true)}
+            openModal={open}
             attribute={
               character.attributes.find(
                 (attribute) => attribute.name === 'strength',
@@ -26,7 +27,7 @@ export const MainCharacterSheetAttributes = ({
             }
           />
           <AttributeCard
-            openModal={() => setModalOpen(true)}
+            openModal={open}
             attribute={
               character.attributes.find(
                 (attribute) => attribute.name === 'dexterity',
@@ -34,7 +35,7 @@ export const MainCharacterSheetAttributes = ({
             }
           />
           <AttributeCard
-            openModal={() => setModalOpen(true)}
+            openModal={open}
             attribute={
               character.attributes.find(
                 (attribute) => attribute.name === 'constitution',
@@ -42,7 +43,7 @@ export const MainCharacterSheetAttributes = ({
             }
           />
           <AttributeCard
-            openModal={() => setModalOpen(true)}
+            openModal={open}
             attribute={
               character.attributes.find(
                 (attribute) => attribute.name === 'intelligence',
@@ -50,7 +51,7 @@ export const MainCharacterSheetAttributes = ({
             }
           />
           <AttributeCard
-            openModal={() => setModalOpen(true)}
+            openModal={open}
             attribute={
               character.attributes.find(
                 (attribute) => attribute.name === 'wisdom',
@@ -58,7 +59,7 @@ export const MainCharacterSheetAttributes = ({
             }
           />
           <AttributeCard
-            openModal={() => setModalOpen(true)}
+            openModal={open}
             attribute={
               character.attributes.find(
                 (attribute) => attribute.name === 'charisma',
@@ -68,21 +69,13 @@ export const MainCharacterSheetAttributes = ({
         </View>
       </View>
 
-      <ReactNativeModal
-        backdropColor={'rgba(0,0,0,0.4)'}
-        isVisible={modalOpen}
-        onModalHide={() => setModalOpen(false)}
-        onDismiss={() => setModalOpen(false)}
-        onBackButtonPress={() => setModalOpen(false)}
-        onBackdropPress={() => setModalOpen(false)}
-        backdropTransitionOutTiming={0}
+      <ReusableBottomSheetModal
+        onDismiss={close}
+        ref={bottomSheetRef}
+        snapPoints={[600, 875]}
       >
-        <View className="flex-1 items-center justify-center">
-          <View className="bg-gray-100 p-6 rounded-lg w-full">
-            <AttributesForm character={character} />
-          </View>
-        </View>
-      </ReactNativeModal>
+        <AttributesForm character={character} onClose={close} />
+      </ReusableBottomSheetModal>
     </>
   );
 };
@@ -108,7 +101,7 @@ const AttributeCard = ({ attribute, openModal }: AttributeCardProps) => {
         </Text>
         <View className="absolute rounded-full bg-gray-200 p-1 bottom-0 min-w-7">
           <Text className="text-gray-900 text-sm font-semibold text-center">
-            {attribute.value}
+            {attribute?.tempValue || attribute.value}
           </Text>
         </View>
       </TouchableOpacity>

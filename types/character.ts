@@ -29,6 +29,7 @@ export type Character = {
 export type Attribute = {
   name: AttributesType;
   value: number;
+  tempValue?: number;
   modifier: number;
 };
 

@@ -25,6 +25,7 @@
       "supportsTablet": true
     },
     "android": {
+      "softwareKeyboardLayoutMode": "resize",
       "package": "com.ironprog.dungeonsmanager",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

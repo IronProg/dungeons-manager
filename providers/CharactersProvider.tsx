@@ -12,6 +12,7 @@ export type CharactersProviderProps = {
   character?: Character;
   getDetails: (params: GetDetailsParams) => void;
   getModifier: (attribute: AttributesType) => number;
+  updateCharacter: (newCharacter: Character) => void;
   //   persistCharacter: (
   //     params: {
   //       id?: string | number;
@@ -37,17 +38,21 @@ export const CharactersProvider = ({ children }: { children: ReactNode }) => {
     [modifiers],
   );
 
+  const updateCharacter = useCallback((newCharacter: Character) => {
+    setCharacter(newCharacter);
+  }, []);
+
   const getDetails = useCallback(
     async ({ id, success, error }: GetDetailsParams) => {
       const character: Character = {
         name: 'Personagem de Teste',
         attributes: [
-          { name: 'strength', value: 9, modifier: -1 },
-          { name: 'dexterity', value: 16, modifier: 3 },
-          { name: 'constitution', value: 16, modifier: 3 },
-          { name: 'intelligence', value: 18, modifier: 4 },
-          { name: 'wisdom', value: 16, modifier: 3 },
-          { name: 'charisma', value: 12, modifier: 1 },
+          { name: 'strength', tempValue: 0, value: 9, modifier: -1 },
+          { name: 'dexterity', tempValue: 0, value: 16, modifier: 3 },
+          { name: 'constitution', tempValue: 0, value: 16, modifier: 3 },
+          { name: 'intelligence', tempValue: 0, value: 18, modifier: 4 },
+          { name: 'wisdom', tempValue: 0, value: 16, modifier: 3 },
+          { name: 'charisma', tempValue: 0, value: 12, modifier: 1 },
         ],
         hitPoints: 9,
         hitPointsLimit: 9,
@@ -172,6 +177,7 @@ export const CharactersProvider = ({ children }: { children: ReactNode }) => {
     characters,
     getDetails,
     getModifier,
+    updateCharacter,
   };
   return (
     <CharactersContext.Provider value={value}>

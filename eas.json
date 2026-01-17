@@ -9,6 +9,12 @@
       "distribution": "internal"
     },
     "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "YARN_VERSION": "1.22.22"
+      },
       "distribution": "internal"
     },
     "production": {
@@ -16,12 +22,12 @@
     },
     "android": {
       "env": {
-        "YARN_VERSION": "4.12.0"
+        "YARN_VERSION": "1.22.22"
       }
     },
     "ios": {
       "env": {
-        "YARN_VERSION": "4.12.0"
+        "YARN_VERSION": "1.22.22"
       }
     }
   },

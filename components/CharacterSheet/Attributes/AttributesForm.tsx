@@ -1,82 +1,138 @@
 import { Control, Controller } from 'react-hook-form';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { AttributesFormType, useAttributesForm } from './useAttributesForm';
-import { Character } from 'types/character';
+import { Attribute, AttributesType, Character } from 'types/character';
+import { ATTRIBUTES } from 'core/enums/attributes';
+import { useCharacters } from 'contexts/CharactersContext';
+import { getModifier } from 'core/helpers/getModifier';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type AttributesFormProps = {
   character: Character;
+  onClose: () => void;
 };
 
-export const AttributesForm = ({ character }: AttributesFormProps) => {
+export const AttributesForm = ({ character, onClose }: AttributesFormProps) => {
+  const { updateCharacter } = useCharacters();
   const { control, handleSubmit } = useAttributesForm({ character });
 
   const onSubmit = (values: AttributesFormType) => {
-    Alert.alert('Int = ' + values.intelligence);
+    const attributes: Attribute[] = values.attributes.map((attrVal) => ({
+      name: attrVal.name,
+      value: attrVal.value,
+      tempValue: attrVal.tempValue,
+      modifier: attrVal.tempValue
+        ? getModifier(attrVal.tempValue)
+        : getModifier(attrVal.value),
+    }));
+
+    const newCharacter = { ...character, attributes };
+
+    updateCharacter(newCharacter);
+
+    onClose();
   };
 
   return (
-    <View className="flex flex-col gap-4">
-      <Text className="text-gray-900 font-bold text-2xl text-center">
-        Modificar Atributos
-      </Text>
-
-      <View className="flex flex-row justify-between flex-wrap gap-4">
-        <AttributeFormItem control={control} name="strength" text="Força" />
-        <AttributeFormItem control={control} name="dexterity" text="Destreza" />
-        <AttributeFormItem
-          control={control}
-          name="constitution"
-          text="Constituição"
-        />
-      </View>
-      <View className="flex flex-row justify-between flex-wrap gap-4">
-        <AttributeFormItem
-          control={control}
-          name="intelligence"
-          text="Inteligência"
-        />
-        <AttributeFormItem control={control} name="wisdom" text="Sabedoria" />
-        <AttributeFormItem control={control} name="charisma" text="Carisma" />
-      </View>
-
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+    <KeyboardAwareScrollView className="flex-1">
+      <View className="flex flex-col gap-4">
+        <Text className="text-gray-900 font-bold text-2xl text-center">
+          Modificar Atributos
         </Text>
-      </TouchableOpacity>
-    </View>
+
+        <View className="flex flex-row justify-between flex-wrap">
+          {ATTRIBUTES.map((attrName, index) => (
+            <AttributeFormItem
+              key={attrName}
+              control={control}
+              name={attrName}
+              index={index}
+            />
+          ))}
+        </View>
+
+        <TouchableOpacity
+          onPress={handleSubmit(onSubmit)}
+          className="w-full bg-primary-600 rounded-lg py-2"
+        >
+          <Text className="text-white font-bold text-2xl text-center">
+            Salvar
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 type AttributeFormItemProps = {
+  index: number;
   control: Control<AttributesFormType>;
-  name: keyof AttributesFormType;
-  text: string;
+  name: AttributesType;
 };
 
-const AttributeFormItem = ({ name, control, text }: AttributeFormItemProps) => {
+const AttributeFormItem = ({
+  index,
+  control,
+  name,
+}: AttributeFormItemProps) => {
   return (
-    <View className="border border-gray-900 rounded-lg flex-col flex w-[90px] items-stretch">
-      <Controller
-        control={control}
-        name={name}
-        render={({ field, fieldState }) => (
-          <TextInput
-            className="text-4xl font-bold text-center h-20"
-            {...field}
-            onChangeText={field.onChange}
-            maxLength={3}
-            value={`${field.value}`}
+    <View className="w-[33%] flex items-center justify-center">
+      <Text className="text-gray-900 font-bold text-center">{name}</Text>
+
+      <View className="flex flex-col gap-2 border border-gray-900 rounded-lg w-[90px] items-stretch">
+        <View className=" flex-col flex">
+          <Text className="text-gray-900 text-sm text-center">Base</Text>
+          <Controller
+            control={control}
+            name={`attributes.${index}.value`}
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <BottomSheetTextInput
+                  className="text-4xl font-bold text-center"
+                  keyboardType="number-pad"
+                  {...field}
+                  onChangeText={field.onChange}
+                  maxLength={3}
+                  value={`${field.value}`}
+                />
+
+                {error?.message && (
+                  <Text className="text-sm text-center text-red-400">
+                    {error.message}
+                  </Text>
+                )}
+              </>
+            )}
           />
-        )}
-      />
-      <Text className="text-gray-900 text-sm text-bold border-t border-gray-900 text-center">
-        {text}
-      </Text>
+        </View>
+
+        <View className="flex-col flex items-stretch border-t border-gray-900">
+          <Text className="text-gray-900 text-sm text-center mt-2">Temp</Text>
+          <Controller
+            control={control}
+            name={`attributes.${index}.tempValue`}
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <BottomSheetTextInput
+                  className="text-4xl font-bold text-center"
+                  keyboardType="number-pad"
+                  {...field}
+                  onChangeText={field.onChange}
+                  maxLength={3}
+                  value={`${field.value || ''}`}
+                />
+
+                {error?.message && (
+                  <Text className="text-sm text-center text-red-400">
+                    {error.message}
+                  </Text>
+                )}
+              </>
+            )}
+          />
+        </View>
+      </View>
     </View>
   );
 };
