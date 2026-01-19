@@ -1,0 +1,38 @@
+import { useAttributes } from 'contexts/AttributesContext';
+import { useGeneralInfo } from 'contexts/GeneralInfoContext';
+import { Shield } from 'lucide-react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+type ArmorClassProps = {
+  onLongPress: () => void;
+};
+
+export const ArmorClass = ({ onLongPress }: ArmorClassProps) => {
+  const { modifiers } = useAttributes();
+  const { generalInfo } = useGeneralInfo();
+
+  let modifier = generalInfo.armorClassBase;
+
+  if (generalInfo.armorClassFirstAttribute) {
+    modifier += modifiers[generalInfo.armorClassFirstAttribute];
+  }
+
+  if (generalInfo.armorClassSecondAttribute) {
+    modifier += modifiers[generalInfo.armorClassSecondAttribute];
+  }
+
+  return (
+    <TouchableOpacity
+      onLongPress={onLongPress}
+      className="relative flex flex-col items-center justify-center flex w-[90px]"
+    >
+      <Shield size={90} color={'#ccc'} fill={'#ddd'} />
+      <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
+        <Text className="text-gray-900 text-sm font-semibold text-center">
+          CA
+        </Text>
+        <Text className="text-3xl font-bold text-center">{modifier}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};

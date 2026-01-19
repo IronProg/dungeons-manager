@@ -1,9 +1,9 @@
 import { Controller } from 'react-hook-form';
 import { Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SkillFormType, useSkillForm } from './useSkillForm';
-import { Character, Skill } from 'types/character';
-import { useCharacters } from 'contexts/CharactersContext';
+import { Skill } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { useSkills } from 'contexts/SkillsContext';
 
 type AttributesFormProps = {
   skill: Skill;
@@ -11,14 +11,14 @@ type AttributesFormProps = {
 };
 
 export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
-  const { character, updateCharacter } = useCharacters();
+  const { skills, updateSkills } = useSkills();
   const { control, handleSubmit, watch } = useSkillForm({ skill });
 
   const proficiency = watch('proficiency');
 
   const onSubmit = (values: SkillFormType) => {
     console.log({ values });
-    const newSkills = character!.skills.map((skill) => {
+    const newSkills = skills.map((skill) => {
       if (skill.name === values.name) {
         return values;
       }
@@ -26,9 +26,7 @@ export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
       return skill;
     });
 
-    const newCharacter: Character = { ...character!, skills: newSkills };
-
-    updateCharacter(newCharacter);
+    updateSkills(newSkills);
 
     onClose();
   };

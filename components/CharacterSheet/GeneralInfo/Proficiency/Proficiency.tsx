@@ -1,0 +1,26 @@
+import { useCharacters } from 'contexts/CharactersContext';
+import { Award } from 'lucide-react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+type ProficiencyProps = {
+  onLongPress: () => void;
+};
+
+export const Proficiency = ({ onLongPress }: ProficiencyProps) => {
+  const { proficiency } = useCharacters();
+
+  return (
+    <TouchableOpacity
+      onLongPress={onLongPress}
+      className="relative flex flex-col items-center justify-center flex w-[90px]"
+    >
+      <Award size={90} color={'#ccc'} fill={'#ddd'} />
+      <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
+        <Text className="text-gray-900 text-sm font-semibold text-center">
+          Proficiência
+        </Text>
+        <Text className="text-3xl font-bold text-center">{proficiency}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};

@@ -1,7 +1,7 @@
 import { CharactersContext } from 'contexts/CharactersContext';
 import { ReactNode, useCallback, useState } from 'react';
 import { ApiCallbacks } from 'types/api';
-import { AttributesType, Character, Modifiers } from 'types/character';
+import { Character } from 'types/character';
 
 type GetDetailsParams = {
   id: string | number;
@@ -10,37 +10,15 @@ type GetDetailsParams = {
 export type CharactersProviderProps = {
   characters: Character[];
   character?: Character;
+  proficiency: number;
   getDetails: (params: GetDetailsParams) => void;
-  getModifier: (attribute: AttributesType) => number;
-  updateCharacter: (newCharacter: Character) => void;
-  //   persistCharacter: (
-  //     params: {
-  //       id?: string | number;
-  //       character: Character;
-  //     } & ApiCallbacks<Character>,
-  //   ) => void;
-  //   removeCharacter: (
-  //     params: {
-  //       id: string | number;
-  //     } & ApiCallbacks<Character>,
-  //   ) => void;
+  updateProficiency: (newProficiency: number) => void;
+  updateExperience: (newProficiency: number) => void;
 };
 
 export const CharactersProvider = ({ children }: { children: ReactNode }) => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [character, setCharacter] = useState<Character | undefined>(undefined);
-  const [modifiers, setModifiers] = useState<Modifiers>();
-
-  const getModifier = useCallback(
-    (attribute: AttributesType): number => {
-      return modifiers?.[attribute] || 0;
-    },
-    [modifiers],
-  );
-
-  const updateCharacter = useCallback((newCharacter: Character) => {
-    setCharacter(newCharacter);
-  }, []);
 
   const getDetails = useCallback(
     async ({ id, success, error }: GetDetailsParams) => {
@@ -54,15 +32,26 @@ export const CharactersProvider = ({ children }: { children: ReactNode }) => {
           { name: 'wisdom', tempValue: 0, value: 16, modifier: 3 },
           { name: 'charisma', tempValue: 0, value: 12, modifier: 1 },
         ],
-        hitPoints: 9,
-        hitPointsLimit: 9,
-        temporaryHitPoints: 0,
-        armorClass: 13,
-        speed: 30,
         proficiency: 2,
-        initiative: 3,
-        passivePerception: 13,
-        experience: 0,
+        level: 1,
+        experience: 200,
+        generalInfo: {
+          armorClassBase: 10,
+          armorClassFirstAttribute: 'dexterity',
+          armorClassSecondAttribute: undefined,
+          hitPoints: 0,
+          hitPointsLimit: 0,
+          temporaryHitPoints: 0,
+          hitDices: 1,
+          hitDicesMaximum: 1,
+          hitDicesSize: 'd6',
+          speed: 30,
+          speedClimbing: undefined,
+          speedFlying: undefined,
+          initiativeCustomBonus: undefined,
+          passivePerceptionCustomBonus: undefined,
+          exhaustion: 0,
+        },
         saves: [
           { attribute: 'strength', proficiency: false },
           { attribute: 'dexterity', proficiency: false },
@@ -146,39 +135,33 @@ export const CharactersProvider = ({ children }: { children: ReactNode }) => {
 
       setCharacter(character);
       success?.(character);
-      const newModifiers: Modifiers = {
-        strength: character.attributes.find((attr) => attr.name === 'strength')!
-          .modifier!,
-        dexterity: character.attributes.find(
-          (attr) => attr.name === 'dexterity',
-        )!.modifier!,
-        constitution: character.attributes.find(
-          (attr) => attr.name === 'constitution',
-        )!.modifier!,
-        intelligence: character.attributes.find(
-          (attr) => attr.name === 'intelligence',
-        )!.modifier!,
-        wisdom: character.attributes.find((attr) => attr.name === 'wisdom')!
-          .modifier!,
-        charisma: character.attributes.find((attr) => attr.name === 'charisma')!
-          .modifier!,
-      };
-      character.attributes.forEach((attr) => {
-        newModifiers[attr.name] = attr.modifier;
-      });
-
-      setModifiers(newModifiers);
     },
     [],
   );
 
+  const updateProficiency = useCallback(
+    (newProficiency: number) => {
+      setCharacter({ ...character!, proficiency: newProficiency });
+    },
+    [character],
+  );
+
+  const updateExperience = useCallback(
+    (newExperience: number) => {
+      setCharacter({ ...character!, experience: newExperience });
+    },
+    [character],
+  );
+
   const value: CharactersProviderProps = {
     character,
+    proficiency: character?.proficiency || 2,
     characters,
+    updateProficiency,
+    updateExperience,
     getDetails,
-    getModifier,
-    updateCharacter,
   };
+
   return (
     <CharactersContext.Provider value={value}>
       {children}

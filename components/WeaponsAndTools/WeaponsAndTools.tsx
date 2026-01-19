@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useCharacters } from 'contexts/CharactersContext';
 import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useAttributes } from 'contexts/AttributesContext';
 
 export const WeaponsAndTools = () => {
   const [loading, setLoading] = useState(true);
-  const { character, getDetails, getModifier } = useCharacters();
+  const { character, getDetails } = useCharacters();
+  const { modifiers } = useAttributes();
 
   useEffect(() => {
     if (!character) {
@@ -30,7 +32,7 @@ export const WeaponsAndTools = () => {
           </Text>
 
           {character.attacks?.map((attack, index) => {
-            const attributeModifier = getModifier(attack.attribute);
+            const attributeModifier = modifiers[attack.attribute];
 
             const attackBonus =
               attributeModifier +
@@ -50,7 +52,7 @@ export const WeaponsAndTools = () => {
                 </Text>
                 <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
                   {attack.damages.map((damage, index) => {
-                    const attributeModifier = getModifier(damage.attribute);
+                    const attributeModifier = modifiers[damage.attribute];
 
                     return (
                       <Text className="" key={index}>

@@ -28,7 +28,7 @@ export const MainCharacterSheet = () => {
 
   return (
     <>
-      {character && (
+      {character && !loading && (
         <ScrollView>
           <View className="flex flex-row justify-between items-center mb-2">
             <Text className="text-black text-2xl font-bold">
@@ -44,23 +44,28 @@ export const MainCharacterSheet = () => {
             <Text className="text-gray-900 text-lg font-semibold text-center">
               Ficha do Personagem
             </Text>
-            <MainCharacterSheetHitPoints character={character} />
+
+            <MainCharacterSheetHitPoints />
+
             <View className={styles.separator} />
-            <MainCharacterSheetGeneralInfo character={character} />
+
+            <MainCharacterSheetGeneralInfo />
           </View>
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
             <Text className="text-gray-900 text-lg font-semibold text-center">
               Atributos
             </Text>
-            <MainCharacterSheetAttributes character={character} />
+
+            <MainCharacterSheetAttributes />
           </View>
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
             <Text className="text-gray-900 text-lg font-semibold text-center">
               Resistências e Perícias
             </Text>
-            <MainCharacterSheetProficiencies character={character} />
+
+            <MainCharacterSheetProficiencies />
           </View>
         </ScrollView>
       )}

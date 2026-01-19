@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ATTRIBUTES } from 'core/enums/attributes';
 import { useForm } from 'react-hook-form';
-import { Character } from 'types/character';
+import { Attribute } from 'types/character';
 import * as z from 'zod';
 
 export const attributeSchema = z.object({
@@ -18,16 +18,16 @@ export type FormAttribute = z.infer<typeof attributeSchema>;
 export type AttributesFormType = z.infer<typeof schema>;
 
 type useAttributesFormProps = {
-  character: Character;
+  attributes: Attribute[];
 };
 
-export const useAttributesForm = ({ character }: useAttributesFormProps) => {
+export const useAttributesForm = ({ attributes }: useAttributesFormProps) => {
   const { control, handleSubmit, watch, getValues, formState } =
     useForm<AttributesFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
         attributes: ATTRIBUTES.map((attributeName) => {
-          const characterAttr = character.attributes.find(
+          const characterAttr = attributes.find(
             (attr) => attr.name === attributeName,
           );
 

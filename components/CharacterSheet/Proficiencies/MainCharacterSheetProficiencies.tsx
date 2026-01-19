@@ -1,21 +1,19 @@
-import { useCharacters } from 'contexts/CharactersContext';
 import React, { useCallback, useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Character, Save, Skill } from 'types/character';
+import { Save, Skill } from 'types/character';
 import { SaveForm } from './Save/SaveForm';
 import { SkillForm } from './Skill/SkillForm';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+import { useSaves } from 'contexts/SavesContext';
+import { useSkills } from 'contexts/SkillsContext';
 
-type MainCharacterSheetAttributes = {
-  character: Character;
-};
-
-export const MainCharacterSheetProficiencies = ({
-  character,
-}: MainCharacterSheetAttributes) => {
+export const MainCharacterSheetProficiencies = () => {
   const [highlightedSave, setHighlightedSave] = useState<Save | null>(null);
   const [highlightedSkill, setHighlightedSkill] = useState<Skill | null>(null);
+
+  const { saves } = useSaves();
+  const { skills } = useSkills();
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
@@ -41,7 +39,7 @@ export const MainCharacterSheetProficiencies = ({
     <>
       <View className="flex flex-col bg-gray-100 rounded-lg px-4">
         <View className="flex flex-row flex-wrap py-2 w-full">
-          {character.saves.map((save, index) => (
+          {saves.map((save, index) => (
             <SaveCard
               key={index}
               save={save}
@@ -53,7 +51,7 @@ export const MainCharacterSheetProficiencies = ({
         <View className="border-t border-gray-300 mb-2" />
 
         <View className="flex flex-row flex-wrap py-2 w-full">
-          {character.skills.map((skill) => (
+          {skills.map((skill) => (
             <SkillCard
               key={skill.name}
               skill={skill}
@@ -83,17 +81,9 @@ export const MainCharacterSheetProficiencies = ({
 type SaveCardProps = { save: Save; onLongPress: () => void };
 
 const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
-  const { character, getModifier } = useCharacters();
+  const { getSaveBonus } = useSaves();
 
-  const attributeModifier = getModifier(save.attribute);
-  const proficiencyModifier = character?.proficiency || 0;
-
-  let modifier =
-    attributeModifier + (save.proficiency ? proficiencyModifier : 0);
-
-  if (save.customBonus) {
-    modifier += save.customBonus;
-  }
+  const modifier = getSaveBonus(save.attribute);
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
@@ -116,18 +106,9 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
 type SkillCardProps = { skill: Skill; onLongPress: () => void };
 
 const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
-  const { character, getModifier } = useCharacters();
+  const { getSkillBonus } = useSkills();
 
-  let modifier = 0;
-
-  modifier = getModifier(skill.attribute);
-
-  if (character?.proficiency) {
-    if (skill.expertise) modifier += character.proficiency * 2;
-    else if (skill.proficiency) modifier += character.proficiency;
-  }
-
-  if (skill.customBonus) modifier += skill.customBonus;
+  const modifier = getSkillBonus(skill.name);
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">

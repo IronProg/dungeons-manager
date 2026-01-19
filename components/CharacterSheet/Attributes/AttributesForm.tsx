@@ -1,24 +1,27 @@
 import { Control, Controller } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { AttributesFormType, useAttributesForm } from './useAttributesForm';
-import { Attribute, AttributesType, Character } from 'types/character';
+import { Attribute, AttributesType } from 'types/character';
 import { ATTRIBUTES } from 'core/enums/attributes';
-import { useCharacters } from 'contexts/CharactersContext';
 import { getModifier } from 'core/helpers/getModifier';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useAttributes } from 'contexts/AttributesContext';
 
 type AttributesFormProps = {
-  character: Character;
+  attributes: Attribute[];
   onClose: () => void;
 };
 
-export const AttributesForm = ({ character, onClose }: AttributesFormProps) => {
-  const { updateCharacter } = useCharacters();
-  const { control, handleSubmit } = useAttributesForm({ character });
+export const AttributesForm = ({
+  attributes,
+  onClose,
+}: AttributesFormProps) => {
+  const { updateAttributes } = useAttributes();
+  const { control, handleSubmit } = useAttributesForm({ attributes });
 
   const onSubmit = (values: AttributesFormType) => {
-    const attributes: Attribute[] = values.attributes.map((attrVal) => ({
+    const newAttributes: Attribute[] = values.attributes.map((attrVal) => ({
       name: attrVal.name,
       value: attrVal.value,
       tempValue: attrVal.tempValue,
@@ -27,9 +30,7 @@ export const AttributesForm = ({ character, onClose }: AttributesFormProps) => {
         : getModifier(attrVal.value),
     }));
 
-    const newCharacter = { ...character, attributes };
-
-    updateCharacter(newCharacter);
+    updateAttributes(newAttributes);
 
     onClose();
   };
@@ -94,7 +95,7 @@ const AttributeFormItem = ({
                   {...field}
                   onChangeText={field.onChange}
                   maxLength={3}
-                  value={`${field.value}`}
+                  value={`${field.value || ''}`}
                 />
 
                 {error?.message && (

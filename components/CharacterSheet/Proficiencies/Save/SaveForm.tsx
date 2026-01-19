@@ -1,9 +1,9 @@
 import { Controller } from 'react-hook-form';
 import { Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SaveFormType, useSaveForm } from './useSaveForm';
-import { Character, Save } from 'types/character';
-import { useCharacters } from 'contexts/CharactersContext';
+import { Save } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { useSaves } from 'contexts/SavesContext';
 
 type AttributesFormProps = {
   save: Save;
@@ -11,11 +11,11 @@ type AttributesFormProps = {
 };
 
 export const SaveForm = ({ save, onClose }: AttributesFormProps) => {
-  const { character, updateCharacter } = useCharacters();
+  const { saves, updateSaves } = useSaves();
   const { control, handleSubmit } = useSaveForm({ save });
 
   const onSubmit = (values: SaveFormType) => {
-    const newSaves = character!.saves.map((save) => {
+    const newSaves = saves.map((save) => {
       if (save.attribute === values.attribute) {
         return values;
       }
@@ -23,9 +23,7 @@ export const SaveForm = ({ save, onClose }: AttributesFormProps) => {
       return save;
     });
 
-    const newCharacter: Character = { ...character!, saves: newSaves };
-
-    updateCharacter(newCharacter);
+    updateSaves(newSaves);
 
     onClose();
   };

@@ -6,24 +6,40 @@ export type AttributesType =
   | 'wisdom'
   | 'charisma';
 
+export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
+
 export type Character = {
   id?: number;
   name: string;
-  hitPoints: number;
-  hitPointsLimit: number;
-  temporaryHitPoints: number;
-  armorClass: number;
-  speed: number;
   proficiency: number;
-  initiative: number;
-  passivePerception: number;
+  level: number;
   experience: number;
+  generalInfo: CharacterGeneralInfo;
   attributes: Attribute[];
   saves: Save[];
   skills: Skill[];
   attacks: Attack[];
   resources: Resource[];
   features: Feature[];
+};
+
+export type CharacterGeneralInfo = {
+  hitPoints: number;
+  hitPointsLimit: number;
+  hitPointsLimitTemporary?: number;
+  temporaryHitPoints?: number;
+  armorClassBase: number;
+  armorClassFirstAttribute?: AttributesType;
+  armorClassSecondAttribute?: AttributesType;
+  speed: number;
+  hitDices: number;
+  hitDicesMaximum: number;
+  hitDicesSize: HitDicesType;
+  speedClimbing?: number;
+  speedFlying?: number;
+  initiativeCustomBonus?: number;
+  passivePerceptionCustomBonus?: number;
+  exhaustion: number;
 };
 
 export type Attribute = {
