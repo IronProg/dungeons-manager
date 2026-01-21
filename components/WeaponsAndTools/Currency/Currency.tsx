@@ -3,6 +3,7 @@ import { Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useCurrencyForm } from './useCurrencyForm';
 import { Controller } from 'react-hook-form';
+import i18n from 'i18n';
 
 export const Currency = () => {
   const { currencies } = useCurrencies();
@@ -11,7 +12,9 @@ export const Currency = () => {
 
   return (
     <>
-      <Text className="text-2xl font-bold text-center mb-2">Moedas</Text>
+      <Text className="text-2xl font-bold text-center mb-2">
+        {i18n.t('titles.currencies')}
+      </Text>
 
       <ScrollView
         horizontal
@@ -37,7 +40,9 @@ export const Currency = () => {
             )}
           />
 
-          <Text className="text-sm text-center font-medium">CP</Text>
+          <Text className="text-sm text-center font-medium">
+            {i18n.t('currencies.cp')}
+          </Text>
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow">
@@ -59,7 +64,9 @@ export const Currency = () => {
             )}
           />
 
-          <Text className="text-sm text-center font-medium">SP</Text>
+          <Text className="text-sm text-center font-medium">
+            {i18n.t('currencies.sp')}
+          </Text>
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow">
@@ -81,7 +88,9 @@ export const Currency = () => {
             )}
           />
 
-          <Text className="text-sm text-center font-medium">EP</Text>
+          <Text className="text-sm text-center font-medium">
+            {i18n.t('currencies.ep')}
+          </Text>
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow">
@@ -103,7 +112,9 @@ export const Currency = () => {
             )}
           />
 
-          <Text className="text-sm text-center font-medium">GP</Text>
+          <Text className="text-sm text-center font-medium">
+            {i18n.t('currencies.gp')}
+          </Text>
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow">
@@ -125,7 +136,9 @@ export const Currency = () => {
             )}
           />
 
-          <Text className="text-sm text-center font-medium">PP</Text>
+          <Text className="text-sm text-center font-medium">
+            {i18n.t('currencies.pp')}
+          </Text>
         </View>
       </ScrollView>
     </>

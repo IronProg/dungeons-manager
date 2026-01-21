@@ -7,6 +7,7 @@ import { getModifier } from 'core/helpers/getModifier';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useAttributes } from 'contexts/AttributesContext';
+import i18n from 'i18n';
 
 type AttributesFormProps = {
   attributes: Attribute[];
@@ -58,7 +59,7 @@ export const AttributesForm = ({
           className="w-full bg-primary-600 rounded-lg py-2"
         >
           <Text className="text-white font-bold text-2xl text-center">
-            Salvar
+            {i18n.t('general.save')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -79,11 +80,15 @@ const AttributeFormItem = ({
 }: AttributeFormItemProps) => {
   return (
     <View className="w-[33%] flex items-center justify-center">
-      <Text className="text-gray-900 font-bold text-center">{name}</Text>
+      <Text className="text-gray-900 font-bold text-center">
+        {i18n.t(`attributes.${name}`)}
+      </Text>
 
       <View className="flex flex-col gap-2 border border-gray-900 rounded-lg w-[90px] items-stretch">
         <View className=" flex-col flex">
-          <Text className="text-gray-900 text-sm text-center">Base</Text>
+          <Text className="text-gray-900 text-sm text-center">
+            {i18n.t(`general.base`)}
+          </Text>
           <Controller
             control={control}
             name={`attributes.${index}.value`}
@@ -109,7 +114,9 @@ const AttributeFormItem = ({
         </View>
 
         <View className="flex-col flex items-stretch border-t border-gray-900">
-          <Text className="text-gray-900 text-sm text-center mt-2">Temp</Text>
+          <Text className="text-gray-900 text-sm text-center mt-2">
+            {i18n.t(`general.temp`)}
+          </Text>
           <Controller
             control={control}
             name={`attributes.${index}.tempValue`}

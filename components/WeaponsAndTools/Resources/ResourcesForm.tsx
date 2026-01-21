@@ -5,6 +5,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useResources } from 'contexts/ResourcesContext';
+import i18n from 'i18n';
 
 type ResourcesFormProps = {
   resource?: Resource;
@@ -36,7 +37,7 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
 
       <View className="flex flex-col items-stretch">
         <View>
-          <Text>Título</Text>
+          <Text>{i18n.t('general.title')}</Text>
 
           <Controller
             control={control}
@@ -56,8 +57,8 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
         </View>
 
         <View className="flex flex-row justify-between gap-4">
-          <View className="grow">
-            <Text>Qtde Atual</Text>
+          <View className="flex-1">
+            <Text>{i18n.t('general.currentQuantity')}</Text>
 
             <Controller
               control={control}
@@ -77,8 +78,8 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
             />
           </View>
 
-          <View className="grow">
-            <Text>Limite</Text>
+          <View className="flex-1">
+            <Text>{i18n.t('general.limit')}</Text>
 
             <Controller
               control={control}
@@ -105,7 +106,7 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

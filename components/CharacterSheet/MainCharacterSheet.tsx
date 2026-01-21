@@ -8,6 +8,7 @@ import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPo
 import { ScrollView } from 'react-native-gesture-handler';
 import { MainCharacterSheetProficiencies } from './Proficiencies/MainCharacterSheetProficiencies';
 import { SettingsIcon } from 'lucide-react-native';
+import i18n from 'i18n';
 
 export const MainCharacterSheet = () => {
   const [loading, setLoading] = useState(true);
@@ -42,7 +43,7 @@ export const MainCharacterSheet = () => {
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch">
             <Text className="text-gray-900 text-lg font-semibold text-center">
-              Ficha do Personagem
+              {i18n.t('titles.characterSheet')}
             </Text>
 
             <MainCharacterSheetHitPoints />
@@ -54,7 +55,7 @@ export const MainCharacterSheet = () => {
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
             <Text className="text-gray-900 text-lg font-semibold text-center">
-              Atributos
+              {i18n.t('titles.attributes')}
             </Text>
 
             <MainCharacterSheetAttributes />
@@ -62,7 +63,7 @@ export const MainCharacterSheet = () => {
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
             <Text className="text-gray-900 text-lg font-semibold text-center">
-              Resistências e Perícias
+              {i18n.t('titles.savesAndSkills')}
             </Text>
 
             <MainCharacterSheetProficiencies />

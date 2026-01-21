@@ -4,6 +4,7 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
+import i18n from 'i18n';
 
 type SpeedFormProps = {
   onClose: () => void;
@@ -31,18 +32,20 @@ export const SpeedForm = ({ onClose }: SpeedFormProps) => {
 
   return (
     <View className="flex flex-col">
-      <Text className="text-2xl text-center font-medium">Speed</Text>
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('titles.speed')}
+      </Text>
 
       <View className="flex flex-row gap-4 items-start">
-        <View>
-          <Text className="font-medium">Normal</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium">{i18n.t('speeds.normal')}</Text>
           <Controller
             control={control}
             name="speed"
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="text-center text-xl rounded-lg bg-gray-100 overflow-hidden h-15"
+                  className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   keyboardType="numeric"
@@ -52,18 +55,17 @@ export const SpeedForm = ({ onClose }: SpeedFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
-        <View>
-          <Text className="font-medium">Climbing</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium">{i18n.t('speeds.climbing')}</Text>
           <Controller
             control={control}
             name="speedClimbing"
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="text-center text-xl rounded-lg bg-gray-100 overflow-hidden h-15"
+                  className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   keyboardType="numeric"
@@ -73,18 +75,17 @@ export const SpeedForm = ({ onClose }: SpeedFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
-        <View>
-          <Text className="font-medium">Flying</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium">{i18n.t('speeds.flying')}</Text>
           <Controller
             control={control}
             name="speedFlying"
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="text-center text-xl rounded-lg bg-gray-100 overflow-hidden h-15"
+                  className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   keyboardType="numeric"
@@ -94,7 +95,6 @@ export const SpeedForm = ({ onClose }: SpeedFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
       </View>
 
@@ -103,7 +103,7 @@ export const SpeedForm = ({ onClose }: SpeedFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

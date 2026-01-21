@@ -4,6 +4,8 @@ import { SaveFormType, useSaveForm } from './useSaveForm';
 import { Save } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useSaves } from 'contexts/SavesContext';
+import i18n from 'i18n';
+import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type AttributesFormProps = {
   save: Save;
@@ -31,48 +33,66 @@ export const SaveForm = ({ save, onClose }: AttributesFormProps) => {
   return (
     <View className="flex flex-col gap-4">
       <Text className="text-gray-900 font-bold text-2xl text-center">
-        {save.attribute} Save
+        {i18n.t(`saves.${save.attribute}`)}
       </Text>
 
-      <View className="flex flex-row gap-6 flex-wrap">
-        <Controller
-          control={control}
-          name={'proficiency'}
-          render={({ field, fieldState: { error } }) => (
-            <View className="flex flex-col items-start">
-              <Text>Proficiência</Text>
-              <Switch value={field.value} onValueChange={field.onChange} />
+      <View className="flex flex-row gap-4 flex-wrap">
+        <View>
+          <Controller
+            control={control}
+            name={'proficiency'}
+            render={({ field, fieldState: { error } }) => (
+              <View className="flex flex-col items-start">
+                <Text>{i18n.t('general.proficiency')}</Text>
+                <Switch value={field.value} onValueChange={field.onChange} />
 
-              {error?.message && (
-                <Text className="text-sm text-center text-red-400">
-                  {error.message}
-                </Text>
-              )}
-            </View>
-          )}
-        />
+                {error?.message && (
+                  <Text className="text-sm text-center text-red-400">
+                    {error.message}
+                  </Text>
+                )}
+              </View>
+            )}
+          />
+        </View>
 
-        <Controller
-          control={control}
-          name={'customBonus'}
-          render={({ field, fieldState: { error } }) => (
-            <View className="flex flex-col items-start">
-              <Text>Modificador</Text>
-              <BottomSheetTextInput
-                className="w-full text-2xl bg-gray-200 rounded-xl"
-                keyboardType="number-pad"
-                onChangeText={field.onChange}
-                value={`${field.value || ''}`}
-              />
+        <View className="min-w-0 flex-1">
+          <Controller
+            control={control}
+            name={'customBonus'}
+            render={({ field, fieldState: { error } }) => (
+              <View className="flex flex-col items-start">
+                <Text>{i18n.t('general.modifier')}</Text>
+                <BottomSheetTextInput
+                  className="w-full text-base bg-gray-200 rounded-xl h-15"
+                  keyboardType="number-pad"
+                  onChangeText={field.onChange}
+                  value={`${field.value || ''}`}
+                />
 
-              {error?.message && (
-                <Text className="text-sm text-center text-red-400">
-                  {error.message}
-                </Text>
-              )}
-            </View>
-          )}
-        />
+                {error?.message && (
+                  <Text className="text-sm text-center text-red-400">
+                    {error.message}
+                  </Text>
+                )}
+              </View>
+            )}
+          />
+        </View>
+
+        <View className="min-w-0 flex-1">
+          <Controller
+            control={control}
+            name={'extraAttribute'}
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <Text>{i18n.t('general.extraAttribute')}</Text>
+
+                <AttributePicker {...field} error={error?.message} />
+              </>
+            )}
+          />
+        </View>
       </View>
 
       <TouchableOpacity
@@ -80,7 +100,7 @@ export const SaveForm = ({ save, onClose }: AttributesFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

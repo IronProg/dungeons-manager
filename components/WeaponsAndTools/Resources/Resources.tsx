@@ -1,4 +1,5 @@
 import { useResources } from 'contexts/ResourcesContext';
+import i18n from 'i18n';
 import { Plus } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Resource } from 'types/character';
@@ -17,7 +18,7 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
         <View />
 
         <Text className="text-black text-2xl font-bold text-center">
-          Recursos e Munições
+          {i18n.t('titles.resourcesAndAmmunitions')}
         </Text>
 
         <TouchableOpacity
@@ -46,7 +47,7 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
 
             <Text className="bg-gray-100 rounded-lg px-2 py-1" key={index}>
               {resource.amount}
-              {resource.max && `/${resource.max}`}
+              {resource.max && resource.max > 0 && `/${resource.max}`}
             </Text>
           </TouchableOpacity>
         );

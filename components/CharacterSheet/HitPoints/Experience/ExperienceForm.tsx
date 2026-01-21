@@ -4,6 +4,7 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useCharacters } from 'contexts/CharactersContext';
 import { ExperienceFormType, useExperienceForm } from './useExperienceForm';
+import i18n from 'i18n';
 
 type ExperienceFormProps = {
   onClose: () => void;
@@ -26,9 +27,11 @@ export const ExperienceForm = ({ onClose }: ExperienceFormProps) => {
 
   return (
     <View className="flex flex-col">
-      <Text className="text-2xl text-center font-medium">Experiência</Text>
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('titles.experience')}
+      </Text>
 
-      <View className="flex flex-col items-center">
+      <View className="min-w-0 flex-1">
         <Controller
           control={control}
           name="experience"
@@ -45,7 +48,6 @@ export const ExperienceForm = ({ onClose }: ExperienceFormProps) => {
             </>
           )}
         />
-        <Text className="text-center"></Text>
       </View>
 
       <TouchableOpacity
@@ -53,7 +55,7 @@ export const ExperienceForm = ({ onClose }: ExperienceFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

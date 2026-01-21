@@ -8,6 +8,8 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { useSkills } from 'contexts/SkillsContext';
+import i18n from 'i18n';
+import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type PassivePerceptionFormProps = {
   onClose: () => void;
@@ -19,7 +21,7 @@ export const PassivePerceptionForm = ({
   const { generalInfo, updateGeneralInfo } = useGeneralInfo();
   const { getSkillBonus } = useSkills();
   const { control, handleSubmit } = usePassivePerceptionForm({
-    passivePerceptionCustomBonus: generalInfo.passivePerceptionCustomBonus,
+    generalInfo,
   });
 
   const percetionBonus = getSkillBonus('perception');
@@ -41,22 +43,24 @@ export const PassivePerceptionForm = ({
   return (
     <View className="flex flex-col">
       <Text className="text-2xl text-center font-medium">
-        Passive Perception
+        {i18n.t('titles.passivePerception')}
       </Text>
 
       <View className="flex flex-row gap-4 items-start">
         <View>
-          <Text className="font-medium mb-3">Base</Text>
+          <Text className="font-medium mb-3">{i18n.t('general.base')}</Text>
           <Text className="text-center text-xl">10</Text>
         </View>
 
         <View>
-          <Text className="font-medium mb-3">Perception</Text>
+          <Text className="font-medium mb-3">
+            {i18n.t('titles.perception')}
+          </Text>
           <Text className="text-center text-xl">{percetionBonus}</Text>
         </View>
 
-        <View>
-          <Text className="font-medium">Modifier</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium">{i18n.t('general.modifier')}</Text>
           <Controller
             control={control}
             name="passivePerceptionCustomBonus"
@@ -73,7 +77,19 @@ export const PassivePerceptionForm = ({
               </>
             )}
           />
-          <Text className="text-center"></Text>
+        </View>
+
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium">
+            {i18n.t('general.extraAttribute')}
+          </Text>
+          <Controller
+            control={control}
+            name="passivePerceptionExtraAttribute"
+            render={({ field, fieldState: { error } }) => (
+              <AttributePicker {...field} error={error?.message} />
+            )}
+          />
         </View>
       </View>
 
@@ -82,7 +98,7 @@ export const PassivePerceptionForm = ({
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

@@ -4,6 +4,8 @@ import { SkillFormType, useSkillForm } from './useSkillForm';
 import { Skill } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useSkills } from 'contexts/SkillsContext';
+import i18n from 'i18n';
+import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type AttributesFormProps = {
   skill: Skill;
@@ -33,17 +35,22 @@ export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
 
   return (
     <View className="flex flex-col gap-4">
-      <Text className="text-gray-900 font-bold text-2xl text-center">
-        {skill.name}
-      </Text>
+      <View>
+        <Text className="text-gray-900 font-bold text-2xl text-center">
+          {i18n.t(`skills.${skill.name}`)}
+        </Text>
+        <Text className="text-gray-600 font-semibold text-lg text-center">
+          {i18n.t(`attributes.${skill.attribute}`)}
+        </Text>
+      </View>
 
-      <View className="flex flex-row gap-6 flex-wrap">
+      <View className="flex flex-row gap-4 flex-wrap">
         <Controller
           control={control}
           name={'proficiency'}
           render={({ field, fieldState: { error } }) => (
             <View className="flex flex-col items-start">
-              <Text>Proficiência</Text>
+              <Text>{i18n.t('general.proficiency')}</Text>
               <Switch value={field.value} onValueChange={field.onChange} />
 
               {error?.message && (
@@ -61,7 +68,7 @@ export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
             name={'expertise'}
             render={({ field, fieldState: { error } }) => (
               <View className="flex flex-col items-start">
-                <Text>Expertise</Text>
+                <Text>{i18n.t('general.expertise')}</Text>
                 <Switch value={field.value} onValueChange={field.onChange} />
 
                 {error?.message && (
@@ -74,27 +81,43 @@ export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
           />
         )}
 
-        <Controller
-          control={control}
-          name={'customBonus'}
-          render={({ field, fieldState: { error } }) => (
-            <View className="flex flex-col items-start">
-              <Text>Modificador</Text>
-              <BottomSheetTextInput
-                className="w-full text-2xl bg-gray-200 rounded-xl"
-                keyboardType="number-pad"
-                onChangeText={field.onChange}
-                value={`${field.value || ''}`}
-              />
+        <View className="min-w-0 flex-1">
+          <Controller
+            control={control}
+            name={'customBonus'}
+            render={({ field, fieldState: { error } }) => (
+              <View className="flex flex-col items-start">
+                <Text>{i18n.t('general.modifier')}</Text>
+                <BottomSheetTextInput
+                  className="w-full text-base bg-gray-200 rounded-xl h-15"
+                  keyboardType="number-pad"
+                  onChangeText={field.onChange}
+                  value={`${field.value || ''}`}
+                />
 
-              {error?.message && (
-                <Text className="text-sm text-center text-red-400">
-                  {error.message}
-                </Text>
-              )}
-            </View>
-          )}
-        />
+                {error?.message && (
+                  <Text className="text-sm text-center text-red-400">
+                    {error.message}
+                  </Text>
+                )}
+              </View>
+            )}
+          />
+        </View>
+
+        <View className="min-w-0 flex-1">
+          <Controller
+            control={control}
+            name={'extraAttribute'}
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <Text>{i18n.t('general.extraAttribute')}</Text>
+
+                <AttributePicker {...field} error={error?.message} />
+              </>
+            )}
+          />
+        </View>
       </View>
 
       <TouchableOpacity
@@ -102,7 +125,7 @@ export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,5 @@
 import { useCharacters } from 'contexts/CharactersContext';
+import i18n from 'i18n';
 import { Book } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -18,7 +19,7 @@ export const Experience = ({ onLongPress }: ExperienceProps) => {
 
       <View className="absolute flex flex-col items-center justify-center h-full w-full">
         <Text className="text-gray-900 text-sm font-semibold text-center">
-          Experiência
+          {i18n.t('titles.experience')}
         </Text>
         <Text className="text-2xl font-bold text-center">
           {character?.experience}

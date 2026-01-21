@@ -1,4 +1,5 @@
 import { useCharacters } from 'contexts/CharactersContext';
+import i18n from 'i18n';
 import { Award } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -17,7 +18,7 @@ export const Proficiency = ({ onLongPress }: ProficiencyProps) => {
       <Award size={90} color={'#ccc'} fill={'#ddd'} />
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">
-          Proficiência
+          {i18n.t('general.proficiency')}
         </Text>
         <Text className="text-3xl font-bold text-center">{proficiency}</Text>
       </View>

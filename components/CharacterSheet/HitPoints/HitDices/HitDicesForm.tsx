@@ -7,6 +7,7 @@ import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import RNPickerSelect from 'react-native-picker-select';
 import { HIT_DICES } from 'core/enums/hitDices';
 import { ChevronDown } from 'lucide-react-native';
+import i18n from 'i18n';
 
 type HitDicesFormProps = {
   onClose: () => void;
@@ -28,11 +29,11 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
   return (
     <View className="flex flex-col items-center">
       <Text className="text-2xl text-center font-medium">
-        Dados de Vida / Máximo
+        {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
       </Text>
 
       <View className="flex flex-row gap-2">
-        <View className="flex flex-col items-center">
+        <View className="min-w-0 flex-1">
           <Controller
             control={control}
             name="hitDices"
@@ -53,7 +54,7 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
 
         <Text className="mt-4">/</Text>
 
-        <View className="flex flex-col items-center">
+        <View className="min-w-0 flex-1">
           <Controller
             control={control}
             name="hitDicesMaximum"
@@ -120,7 +121,7 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

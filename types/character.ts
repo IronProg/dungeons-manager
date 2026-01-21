@@ -39,7 +39,9 @@ export type CharacterGeneralInfo = {
   speedClimbing?: number;
   speedFlying?: number;
   initiativeCustomBonus?: number;
+  initiaveExtraAttribute?: AttributesType;
   passivePerceptionCustomBonus?: number;
+  passivePerceptionExtraAttribute?: AttributesType;
   exhaustion: number;
 };
 
@@ -54,6 +56,7 @@ export type Save = {
   attribute: AttributesType;
   proficiency: boolean;
   customBonus?: number;
+  extraAttribute?: AttributesType;
 };
 
 export type Feature = {
@@ -68,6 +71,7 @@ export type Skill = {
   proficiency: boolean;
   expertise?: boolean;
   customBonus?: number;
+  extraAttribute?: AttributesType;
 };
 
 export type Currencies = {

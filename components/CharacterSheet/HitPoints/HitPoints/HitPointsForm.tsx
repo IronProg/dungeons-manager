@@ -4,6 +4,7 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitPointsFormType, useHitPointsForm } from './useHitPointsForm';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
+import i18n from 'i18n';
 
 type HitPointsFormProps = { onClose: () => void };
 
@@ -22,11 +23,15 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
 
   return (
     <View className="flex flex-col items-center">
-      <Text className="text-2xl text-center font-medium">Vida</Text>
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('titles.hitPoints')}
+      </Text>
 
       <View className="flex flex-row gap-4 flex-wrap">
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Atual</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium text-center">
+            {i18n.t('general.current')}
+          </Text>
 
           <Controller
             control={control}
@@ -34,7 +39,7 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                  className="text-center text-base w-full px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   keyboardType="numeric"
@@ -44,11 +49,12 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Máxima</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium text-center">
+            {i18n.t('general.maximum')}
+          </Text>
 
           <Controller
             control={control}
@@ -56,7 +62,7 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                  className="text-center text-base w-full px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   keyboardType="numeric"
@@ -66,11 +72,12 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Temp</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium text-center">
+            {i18n.t('general.temp')}
+          </Text>
 
           <Controller
             control={control}
@@ -78,7 +85,7 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                  className="text-center text-base w-full px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   keyboardType="numeric"
@@ -88,30 +95,30 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
+      </View>
 
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Vida Máxima Temporária</Text>
+      <View className="min-w-0 flex-1">
+        <Text className="font-medium text-center">
+          {i18n.t('hitPoints.tempMaxHP')}
+        </Text>
 
-          <Controller
-            control={control}
-            name="hitPointsLimitTemporary"
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <BottomSheetTextInput
-                  className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
-                  onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
-                  keyboardType="numeric"
-                />
+        <Controller
+          control={control}
+          name="hitPointsLimitTemporary"
+          render={({ field, fieldState: { error } }) => (
+            <>
+              <BottomSheetTextInput
+                className="text-center text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                onChangeText={field.onChange}
+                value={`${field.value || ''}`}
+                keyboardType="numeric"
+              />
 
-                <Text className="text-red-400 text-sm">{error?.message}</Text>
-              </>
-            )}
-          />
-          <Text className="text-center"></Text>
-        </View>
+              <Text className="text-red-400 text-sm">{error?.message}</Text>
+            </>
+          )}
+        />
       </View>
 
       <TouchableOpacity
@@ -119,7 +126,7 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

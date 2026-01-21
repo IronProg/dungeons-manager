@@ -42,6 +42,7 @@ export const MainCharacterSheetHitPoints = () => {
 
         <ReusableBottomSheetModal
           ref={ref}
+          snapPoints={[300, 650]}
           onDismiss={() => {
             setActiveForm(null);
           }}

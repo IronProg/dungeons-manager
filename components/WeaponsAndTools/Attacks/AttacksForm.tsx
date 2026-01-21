@@ -4,12 +4,11 @@ import { AttacksFormType, useAttacksForm } from './useAttacksForm';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import RNPickerSelect from 'react-native-picker-select';
-import { ATTRIBUTES } from 'core/enums/attributes';
 import { Switch } from 'react-native-gesture-handler';
 import { useAttacks } from 'contexts/AttacksContext';
 import { DamagesForm } from './DamagesForm';
-import { ChevronDown } from 'lucide-react-native';
+import i18n from 'i18n';
+import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type AttacksFormProps = {
   attack?: Attack;
@@ -36,12 +35,12 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
   return (
     <View className="flex flex-col">
       <Text className="text-2xl font-medium text-center mb-2">
-        {attack ? 'Editar Ataque' : 'Novo Ataque'}
+        {attack ? i18n.t('titles.editAttack') : i18n.t('titles.newAttack')}
       </Text>
 
       <View className="flex flex-row gap-4">
         <View className="flex-1 grow">
-          <Text>Nome</Text>
+          <Text>{i18n.t('general.name')}</Text>
 
           <Controller
             control={control}
@@ -60,52 +59,20 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
           />
         </View>
 
-        <View>
-          <Text>Atributo</Text>
+        <View className="min-w-0 w-28">
+          <Text>{i18n.t('general.attribute')}</Text>
 
           <Controller
             control={control}
             name="attribute"
             render={({ field, fieldState: { error } }) => (
-              <>
-                <RNPickerSelect
-                  onValueChange={field.onChange}
-                  placeholder="Placeholder"
-                  value={field.value}
-                  useNativeAndroidPickerStyle={false}
-                  style={{
-                    viewContainer: {
-                      backgroundColor: '#f3f3f3ff',
-                      width: 120,
-                      borderRadius: 20,
-                      overflow: 'hidden',
-                    },
-                  }}
-                  items={[
-                    { label: 'None', value: null },
-                    ...ATTRIBUTES.map((attr) => ({
-                      label: attr,
-                      value: attr,
-                    })),
-                  ]}
-                >
-                  <View className="rounded-lg bg-gray-100 px-4 h-15 py-3 flex flex-row justify-between items-center gap-2">
-                    <Text>{field.value}</Text>
-
-                    <View className="pt-1">
-                      <ChevronDown size={12} />
-                    </View>
-                  </View>
-                </RNPickerSelect>
-
-                <Text className="text-red-400 text-sm">{error?.message}</Text>
-              </>
+              <AttributePicker {...field} error={error?.message} />
             )}
           />
         </View>
 
-        <View className="w-12">
-          <Text>Mod</Text>
+        <View className="w-14">
+          <Text>{i18n.t('general.mod')}</Text>
 
           <Controller
             control={control}
@@ -126,7 +93,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
         </View>
 
         <View className="flex flex-col items-start">
-          <Text>Prof</Text>
+          <Text>{i18n.t('general.prof')}</Text>
 
           <Controller
             control={control}
@@ -148,7 +115,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
 
       <View className="flex flex-row gap-4">
         <View className="grow flex-1">
-          <Text>Alcance</Text>
+          <Text>{i18n.t('general.range')}</Text>
 
           <Controller
             control={control}
@@ -168,7 +135,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
         </View>
 
         <View className="grow flex-1 max-w-[70%]">
-          <Text>Propriedades</Text>
+          <Text>{i18n.t('general.properties')}</Text>
 
           <Controller
             control={control}
@@ -191,8 +158,8 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
       <DamagesForm control={control} />
 
       <View className="flex flex-row gap-4">
-        <View className="grow">
-          <Text>Descrição</Text>
+        <View className="flex-1">
+          <Text>{i18n.t('general.description')}</Text>
 
           <Controller
             control={control}
@@ -219,7 +186,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

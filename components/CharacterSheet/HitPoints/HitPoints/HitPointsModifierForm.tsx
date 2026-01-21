@@ -7,6 +7,7 @@ import {
   useHitPointsModifierForm,
 } from './useHitPointsModifierForm';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
+import i18n from 'i18n';
 
 type HitPointsModifierFormProps = { onClose: () => void };
 
@@ -56,11 +57,15 @@ export const HitPointsModifierForm = ({
 
   return (
     <View className="flex flex-col items-center">
-      <Text className="text-2xl text-center font-medium">Vida</Text>
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('titles.hitPoints')}
+      </Text>
 
       <View className="flex flex-row gap-4">
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Damage</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium text-center">
+            {i18n.t('general.damage')}
+          </Text>
 
           <Controller
             control={control}
@@ -78,11 +83,12 @@ export const HitPointsModifierForm = ({
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Healing</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium text-center">
+            {i18n.t('general.healing')}
+          </Text>
 
           <Controller
             control={control}
@@ -100,11 +106,12 @@ export const HitPointsModifierForm = ({
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
-        <View className="flex flex-col items-center">
-          <Text className="font-medium">Temporário</Text>
+        <View className="min-w-0 flex-1">
+          <Text className="font-medium text-center">
+            {i18n.t('general.temporary')}
+          </Text>
 
           <Controller
             control={control}
@@ -122,7 +129,6 @@ export const HitPointsModifierForm = ({
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
       </View>
 
@@ -131,7 +137,7 @@ export const HitPointsModifierForm = ({
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Aplicar
+          {i18n.t('general.apply')}
         </Text>
       </TouchableOpacity>
     </View>

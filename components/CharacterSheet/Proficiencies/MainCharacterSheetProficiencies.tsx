@@ -7,6 +7,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { useSaves } from 'contexts/SavesContext';
 import { useSkills } from 'contexts/SkillsContext';
+import i18n from 'i18n';
 
 export const MainCharacterSheetProficiencies = () => {
   const [highlightedSave, setHighlightedSave] = useState<Save | null>(null);
@@ -96,7 +97,7 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
             numberOfLines={0}
             className="text-gray-900 text-sm font-semibold"
           >
-            {save.attribute}
+            {i18n.t(`attributes.${save.attribute}`)}
           </Text>
         </View>
 
@@ -124,7 +125,8 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
       >
         <View className="min-w-0 flex-1 py-1">
           <Text className="grow text-gray-900 text-sm font-semibold rounded-md">
-            {skill.name} ({skill.attribute.substring(0, 3)})
+            {i18n.t(`skills.${skill.name}`)}(
+            {i18n.t(`attributes.${skill.attribute}`).substring(0, 3)})
           </Text>
         </View>
 

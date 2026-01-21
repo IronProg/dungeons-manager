@@ -4,6 +4,7 @@ import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useCharacters } from 'contexts/CharactersContext';
+import i18n from 'i18n';
 
 type ProficiencyFormProps = {
   onClose: () => void;
@@ -24,9 +25,11 @@ export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
 
   return (
     <View className="flex flex-col">
-      <Text className="text-2xl text-center font-medium">Proficiência</Text>
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('general.proficiency')}
+      </Text>
 
-      <View className="flex flex-col items-center">
+      <View className="min-w-0 flex-1">
         <Controller
           control={control}
           name="proficiencyBonus"
@@ -43,7 +46,6 @@ export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
             </>
           )}
         />
-        <Text className="text-center"></Text>
       </View>
 
       <TouchableOpacity
@@ -51,7 +53,7 @@ export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

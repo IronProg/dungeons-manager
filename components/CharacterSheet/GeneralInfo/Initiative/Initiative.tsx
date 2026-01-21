@@ -1,5 +1,6 @@
 import { useAttributes } from 'contexts/AttributesContext';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
+import i18n from 'i18n';
 import { Zap } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -25,7 +26,7 @@ export const Initiative = ({ onLongPress }: InitiativeProps) => {
       <Zap size={90} color={'#ccc'} fill={'#ddd'} />
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">
-          Iniciativa
+          {i18n.t('titles.initiative')}
         </Text>
         <Text className="text-3xl font-bold text-center">{modifier}</Text>
       </View>

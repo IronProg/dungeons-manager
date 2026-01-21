@@ -5,6 +5,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useFeatures } from 'contexts/FeaturesContext';
+import i18n from 'i18n';
 
 type FeaturesFormProps = {
   feature?: Feature;
@@ -36,7 +37,7 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
 
       <View className="flex flex-col items-stretch">
         <View>
-          <Text>Título</Text>
+          <Text>{i18n.t('general.title')}</Text>
 
           <Controller
             control={control}
@@ -56,7 +57,7 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
         </View>
 
         <View>
-          <Text>Origem</Text>
+          <Text>{i18n.t('general.origin')}</Text>
 
           <Controller
             control={control}
@@ -76,7 +77,7 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
         </View>
 
         <View>
-          <Text>Origem</Text>
+          <Text>{i18n.t('general.description')}</Text>
 
           <Controller
             control={control}
@@ -106,7 +107,7 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
         className="w-full bg-primary-600 rounded-lg py-2"
       >
         <Text className="text-white font-bold text-2xl text-center">
-          Salvar
+          {i18n.t('general.save')}
         </Text>
       </TouchableOpacity>
     </View>

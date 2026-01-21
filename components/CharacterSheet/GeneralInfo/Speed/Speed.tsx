@@ -1,4 +1,5 @@
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
+import i18n from 'i18n';
 import { Bird, Footprints, Mountain } from 'lucide-react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -63,7 +64,7 @@ export const Speed = ({ onLongPress }: SpeedProps) => {
       )}
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">
-          Velocidade
+          {i18n.t('titles.speed')}
         </Text>
         <Text className="text-3xl font-bold text-center">
           {activeSpeed?.speed}

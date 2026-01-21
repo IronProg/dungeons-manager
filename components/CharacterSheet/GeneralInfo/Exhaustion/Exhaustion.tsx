@@ -1,4 +1,5 @@
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
+import i18n from 'i18n';
 import { Skull } from 'lucide-react-native';
 import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -24,7 +25,7 @@ export const Exhaustion = () => {
 
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">
-          Exaustão
+          {i18n.t('titles.exhaustion')}
         </Text>
         <Text className="text-3xl font-bold text-center">
           {generalInfo.exhaustion}

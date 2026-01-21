@@ -1,24 +1,32 @@
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import { AttacksFormType } from './useAttacksForm';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { ChevronDown, Plus } from 'lucide-react-native';
+import { Minus, Plus } from 'lucide-react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import RNPickerSelect from 'react-native-picker-select';
-import { ATTRIBUTES } from 'core/enums/attributes';
+import i18n from 'i18n';
+import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type DamagesFormProps = {
   control: Control<AttacksFormType>;
 };
 
 export const DamagesForm = ({ control }: DamagesFormProps) => {
-  const { fields, append } = useFieldArray({ control, name: 'damages' });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'damages',
+  });
 
   return (
     <View className="flex flex-col items-stretch">
       <View className="flex flex-row justify-between">
-        <View />
+        <TouchableOpacity
+          onPress={() => remove(fields.length - 1)}
+          className="rounded-full bg-red-400 flex items-center justify-center p-2"
+        >
+          <Minus color="white" size={16} />
+        </TouchableOpacity>
 
-        <Text className="text-center text-lg">Danos</Text>
+        <Text className="text-center text-lg">{i18n.t('titles.damages')}</Text>
 
         <TouchableOpacity
           onPress={() => append({})}
@@ -31,7 +39,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
       {fields.map((field, index) => (
         <View key={index} className="flex flex-row gap-2">
           <View className="grow flex-1">
-            <Text>Dado</Text>
+            <Text>{i18n.t('general.dice')}</Text>
 
             <Controller
               control={control}
@@ -41,7 +49,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                   <BottomSheetTextInput
                     className="rounded-lg bg-gray-100 h-15 text-base"
                     onChangeText={field.onChange}
-                    value={`${field.value}`}
+                    value={field.value}
                   />
 
                   <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -50,51 +58,20 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
             />
           </View>
 
-          <View>
+          <View className="w-24">
             <Text>Atributo</Text>
 
             <Controller
               control={control}
               name={`damages.${index}.attribute`}
               render={({ field, fieldState: { error } }) => (
-                <>
-                  <RNPickerSelect
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    useNativeAndroidPickerStyle={false}
-                    style={{
-                      viewContainer: {
-                        backgroundColor: '#f3f3f3ff',
-                        width: 120,
-                        borderRadius: 20,
-                        overflow: 'hidden',
-                      },
-                    }}
-                    items={[
-                      { label: 'None', value: null },
-                      ...ATTRIBUTES.map((attr) => ({
-                        label: attr,
-                        value: attr,
-                      })),
-                    ]}
-                  >
-                    <View className="rounded-lg bg-gray-100 px-4 h-15 py-3 flex flex-row justify-between items-center gap-2">
-                      <Text>{field.value}</Text>
-
-                      <View className="pt-1">
-                        <ChevronDown size={12} />
-                      </View>
-                    </View>
-                  </RNPickerSelect>
-
-                  <Text className="text-red-400 text-sm">{error?.message}</Text>
-                </>
+                <AttributePicker {...field} error={error?.message} />
               )}
             />
           </View>
 
-          <View className="w-12">
-            <Text>Mod</Text>
+          <View className="w-16">
+            <Text>{i18n.t('general.mod')}</Text>
 
             <Controller
               control={control}
@@ -115,7 +92,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
           </View>
 
           <View className="flex-1">
-            <Text>Tipo</Text>
+            <Text>{i18n.t('general.type')}</Text>
 
             <Controller
               control={control}

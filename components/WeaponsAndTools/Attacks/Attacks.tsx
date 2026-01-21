@@ -6,6 +6,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Attack } from 'types/character';
 import RNModal from 'react-native-modal';
 import { useState } from 'react';
+import i18n from 'i18n';
 
 type AttacksProps = {
   onCreate: () => void;
@@ -25,7 +26,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
         <View />
 
         <Text className="mt-4 text-black text-2xl font-bold text-center">
-          Ataques
+          {i18n.t('titles.attacks')}
         </Text>
 
         <TouchableOpacity
@@ -93,7 +94,9 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
 
           {detailedAttack?.properties && (
             <View className="flex flex-col gap-2">
-              <Text className="font-medium">Propriedades:</Text>
+              <Text className="font-medium">
+                {i18n.t('general.properties')}:
+              </Text>
 
               <Text>{detailedAttack.properties}</Text>
             </View>
@@ -101,7 +104,9 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
 
           {detailedAttack?.description && (
             <View className="flex flex-col gap-2">
-              <Text className="font-medium">Descrição:</Text>
+              <Text className="font-medium">
+                {i18n.t('general.description')}:
+              </Text>
 
               <Text>{detailedAttack.description}</Text>
             </View>

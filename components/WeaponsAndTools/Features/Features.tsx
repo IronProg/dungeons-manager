@@ -4,6 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Feature } from 'types/character';
 import RNModal from 'react-native-modal';
 import { useState } from 'react';
+import i18n from 'i18n';
 
 type FeaturesProps = {
   onCreate: () => void;
@@ -20,7 +21,7 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
         <View />
 
         <Text className="text-black text-2xl font-bold text-center">
-          Características
+          {i18n.t('titles.features')}
         </Text>
 
         <TouchableOpacity
@@ -65,14 +66,16 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
 
           {detailedFeature?.origin && (
             <View className="flex flex-col gap-2">
-              <Text className="font-medium">Origem:</Text>
+              <Text className="font-medium">{i18n.t('general.origin')}:</Text>
 
               <Text>{detailedFeature?.origin}</Text>
             </View>
           )}
 
           <View className="flex flex-col gap-2">
-            <Text className="font-medium">Descrição:</Text>
+            <Text className="font-medium">
+              {i18n.t('general.description')}:
+            </Text>
 
             <Text>{detailedFeature?.description}</Text>
           </View>
