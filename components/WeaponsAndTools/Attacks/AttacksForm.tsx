@@ -40,7 +40,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
       </Text>
 
       <View className="flex flex-row gap-4">
-        <View className="grow">
+        <View className="flex-1 grow">
           <Text>Nome</Text>
 
           <Controller
@@ -49,7 +49,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15 max-w-[30vw]"
+                  className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15 w-full"
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                 />
@@ -69,11 +69,9 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <RNPickerSelect
-                  onValueChange={(value) => {
-                    field.onChange(value === '' ? undefined : value);
-                  }}
+                  onValueChange={field.onChange}
                   placeholder="Placeholder"
-                  value={field.value || ''}
+                  value={field.value}
                   useNativeAndroidPickerStyle={false}
                   style={{
                     viewContainer: {
@@ -84,7 +82,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
                     },
                   }}
                   items={[
-                    { label: 'None', value: '' },
+                    { label: 'None', value: null },
                     ...ATTRIBUTES.map((attr) => ({
                       label: attr,
                       value: attr,
@@ -106,7 +104,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
           />
         </View>
 
-        <View className="grow">
+        <View className="w-12">
           <Text>Mod</Text>
 
           <Controller
@@ -149,7 +147,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
       </View>
 
       <View className="flex flex-row gap-4">
-        <View className="grow">
+        <View className="grow flex-1">
           <Text>Alcance</Text>
 
           <Controller
@@ -169,7 +167,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
           />
         </View>
 
-        <View className="grow">
+        <View className="grow flex-1 max-w-[70%]">
           <Text>Propriedades</Text>
 
           <Controller
@@ -198,7 +196,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
 
           <Controller
             control={control}
-            name="properties"
+            name="description"
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput

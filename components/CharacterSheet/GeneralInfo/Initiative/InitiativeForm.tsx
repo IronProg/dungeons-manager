@@ -3,15 +3,16 @@ import { InitiativeFormType, useInitiativeForm } from './useInitiativeForm';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { Plus } from 'lucide-react-native';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { CharacterGeneralInfo } from 'types/character';
+import { useAttributes } from 'contexts/AttributesContext';
 
 type InitiativeFormProps = {
   onClose: () => void;
 };
 
 export const InitiativeForm = ({ onClose }: InitiativeFormProps) => {
+  const { modifiers } = useAttributes();
   const { generalInfo, updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useInitiativeForm({ generalInfo });
 
@@ -33,14 +34,10 @@ export const InitiativeForm = ({ onClose }: InitiativeFormProps) => {
     <View className="flex flex-col">
       <Text className="text-2xl text-center font-medium">Iniciativa</Text>
 
-      <View className="flex flex-row gap-2 items-start">
+      <View className="flex flex-row gap-4 items-start">
         <View>
           <Text className="font-medium mb-3">Base</Text>
-          <Text className="text-center text-xl">10</Text>
-        </View>
-
-        <View className="pt-5">
-          <Plus size={16} />
+          <Text className="text-center text-xl">{modifiers.dexterity}</Text>
         </View>
 
         <View>

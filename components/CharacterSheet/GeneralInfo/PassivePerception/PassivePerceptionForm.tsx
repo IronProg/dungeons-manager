@@ -8,7 +8,6 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { useSkills } from 'contexts/SkillsContext';
-import { Plus } from 'lucide-react-native';
 
 type PassivePerceptionFormProps = {
   onClose: () => void;
@@ -45,23 +44,15 @@ export const PassivePerceptionForm = ({
         Passive Perception
       </Text>
 
-      <View className="flex flex-row gap-2 items-start">
+      <View className="flex flex-row gap-4 items-start">
         <View>
           <Text className="font-medium mb-3">Base</Text>
           <Text className="text-center text-xl">10</Text>
         </View>
 
-        <View className="pt-5">
-          <Plus size={16} />
-        </View>
-
         <View>
           <Text className="font-medium mb-3">Perception</Text>
           <Text className="text-center text-xl">{percetionBonus}</Text>
-        </View>
-
-        <View className="pt-5">
-          <Plus size={16} />
         </View>
 
         <View>

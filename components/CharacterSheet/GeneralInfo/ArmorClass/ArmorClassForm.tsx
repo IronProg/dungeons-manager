@@ -3,9 +3,9 @@ import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
-import { Plus } from 'lucide-react-native';
+import { ChevronDown } from 'lucide-react-native';
 import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 import { ATTRIBUTES } from 'core/enums/attributes';
 
 type PassivePerceptionFormProps = {
@@ -35,7 +35,7 @@ export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
         Passive Perception
       </Text>
 
-      <View className="flex flex-row gap-2 items-start">
+      <View className="flex flex-row gap-4 items-start flex-wrap">
         <View>
           <Text className="font-medium">Base</Text>
           <Controller
@@ -57,10 +57,6 @@ export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
           <Text className="text-center"></Text>
         </View>
 
-        <View className="pt-5">
-          <Plus size={16} />
-        </View>
-
         <View>
           <Text className="font-medium">Attribute</Text>
           <Controller
@@ -68,26 +64,35 @@ export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
             name="armorClassFirstAttribute"
             render={({ field, fieldState: { error } }) => (
               <>
-                <Picker
-                  onValueChange={(value) => {
-                    field.onChange(value === '' ? undefined : value);
-                  }}
+                <RNPickerSelect
+                  onValueChange={field.onChange}
                   placeholder="Placeholder"
-                  selectedValue={field.value || ''}
-                  mode="dialog"
+                  value={field.value}
+                  useNativeAndroidPickerStyle={false}
                   style={{
-                    backgroundColor: '#f3f3f3ff',
-                    width: 120,
-                    height: 50,
-                    borderRadius: 20,
-                    overflow: 'hidden',
+                    viewContainer: {
+                      backgroundColor: '#f3f3f3ff',
+                      width: 120,
+                      borderRadius: 20,
+                      overflow: 'hidden',
+                    },
                   }}
+                  items={[
+                    { label: 'None', value: null },
+                    ...ATTRIBUTES.map((attr) => ({
+                      label: attr,
+                      value: attr,
+                    })),
+                  ]}
                 >
-                  <Picker.Item label="None" value="" />
-                  {ATTRIBUTES.map((attr) => (
-                    <Picker.Item key={attr} label={attr} value={attr} />
-                  ))}
-                </Picker>
+                  <View className="rounded-lg bg-gray-100 px-4 h-15 py-3 flex flex-row justify-between items-center gap-2">
+                    <Text className="text-xl">{field.value}</Text>
+
+                    <View className="pt-1">
+                      <ChevronDown size={12} />
+                    </View>
+                  </View>
+                </RNPickerSelect>
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
               </>
@@ -103,26 +108,35 @@ export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
             name="armorClassSecondAttribute"
             render={({ field, fieldState: { error } }) => (
               <>
-                <Picker
-                  onValueChange={(value) => {
-                    field.onChange(value === '' ? undefined : value);
-                  }}
+                <RNPickerSelect
+                  onValueChange={field.onChange}
                   placeholder="Placeholder"
-                  selectedValue={field.value || ''}
-                  mode="dialog"
+                  value={field.value}
+                  useNativeAndroidPickerStyle={false}
                   style={{
-                    backgroundColor: '#f3f3f3ff',
-                    width: 120,
-                    height: 50,
-                    borderRadius: 20,
-                    overflow: 'hidden',
+                    viewContainer: {
+                      backgroundColor: '#f3f3f3ff',
+                      width: 120,
+                      borderRadius: 20,
+                      overflow: 'hidden',
+                    },
                   }}
+                  items={[
+                    { label: 'None', value: null },
+                    ...ATTRIBUTES.map((attr) => ({
+                      label: attr,
+                      value: attr,
+                    })),
+                  ]}
                 >
-                  <Picker.Item label="None" value="" />
-                  {ATTRIBUTES.map((attr) => (
-                    <Picker.Item key={attr} label={attr} value={attr} />
-                  ))}
-                </Picker>
+                  <View className="rounded-lg bg-gray-100 px-4 h-15 py-3 flex flex-row justify-between items-center gap-2">
+                    <Text className="text-xl">{field.value}</Text>
+
+                    <View className="pt-1">
+                      <ChevronDown size={12} />
+                    </View>
+                  </View>
+                </RNPickerSelect>
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
               </>

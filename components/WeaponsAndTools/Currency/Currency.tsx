@@ -26,7 +26,7 @@ export const Currency = () => {
               <>
                 <TextInput
                   className="w-full text-center px-4 text-xl"
-                  value={`${field.value || ''}`}
+                  value={`${field.value}`}
                   onChangeText={field.onChange}
                 />
 
@@ -48,7 +48,7 @@ export const Currency = () => {
               <>
                 <TextInput
                   className="w-full text-center px-4 text-xl"
-                  value={`${field.value || ''}`}
+                  value={`${field.value}`}
                   onChangeText={field.onChange}
                 />
 
@@ -70,7 +70,7 @@ export const Currency = () => {
               <>
                 <TextInput
                   className="w-full text-center px-4 text-xl"
-                  value={`${field.value || ''}`}
+                  value={`${field.value}`}
                   onChangeText={field.onChange}
                 />
 
@@ -92,7 +92,7 @@ export const Currency = () => {
               <>
                 <TextInput
                   className="w-full text-center px-4 text-xl"
-                  value={`${field.value || ''}`}
+                  value={`${field.value}`}
                   onChangeText={field.onChange}
                 />
 
@@ -114,7 +114,7 @@ export const Currency = () => {
               <>
                 <TextInput
                   className="w-full text-center px-4 text-xl"
-                  value={`${field.value || ''}`}
+                  value={`${field.value}`}
                   onChangeText={field.onChange}
                 />
 

@@ -24,7 +24,7 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
     <View className="flex flex-col items-center">
       <Text className="text-2xl text-center font-medium">Vida</Text>
 
-      <View className="flex flex-row gap-4">
+      <View className="flex flex-row gap-4 flex-wrap">
         <View className="flex flex-col items-center">
           <Text className="font-medium">Atual</Text>
 

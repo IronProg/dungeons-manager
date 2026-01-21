@@ -89,12 +89,18 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row flex items-stretch gap-2 border rounded-lg w-full ${save.proficiency && 'bg-green-200'}`}
+        className={`flex flex-row flex items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${save.proficiency && 'bg-green-200'}`}
       >
-        <Text className="grow text-gray-900 text-sm font-semibold px-2 rounded-md py-1">
-          {save.attribute}
-        </Text>
-        <Text className="font-bold text-center px-2 rounded-md py-1">
+        <View className="min-w-0 flex-1 py-1">
+          <Text
+            numberOfLines={0}
+            className="text-gray-900 text-sm font-semibold"
+          >
+            {save.attribute}
+          </Text>
+        </View>
+
+        <Text className="font-bold text-center py-1">
           {modifier > 0 && '+'}
           {modifier}
         </Text>
@@ -114,12 +120,15 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row flex items-stretch gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill.proficiency && 'bg-green-200'}`}
+        className={`flex flex-row flex items-center px-2 gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill.proficiency && 'bg-green-200'}`}
       >
-        <Text className="grow text-gray-900 text-sm font-semibold px-2 rounded-md py-1">
-          {skill.name} ({skill.attribute.substring(0, 3)})
-        </Text>
-        <Text className="font-bold text-center px-2 rounded-md py-1">
+        <View className="min-w-0 flex-1 py-1">
+          <Text className="grow text-gray-900 text-sm font-semibold rounded-md">
+            {skill.name} ({skill.attribute.substring(0, 3)})
+          </Text>
+        </View>
+
+        <Text className="font-bold text-center rounded-md">
           {modifier > 0 && '+'}
           {modifier.toFixed(0)}
         </Text>

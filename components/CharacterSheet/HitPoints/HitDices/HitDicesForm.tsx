@@ -4,8 +4,9 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitDicesFormType, useHitDicesForm } from './useHitDicesForm';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 import { HIT_DICES } from 'core/enums/hitDices';
+import { ChevronDown } from 'lucide-react-native';
 
 type HitDicesFormProps = {
   onClose: () => void;
@@ -48,7 +49,6 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
 
         <Text className="mt-4">/</Text>
@@ -70,39 +70,49 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
         </View>
-      </View>
 
-      <View className="absolute top-8 right-0">
-        <Controller
-          control={control}
-          name="hitDicesSize"
-          render={({ field, fieldState: { error } }) => (
-            <>
-              <Picker
-                onValueChange={field.onChange}
-                placeholder="Placeholder"
-                selectedValue={field.value || ''}
-                mode="dialog"
-                style={{
-                  backgroundColor: '#f3f3f3ff',
-                  width: 90,
-                  height: 50,
-                  borderRadius: 20,
-                  overflow: 'hidden',
-                }}
-              >
-                {HIT_DICES.map((hitDice) => (
-                  <Picker.Item key={hitDice} label={hitDice} value={hitDice} />
-                ))}
-              </Picker>
+        <View className="flex flex-col items-center">
+          <Controller
+            control={control}
+            name="hitDicesSize"
+            render={({ field, fieldState: { error } }) => (
+              <>
+                <RNPickerSelect
+                  onValueChange={field.onChange}
+                  placeholder="Placeholder"
+                  value={field.value || ''}
+                  useNativeAndroidPickerStyle={false}
+                  style={{
+                    viewContainer: {
+                      backgroundColor: '#f3f3f3ff',
+                      width: 120,
+                      borderRadius: 20,
+                      overflow: 'hidden',
+                    },
+                  }}
+                  items={[
+                    { label: 'None', value: null },
+                    ...HIT_DICES.map((dice) => ({
+                      label: dice,
+                      value: dice,
+                    })),
+                  ]}
+                >
+                  <View className="rounded-lg bg-gray-100 px-4 h-15 py-3 flex flex-row justify-between items-center gap-2">
+                    <Text className="text-xl">{field.value}</Text>
 
-              <Text className="text-red-400 text-sm">{error?.message}</Text>
-            </>
-          )}
-        />
-        <Text className="text-center"></Text>
+                    <View className="pt-1">
+                      <ChevronDown size={12} />
+                    </View>
+                  </View>
+                </RNPickerSelect>
+
+                <Text className="text-red-400 text-sm">{error?.message}</Text>
+              </>
+            )}
+          />
+        </View>
       </View>
 
       <TouchableOpacity

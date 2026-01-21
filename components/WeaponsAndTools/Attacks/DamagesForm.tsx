@@ -29,8 +29,8 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
       </View>
 
       {fields.map((field, index) => (
-        <View className="flex flex-row gap-2">
-          <View className="grow">
+        <View key={index} className="flex flex-row gap-2">
+          <View className="grow flex-1">
             <Text>Dado</Text>
 
             <Controller
@@ -39,9 +39,9 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               render={({ field, fieldState: { error } }) => (
                 <>
                   <BottomSheetTextInput
-                    className="text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                    className="rounded-lg bg-gray-100 h-15 text-base"
                     onChangeText={field.onChange}
-                    value={`${field.value || ''}`}
+                    value={`${field.value}`}
                   />
 
                   <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -59,11 +59,8 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               render={({ field, fieldState: { error } }) => (
                 <>
                   <RNPickerSelect
-                    onValueChange={(value) => {
-                      field.onChange(value === '' ? undefined : value);
-                    }}
-                    placeholder="Placeholder"
-                    value={field.value || ''}
+                    onValueChange={field.onChange}
+                    value={field.value}
                     useNativeAndroidPickerStyle={false}
                     style={{
                       viewContainer: {
@@ -74,7 +71,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                       },
                     }}
                     items={[
-                      { label: 'None', value: '' },
+                      { label: 'None', value: null },
                       ...ATTRIBUTES.map((attr) => ({
                         label: attr,
                         value: attr,
@@ -96,7 +93,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
             />
           </View>
 
-          <View className="grow">
+          <View className="w-12">
             <Text>Mod</Text>
 
             <Controller
@@ -105,7 +102,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               render={({ field, fieldState: { error } }) => (
                 <>
                   <BottomSheetTextInput
-                    className="text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                    className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                     onChangeText={field.onChange}
                     value={`${field.value || ''}`}
                     keyboardType="numeric"
@@ -117,8 +114,8 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
             />
           </View>
 
-          <View className="grow">
-            <Text>Mod</Text>
+          <View className="flex-1">
+            <Text>Tipo</Text>
 
             <Controller
               control={control}
@@ -126,7 +123,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               render={({ field, fieldState: { error } }) => (
                 <>
                   <BottomSheetTextInput
-                    className="text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                    className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                     onChangeText={field.onChange}
                     value={`${field.value || ''}`}
                   />
