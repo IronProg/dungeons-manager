@@ -1,116 +1,102 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useCallback, useState } from 'react';
 import { useCharacters } from 'contexts/CharactersContext';
-import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useAttributes } from 'contexts/AttributesContext';
+import { Currency } from './Currency/Currency';
+import { Attacks } from './Attacks/Attacks';
+import { Resources } from './Resources/Resources';
+import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
+import { Features } from './Features/Features';
+import { Attack, Feature, Resource } from 'types/character';
+import { AttacksForm } from './Attacks/AttacksForm';
+import { FeaturesForm } from './Features/FeaturesForm';
+import { ResourcesForm } from './Resources/ResourcesForm';
+
+type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
 export const WeaponsAndTools = () => {
-  const [loading, setLoading] = useState(true);
-  const { character, getDetails } = useCharacters();
-  const { modifiers } = useAttributes();
+  const { character } = useCharacters();
 
-  useEffect(() => {
-    if (!character) {
-      getDetails({
-        id: '1',
-        success: () => {
-          setLoading(false);
-        },
-      });
-    } else {
-      setLoading(false);
-    }
-  }, [character, getDetails]);
+  const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
+    null,
+  );
+
+  const [highlightedAttack, setHighlightedAttack] = useState<Attack>();
+  const [highlightedResource, setHighlightedResource] = useState<Resource>();
+  const [highlightedFeature, setHighlightedFeature] = useState<Feature>();
+
+  const { ref, open, close } = useBottomSheetRef();
+
+  const handleOpen = useCallback(
+    (formName: WeaponsAndToolsFormTypes) => {
+      setActiveForm(formName);
+      open();
+    },
+    [open],
+  );
+
+  const handleClose = useCallback(() => {
+    setHighlightedAttack(undefined);
+    setHighlightedResource(undefined);
+    setHighlightedFeature(undefined);
+
+    setActiveForm(null);
+    close();
+  }, [close]);
 
   return (
     <>
       {character && (
-        <ScrollView>
-          <Text className="text-black text-2xl font-bold text-center pb-2">
-            Ataques
-          </Text>
+        <ScrollView scrollEnabled>
+          <Currency />
 
-          {character.attacks?.map((attack, index) => {
-            const attributeModifier = modifiers[attack.attribute];
+          <Attacks
+            onCreate={() => {
+              handleOpen('attacks');
+            }}
+            onSelect={(attack: Attack) => {
+              setHighlightedAttack(attack);
+              handleOpen('attacks');
+            }}
+          />
 
-            const attackBonus =
-              attributeModifier +
-              (attack.applyProficiency ? character.proficiency : 0);
+          <Resources
+            onCreate={() => {
+              handleOpen('resources');
+            }}
+            onSelect={(attack: Resource) => {
+              setHighlightedResource(attack);
+              handleOpen('resources');
+            }}
+          />
 
-            return (
-              <View
-                key={index}
-                className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
-              >
-                <Text className="bg-gray-100 rounded-lg px-2 py-1 grow">
-                  {attack.name}
-                </Text>
-                <Text className="bg-gray-100 rounded-lg px-2 py-1">
-                  {attackBonus > 0 && '+'}
-                  {attackBonus}
-                </Text>
-                <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
-                  {attack.damages.map((damage, index) => {
-                    const attributeModifier = modifiers[damage.attribute];
-
-                    return (
-                      <Text className="" key={index}>
-                        {damage.dice}{' '}
-                        {`${attributeModifier > 0 ? '+' : ''}${attributeModifier}`}{' '}
-                        {damage.customBonus && damage.customBonus} {damage.kind}
-                      </Text>
-                    );
-                  })}
-                </View>
-              </View>
-            );
-          })}
-
-          <Text className="text-black text-2xl font-bold text-center pb-2">
-            Recursos e Munições
-          </Text>
-
-          {character.resources?.map((resource, index) => {
-            return (
-              <View
-                key={index}
-                className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
-              >
-                <Text className="bg-gray-100 rounded-lg px-2 py-1 grow">
-                  {resource.name}
-                </Text>
-
-                <Text className="bg-gray-100 rounded-lg px-2 py-1" key={index}>
-                  {resource.amount}
-                  {resource.max && `/${resource.max}`}
-                </Text>
-              </View>
-            );
-          })}
-
-          <Text className="text-black text-2xl font-bold text-center pb-2">
-            Características
-          </Text>
-
-          {character.features?.map((feature, index) => {
-            return (
-              <View
-                key={index}
-                className="rounded-lg gap-2 border-b border-gray-300 pb-2 mb-2"
-              >
-                <View className="bg-gray-100 rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
-                  <Text>{feature.title}</Text>
-
-                  {feature.origin && (
-                    <Text className="text-gray-700">({feature.origin})</Text>
-                  )}
-                </View>
-              </View>
-            );
-          })}
+          <Features
+            onCreate={() => {
+              handleOpen('features');
+            }}
+            onSelect={(attack: Feature) => {
+              setHighlightedFeature(attack);
+              handleOpen('features');
+            }}
+          />
         </ScrollView>
       )}
+
+      <ReusableBottomSheetModal
+        ref={ref}
+        snapPoints={[600, '95%']}
+        onDismiss={handleClose}
+      >
+        {activeForm === 'attacks' && (
+          <AttacksForm attack={highlightedAttack} onClose={handleClose} />
+        )}
+        {activeForm === 'resources' && (
+          <ResourcesForm resource={highlightedResource} onClose={handleClose} />
+        )}
+        {activeForm === 'features' && (
+          <FeaturesForm feature={highlightedFeature} onClose={handleClose} />
+        )}
+      </ReusableBottomSheetModal>
     </>
   );
 };

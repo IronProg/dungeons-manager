@@ -15,6 +15,7 @@ export type Character = {
   level: number;
   experience: number;
   generalInfo: CharacterGeneralInfo;
+  currencies: Currencies;
   attributes: Attribute[];
   saves: Save[];
   skills: Skill[];
@@ -58,7 +59,7 @@ export type Save = {
 export type Feature = {
   title: string;
   description: string;
-  origin: string;
+  origin?: string;
 };
 
 export type Skill = {
@@ -69,28 +70,36 @@ export type Skill = {
   customBonus?: number;
 };
 
+export type Currencies = {
+  copperPoints: number;
+  silverPoints: number;
+  electrumPoints: number;
+  goldPoints: number;
+  platinumPoints: number;
+};
+
 export type Attack = {
   name: string;
-  attribute: AttributesType;
+  attribute?: AttributesType;
   applyProficiency: boolean;
-  range: string;
-  damages: Damage[];
-  properties: string;
+  customBonus?: number;
+  range?: string;
+  properties?: string;
   description?: string;
+  damages: Damage[];
 };
 
 export type Damage = {
-  dice: string;
-  attribute: AttributesType;
-  kind: string;
+  dice?: string;
+  attribute?: AttributesType;
+  kind?: string;
   customBonus?: string;
 };
 
 export type Resource = {
   name: string;
   amount: number;
-  max: number;
-  description?: string;
+  max?: number;
 };
 
 export type Modifiers = {

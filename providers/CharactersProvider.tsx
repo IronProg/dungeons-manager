@@ -35,6 +35,13 @@ export const CharactersProvider = ({ children }: { children: ReactNode }) => {
         proficiency: 2,
         level: 1,
         experience: 200,
+        currencies: {
+          copperPoints: 0,
+          silverPoints: 0,
+          electrumPoints: 0,
+          goldPoints: 0,
+          platinumPoints: 0,
+        },
         generalInfo: {
           armorClassBase: 10,
           armorClassFirstAttribute: 'dexterity',

@@ -7,6 +7,10 @@ import { AttributesProvider } from 'providers/AttributesProvider';
 import { SavesProvider } from 'providers/SavesProvider';
 import { SkillsProvider } from 'providers/SkillsProvider';
 import { GeneralInfoProvider } from 'providers/GeneralInfoProvider';
+import { CurrenciesProvider } from 'providers/CurrenciesProvider';
+import { AttacksProvider } from 'providers/AttacksProvider';
+import { FeaturesProvider } from 'providers/FeaturesProvider';
+import { ResourcesProvider } from 'providers/ResourcesProvider';
 
 export default function App() {
   return (
@@ -17,9 +21,17 @@ export default function App() {
             <SavesProvider>
               <SkillsProvider>
                 <GeneralInfoProvider>
-                  <BottomSheetModalProvider>
-                    <DrawerNavigator />
-                  </BottomSheetModalProvider>
+                  <CurrenciesProvider>
+                    <AttacksProvider>
+                      <FeaturesProvider>
+                        <ResourcesProvider>
+                          <BottomSheetModalProvider>
+                            <DrawerNavigator />
+                          </BottomSheetModalProvider>
+                        </ResourcesProvider>
+                      </FeaturesProvider>
+                    </AttacksProvider>
+                  </CurrenciesProvider>
                 </GeneralInfoProvider>
               </SkillsProvider>
             </SavesProvider>
