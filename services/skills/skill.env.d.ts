@@ -1,3 +1,3 @@
 type GetAllSkillsParams = {
-  characterId: number;
+  characterId?: number;
 };

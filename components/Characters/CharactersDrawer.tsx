@@ -1,44 +1,53 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import i18n from 'i18n';
-import { CharacterRoutesStack } from 'navigators/DrawerNavigator';
+import { CharacterDrawerProps } from 'navigators/DrawerNavigator';
 import { Text, TouchableOpacity } from 'react-native';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Character } from 'types/character';
 
-type DrawerNavigation = DrawerNavigationProp<CharacterRoutesStack>;
-
-type CharactersDrawerProps = {
-  characters: Character[];
-};
+type CharactersDrawerProps = { characters: Character[] };
 
 export const CharactersDrawer = ({ characters }: CharactersDrawerProps) => {
-  const navigation = useNavigation<DrawerNavigation>();
+  const navigation = useNavigation<CharacterDrawerProps>();
+  const { bottom } = useSafeAreaInsets();
 
   return (
-    <ScrollView contentContainerClassName="flex flex-col items-stretch gap-2 px-2">
-      <View className=" py-4">
+    <View className="flex-1">
+      <View className="py-4">
         <Text className="text-center font-medium text-xl">
           {i18n.t('titles.characters')}
         </Text>
       </View>
 
-      {characters.map((character) => (
+      <ScrollView contentContainerClassName="flex flex-1 justify-end flex-col items-stretch gap-2 px-2 pb-4">
+        {characters.map((character) => (
+          <TouchableOpacity
+            key={character.id}
+            onPress={() => {
+              navigation.navigate('CharacterSheet', {
+                characterId: character.id!,
+              });
+            }}
+            className="w-full bg-gray-100 py-2 px-4"
+          >
+            <Text className="font-medium text-lg">
+              {character.id}. {character.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <View className="mt-auto px-4" style={{ marginBottom: bottom }}>
         <TouchableOpacity
-          key={character.id}
-          onPress={() => {
-            navigation.navigate('CharacterSheet', {
-              characterId: character.id!,
-            });
-          }}
-          className="w-full bg-gray-100 py-2 px-4"
+          onPress={() => navigation.navigate('NewCharacter')}
+          className="bg-green-600 px-4 py-2 rounded-lg"
         >
-          <Text className="font-medium text-lg">
-            {character.id}. {character.name}
+          <Text className="text-2xl text-center text-white font-medium">
+            {i18n.t('titles.newCharacter')}
           </Text>
         </TouchableOpacity>
-      ))}
-    </ScrollView>
+      </View>
+    </View>
   );
 };

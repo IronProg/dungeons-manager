@@ -23,6 +23,7 @@ export const pt = {
     resourcesAndAmmunitions: 'Recursos e Munições',
     features: 'Características',
     characters: 'Personagens',
+    newCharacter: 'Novo Personagem',
   },
   general: {
     none: 'Nenhum',
@@ -52,6 +53,7 @@ export const pt = {
     description: 'Descrição',
     currentQuantity: 'Quantidade Atual',
     limit: 'Limite',
+    generateCharacter: 'Gerar Personagem',
   },
   hitPoints: {
     tempMaxHP: 'PV Máximo Temporário',
@@ -105,5 +107,9 @@ export const pt = {
     ep: 'PE',
     gp: 'PO',
     pp: 'PPl',
+  },
+  loadings: {
+    character: 'Carregando dados de personagem',
+    characters: 'Carregando personagens do usuário',
   },
 };

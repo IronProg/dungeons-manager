@@ -19,7 +19,7 @@ type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 export const WeaponsAndTools = () => {
   const { character } = useCharacter();
   const { data: currencies, isLoading: isLoadingCurrencies } =
-    useGetCharacterCurrency({ characterId: 10 });
+    useGetCharacterCurrency({ characterId: character?.id });
 
   const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
     null,

@@ -2,10 +2,14 @@ type GetCharacterParams = {
   id?: number;
 };
 
+type CreateCharacterParams = {
+  name: string;
+};
+
 type GetCharacterGeneralInfoParams = {
-  characterId: number;
+  characterId?: number;
 };
 
 type GetCharacterCurrencyParams = {
-  characterId: number;
+  characterId?: number;
 };

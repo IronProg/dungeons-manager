@@ -4,7 +4,9 @@ import { Attribute } from 'types/character';
 
 export const getAllAttributesKey = ({
   characterId,
-}: GetAllAttributesParams): ['characters', number, 'attributes'] => [
+}: {
+  characterId: number;
+}): ['characters', number, 'attributes'] => [
   'characters',
   characterId,
   'attributes',
@@ -19,8 +21,8 @@ export const useGetAllAttributes = ({
     Attribute[],
     ['characters', number, 'attributes']
   >({
-    queryKey: getAllAttributesKey({ characterId }),
-    queryFn: () => attributesService.fetchAll({ characterId }),
+    queryKey: getAllAttributesKey({ characterId: characterId! }),
+    queryFn: () => attributesService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
   });

@@ -4,7 +4,9 @@ import { Resource } from 'types/character';
 
 export const getAllResourcesKey = ({
   characterId,
-}: GetAllResourcesParams): ['characters', number, 'resources'] => [
+}: {
+  characterId: number;
+}): ['characters', number, 'resources'] => [
   'characters',
   characterId,
   'resources',
@@ -17,8 +19,8 @@ export const useGetAllResources = ({ characterId }: GetAllResourcesParams) => {
     Resource[],
     ['characters', number, 'resources']
   >({
-    queryKey: getAllResourcesKey({ characterId }),
-    queryFn: () => resourcesService.fetchAll({ characterId }),
+    queryKey: getAllResourcesKey({ characterId: characterId! }),
+    queryFn: () => resourcesService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
   });

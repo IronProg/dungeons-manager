@@ -4,7 +4,9 @@ import { Feature } from 'types/character';
 
 export const getAllFeaturesKey = ({
   characterId,
-}: GetAllFeaturesParams): ['characters', number, 'features'] => [
+}: {
+  characterId: number;
+}): ['characters', number, 'features'] => [
   'characters',
   characterId,
   'features',
@@ -17,8 +19,8 @@ export const useGetAllFeatures = ({ characterId }: GetAllFeaturesParams) => {
     Feature[],
     ['characters', number, 'features']
   >({
-    queryKey: getAllFeaturesKey({ characterId }),
-    queryFn: () => featuresService.fetchAll({ characterId }),
+    queryKey: getAllFeaturesKey({ characterId: characterId! }),
+    queryFn: () => featuresService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
   });

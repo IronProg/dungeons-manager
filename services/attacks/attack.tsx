@@ -4,17 +4,15 @@ import { Attack } from 'types/character';
 
 export const getAllAttacksKey = ({
   characterId,
-}: GetAllAttacksParams): ['characters', number, 'attacks'] => [
-  'characters',
-  characterId,
-  'attacks',
-];
+}: {
+  characterId: number;
+}): ['characters', number, 'attacks'] => ['characters', characterId, 'attacks'];
 
 export const useGetAllAttacks = ({ characterId }: GetAllAttacksParams) => {
   return useQuery<Attack[], Error, Attack[], ['characters', number, 'attacks']>(
     {
-      queryKey: getAllAttacksKey({ characterId }),
-      queryFn: () => attacksService.fetchAll({ characterId }),
+      queryKey: getAllAttacksKey({ characterId: characterId! }),
+      queryFn: () => attacksService.fetchAll({ characterId: characterId! }),
       staleTime: 10 * 60_000,
       enabled: !!characterId,
     },

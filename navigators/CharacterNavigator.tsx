@@ -2,20 +2,19 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { WeaponsAndToolsScreen } from 'Screens/WeaponsAndToolsScreen';
 import { CharacterSheetScreen } from 'Screens/CharacterSheetScreen';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import type { CharacterRoutesStack } from './DrawerNavigator';
-import type { RouteProp } from '@react-navigation/native';
+import type {
+  CharacterDrawerProps,
+  CharacterRouteProps,
+} from './DrawerNavigator';
 import { useEffect } from 'react';
 import { useCharacter } from 'contexts/CharacterContext';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import i18n from 'i18n';
 const Tab = createMaterialTopTabNavigator();
 
-type DrawerProps = DrawerNavigationProp<CharacterRoutesStack>;
-type RouteProps = RouteProp<CharacterRoutesStack, 'CharacterSheet'>;
-
 export const CharacterNavigator = () => {
-  const navigation = useNavigation<DrawerProps>();
-  const { params } = useRoute<RouteProps>();
+  const navigation = useNavigation<CharacterDrawerProps>();
+  const { params } = useRoute<CharacterRouteProps>();
   const characterId = params?.characterId;
 
   const { character, setCharacterId, initialLoading } = useCharacter();
@@ -36,11 +35,12 @@ export const CharacterNavigator = () => {
 
   if (initialLoading) {
     return (
-      <View className="bg-red-600 flex-1 flex flex-col justify-center items-center">
-        <View className="bg-blue-600">
-          <Text>Loading</Text>
-        </View>
-        <ActivityIndicator />
+      <View className="flex-1 flex flex-col justify-center items-center">
+        <Text className="mb-4 text-2xl font-medium">
+          {i18n.t('loadings.characters')}
+        </Text>
+
+        <ActivityIndicator color={'olive'} size={40} />
       </View>
     );
   }
@@ -57,6 +57,8 @@ export const CharacterNavigator = () => {
         tabBarShowIcon: false,
         tabBarStyle: {
           height: 0,
+          padding: 0,
+          margin: 0,
         },
       }}
       tabIndex={0}

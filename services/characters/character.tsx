@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { characterService } from './character.service';
 import { Character, CharacterGeneralInfo, Currencies } from 'types/character';
 
@@ -19,9 +19,23 @@ export const useGetCharacter = ({ id }: GetCharacterParams) => {
   });
 };
 
+export const useCreateCharacterMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Character, Error, CreateCharacterParams>({
+    mutationFn: (params: CreateCharacterParams) =>
+      characterService.create(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['characters'] });
+    },
+  });
+};
+
 export const getCharacterGeneralInfoKey = ({
   characterId,
-}: GetAllAttributesParams): ['characters', number, 'generalInfo'] => [
+}: {
+  characterId: number;
+}): ['characters', number, 'generalInfo'] => [
   'characters',
   characterId,
   'generalInfo',
@@ -36,8 +50,9 @@ export const useGetCharacterGeneralInfo = ({
     CharacterGeneralInfo,
     ['characters', number, 'generalInfo']
   >({
-    queryKey: getCharacterGeneralInfoKey({ characterId }),
-    queryFn: () => characterService.fetchGeneralInfo({ characterId }),
+    queryKey: getCharacterGeneralInfoKey({ characterId: characterId! }),
+    queryFn: () =>
+      characterService.fetchGeneralInfo({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
   });
@@ -45,7 +60,9 @@ export const useGetCharacterGeneralInfo = ({
 
 export const getCharacterCurrencyKey = ({
   characterId,
-}: GetAllAttributesParams): ['characters', number, 'currencies'] => [
+}: {
+  characterId: number;
+}): ['characters', number, 'currencies'] => [
   'characters',
   characterId,
   'currencies',
@@ -60,8 +77,9 @@ export const useGetCharacterCurrency = ({
     Currencies,
     ['characters', number, 'currencies']
   >({
-    queryKey: getCharacterCurrencyKey({ characterId }),
-    queryFn: () => characterService.fetchCurrency({ characterId }),
+    queryKey: getCharacterCurrencyKey({ characterId: characterId! }),
+    queryFn: () =>
+      characterService.fetchCurrency({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
   });

@@ -1,3 +1,3 @@
 type GetAllAttacksParams = {
-  characterId: number;
+  characterId?: number;
 };
