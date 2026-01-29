@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitDicesFormType, useHitDicesForm } from './useHitDicesForm';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import RNPickerSelect from 'react-native-picker-select';
 import { HIT_DICES } from 'core/enums/hitDices';
 import { ChevronDown } from 'lucide-react-native';
@@ -16,16 +15,15 @@ type HitDicesFormProps = {
 };
 
 export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useHitDicesForm({ generalInfo });
 
   const onSubmit = useCallback(
     (values: HitDicesFormType) => {
-      updateGeneralInfo({ ...generalInfo, ...values });
+      // updateGeneralInfo({ ...generalInfo, ...values });
 
       onClose();
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [generalInfo, onClose],
   );
 
   return (

@@ -1,5 +1,3 @@
-import { useAttributes } from 'contexts/AttributesContext';
-import { useCharacters } from 'contexts/CharactersContext';
 import { Plus } from 'lucide-react-native';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Attack } from 'types/character';
@@ -7,19 +5,19 @@ import RNModal from 'react-native-modal';
 import { useState } from 'react';
 import i18n from 'i18n';
 import { useGetAllAttacks } from 'services/attacks/attack';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type AttacksProps = {
-  characterId: number;
   onCreate: () => void;
   onSelect: (attack: Attack) => void;
 };
 
-export const Attacks = ({ characterId, onCreate, onSelect }: AttacksProps) => {
-  const { data: attacks, isLoading } = useGetAllAttacks({ characterId });
+export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
+  const { characterId } = useCharacter();
+  const { data: attacks, isLoading } = useGetAllAttacks({
+    characterId: characterId!,
+  });
   const [detailedAttack, setDetailedAttack] = useState<Attack>();
-
-  const { proficiency } = useCharacters();
-  const { modifiers } = useAttributes();
 
   return (
     <>
@@ -42,12 +40,14 @@ export const Attacks = ({ characterId, onCreate, onSelect }: AttacksProps) => {
 
       {attacks && attacks.length > 0 ? (
         attacks?.map((attack, index) => {
-          const attributeModifier = attack.mainAttribute
-            ? modifiers[attack.mainAttribute]
-            : 0;
+          // const attributeModifier = attack.mainAttribute
+          //   ? modifiers[attack.mainAttribute]
+          //   : 0;
+          const attributeModifier = 3;
 
           const attackBonus =
-            attributeModifier + (attack.applyProficiency ? proficiency : 0);
+            // attributeModifier + (attack.applyProficiency ? proficiency : 0);
+            attributeModifier + (attack.applyProficiency ? 2 : 0);
 
           return (
             <TouchableOpacity
@@ -66,9 +66,7 @@ export const Attacks = ({ characterId, onCreate, onSelect }: AttacksProps) => {
               </Text>
               <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
                 {attack.damages.map((damage, index) => {
-                  const attributeModifier = damage.mainAttribute
-                    ? modifiers[damage.mainAttribute]
-                    : 0;
+                  const attributeModifier = damage.mainAttribute ? 2 : 0;
 
                   return (
                     <Text className="" key={index}>

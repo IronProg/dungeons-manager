@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useCharacters } from 'contexts/CharactersContext';
 import { ExperienceFormType, useExperienceForm } from './useExperienceForm';
 import i18n from 'i18n';
 import { Character } from 'types/character';
@@ -13,18 +12,17 @@ type ExperienceFormProps = {
 };
 
 export const ExperienceForm = ({ character, onClose }: ExperienceFormProps) => {
-  const { updateExperience } = useCharacters();
   const { control, handleSubmit } = useExperienceForm({
     experience: character?.experience || 0,
   });
 
   const onSubmit = useCallback(
     (values: ExperienceFormType) => {
-      updateExperience(values.experience);
+      // updateExperience(values.experience);
 
       onClose();
     },
-    [onClose, updateExperience],
+    [onClose],
   );
 
   return (

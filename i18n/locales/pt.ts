@@ -21,6 +21,7 @@ export const pt = {
     damages: 'Danos',
     resourcesAndAmmunitions: 'Recursos e Munições',
     features: 'Características',
+    characters: 'Personagens',
   },
   general: {
     none: 'Nenhum',

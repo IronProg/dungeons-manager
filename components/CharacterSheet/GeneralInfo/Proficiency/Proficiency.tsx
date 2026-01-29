@@ -1,15 +1,14 @@
+import { useCharacter } from 'contexts/CharacterContext';
 import i18n from 'i18n';
 import { Award } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Character } from 'types/character';
 
 type ProficiencyProps = {
-  character: Character;
   onLongPress: () => void;
 };
 
-export const Proficiency = ({ character, onLongPress }: ProficiencyProps) => {
-  const { proficiency } = character;
+export const Proficiency = ({ onLongPress }: ProficiencyProps) => {
+  const { proficiency } = useCharacter();
 
   return (
     <TouchableOpacity

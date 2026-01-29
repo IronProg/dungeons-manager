@@ -10,16 +10,14 @@ import { Attack, Feature, Resource } from 'types/character';
 import { AttacksForm } from './Attacks/AttacksForm';
 import { FeaturesForm } from './Features/FeaturesForm';
 import { ResourcesForm } from './Resources/ResourcesForm';
-import {
-  useGetCharacter,
-  useGetCharacterCurrency,
-} from 'services/characters/character';
+import { useGetCharacterCurrency } from 'services/characters/character';
 import { ActivityIndicator, Text } from 'react-native';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
 export const WeaponsAndTools = () => {
-  const { data: character } = useGetCharacter({ id: 10 });
+  const { character } = useCharacter();
   const { data: currencies, isLoading: isLoadingCurrencies } =
     useGetCharacterCurrency({ characterId: 10 });
 
@@ -62,7 +60,6 @@ export const WeaponsAndTools = () => {
           )}
 
           <Attacks
-            characterId={character.id!}
             onCreate={() => {
               handleOpen('attacks');
             }}
@@ -73,7 +70,6 @@ export const WeaponsAndTools = () => {
           />
 
           <Resources
-            characterId={character.id!}
             onCreate={() => {
               handleOpen('resources');
             }}
@@ -84,7 +80,6 @@ export const WeaponsAndTools = () => {
           />
 
           <Features
-            characterId={character.id!}
             onCreate={() => {
               handleOpen('features');
             }}

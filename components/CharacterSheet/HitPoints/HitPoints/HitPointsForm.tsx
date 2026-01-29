@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitPointsFormType, useHitPointsForm } from './useHitPointsForm';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
 
@@ -13,16 +12,15 @@ type HitPointsFormProps = {
 };
 
 export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useHitPointsForm({ generalInfo });
 
   const onSubmit = useCallback(
     (values: HitPointsFormType) => {
-      updateGeneralInfo({ ...generalInfo, ...values });
+      // updateGeneralInfo({ ...generalInfo, ...values });
 
       onClose();
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [generalInfo, onClose],
   );
 
   return (

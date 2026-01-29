@@ -1,4 +1,4 @@
-import { useResources } from 'contexts/ResourcesContext';
+import { useCharacter } from 'contexts/CharacterContext';
 import i18n from 'i18n';
 import { Plus } from 'lucide-react-native';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
@@ -6,18 +6,15 @@ import { useGetAllResources } from 'services/resources/resource';
 import { Resource } from 'types/character';
 
 type ResourcesProps = {
-  characterId: number;
   onCreate: () => void;
   onSelect: (attack: Resource) => void;
 };
 
-export const Resources = ({
-  characterId,
-  onCreate,
-  onSelect,
-}: ResourcesProps) => {
-  const { data: resources, isLoading } = useGetAllResources({ characterId });
-  const { updateResource } = useResources();
+export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
+  const { characterId } = useCharacter();
+  const { data: resources, isLoading } = useGetAllResources({
+    characterId: characterId!,
+  });
 
   return (
     <>
@@ -44,8 +41,6 @@ export const Resources = ({
             <TouchableOpacity
               onPress={() => {
                 const newAmount = resource.amount > 0 ? resource.amount - 1 : 0;
-
-                updateResource(resource, { ...resource, amount: newAmount });
               }}
               onLongPress={() => onSelect(resource)}
               key={index}

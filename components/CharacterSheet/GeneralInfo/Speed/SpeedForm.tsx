@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
@@ -13,7 +12,6 @@ type SpeedFormProps = {
 };
 
 export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useSpeedForm({
     generalInfo,
   });
@@ -25,11 +23,11 @@ export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
         ...values,
       };
 
-      updateGeneralInfo(newGeneralInfo);
+      // updateGeneralInfo(newGeneralInfo);
 
       onClose();
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [generalInfo, onClose],
   );
 
   return (

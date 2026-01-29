@@ -3,9 +3,7 @@ import { InitiativeFormType, useInitiativeForm } from './useInitiativeForm';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { CharacterGeneralInfo } from 'types/character';
-import { useAttributes } from 'contexts/AttributesContext';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
@@ -18,8 +16,6 @@ export const InitiativeForm = ({
   generalInfo,
   onClose,
 }: InitiativeFormProps) => {
-  const { modifiers } = useAttributes();
-  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useInitiativeForm({ generalInfo });
 
   const onSubmit = useCallback(
@@ -29,11 +25,11 @@ export const InitiativeForm = ({
         ...values,
       };
 
-      updateGeneralInfo(newGeneralInfo);
+      // updateGeneralInfo(newGeneralInfo);
 
       onClose();
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [generalInfo, onClose],
   );
 
   return (
@@ -45,7 +41,8 @@ export const InitiativeForm = ({
       <View className="flex flex-row gap-4 items-start">
         <View>
           <Text className="font-medium mb-3">{i18n.t('general.base')}</Text>
-          <Text className="text-center text-xl">{modifiers.dexterity}</Text>
+          <Text className="text-center text-xl">2</Text>
+          {/* <Text className="text-center text-xl">{modifiers.dexterity}</Text> */}
         </View>
 
         <View className="min-w-0 flex-1">

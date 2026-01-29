@@ -13,10 +13,8 @@ import { ProficiencyForm } from './Proficiency/ProficiencyForm';
 import { InitiativeForm } from './Initiative/InitiativeForm';
 import { ArmorClassForm } from './ArmorClass/ArmorClassForm';
 import { SpeedForm } from './Speed/SpeedForm';
-import {
-  useGetCharacter,
-  useGetCharacterGeneralInfo,
-} from 'services/characters/character';
+import { useGetCharacterGeneralInfo } from 'services/characters/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type GeneralInfoFormTypes =
   | 'passivePerception'
@@ -28,18 +26,10 @@ type GeneralInfoFormTypes =
   | 'hitDice'
   | 'hitPoint';
 
-type MainCharacterSheetGeneralInfoProps = {
-  characterId: number;
-};
-
-export const MainCharacterSheetGeneralInfo = ({
-  characterId,
-}: MainCharacterSheetGeneralInfoProps) => {
-  const { data: character } = useGetCharacter({
-    id: characterId,
-  });
+export const MainCharacterSheetGeneralInfo = () => {
+  const { character, characterId } = useCharacter();
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
-    characterId,
+    characterId: characterId!,
   });
 
   const [activeForm, setActiveForm] = useState<null | GeneralInfoFormTypes>(

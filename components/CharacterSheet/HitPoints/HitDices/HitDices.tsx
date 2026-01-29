@@ -1,4 +1,3 @@
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Tent } from 'lucide-react-native';
 import { useCallback } from 'react';
@@ -11,16 +10,14 @@ type HitDicesProps = {
 };
 
 export const HitDices = ({ generalInfo, onLongPress }: HitDicesProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
-
   const handleReduceHitDices = useCallback(() => {
     let newHitDices = 0;
     if (generalInfo.hitDices > 0) {
       newHitDices = generalInfo.hitDices - 1;
     }
 
-    updateGeneralInfo({ ...generalInfo, hitDices: newHitDices });
-  }, [generalInfo, updateGeneralInfo]);
+    // updateGeneralInfo({ ...generalInfo, hitDices: newHitDices });
+  }, [generalInfo]);
 
   return (
     <TouchableOpacity

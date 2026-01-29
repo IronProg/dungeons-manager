@@ -6,15 +6,15 @@ export const useGetAllCharacters = () => {
   return useQuery({
     queryKey: ['characters'],
     queryFn: characterService.fetchAll,
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
   });
 };
 
 export const useGetCharacter = ({ id }: GetCharacterParams) => {
   return useQuery<Character, Error, Character, ['characters', number]>({
-    queryKey: ['characters', id],
+    queryKey: ['characters', id!],
     queryFn: () => characterService.fetch({ id }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
     enabled: !!id,
   });
 };
@@ -38,7 +38,7 @@ export const useGetCharacterGeneralInfo = ({
   >({
     queryKey: getCharacterGeneralInfoKey({ characterId }),
     queryFn: () => characterService.fetchGeneralInfo({ characterId }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
     enabled: !!characterId,
   });
 };
@@ -62,7 +62,7 @@ export const useGetCharacterCurrency = ({
   >({
     queryKey: getCharacterCurrencyKey({ characterId }),
     queryFn: () => characterService.fetchCurrency({ characterId }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
     enabled: !!characterId,
   });
 };

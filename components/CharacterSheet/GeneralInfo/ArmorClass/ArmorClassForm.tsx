@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
@@ -17,7 +16,6 @@ export const ArmorClassForm = ({
   generalInfo,
   onClose,
 }: PassivePerceptionFormProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useArmorClassForm({
     generalInfo,
   });
@@ -26,11 +24,11 @@ export const ArmorClassForm = ({
     (values: ArmorClassFormType) => {
       const newGeneralInfo = { ...generalInfo, ...values };
 
-      updateGeneralInfo(newGeneralInfo);
+      //updateGeneralInfo(newGeneralInfo);
 
       onClose();
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [generalInfo, onClose],
   );
 
   return (

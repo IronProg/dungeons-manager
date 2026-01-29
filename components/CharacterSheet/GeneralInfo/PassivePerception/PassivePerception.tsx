@@ -1,4 +1,3 @@
-import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
 import { Eye } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -13,11 +12,9 @@ export const PassivePerception = ({
   generalInfo,
   onLongPress,
 }: PassivePerceptionProps) => {
-  const { getSkillBonus } = useSkills();
-
   const passivePercetion =
     10 +
-    getSkillBonus('perception') +
+    // getSkillBonus('perception') +
     (generalInfo.passivePerceptionCustomBonus || 0);
 
   return (

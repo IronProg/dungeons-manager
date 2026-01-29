@@ -4,20 +4,17 @@ import { AttributesForm } from './AttributesForm';
 import { Attribute } from 'types/character';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
-import { useAttributes } from 'contexts/AttributesContext';
 import i18n from 'i18n';
 import { useGetAllAttributes } from 'services/attributes/attributes';
+import { useCharacter } from 'contexts/CharacterContext';
 
-type MainCharacterSheetAttributesProps = {
-  characterId: number;
-};
-
-export const MainCharacterSheetAttributes = ({
-  characterId,
-}: MainCharacterSheetAttributesProps) => {
+export const MainCharacterSheetAttributes = () => {
+  const { characterId } = useCharacter();
   const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
-  const { data: characterAttributes } = useGetAllAttributes({ characterId });
+  const { data: characterAttributes } = useGetAllAttributes({
+    characterId: characterId!,
+  });
 
   if (characterAttributes?.length !== 6) {
     return <ActivityIndicator />;
@@ -98,8 +95,6 @@ type AttributeCardProps = {
 };
 
 const AttributeCard = ({ attribute, openModal }: AttributeCardProps) => {
-  const { modifiers } = useAttributes();
-
   return (
     <View className="w-[33%] px-4 flex justify-center">
       <TouchableOpacity
@@ -110,8 +105,9 @@ const AttributeCard = ({ attribute, openModal }: AttributeCardProps) => {
           {i18n.t(`attributes.${attribute.name}`)}
         </Text>
         <Text className="text-2xl font-bold text-center">
-          {modifiers[attribute.name] > 0 && '+'}
-          {modifiers[attribute.name]}
+          {/* {modifiers[attribute.name] > 0 && '+'}
+          {modifiers[attribute.name]} */}
+          0
         </Text>
         <View className="absolute rounded-full bg-gray-200 p-1 bottom-0 min-w-7">
           <Text className="text-gray-900 text-sm font-semibold text-center">

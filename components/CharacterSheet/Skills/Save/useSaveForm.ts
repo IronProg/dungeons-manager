@@ -23,7 +23,7 @@ export const useSaveForm = ({ save }: useSaveFormProps) => {
       resolver: zodResolver(schema),
       defaultValues: {
         mainAttribute: save.mainAttribute,
-        proficiency: save.proficiency,
+        proficiency: save?.proficiency,
         customBonus: save.customBonus,
         extraAttribute: save.extraAttribute,
       },

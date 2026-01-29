@@ -3,7 +3,6 @@ import { Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SkillFormType, useSkillForm } from './useSkillForm';
 import { Skill } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
@@ -18,7 +17,6 @@ export const SkillForm = ({
   skill,
   onClose,
 }: AttributesFormProps) => {
-  const { updateSkills } = useSkills();
   const { control, handleSubmit, watch } = useSkillForm({ skill });
 
   const proficiency = watch('proficiency');

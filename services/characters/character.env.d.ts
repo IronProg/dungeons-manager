@@ -1,5 +1,5 @@
 type GetCharacterParams = {
-  id: number;
+  id?: number;
 };
 
 type GetCharacterGeneralInfoParams = {

@@ -19,6 +19,7 @@ export const useGetAllResources = ({ characterId }: GetAllResourcesParams) => {
   >({
     queryKey: getAllResourcesKey({ characterId }),
     queryFn: () => resourcesService.fetchAll({ characterId }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
+    enabled: !!characterId,
   });
 };

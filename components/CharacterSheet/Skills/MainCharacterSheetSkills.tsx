@@ -5,23 +5,18 @@ import { SaveForm } from './Save/SaveForm';
 import { SkillForm } from './Skill/SkillForm';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
-import { useSaves } from 'contexts/SavesContext';
-import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
 import { useGetAllSkills } from 'services/skills/skill';
 import { useGetAllSaves } from 'services/saves/save';
+import { useCharacter } from 'contexts/CharacterContext';
 
-type MainCharacterSheetSkills = {
-  characterId: number;
-};
-export const MainCharacterSheetSkills = ({
-  characterId,
-}: MainCharacterSheetSkills) => {
+export const MainCharacterSheetSkills = () => {
+  const { characterId } = useCharacter();
   const { data: saves, isLoading: isLoadingSaves } = useGetAllSaves({
-    characterId,
+    characterId: characterId!,
   });
   const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills({
-    characterId,
+    characterId: characterId!,
   });
 
   const [highlightedSave, setHighlightedSave] = useState<Save | null>(null);
@@ -72,7 +67,7 @@ export const MainCharacterSheetSkills = ({
           {skills && skills.length > 0 ? (
             skills.map((skill) => (
               <SkillCard
-                key={skill.name}
+                key={skill.id}
                 skill={skill}
                 onLongPress={() => handleOpen({ skill })}
               />
@@ -90,7 +85,7 @@ export const MainCharacterSheetSkills = ({
       >
         {highlightedSave && (
           <SaveForm
-            characterId={characterId}
+            characterId={characterId!}
             save={highlightedSave}
             onClose={handleClose}
           />
@@ -98,7 +93,7 @@ export const MainCharacterSheetSkills = ({
 
         {highlightedSkill && (
           <SkillForm
-            characterId={characterId}
+            characterId={characterId!}
             skill={highlightedSkill}
             onClose={handleClose}
           />
@@ -111,15 +106,13 @@ export const MainCharacterSheetSkills = ({
 type SaveCardProps = { save: Save; onLongPress: () => void };
 
 const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
-  const { getSaveBonus } = useSaves();
-
-  const modifier = getSaveBonus(save.mainAttribute);
+  const modifier = 0;
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row flex items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${save.proficiency && 'bg-green-200'}`}
+        className={`flex flex-row flex items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${save?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 py-1">
           <Text
@@ -142,15 +135,13 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
 type SkillCardProps = { skill: Skill; onLongPress: () => void };
 
 const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
-  const { getSkillBonus } = useSkills();
-
-  const modifier = getSkillBonus(skill.name);
+  const modifier = 0;
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row flex items-center px-2 gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill.proficiency && 'bg-green-200'}`}
+        className={`flex flex-row flex items-center px-2 gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 py-1">
           <Text className="grow text-gray-900 text-sm font-semibold rounded-md">

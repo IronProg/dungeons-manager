@@ -21,6 +21,7 @@ export const en = {
     damages: 'Damage',
     resourcesAndAmmunitions: 'Resources & Ammunition',
     features: 'Features',
+    characters: 'Characters',
   },
   general: {
     none: 'None',

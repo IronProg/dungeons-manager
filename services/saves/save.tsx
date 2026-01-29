@@ -14,6 +14,7 @@ export const useGetAllSaves = ({ characterId }: GetAllSavesParams) => {
   return useQuery<Save[], Error, Save[], ['characters', number, 'saves']>({
     queryKey: getAllSavesKey({ characterId }),
     queryFn: () => savesService.fetchAll({ characterId }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
+    enabled: !!characterId,
   });
 };

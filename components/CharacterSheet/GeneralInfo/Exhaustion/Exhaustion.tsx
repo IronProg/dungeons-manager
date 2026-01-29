@@ -1,4 +1,3 @@
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Skull } from 'lucide-react-native';
 import { useCallback } from 'react';
@@ -8,16 +7,14 @@ import { CharacterGeneralInfo } from 'types/character';
 type ExhaustionProps = { generalInfo: CharacterGeneralInfo };
 
 export const Exhaustion = ({ generalInfo }: ExhaustionProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
-
   const handleChangeExhaustion = useCallback(() => {
     let newExhaustion = 0;
     if (generalInfo.exhaustion < 6) {
       newExhaustion = generalInfo.exhaustion += 1;
     }
 
-    updateGeneralInfo({ ...generalInfo, exhaustion: newExhaustion });
-  }, [generalInfo, updateGeneralInfo]);
+    //updateGeneralInfo({ ...generalInfo, exhaustion: newExhaustion });
+  }, [generalInfo]);
 
   return (
     <TouchableOpacity

@@ -9,10 +9,8 @@ import { HitDicesForm } from './HitDices/HitDicesForm';
 import { HitPoints } from './HitPoints/HitPoints';
 import { HitPointsForm } from './HitPoints/HitPointsForm';
 import { HitPointsModifierForm } from './HitPoints/HitPointsModifierForm';
-import {
-  useGetCharacter,
-  useGetCharacterGeneralInfo,
-} from 'services/characters/character';
+import { useGetCharacterGeneralInfo } from 'services/characters/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type HitPointsFormTypes =
   | 'hitPoints'
@@ -20,18 +18,10 @@ type HitPointsFormTypes =
   | 'hitDices'
   | 'experience';
 
-type MainCharacterSheetHitPointsProps = {
-  characterId: number;
-};
-
-export const MainCharacterSheetHitPoints = ({
-  characterId,
-}: MainCharacterSheetHitPointsProps) => {
-  const { data: character } = useGetCharacter({
-    id: characterId,
-  });
+export const MainCharacterSheetHitPoints = () => {
+  const { character, characterId } = useCharacter();
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
-    characterId,
+    characterId: characterId!,
   });
   const [activeForm, setActiveForm] = useState<null | HitPointsFormTypes>(null);
   const { ref, open, close } = useBottomSheetRef();
@@ -61,10 +51,7 @@ export const MainCharacterSheetHitPoints = ({
               onLongPress={() => handleOpen('hitDices')}
             />
 
-            <Experience
-              character={character!}
-              onLongPress={() => handleOpen('experience')}
-            />
+            <Experience onLongPress={() => handleOpen('experience')} />
           </>
         ) : (
           <Text>No data found</Text>

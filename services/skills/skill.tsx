@@ -14,6 +14,7 @@ export const useGetAllSkills = ({ characterId }: GetAllSkillsParams) => {
   return useQuery<Skill[], Error, Skill[], ['characters', number, 'skills']>({
     queryKey: getAllSkillsKey({ characterId }),
     queryFn: () => skillsService.fetchAll({ characterId }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
+    enabled: !!characterId,
   });
 };

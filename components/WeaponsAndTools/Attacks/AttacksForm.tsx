@@ -5,7 +5,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { Switch } from 'react-native-gesture-handler';
-import { useAttacks } from 'contexts/AttacksContext';
 import { DamagesForm } from './DamagesForm';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
@@ -16,20 +15,19 @@ type AttacksFormProps = {
 };
 
 export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
-  const { appendAttack, updateAttack } = useAttacks();
   const { control, handleSubmit } = useAttacksForm({ attack });
 
   const onSubmit = useCallback(
     (values: AttacksFormType) => {
-      if (!attack) {
-        appendAttack(values);
-      } else {
-        updateAttack(attack, values);
-      }
+      // if (!attack) {
+      //   appendAttack(values);
+      // } else {
+      //   updateAttack(attack, values);
+      // }
 
       onClose();
     },
-    [appendAttack, attack, onClose, updateAttack],
+    [attack, onClose],
   );
 
   return (

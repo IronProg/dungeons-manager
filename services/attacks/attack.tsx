@@ -15,7 +15,8 @@ export const useGetAllAttacks = ({ characterId }: GetAllAttacksParams) => {
     {
       queryKey: getAllAttacksKey({ characterId }),
       queryFn: () => attacksService.fetchAll({ characterId }),
-      // staleTime: 10 * 60_000,
+      staleTime: 10 * 60_000,
+      enabled: !!characterId,
     },
   );
 };

@@ -21,6 +21,7 @@ export const useGetAllAttributes = ({
   >({
     queryKey: getAllAttributesKey({ characterId }),
     queryFn: () => attributesService.fetchAll({ characterId }),
-    // staleTime: 10 * 60_000,
+    staleTime: 10 * 60_000,
+    enabled: !!characterId,
   });
 };

@@ -4,7 +4,6 @@ import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useFeatures } from 'contexts/FeaturesContext';
 import i18n from 'i18n';
 
 type FeaturesFormProps = {
@@ -13,20 +12,19 @@ type FeaturesFormProps = {
 };
 
 export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
-  const { appendFeature, updateFeature } = useFeatures();
   const { control, handleSubmit } = useFeaturesForm({ feature });
 
   const onSubmit = useCallback(
     (values: FeaturesFormType) => {
-      if (!feature) {
-        appendFeature(values);
-      } else {
-        updateFeature(feature, values);
-      }
+      // if (!feature) {
+      //   appendFeature(values);
+      // } else {
+      //   updateFeature(feature, values);
+      // }
 
       onClose();
     },
-    [appendFeature, feature, onClose, updateFeature],
+    [feature, onClose],
   );
 
   return (

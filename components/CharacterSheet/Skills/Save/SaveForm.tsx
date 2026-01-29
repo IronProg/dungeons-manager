@@ -3,7 +3,6 @@ import { Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SaveFormType, useSaveForm } from './useSaveForm';
 import { Save } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useSaves } from 'contexts/SavesContext';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
@@ -18,7 +17,6 @@ export const SaveForm = ({
   save,
   onClose,
 }: AttributesFormProps) => {
-  const { updateSaves } = useSaves();
   const { control, handleSubmit } = useSaveForm({ save });
 
   const onSubmit = (values: SaveFormType) => {

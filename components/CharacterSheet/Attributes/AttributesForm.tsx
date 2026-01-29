@@ -6,7 +6,6 @@ import { ATTRIBUTES } from 'core/enums/attributes';
 import { getModifier } from 'core/helpers/getModifier';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useAttributes } from 'contexts/AttributesContext';
 import i18n from 'i18n';
 
 type AttributesFormProps = {
@@ -18,7 +17,6 @@ export const AttributesForm = ({
   characterAttributes,
   onClose,
 }: AttributesFormProps) => {
-  const { updateAttributes } = useAttributes();
   const { control, handleSubmit } = useAttributesForm({ characterAttributes });
 
   const onSubmit = (values: AttributesFormType) => {
@@ -33,7 +31,7 @@ export const AttributesForm = ({
       }),
     );
 
-    updateAttributes(newAttributes);
+    // updateAttributes(newAttributes);
 
     onClose();
   };

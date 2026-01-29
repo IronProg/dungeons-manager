@@ -3,30 +3,24 @@ import { ProficiencyFormType, useProficiencyForm } from './useProficiencyForm';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useCharacters } from 'contexts/CharactersContext';
 import i18n from 'i18n';
-import { Character } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type ProficiencyFormProps = {
-  character: Character;
   onClose: () => void;
 };
 
-export const ProficiencyForm = ({
-  character,
-  onClose,
-}: ProficiencyFormProps) => {
-  const { proficiency } = character;
-  const { updateProficiency } = useCharacters();
+export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
+  const { proficiency } = useCharacter();
   const { control, handleSubmit } = useProficiencyForm({ proficiency });
 
   const onSubmit = useCallback(
     (values: ProficiencyFormType) => {
-      updateProficiency(values.proficiencyBonus);
+      // updateProficiency(values.proficiencyBonus);
 
       onClose();
     },
-    [onClose, updateProficiency],
+    [onClose],
   );
 
   return (

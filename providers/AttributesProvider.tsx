@@ -1,5 +1,5 @@
 import { AttributesContext } from 'contexts/AttributesContext';
-import { useCharacters } from 'contexts/CharactersContext';
+import { useCharacter } from 'contexts/CharacterContext';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Attribute, Modifiers } from 'types/character';
 
@@ -19,7 +19,7 @@ export type AttributesProviderProps = {
 };
 
 export const AttributesProvider = ({ children }: { children: ReactNode }) => {
-  const { character } = useCharacters();
+  const { character } = useCharacter();
   const [characterAttributes, setCharacterAttributes] = useState<Attribute[]>(
     [],
   );

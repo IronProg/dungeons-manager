@@ -6,7 +6,6 @@ import {
   HitPointsModifierFormType,
   useHitPointsModifierForm,
 } from './useHitPointsModifierForm';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
 
@@ -19,7 +18,6 @@ export const HitPointsModifierForm = ({
   generalInfo,
   onClose,
 }: HitPointsModifierFormProps) => {
-  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useHitPointsModifierForm();
 
   const onSubmit = useCallback(
@@ -49,15 +47,15 @@ export const HitPointsModifierForm = ({
         tempHitPoints = Math.max(values.temporary, tempHitPoints);
       }
 
-      updateGeneralInfo({
-        ...generalInfo,
-        hitPoints: Math.max(hitPoints, 0),
-        temporaryHitPoints: tempHitPoints <= 0 ? undefined : tempHitPoints,
-      });
+      // updateGeneralInfo({
+      //   ...generalInfo,
+      //   hitPoints: Math.max(hitPoints, 0),
+      //   temporaryHitPoints: tempHitPoints <= 0 ? undefined : tempHitPoints,
+      // });
 
       onClose();
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [generalInfo, onClose],
   );
 
   return (

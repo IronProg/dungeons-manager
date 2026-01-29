@@ -5,19 +5,18 @@ import RNModal from 'react-native-modal';
 import { useState } from 'react';
 import i18n from 'i18n';
 import { useGetAllFeatures } from 'services/features/feature';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type FeaturesProps = {
-  characterId: number;
   onCreate: () => void;
   onSelect: (feature: Feature) => void;
 };
 
-export const Features = ({
-  characterId,
-  onCreate,
-  onSelect,
-}: FeaturesProps) => {
-  const { data: features, isLoading } = useGetAllFeatures({ characterId });
+export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
+  const { characterId } = useCharacter();
+  const { data: features, isLoading } = useGetAllFeatures({
+    characterId: characterId!,
+  });
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
 
   return (

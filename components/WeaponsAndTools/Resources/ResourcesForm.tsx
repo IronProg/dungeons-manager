@@ -4,7 +4,6 @@ import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useResources } from 'contexts/ResourcesContext';
 import i18n from 'i18n';
 
 type ResourcesFormProps = {
@@ -13,20 +12,19 @@ type ResourcesFormProps = {
 };
 
 export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
-  const { appendResource, updateResource } = useResources();
   const { control, handleSubmit } = useResourcesForm({ resource });
 
   const onSubmit = useCallback(
     (values: ResourcesFormType) => {
-      if (!resource) {
-        appendResource(values);
-      } else {
-        updateResource(resource, values);
-      }
+      // if (!resource) {
+      //   appendResource(values);
+      // } else {
+      //   updateResource(resource, values);
+      // }
 
       onClose();
     },
-    [appendResource, resource, onClose, updateResource],
+    [resource, onClose],
   );
 
   return (
