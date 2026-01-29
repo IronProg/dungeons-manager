@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { Experience } from './Experience/Experience';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { ExperienceForm } from './Experience/ExperienceForm';
@@ -9,6 +9,10 @@ import { HitDicesForm } from './HitDices/HitDicesForm';
 import { HitPoints } from './HitPoints/HitPoints';
 import { HitPointsForm } from './HitPoints/HitPointsForm';
 import { HitPointsModifierForm } from './HitPoints/HitPointsModifierForm';
+import {
+  useGetCharacter,
+  useGetCharacterGeneralInfo,
+} from 'services/characters/character';
 
 type HitPointsFormTypes =
   | 'hitPoints'
@@ -16,7 +20,19 @@ type HitPointsFormTypes =
   | 'hitDices'
   | 'experience';
 
-export const MainCharacterSheetHitPoints = () => {
+type MainCharacterSheetHitPointsProps = {
+  characterId: number;
+};
+
+export const MainCharacterSheetHitPoints = ({
+  characterId,
+}: MainCharacterSheetHitPointsProps) => {
+  const { data: character } = useGetCharacter({
+    id: characterId,
+  });
+  const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
+    characterId,
+  });
   const [activeForm, setActiveForm] = useState<null | HitPointsFormTypes>(null);
   const { ref, open, close } = useBottomSheetRef();
 
@@ -31,14 +47,28 @@ export const MainCharacterSheetHitPoints = () => {
   return (
     <>
       <View className="flex flex-row justify-between flex-wrap p-4">
-        <HitPoints
-          onLongPress={() => handleOpen('hitPoints')}
-          onPress={() => handleOpen('hitPointModifier')}
-        />
+        {isLoading && <ActivityIndicator />}
+        {generalInfo ? (
+          <>
+            <HitPoints
+              generalInfo={generalInfo}
+              onLongPress={() => handleOpen('hitPoints')}
+              onPress={() => handleOpen('hitPointModifier')}
+            />
 
-        <HitDices onLongPress={() => handleOpen('hitDices')} />
+            <HitDices
+              generalInfo={generalInfo}
+              onLongPress={() => handleOpen('hitDices')}
+            />
 
-        <Experience onLongPress={() => handleOpen('experience')} />
+            <Experience
+              character={character!}
+              onLongPress={() => handleOpen('experience')}
+            />
+          </>
+        ) : (
+          <Text>No data found</Text>
+        )}
 
         <ReusableBottomSheetModal
           ref={ref}
@@ -47,12 +77,25 @@ export const MainCharacterSheetHitPoints = () => {
             setActiveForm(null);
           }}
         >
-          {activeForm === 'hitPoints' && <HitPointsForm onClose={close} />}
-          {activeForm === 'hitPointModifier' && (
-            <HitPointsModifierForm onClose={close} />
+          {generalInfo && (
+            <>
+              {activeForm === 'hitPoints' && (
+                <HitPointsForm generalInfo={generalInfo} onClose={close} />
+              )}
+              {activeForm === 'hitPointModifier' && (
+                <HitPointsModifierForm
+                  generalInfo={generalInfo}
+                  onClose={close}
+                />
+              )}
+              {activeForm === 'hitDices' && (
+                <HitDicesForm generalInfo={generalInfo} onClose={close} />
+              )}
+            </>
           )}
-          {activeForm === 'hitDices' && <HitDicesForm onClose={close} />}
-          {activeForm === 'experience' && <ExperienceForm onClose={close} />}
+          {activeForm === 'experience' && (
+            <ExperienceForm character={character!} onClose={close} />
+          )}
         </ReusableBottomSheetModal>
       </View>
     </>

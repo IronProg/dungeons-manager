@@ -5,13 +5,15 @@ import { useCallback } from 'react';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
 
 type SpeedFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const SpeedForm = ({ onClose }: SpeedFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
+  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useSpeedForm({
     generalInfo,
   });

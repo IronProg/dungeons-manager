@@ -1,16 +1,19 @@
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
 import { Eye } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 type PassivePerceptionProps = {
+  generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
 };
 
-export const PassivePerception = ({ onLongPress }: PassivePerceptionProps) => {
+export const PassivePerception = ({
+  generalInfo,
+  onLongPress,
+}: PassivePerceptionProps) => {
   const { getSkillBonus } = useSkills();
-  const { generalInfo } = useGeneralInfo();
 
   const passivePercetion =
     10 +

@@ -13,52 +13,58 @@ const DEFAULT_MODIFIERS = {
 };
 
 export type AttributesProviderProps = {
-  attributes: Attribute[];
+  characterAttributes: Attribute[];
   modifiers: Modifiers;
   updateAttributes: (newAttribute: Attribute[]) => void;
 };
 
 export const AttributesProvider = ({ children }: { children: ReactNode }) => {
   const { character } = useCharacters();
-  const [attributes, setAttributes] = useState<Attribute[]>([]);
+  const [characterAttributes, setCharacterAttributes] = useState<Attribute[]>(
+    [],
+  );
   const [modifiers, setModifiers] = useState<Modifiers>(DEFAULT_MODIFIERS);
 
   useEffect(() => {
     if (character) {
-      setAttributes(character.attributes);
+      setCharacterAttributes(character.characterAttributes);
     }
   }, [character]);
 
   useEffect(() => {
-    if (attributes.length === 6) {
+    if (characterAttributes.length === 6) {
       const newModifiers: Modifiers = {
-        strength: attributes.find((attr) => attr.name === 'strength')!
+        strength: characterAttributes.find((attr) => attr.name === 'strength')!
           .modifier!,
-        dexterity: attributes.find((attr) => attr.name === 'dexterity')!
+        dexterity: characterAttributes.find(
+          (attr) => attr.name === 'dexterity',
+        )!.modifier!,
+        constitution: characterAttributes.find(
+          (attr) => attr.name === 'constitution',
+        )!.modifier!,
+        intelligence: characterAttributes.find(
+          (attr) => attr.name === 'intelligence',
+        )!.modifier!,
+        wisdom: characterAttributes.find((attr) => attr.name === 'wisdom')!
           .modifier!,
-        constitution: attributes.find((attr) => attr.name === 'constitution')!
-          .modifier!,
-        intelligence: attributes.find((attr) => attr.name === 'intelligence')!
-          .modifier!,
-        wisdom: attributes.find((attr) => attr.name === 'wisdom')!.modifier!,
-        charisma: attributes.find((attr) => attr.name === 'charisma')!
+        charisma: characterAttributes.find((attr) => attr.name === 'charisma')!
           .modifier!,
       };
 
-      attributes.forEach((attr) => {
+      characterAttributes.forEach((attr) => {
         newModifiers[attr.name] = attr.modifier;
       });
 
       setModifiers(newModifiers);
     }
-  }, [attributes]);
+  }, [characterAttributes]);
 
   const updateAttributes = useCallback((newAttributes: Attribute[]) => {
-    setAttributes(newAttributes);
+    setCharacterAttributes(newAttributes);
   }, []);
 
   const value: AttributesProviderProps = {
-    attributes,
+    characterAttributes,
     modifiers,
     updateAttributes,
   };

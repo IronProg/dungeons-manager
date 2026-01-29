@@ -78,6 +78,7 @@ export const en = {
   skills: {
     acrobatics: 'Acrobatics',
     animalHandling: 'Animal Handling',
+    animal_handling: 'Animal Handling',
     arcana: 'Arcana',
     athletics: 'Athletics',
     deception: 'Deception',
@@ -92,6 +93,7 @@ export const en = {
     persuasion: 'Persuasion',
     religion: 'Religion',
     sleightOfHand: 'Sleight of Hand',
+    sleight_of_hand: 'Sleight of Hand',
     stealth: 'Stealth',
     survival: 'Survival',
   },

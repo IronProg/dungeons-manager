@@ -1,19 +1,24 @@
-import { useFeatures } from 'contexts/FeaturesContext';
 import { Plus } from 'lucide-react-native';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Feature } from 'types/character';
 import RNModal from 'react-native-modal';
 import { useState } from 'react';
 import i18n from 'i18n';
+import { useGetAllFeatures } from 'services/features/feature';
 
 type FeaturesProps = {
+  characterId: number;
   onCreate: () => void;
   onSelect: (feature: Feature) => void;
 };
 
-export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
+export const Features = ({
+  characterId,
+  onCreate,
+  onSelect,
+}: FeaturesProps) => {
+  const { data: features, isLoading } = useGetAllFeatures({ characterId });
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
-  const { features } = useFeatures();
 
   return (
     <>
@@ -32,24 +37,30 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
         </TouchableOpacity>
       </View>
 
-      {features?.map((feature, index) => {
-        return (
-          <TouchableOpacity
-            onPress={() => setDetailedFeature(feature)}
-            onLongPress={() => onSelect(feature)}
-            key={index}
-            className="rounded-lg gap-2 border-b border-gray-300 pb-2 mb-2"
-          >
-            <View className="bg-gray-100 rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
-              <Text>{feature.title}</Text>
+      {isLoading && <ActivityIndicator />}
 
-              {feature.origin && (
-                <Text className="text-gray-700">({feature.origin})</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+      {features && features.length > 0 ? (
+        features?.map((feature, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => setDetailedFeature(feature)}
+              onLongPress={() => onSelect(feature)}
+              key={index}
+              className="rounded-lg gap-2 border-b border-gray-300 pb-2 mb-2"
+            >
+              <View className="bg-gray-100 rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
+                <Text>{feature.title}</Text>
+
+                {feature.origin && (
+                  <Text className="text-gray-700">({feature.origin})</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          );
+        })
+      ) : (
+        <Text>No features found</Text>
+      )}
 
       <RNModal
         isVisible={!!detailedFeature}

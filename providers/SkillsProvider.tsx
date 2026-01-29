@@ -27,7 +27,7 @@ export const SkillsProvider = ({ children }: { children: ReactNode }) => {
 
       if (!selectedSkill) return 0;
 
-      let modifier = modifiers[selectedSkill.attribute];
+      let modifier = modifiers[selectedSkill.mainAttribute];
 
       if (selectedSkill.expertise) {
         modifier += proficiency;

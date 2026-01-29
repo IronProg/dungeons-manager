@@ -5,13 +5,15 @@ import { useCallback } from 'react';
 import { useCharacters } from 'contexts/CharactersContext';
 import { ExperienceFormType, useExperienceForm } from './useExperienceForm';
 import i18n from 'i18n';
+import { Character } from 'types/character';
 
 type ExperienceFormProps = {
+  character: Character;
   onClose: () => void;
 };
 
-export const ExperienceForm = ({ onClose }: ExperienceFormProps) => {
-  const { character, updateExperience } = useCharacters();
+export const ExperienceForm = ({ character, onClose }: ExperienceFormProps) => {
+  const { updateExperience } = useCharacters();
   const { control, handleSubmit } = useExperienceForm({
     experience: character?.experience || 0,
   });

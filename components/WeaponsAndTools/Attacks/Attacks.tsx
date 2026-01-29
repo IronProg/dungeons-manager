@@ -1,24 +1,25 @@
-import { useAttacks } from 'contexts/AttacksContext';
 import { useAttributes } from 'contexts/AttributesContext';
 import { useCharacters } from 'contexts/CharactersContext';
 import { Plus } from 'lucide-react-native';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Attack } from 'types/character';
 import RNModal from 'react-native-modal';
 import { useState } from 'react';
 import i18n from 'i18n';
+import { useGetAllAttacks } from 'services/attacks/attack';
 
 type AttacksProps = {
+  characterId: number;
   onCreate: () => void;
   onSelect: (attack: Attack) => void;
 };
 
-export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
+export const Attacks = ({ characterId, onCreate, onSelect }: AttacksProps) => {
+  const { data: attacks, isLoading } = useGetAllAttacks({ characterId });
   const [detailedAttack, setDetailedAttack] = useState<Attack>();
 
   const { proficiency } = useCharacters();
   const { modifiers } = useAttributes();
-  const { attacks } = useAttacks();
 
   return (
     <>
@@ -37,47 +38,53 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
         </TouchableOpacity>
       </View>
 
-      {attacks?.map((attack, index) => {
-        const attributeModifier = attack.attribute
-          ? modifiers[attack.attribute]
-          : 0;
+      {isLoading && <ActivityIndicator />}
 
-        const attackBonus =
-          attributeModifier + (attack.applyProficiency ? proficiency : 0);
+      {attacks && attacks.length > 0 ? (
+        attacks?.map((attack, index) => {
+          const attributeModifier = attack.mainAttribute
+            ? modifiers[attack.mainAttribute]
+            : 0;
 
-        return (
-          <TouchableOpacity
-            onPress={() => setDetailedAttack(attack)}
-            onLongPress={() => onSelect(attack)}
-            key={index}
-            className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
-          >
-            <View className="bg-gray-100 rounded-lg px-2 py-1 grow">
-              <Text>{attack.name}</Text>
-              <Text>{attack.range}</Text>
-            </View>
-            <Text className="bg-gray-100 rounded-lg px-2 py-1">
-              {attackBonus > 0 && '+'}
-              {attackBonus}
-            </Text>
-            <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
-              {attack.damages.map((damage, index) => {
-                const attributeModifier = damage.attribute
-                  ? modifiers[damage.attribute]
-                  : 0;
+          const attackBonus =
+            attributeModifier + (attack.applyProficiency ? proficiency : 0);
 
-                return (
-                  <Text className="" key={index}>
-                    {damage.dice}{' '}
-                    {`${attributeModifier > 0 ? '+' : ''}${attributeModifier}`}{' '}
-                    {damage.customBonus && damage.customBonus} {damage.kind}
-                  </Text>
-                );
-              })}
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+          return (
+            <TouchableOpacity
+              onPress={() => setDetailedAttack(attack)}
+              onLongPress={() => onSelect(attack)}
+              key={index}
+              className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
+            >
+              <View className="bg-gray-100 rounded-lg px-2 py-1 grow">
+                <Text>{attack.name}</Text>
+                <Text>{attack.range}</Text>
+              </View>
+              <Text className="bg-gray-100 rounded-lg px-2 py-1">
+                {attackBonus > 0 && '+'}
+                {attackBonus}
+              </Text>
+              <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
+                {attack.damages.map((damage, index) => {
+                  const attributeModifier = damage.mainAttribute
+                    ? modifiers[damage.mainAttribute]
+                    : 0;
+
+                  return (
+                    <Text className="" key={index}>
+                      {damage.dice}{' '}
+                      {`${attributeModifier > 0 ? '+' : ''}${attributeModifier}`}{' '}
+                      {damage.customBonus && damage.customBonus} {damage.kind}
+                    </Text>
+                  );
+                })}
+              </View>
+            </TouchableOpacity>
+          );
+        })
+      ) : (
+        <Text>No attacks found</Text>
+      )}
 
       <RNModal
         isVisible={!!detailedAttack}

@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Save, Skill } from 'types/character';
 import { SaveForm } from './Save/SaveForm';
 import { SkillForm } from './Skill/SkillForm';
@@ -8,13 +8,24 @@ import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { useSaves } from 'contexts/SavesContext';
 import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
+import { useGetAllSkills } from 'services/skills/skill';
+import { useGetAllSaves } from 'services/saves/save';
 
-export const MainCharacterSheetProficiencies = () => {
+type MainCharacterSheetSkills = {
+  characterId: number;
+};
+export const MainCharacterSheetSkills = ({
+  characterId,
+}: MainCharacterSheetSkills) => {
+  const { data: saves, isLoading: isLoadingSaves } = useGetAllSaves({
+    characterId,
+  });
+  const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills({
+    characterId,
+  });
+
   const [highlightedSave, setHighlightedSave] = useState<Save | null>(null);
   const [highlightedSkill, setHighlightedSkill] = useState<Skill | null>(null);
-
-  const { saves } = useSaves();
-  const { skills } = useSkills();
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
@@ -40,25 +51,35 @@ export const MainCharacterSheetProficiencies = () => {
     <>
       <View className="flex flex-col bg-gray-100 rounded-lg px-4">
         <View className="flex flex-row flex-wrap py-2 w-full">
-          {saves.map((save, index) => (
-            <SaveCard
-              key={index}
-              save={save}
-              onLongPress={() => handleOpen({ save })}
-            />
-          ))}
+          {isLoadingSaves && <ActivityIndicator />}
+          {saves && saves.length > 0 ? (
+            saves.map((save, index) => (
+              <SaveCard
+                key={index}
+                save={save}
+                onLongPress={() => handleOpen({ save })}
+              />
+            ))
+          ) : (
+            <Text>No data found</Text>
+          )}
         </View>
 
         <View className="border-t border-gray-300 mb-2" />
 
         <View className="flex flex-row flex-wrap py-2 w-full">
-          {skills.map((skill) => (
-            <SkillCard
-              key={skill.name}
-              skill={skill}
-              onLongPress={() => handleOpen({ skill })}
-            />
-          ))}
+          {isLoadingSkills && <ActivityIndicator />}
+          {skills && skills.length > 0 ? (
+            skills.map((skill) => (
+              <SkillCard
+                key={skill.name}
+                skill={skill}
+                onLongPress={() => handleOpen({ skill })}
+              />
+            ))
+          ) : (
+            <Text>No data found</Text>
+          )}
         </View>
       </View>
 
@@ -68,11 +89,19 @@ export const MainCharacterSheetProficiencies = () => {
         snapPoints={[300, 600]}
       >
         {highlightedSave && (
-          <SaveForm save={highlightedSave} onClose={handleClose} />
+          <SaveForm
+            characterId={characterId}
+            save={highlightedSave}
+            onClose={handleClose}
+          />
         )}
 
         {highlightedSkill && (
-          <SkillForm skill={highlightedSkill} onClose={handleClose} />
+          <SkillForm
+            characterId={characterId}
+            skill={highlightedSkill}
+            onClose={handleClose}
+          />
         )}
       </ReusableBottomSheetModal>
     </>
@@ -84,7 +113,7 @@ type SaveCardProps = { save: Save; onLongPress: () => void };
 const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
   const { getSaveBonus } = useSaves();
 
-  const modifier = getSaveBonus(save.attribute);
+  const modifier = getSaveBonus(save.mainAttribute);
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
@@ -97,7 +126,7 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
             numberOfLines={0}
             className="text-gray-900 text-sm font-semibold"
           >
-            {i18n.t(`attributes.${save.attribute}`)}
+            {i18n.t(`attributes.${save.mainAttribute}`)}
           </Text>
         </View>
 
@@ -126,7 +155,7 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
         <View className="min-w-0 flex-1 py-1">
           <Text className="grow text-gray-900 text-sm font-semibold rounded-md">
             {i18n.t(`skills.${skill.name}`)}(
-            {i18n.t(`attributes.${skill.attribute}`).substring(0, 3)})
+            {i18n.t(`attributes.${skill.mainAttribute}`).substring(0, 3)})
           </Text>
         </View>
 

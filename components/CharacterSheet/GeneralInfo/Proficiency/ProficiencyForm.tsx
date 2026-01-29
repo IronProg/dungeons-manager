@@ -5,13 +5,19 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { useCharacters } from 'contexts/CharactersContext';
 import i18n from 'i18n';
+import { Character } from 'types/character';
 
 type ProficiencyFormProps = {
+  character: Character;
   onClose: () => void;
 };
 
-export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
-  const { proficiency, updateProficiency } = useCharacters();
+export const ProficiencyForm = ({
+  character,
+  onClose,
+}: ProficiencyFormProps) => {
+  const { proficiency } = character;
+  const { updateProficiency } = useCharacters();
   const { control, handleSubmit } = useProficiencyForm({ proficiency });
 
   const onSubmit = useCallback(

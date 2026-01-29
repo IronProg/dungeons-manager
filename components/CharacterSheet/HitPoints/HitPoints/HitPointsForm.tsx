@@ -5,11 +5,15 @@ import { useCallback } from 'react';
 import { HitPointsFormType, useHitPointsForm } from './useHitPointsForm';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
 
-type HitPointsFormProps = { onClose: () => void };
+type HitPointsFormProps = {
+  generalInfo: CharacterGeneralInfo;
+  onClose: () => void;
+};
 
-export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
+  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useHitPointsForm({ generalInfo });
 
   const onSubmit = useCallback(

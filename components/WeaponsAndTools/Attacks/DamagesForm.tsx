@@ -63,7 +63,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
 
             <Controller
               control={control}
-              name={`damages.${index}.attribute`}
+              name={`damages.${index}.mainAttribute`}
               render={({ field, fieldState: { error } }) => (
                 <AttributePicker {...field} error={error?.message} />
               )}

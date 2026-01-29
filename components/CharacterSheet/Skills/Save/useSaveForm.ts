@@ -5,7 +5,7 @@ import { Save } from 'types/character';
 import * as z from 'zod';
 
 export const schema = z.object({
-  attribute: z.enum(ATTRIBUTES),
+  mainAttribute: z.enum(ATTRIBUTES),
   proficiency: z.boolean(),
   customBonus: z.coerce.number<number>().int().optional(),
   extraAttribute: z.enum(ATTRIBUTES).optional(),
@@ -22,7 +22,7 @@ export const useSaveForm = ({ save }: useSaveFormProps) => {
     useForm<SaveFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
-        attribute: save.attribute,
+        mainAttribute: save.mainAttribute,
         proficiency: save.proficiency,
         customBonus: save.customBonus,
         extraAttribute: save.extraAttribute,

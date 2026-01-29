@@ -8,13 +8,15 @@ import RNPickerSelect from 'react-native-picker-select';
 import { HIT_DICES } from 'core/enums/hitDices';
 import { ChevronDown } from 'lucide-react-native';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
 
 type HitDicesFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
+  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useHitDicesForm({ generalInfo });
 
   const onSubmit = useCallback(

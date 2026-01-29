@@ -6,12 +6,20 @@ import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useAttributes } from 'contexts/AttributesContext';
 import i18n from 'i18n';
+import { useGetAllAttributes } from 'services/attributes/attributes';
 
-export const MainCharacterSheetAttributes = () => {
-  const { attributes } = useAttributes();
+type MainCharacterSheetAttributesProps = {
+  characterId: number;
+};
+
+export const MainCharacterSheetAttributes = ({
+  characterId,
+}: MainCharacterSheetAttributesProps) => {
   const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
-  if (attributes?.length !== 6) {
+  const { data: characterAttributes } = useGetAllAttributes({ characterId });
+
+  if (characterAttributes?.length !== 6) {
     return <ActivityIndicator />;
   }
 
@@ -22,37 +30,49 @@ export const MainCharacterSheetAttributes = () => {
           <AttributeCard
             openModal={open}
             attribute={
-              attributes.find((attribute) => attribute.name === 'strength')!
+              characterAttributes.find(
+                (attribute) => attribute.name === 'strength',
+              )!
             }
           />
           <AttributeCard
             openModal={open}
             attribute={
-              attributes.find((attribute) => attribute.name === 'dexterity')!
+              characterAttributes.find(
+                (attribute) => attribute.name === 'dexterity',
+              )!
             }
           />
           <AttributeCard
             openModal={open}
             attribute={
-              attributes.find((attribute) => attribute.name === 'constitution')!
+              characterAttributes.find(
+                (attribute) => attribute.name === 'constitution',
+              )!
             }
           />
           <AttributeCard
             openModal={open}
             attribute={
-              attributes.find((attribute) => attribute.name === 'intelligence')!
+              characterAttributes.find(
+                (attribute) => attribute.name === 'intelligence',
+              )!
             }
           />
           <AttributeCard
             openModal={open}
             attribute={
-              attributes.find((attribute) => attribute.name === 'wisdom')!
+              characterAttributes.find(
+                (attribute) => attribute.name === 'wisdom',
+              )!
             }
           />
           <AttributeCard
             openModal={open}
             attribute={
-              attributes.find((attribute) => attribute.name === 'charisma')!
+              characterAttributes.find(
+                (attribute) => attribute.name === 'charisma',
+              )!
             }
           />
         </View>
@@ -63,7 +83,10 @@ export const MainCharacterSheetAttributes = () => {
         ref={bottomSheetRef}
         snapPoints={[600, 875]}
       >
-        <AttributesForm attributes={attributes} onClose={close} />
+        <AttributesForm
+          characterAttributes={characterAttributes}
+          onClose={close}
+        />
       </ReusableBottomSheetModal>
     </>
   );

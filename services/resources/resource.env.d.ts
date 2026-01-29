@@ -1,0 +1,3 @@
+type GetAllResourcesParams = {
+  characterId: number;
+};

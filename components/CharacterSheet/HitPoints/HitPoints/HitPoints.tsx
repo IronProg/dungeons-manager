@@ -1,16 +1,19 @@
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Heart } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 type HitPointsProps = {
+  generalInfo: CharacterGeneralInfo;
   onPress: () => void;
   onLongPress: () => void;
 };
 
-export const HitPoints = ({ onPress, onLongPress }: HitPointsProps) => {
-  const { generalInfo } = useGeneralInfo();
-
+export const HitPoints = ({
+  generalInfo,
+  onPress,
+  onLongPress,
+}: HitPointsProps) => {
   const hitPointsMaximum =
     generalInfo.hitPointsLimitTemporary || generalInfo.hitPointsLimit;
 

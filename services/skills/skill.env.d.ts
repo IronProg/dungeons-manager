@@ -1,0 +1,3 @@
+type GetAllSkillsParams = {
+  characterId: number;
+};

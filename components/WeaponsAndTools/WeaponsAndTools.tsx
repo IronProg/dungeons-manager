@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { useCharacters } from 'contexts/CharactersContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Currency } from './Currency/Currency';
 import { Attacks } from './Attacks/Attacks';
@@ -11,11 +10,18 @@ import { Attack, Feature, Resource } from 'types/character';
 import { AttacksForm } from './Attacks/AttacksForm';
 import { FeaturesForm } from './Features/FeaturesForm';
 import { ResourcesForm } from './Resources/ResourcesForm';
+import {
+  useGetCharacter,
+  useGetCharacterCurrency,
+} from 'services/characters/character';
+import { ActivityIndicator, Text } from 'react-native';
 
 type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
 export const WeaponsAndTools = () => {
-  const { character } = useCharacters();
+  const { data: character } = useGetCharacter({ id: 10 });
+  const { data: currencies, isLoading: isLoadingCurrencies } =
+    useGetCharacterCurrency({ characterId: 10 });
 
   const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
     null,
@@ -48,9 +54,15 @@ export const WeaponsAndTools = () => {
     <>
       {character && (
         <ScrollView scrollEnabled>
-          <Currency />
+          {isLoadingCurrencies && <ActivityIndicator />}
+          {currencies ? (
+            <Currency currencies={currencies!} />
+          ) : (
+            <Text>No currencies found</Text>
+          )}
 
           <Attacks
+            characterId={character.id!}
             onCreate={() => {
               handleOpen('attacks');
             }}
@@ -61,6 +73,7 @@ export const WeaponsAndTools = () => {
           />
 
           <Resources
+            characterId={character.id!}
             onCreate={() => {
               handleOpen('resources');
             }}
@@ -71,6 +84,7 @@ export const WeaponsAndTools = () => {
           />
 
           <Features
+            characterId={character.id!}
             onCreate={() => {
               handleOpen('features');
             }}

@@ -10,15 +10,18 @@ import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { CharacterGeneralInfo } from 'types/character';
 
 type PassivePerceptionFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
 export const PassivePerceptionForm = ({
+  generalInfo,
   onClose,
 }: PassivePerceptionFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+  const { updateGeneralInfo } = useGeneralInfo();
   const { getSkillBonus } = useSkills();
   const { control, handleSubmit } = usePassivePerceptionForm({
     generalInfo,

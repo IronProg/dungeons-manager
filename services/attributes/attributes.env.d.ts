@@ -1,0 +1,3 @@
+type GetAllAttributesParams = {
+  characterId: number;
+};

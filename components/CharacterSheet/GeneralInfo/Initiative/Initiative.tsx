@@ -1,16 +1,16 @@
 import { useAttributes } from 'contexts/AttributesContext';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Zap } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 type InitiativeProps = {
+  generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
 };
 
-export const Initiative = ({ onLongPress }: InitiativeProps) => {
+export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
   const { modifiers } = useAttributes();
-  const { generalInfo } = useGeneralInfo();
 
   let modifier = modifiers['dexterity'];
 

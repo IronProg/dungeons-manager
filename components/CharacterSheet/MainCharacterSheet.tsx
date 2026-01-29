@@ -1,35 +1,84 @@
 import React, { useEffect, useState } from 'react';
-
-import { useCharacters } from 'contexts/CharactersContext';
 import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
 import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPoints';
 import { ScrollView } from 'react-native-gesture-handler';
-import { MainCharacterSheetProficiencies } from './Proficiencies/MainCharacterSheetProficiencies';
+import { MainCharacterSheetSkills } from './Skills/MainCharacterSheetSkills';
 import { SettingsIcon } from 'lucide-react-native';
 import i18n from 'i18n';
+import { getAllAttributesKey } from 'services/attributes/attributes';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  getCharacterCurrencyKey,
+  getCharacterGeneralInfoKey,
+  useGetCharacter,
+} from 'services/characters/character';
+import { getAllSavesKey } from 'services/saves/save';
+import { getAllSkillsKey } from 'services/skills/skill';
+import { getAllAttacksKey } from 'services/attacks/attack';
+import { getAllResourcesKey } from 'services/resources/resource';
+import { getAllFeaturesKey } from 'services/features/feature';
 
 export const MainCharacterSheet = () => {
-  const [loading, setLoading] = useState(true);
-  const { character, getDetails } = useCharacters();
+  const queryClient = useQueryClient();
+  const { data: character } = useGetCharacter({ id: 10 });
+
+  const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    if (!character) {
-      getDetails({
-        id: '1',
-        success: () => {
-          setLoading(false);
-        },
-      });
-    } else {
-      setLoading(false);
-    }
-  }, [character, getDetails]);
+    if (!character) return;
+
+    setInitialLoading(true);
+
+    queryClient.setQueryData(
+      getAllAttributesKey({ characterId: character.id! }),
+      character.characterAttributes,
+    );
+
+    queryClient.setQueryData(
+      getCharacterGeneralInfoKey({ characterId: character.id! }),
+      character.generalInfo,
+    );
+
+    queryClient.setQueryData(
+      getCharacterCurrencyKey({ characterId: character.id! }),
+      character.currencies,
+    );
+
+    queryClient.setQueryData(
+      getAllSavesKey({ characterId: character.id! }),
+      character.saves,
+    );
+
+    queryClient.setQueryData(
+      getAllSkillsKey({ characterId: character.id! }),
+      character.skills,
+    );
+
+    queryClient.setQueryData(
+      getAllAttacksKey({ characterId: character.id! }),
+      character.attacks,
+    );
+
+    queryClient.setQueryData(
+      getAllResourcesKey({ characterId: character.id! }),
+      character.resources,
+    );
+
+    queryClient.setQueryData(
+      getAllFeaturesKey({ characterId: character.id! }),
+      character.features,
+    );
+
+    setInitialLoading(false);
+  }, [character, queryClient]);
 
   return (
     <>
-      {character && !loading && (
+      {initialLoading ? (
+        <ActivityIndicator />
+      ) : character ? (
         <ScrollView>
           <View className="flex flex-row justify-between items-center mb-2">
             <Text className="text-black text-2xl font-bold">
@@ -46,11 +95,11 @@ export const MainCharacterSheet = () => {
               {i18n.t('titles.characterSheet')}
             </Text>
 
-            <MainCharacterSheetHitPoints />
+            <MainCharacterSheetHitPoints characterId={character.id!} />
 
             <View className={styles.separator} />
 
-            <MainCharacterSheetGeneralInfo />
+            <MainCharacterSheetGeneralInfo characterId={character.id!} />
           </View>
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
@@ -58,7 +107,7 @@ export const MainCharacterSheet = () => {
               {i18n.t('titles.attributes')}
             </Text>
 
-            <MainCharacterSheetAttributes />
+            <MainCharacterSheetAttributes characterId={character.id!} />
           </View>
 
           <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
@@ -66,9 +115,11 @@ export const MainCharacterSheet = () => {
               {i18n.t('titles.savesAndSkills')}
             </Text>
 
-            <MainCharacterSheetProficiencies />
+            <MainCharacterSheetSkills characterId={character.id!} />
           </View>
         </ScrollView>
+      ) : (
+        <Text>Error while loading character</Text>
       )}
     </>
   );

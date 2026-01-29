@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { PassivePerception } from './PassivePerception/PassivePerception';
@@ -13,6 +13,10 @@ import { ProficiencyForm } from './Proficiency/ProficiencyForm';
 import { InitiativeForm } from './Initiative/InitiativeForm';
 import { ArmorClassForm } from './ArmorClass/ArmorClassForm';
 import { SpeedForm } from './Speed/SpeedForm';
+import {
+  useGetCharacter,
+  useGetCharacterGeneralInfo,
+} from 'services/characters/character';
 
 type GeneralInfoFormTypes =
   | 'passivePerception'
@@ -24,7 +28,20 @@ type GeneralInfoFormTypes =
   | 'hitDice'
   | 'hitPoint';
 
-export const MainCharacterSheetGeneralInfo = () => {
+type MainCharacterSheetGeneralInfoProps = {
+  characterId: number;
+};
+
+export const MainCharacterSheetGeneralInfo = ({
+  characterId,
+}: MainCharacterSheetGeneralInfoProps) => {
+  const { data: character } = useGetCharacter({
+    id: characterId,
+  });
+  const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
+    characterId,
+  });
+
   const [activeForm, setActiveForm] = useState<null | GeneralInfoFormTypes>(
     null,
   );
@@ -40,25 +57,45 @@ export const MainCharacterSheetGeneralInfo = () => {
 
   return (
     <View className="py-4 flex flex-col gap-2">
-      <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
-        <ArmorClass onLongPress={() => handleOpen('armorClass')} />
+      {isLoading && <ActivityIndicator />}
+      {generalInfo ? (
+        <>
+          <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
+            <ArmorClass
+              generalInfo={generalInfo}
+              onLongPress={() => handleOpen('armorClass')}
+            />
 
-        <Initiative onLongPress={() => handleOpen('initiative')} />
+            <Initiative
+              generalInfo={generalInfo}
+              onLongPress={() => handleOpen('initiative')}
+            />
 
-        <Speed onLongPress={() => handleOpen('speed')} />
-      </View>
+            <Speed
+              generalInfo={generalInfo}
+              onLongPress={() => handleOpen('speed')}
+            />
+          </View>
 
-      <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
-        <Proficiency onLongPress={() => handleOpen('proficiency')} />
+          <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
+            <Proficiency
+              character={character!}
+              onLongPress={() => handleOpen('proficiency')}
+            />
 
-        <Exhaustion />
+            <Exhaustion generalInfo={generalInfo} />
 
-        <PassivePerception
-          onLongPress={() => {
-            handleOpen('passivePerception');
-          }}
-        />
-      </View>
+            <PassivePerception
+              generalInfo={generalInfo}
+              onLongPress={() => {
+                handleOpen('passivePerception');
+              }}
+            />
+          </View>
+        </>
+      ) : (
+        <Text>No Data Found</Text>
+      )}
 
       <ReusableBottomSheetModal
         ref={ref}
@@ -66,12 +103,27 @@ export const MainCharacterSheetGeneralInfo = () => {
           setActiveForm(null);
         }}
       >
-        {activeForm === 'armorClass' && <ArmorClassForm onClose={close} />}
-        {activeForm === 'initiative' && <InitiativeForm onClose={close} />}
-        {activeForm === 'speed' && <SpeedForm onClose={close} />}
-        {activeForm === 'proficiency' && <ProficiencyForm onClose={close} />}
-        {activeForm === 'passivePerception' && (
-          <PassivePerceptionForm onClose={close} />
+        {generalInfo && (
+          <>
+            {activeForm === 'armorClass' && (
+              <ArmorClassForm generalInfo={generalInfo} onClose={close} />
+            )}
+            {activeForm === 'initiative' && (
+              <InitiativeForm generalInfo={generalInfo} onClose={close} />
+            )}
+            {activeForm === 'speed' && (
+              <SpeedForm generalInfo={generalInfo} onClose={close} />
+            )}
+            {activeForm === 'proficiency' && (
+              <ProficiencyForm character={character!} onClose={close} />
+            )}
+            {activeForm === 'passivePerception' && (
+              <PassivePerceptionForm
+                generalInfo={generalInfo}
+                onClose={close}
+              />
+            )}
+          </>
         )}
       </ReusableBottomSheetModal>
     </View>

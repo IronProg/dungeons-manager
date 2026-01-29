@@ -3,9 +3,12 @@ import i18n from 'i18n';
 import { Skull } from 'lucide-react-native';
 import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
-export const Exhaustion = () => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+type ExhaustionProps = { generalInfo: CharacterGeneralInfo };
+
+export const Exhaustion = ({ generalInfo }: ExhaustionProps) => {
+  const { updateGeneralInfo } = useGeneralInfo();
 
   const handleChangeExhaustion = useCallback(() => {
     let newExhaustion = 0;

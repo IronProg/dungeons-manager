@@ -1,39 +1,42 @@
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Bird, Footprints, Mountain } from 'lucide-react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 export type SpeedHighlight = {
   type: 'normal' | 'climbing' | 'flying';
-  speed: number;
+  speed?: number;
 };
 
 type SpeedProps = {
+  generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
 };
 
-export const Speed = ({ onLongPress }: SpeedProps) => {
-  const { generalInfo } = useGeneralInfo();
-
+export const Speed = ({ generalInfo, onLongPress }: SpeedProps) => {
   const [activeSpeeds, setActiveSpeeds] = useState<SpeedHighlight[]>([]);
   const [speedIndex, setSpeedIndex] = useState<number>(0);
 
   useEffect(() => {
     const speeds: SpeedHighlight[] = [
-      { type: 'normal', speed: generalInfo.speed },
+      { type: 'normal', speed: generalInfo?.speed },
     ];
 
-    if (generalInfo.speedClimbing) {
-      speeds.push({ type: 'climbing', speed: generalInfo.speedClimbing });
+    if (generalInfo?.speedClimbing) {
+      speeds.push({ type: 'climbing', speed: generalInfo?.speedClimbing });
     }
 
-    if (generalInfo.speedFlying) {
-      speeds.push({ type: 'flying', speed: generalInfo.speedFlying });
+    if (generalInfo?.speedFlying) {
+      speeds.push({ type: 'flying', speed: generalInfo?.speedFlying });
     }
 
     setActiveSpeeds(speeds);
-  }, [generalInfo.speed, generalInfo.speedClimbing, generalInfo.speedFlying]);
+  }, [
+    generalInfo?.speed,
+    generalInfo?.speedClimbing,
+    generalInfo?.speedFlying,
+  ]);
 
   const handleChangeSpeedType = useCallback(() => {
     if (activeSpeeds.length === 0 && speedIndex < activeSpeeds.length - 1) {

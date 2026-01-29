@@ -78,6 +78,7 @@ export const pt = {
   skills: {
     acrobatics: 'Acrobacia',
     animalHandling: 'Lidar com Animais',
+    animal_handling: 'Lidar com Animais',
     arcana: 'Arcanismo',
     athletics: 'Atletismo',
     deception: 'Engação',
@@ -92,6 +93,7 @@ export const pt = {
     persuasion: 'Persuasão',
     religion: 'Religião',
     sleightOfHand: 'Prestidigitação',
+    sleight_of_hand: 'Prestidigitação',
     stealth: 'Furtividade',
     survival: 'Sobrevivência',
   },

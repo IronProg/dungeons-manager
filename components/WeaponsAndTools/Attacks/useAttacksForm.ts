@@ -6,14 +6,14 @@ import * as z from 'zod';
 
 const damageSchema = z.object({
   dice: z.string().optional(),
-  attribute: z.enum(ATTRIBUTES).optional(),
+  mainAttribute: z.enum(ATTRIBUTES).optional(),
   kind: z.string().optional(),
   customBonus: z.string().optional(),
 });
 
 const schema = z.object({
   name: z.string(),
-  attribute: z.enum(ATTRIBUTES).optional(),
+  mainAttribute: z.enum(ATTRIBUTES).optional(),
   applyProficiency: z.boolean(),
   range: z.string().optional(),
   customBonus: z.coerce.number<number>().optional(),

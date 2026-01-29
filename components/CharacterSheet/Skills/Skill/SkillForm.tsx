@@ -8,27 +8,31 @@ import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type AttributesFormProps = {
+  characterId: number;
   skill: Skill;
   onClose: () => void;
 };
 
-export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
-  const { skills, updateSkills } = useSkills();
+export const SkillForm = ({
+  characterId,
+  skill,
+  onClose,
+}: AttributesFormProps) => {
+  const { updateSkills } = useSkills();
   const { control, handleSubmit, watch } = useSkillForm({ skill });
 
   const proficiency = watch('proficiency');
 
   const onSubmit = (values: SkillFormType) => {
-    console.log({ values });
-    const newSkills = skills.map((skill) => {
-      if (skill.name === values.name) {
-        return values;
-      }
+    // const newSkills = skills.map((skill) => {
+    //   if (skill.name === values.name) {
+    //     return values;
+    //   }
 
-      return skill;
-    });
+    //   return skill;
+    // });
 
-    updateSkills(newSkills);
+    // updateSkills(newSkills);
 
     onClose();
   };
@@ -40,7 +44,7 @@ export const SkillForm = ({ skill, onClose }: AttributesFormProps) => {
           {i18n.t(`skills.${skill.name}`)}
         </Text>
         <Text className="text-gray-600 font-semibold text-lg text-center">
-          {i18n.t(`attributes.${skill.attribute}`)}
+          {i18n.t(`attributes.${skill.mainAttribute}`)}
         </Text>
       </View>
 

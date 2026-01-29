@@ -10,12 +10,16 @@ import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type InitiativeFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const InitiativeForm = ({ onClose }: InitiativeFormProps) => {
+export const InitiativeForm = ({
+  generalInfo,
+  onClose,
+}: InitiativeFormProps) => {
   const { modifiers } = useAttributes();
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useInitiativeForm({ generalInfo });
 
   const onSubmit = useCallback(

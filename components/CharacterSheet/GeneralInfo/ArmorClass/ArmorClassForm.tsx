@@ -6,13 +6,18 @@ import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { CharacterGeneralInfo } from 'types/character';
 
 type PassivePerceptionFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const ArmorClassForm = ({
+  generalInfo,
+  onClose,
+}: PassivePerceptionFormProps) => {
+  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useArmorClassForm({
     generalInfo,
   });

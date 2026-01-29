@@ -23,11 +23,11 @@ export const SavesProvider = ({ children }: { children: ReactNode }) => {
 
   const getSaveBonus = useCallback(
     (name: AttributesType) => {
-      const selectedSave = saves.find((save) => save.attribute === name);
+      const selectedSave = saves.find((save) => save.mainAttribute === name);
 
       if (!selectedSave) return 0;
 
-      let modifier = modifiers[selectedSave.attribute];
+      let modifier = modifiers[selectedSave.mainAttribute];
 
       if (selectedSave.proficiency) {
         modifier += proficiency;

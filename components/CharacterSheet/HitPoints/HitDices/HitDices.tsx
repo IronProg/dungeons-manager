@@ -3,13 +3,15 @@ import i18n from 'i18n';
 import { Tent } from 'lucide-react-native';
 import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 type HitDicesProps = {
+  generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
 };
 
-export const HitDices = ({ onLongPress }: HitDicesProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const HitDices = ({ generalInfo, onLongPress }: HitDicesProps) => {
+  const { updateGeneralInfo } = useGeneralInfo();
 
   const handleReduceHitDices = useCallback(() => {
     let newHitDices = 0;

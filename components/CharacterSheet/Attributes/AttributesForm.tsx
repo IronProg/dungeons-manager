@@ -10,26 +10,28 @@ import { useAttributes } from 'contexts/AttributesContext';
 import i18n from 'i18n';
 
 type AttributesFormProps = {
-  attributes: Attribute[];
+  characterAttributes: Attribute[];
   onClose: () => void;
 };
 
 export const AttributesForm = ({
-  attributes,
+  characterAttributes,
   onClose,
 }: AttributesFormProps) => {
   const { updateAttributes } = useAttributes();
-  const { control, handleSubmit } = useAttributesForm({ attributes });
+  const { control, handleSubmit } = useAttributesForm({ characterAttributes });
 
   const onSubmit = (values: AttributesFormType) => {
-    const newAttributes: Attribute[] = values.attributes.map((attrVal) => ({
-      name: attrVal.name,
-      value: attrVal.value,
-      tempValue: attrVal.tempValue,
-      modifier: attrVal.tempValue
-        ? getModifier(attrVal.tempValue)
-        : getModifier(attrVal.value),
-    }));
+    const newAttributes: Attribute[] = values.characterAttributesAttributes.map(
+      (attrVal) => ({
+        name: attrVal.name,
+        value: attrVal.value,
+        tempValue: attrVal.tempValue,
+        modifier: attrVal.tempValue
+          ? getModifier(attrVal.tempValue)
+          : getModifier(attrVal.value),
+      }),
+    );
 
     updateAttributes(newAttributes);
 
@@ -91,7 +93,7 @@ const AttributeFormItem = ({
           </Text>
           <Controller
             control={control}
-            name={`attributes.${index}.value`}
+            name={`characterAttributesAttributes.${index}.value`}
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
@@ -119,7 +121,7 @@ const AttributeFormItem = ({
           </Text>
           <Controller
             control={control}
-            name={`attributes.${index}.tempValue`}
+            name={`characterAttributesAttributes.${index}.tempValue`}
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput

@@ -1,13 +1,14 @@
-import { useCurrencies } from 'contexts/CurrenciesContext';
 import { Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useCurrencyForm } from './useCurrencyForm';
 import { Controller } from 'react-hook-form';
 import i18n from 'i18n';
+import { Currencies } from 'types/character';
 
-export const Currency = () => {
-  const { currencies } = useCurrencies();
-
+type CurrencyProps = {
+  currencies: Currencies;
+};
+export const Currency = ({ currencies }: CurrencyProps) => {
   const { control } = useCurrencyForm({ currencies });
 
   return (

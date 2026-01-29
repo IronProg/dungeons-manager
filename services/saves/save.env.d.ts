@@ -1,0 +1,3 @@
+type GetAllSavesParams = {
+  characterId: number;
+};

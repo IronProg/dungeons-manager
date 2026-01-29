@@ -8,13 +8,18 @@ import {
 } from './useHitPointsModifierForm';
 import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
 
-type HitPointsModifierFormProps = { onClose: () => void };
+type HitPointsModifierFormProps = {
+  generalInfo: CharacterGeneralInfo;
+  onClose: () => void;
+};
 
 export const HitPointsModifierForm = ({
+  generalInfo,
   onClose,
 }: HitPointsModifierFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+  const { updateGeneralInfo } = useGeneralInfo();
   const { control, handleSubmit } = useHitPointsModifierForm();
 
   const onSubmit = useCallback(

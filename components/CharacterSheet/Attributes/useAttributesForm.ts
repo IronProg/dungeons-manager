@@ -11,32 +11,24 @@ export const attributeSchema = z.object({
 });
 
 export const schema = z.object({
-  attributes: attributeSchema.array().length(6),
+  characterAttributesAttributes: attributeSchema.array().length(6),
 });
 
 export type FormAttribute = z.infer<typeof attributeSchema>;
 export type AttributesFormType = z.infer<typeof schema>;
 
 type useAttributesFormProps = {
-  attributes: Attribute[];
+  characterAttributes: Attribute[];
 };
 
-export const useAttributesForm = ({ attributes }: useAttributesFormProps) => {
+export const useAttributesForm = ({
+  characterAttributes,
+}: useAttributesFormProps) => {
   const { control, handleSubmit, watch, getValues, formState } =
     useForm<AttributesFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
-        attributes: ATTRIBUTES.map((attributeName) => {
-          const characterAttr = attributes.find(
-            (attr) => attr.name === attributeName,
-          );
-
-          return {
-            name: attributeName,
-            value: characterAttr?.value || 10,
-            tempValue: characterAttr?.tempValue ?? undefined,
-          };
-        }),
+        characterAttributesAttributes: [...characterAttributes],
       },
     });
 

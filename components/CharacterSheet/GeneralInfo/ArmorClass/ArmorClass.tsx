@@ -1,16 +1,16 @@
 import { useAttributes } from 'contexts/AttributesContext';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Shield } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 type ArmorClassProps = {
+  generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
 };
 
-export const ArmorClass = ({ onLongPress }: ArmorClassProps) => {
+export const ArmorClass = ({ generalInfo, onLongPress }: ArmorClassProps) => {
   const { modifiers } = useAttributes();
-  const { generalInfo } = useGeneralInfo();
 
   let modifier = generalInfo.armorClassBase;
 

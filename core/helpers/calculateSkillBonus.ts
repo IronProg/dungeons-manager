@@ -11,7 +11,7 @@ export const calculateSkillBonus = ({
   proficiencyBonus,
   skill,
 }: calculateSkillBonusProps): number => {
-  const attributeBonus = modifiers[skill.attribute];
+  const attributeBonus = modifiers[skill.mainAttribute];
 
   let modifier = attributeBonus;
 

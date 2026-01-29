@@ -8,24 +8,29 @@ import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 
 type AttributesFormProps = {
+  characterId: number;
   save: Save;
   onClose: () => void;
 };
 
-export const SaveForm = ({ save, onClose }: AttributesFormProps) => {
-  const { saves, updateSaves } = useSaves();
+export const SaveForm = ({
+  characterId,
+  save,
+  onClose,
+}: AttributesFormProps) => {
+  const { updateSaves } = useSaves();
   const { control, handleSubmit } = useSaveForm({ save });
 
   const onSubmit = (values: SaveFormType) => {
-    const newSaves = saves.map((save) => {
-      if (save.attribute === values.attribute) {
-        return values;
-      }
+    // const newSaves = saves.map((save) => {
+    //   if (save.mainAttribute === values.mainAttribute) {
+    //     return values;
+    //   }
 
-      return save;
-    });
+    //   return save;
+    // });
 
-    updateSaves(newSaves);
+    // updateSaves(newSaves);
 
     onClose();
   };
@@ -33,7 +38,7 @@ export const SaveForm = ({ save, onClose }: AttributesFormProps) => {
   return (
     <View className="flex flex-col gap-4">
       <Text className="text-gray-900 font-bold text-2xl text-center">
-        {i18n.t(`saves.${save.attribute}`)}
+        {i18n.t(`saves.${save.mainAttribute}`)}
       </Text>
 
       <View className="flex flex-row gap-4 flex-wrap">

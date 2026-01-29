@@ -1,15 +1,14 @@
-import { useCharacters } from 'contexts/CharactersContext';
 import i18n from 'i18n';
 import { Book } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { Character } from 'types/character';
 
 type ExperienceProps = {
+  character: Character;
   onLongPress: () => void;
 };
 
-export const Experience = ({ onLongPress }: ExperienceProps) => {
-  const { character } = useCharacters();
-
+export const Experience = ({ character, onLongPress }: ExperienceProps) => {
   return (
     <TouchableOpacity
       onLongPress={onLongPress}

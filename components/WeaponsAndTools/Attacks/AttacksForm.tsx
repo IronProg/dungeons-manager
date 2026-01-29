@@ -64,7 +64,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
 
           <Controller
             control={control}
-            name="attribute"
+            name="mainAttribute"
             render={({ field, fieldState: { error } }) => (
               <AttributePicker {...field} error={error?.message} />
             )}
