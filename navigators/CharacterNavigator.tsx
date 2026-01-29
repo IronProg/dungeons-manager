@@ -6,7 +6,7 @@ import type { CharacterRoutesStack } from './DrawerNavigator';
 import type { RouteProp } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useCharacter } from 'contexts/CharacterContext';
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 const Tab = createMaterialTopTabNavigator();
 
@@ -35,7 +35,14 @@ export const CharacterNavigator = () => {
   }, [character, navigation]);
 
   if (initialLoading) {
-    <ActivityIndicator />;
+    return (
+      <View className="bg-red-600 flex-1 flex flex-col justify-center items-center">
+        <View className="bg-blue-600">
+          <Text>Loading</Text>
+        </View>
+        <ActivityIndicator />
+      </View>
+    );
   }
 
   if (!character) {

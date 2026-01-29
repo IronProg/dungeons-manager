@@ -1,6 +1,7 @@
 export const pt = {
   titles: {
     characterSheet: 'Ficha do Personagem',
+    general: 'Geral',
     attributes: 'Atributos',
     savesAndSkills: 'Resistências e Habilidades',
     passivePerception: 'Percepção Passiva',

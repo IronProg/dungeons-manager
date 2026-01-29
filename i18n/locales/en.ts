@@ -1,6 +1,7 @@
 export const en = {
   titles: {
     characterSheet: 'Character Sheet',
+    general: 'General',
     attributes: 'Attributes',
     savesAndSkills: 'Saving Throws & Skills',
     passivePerception: 'Passive Perception',
