@@ -5,6 +5,7 @@ import { Attribute } from 'types/character';
 import * as z from 'zod';
 
 export const attributeSchema = z.object({
+  id: z.coerce.number<number>(),
   name: z.enum(ATTRIBUTES),
   value: z.coerce.number<number>().int(),
   tempValue: z.coerce.number<number>().int().optional(),

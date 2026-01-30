@@ -1,5 +1,5 @@
 import api from 'core/api';
-import { Character, CharacterGeneralInfo } from 'types/character';
+import { CharacterGeneralInfo } from 'types/character';
 
 export const generalInfoService = {
   fetch: ({ characterId }: GetGeneralInfoParams) =>
@@ -8,6 +8,9 @@ export const generalInfoService = {
       .then((res) => res.data),
   update: ({ ...params }: UpdateGeneralInfoParams) =>
     api
-      .put<Character>(`characters/${params.characterId}/general_infos`, params)
+      .put<CharacterGeneralInfo>(
+        `characters/${params.characterId}/general_infos`,
+        params,
+      )
       .then((res) => res.data),
 };

@@ -1,5 +1,5 @@
 import { Control, Controller } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { AttributesFormType, useAttributesForm } from './useAttributesForm';
 import { Attribute, AttributesType } from 'types/character';
 import { ATTRIBUTES } from 'core/enums/attributes';
@@ -7,6 +7,10 @@ import { getModifier } from 'core/helpers/getModifier';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import i18n from 'i18n';
+import { useUpdateAllAttributesMutation } from 'services/attributes/attributes';
+import { useCallback } from 'react';
+import { Button } from 'components/ui/Button';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type AttributesFormProps = {
   characterAttributes: Attribute[];
@@ -17,24 +21,36 @@ export const AttributesForm = ({
   characterAttributes,
   onClose,
 }: AttributesFormProps) => {
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useAttributesForm({ characterAttributes });
 
-  const onSubmit = (values: AttributesFormType) => {
-    const newAttributes: Attribute[] = values.characterAttributesAttributes.map(
-      (attrVal) => ({
-        name: attrVal.name,
-        value: attrVal.value,
-        tempValue: attrVal.tempValue,
-        modifier: attrVal.tempValue
-          ? getModifier(attrVal.tempValue)
-          : getModifier(attrVal.value),
-      }),
-    );
+  const { mutate: updateAllAttributes, isPending } =
+    useUpdateAllAttributesMutation();
 
-    // updateAttributes(newAttributes);
+  const onSubmit = useCallback(
+    (values: AttributesFormType) => {
+      const newAttributes: Attribute[] =
+        values.characterAttributesAttributes.map((attrVal) => ({
+          id: attrVal.id,
+          name: attrVal.name,
+          value: attrVal.value,
+          tempValue: attrVal.tempValue,
+          modifier: attrVal.tempValue
+            ? getModifier(attrVal.tempValue)
+            : getModifier(attrVal.value),
+        }));
 
-    onClose();
-  };
+      updateAllAttributes(
+        { characterId: characterId!, attributes: newAttributes },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
+    },
+    [characterId, onClose, updateAllAttributes],
+  );
 
   return (
     <KeyboardAwareScrollView className="flex-1">
@@ -54,14 +70,7 @@ export const AttributesForm = ({
           ))}
         </View>
 
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          className="w-full bg-primary-600 rounded-lg py-2"
-        >
-          <Text className="text-white font-bold text-2xl text-center">
-            {i18n.t('general.save')}
-          </Text>
-        </TouchableOpacity>
+        <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
       </View>
     </KeyboardAwareScrollView>
   );

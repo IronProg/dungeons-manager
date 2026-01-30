@@ -1,3 +1,7 @@
+type GetGeneralInfoParams = {
+  characterId?: number;
+};
+
 type UpdateGeneralInfoParams = {
   characterId: number;
   hitPoints?: number;
@@ -18,8 +22,4 @@ type UpdateGeneralInfoParams = {
   passivePerceptionCustomBonus?: number;
   passivePerceptionExtraAttribute?: AttributesType | null;
   exhaustion?: number;
-};
-
-type GetGeneralInfoParams = {
-  characterId?: number;
 };

@@ -6,4 +6,10 @@ export const attributesService = {
     api
       .get<Attribute[]>(`/characters/${characterId}/attributes`)
       .then((res) => res.data),
+  updateAll: ({ ...params }: UpdateAllAttributesParams) =>
+    api
+      .put<
+        Attribute[]
+      >(`characters/${params.characterId}/attributes/update_all`, params)
+      .then((res) => res.data),
 };
