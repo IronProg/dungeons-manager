@@ -6,12 +6,8 @@ import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 import { CharacterGeneralInfo } from 'types/character';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { useCharacter } from 'contexts/CharacterContext';
-import { useQueryClient } from '@tanstack/react-query';
 import { Button } from 'components/ui/Button';
 
 type PassivePerceptionFormProps = {
@@ -23,32 +19,24 @@ export const ArmorClassForm = ({
   generalInfo,
   onClose,
 }: PassivePerceptionFormProps) => {
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
-  const { control, handleSubmit } = useArmorClassForm({
-    generalInfo,
-  });
+  const { control, handleSubmit } = useArmorClassForm({ generalInfo });
 
-  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
+  const { mutate: updateGeneralInfo, isPending } =
+    useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: ArmorClassFormType) => {
-      updateCharacter(
+      updateGeneralInfo(
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-
             onClose();
           },
         },
       );
     },
-    [characterId, onClose, queryClient, updateCharacter],
+    [characterId, onClose, updateGeneralInfo],
   );
 
   return (

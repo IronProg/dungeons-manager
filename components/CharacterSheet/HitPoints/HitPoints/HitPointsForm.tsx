@@ -5,12 +5,8 @@ import { useCallback } from 'react';
 import { HitPointsFormType, useHitPointsForm } from './useHitPointsForm';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
-import { useQueryClient } from '@tanstack/react-query';
 import { useCharacter } from 'contexts/CharacterContext';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
 type HitPointsFormProps = {
@@ -19,7 +15,6 @@ type HitPointsFormProps = {
 };
 
 export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitPointsForm({ generalInfo });
 
@@ -31,18 +26,12 @@ export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-
             onClose();
           },
         },
       );
     },
-    [characterId, onClose, queryClient, updateCharacter],
+    [characterId, onClose, updateCharacter],
   );
 
   return (

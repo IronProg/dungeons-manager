@@ -5,12 +5,8 @@ import { useCallback } from 'react';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
-import { useQueryClient } from '@tanstack/react-query';
 import { useCharacter } from 'contexts/CharacterContext';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
 type SpeedFormProps = {
@@ -19,7 +15,6 @@ type SpeedFormProps = {
 };
 
 export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useSpeedForm({ generalInfo });
 
@@ -27,23 +22,16 @@ export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
 
   const onSubmit = useCallback(
     (values: SpeedFormType) => {
-      console.log({ values });
       updateCharacter(
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-
             onClose();
           },
         },
       );
     },
-    [characterId, onClose, queryClient, updateCharacter],
+    [characterId, onClose, updateCharacter],
   );
 
   return (

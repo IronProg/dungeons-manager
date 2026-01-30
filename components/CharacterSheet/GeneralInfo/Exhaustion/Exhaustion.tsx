@@ -1,13 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useCharacter } from 'contexts/CharacterContext';
 import i18n from 'i18n';
 import { Skull } from 'lucide-react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { CharacterGeneralInfo } from 'types/character';
 import { useDebounce } from 'use-debounce';
 
@@ -19,31 +15,21 @@ export const Exhaustion = ({ generalInfo }: ExhaustionProps) => {
   );
   const [debouncedExhaustion] = useDebounce(tempExhaustion, 500);
 
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   useEffect(() => {
     if (debouncedExhaustion != generalInfo.exhaustion) {
-      updateCharacter(
-        { characterId: characterId!, exhaustion: debouncedExhaustion },
-        {
-          onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-          },
-        },
-      );
+      updateCharacter({
+        characterId: characterId!,
+        exhaustion: debouncedExhaustion,
+      });
     }
   }, [
     characterId,
     debouncedExhaustion,
     generalInfo.exhaustion,
-    queryClient,
     updateCharacter,
   ]);
 

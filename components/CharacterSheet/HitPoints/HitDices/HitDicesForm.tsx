@@ -8,11 +8,7 @@ import { HIT_DICES } from 'core/enums/hitDices';
 import { ChevronDown } from 'lucide-react-native';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
-import { useQueryClient } from '@tanstack/react-query';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 import { useCharacter } from 'contexts/CharacterContext';
 
@@ -22,7 +18,6 @@ type HitDicesFormProps = {
 };
 
 export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitDicesForm({ generalInfo });
 
@@ -34,18 +29,12 @@ export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-
             onClose();
           },
         },
       );
     },
-    [characterId, onClose, queryClient, updateCharacter],
+    [characterId, onClose, updateCharacter],
   );
 
   return (

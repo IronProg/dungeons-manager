@@ -10,11 +10,7 @@ import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 import { CharacterGeneralInfo } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
-import { useQueryClient } from '@tanstack/react-query';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
 type PassivePerceptionFormProps = {
@@ -26,7 +22,6 @@ export const PassivePerceptionForm = ({
   generalInfo,
   onClose,
 }: PassivePerceptionFormProps) => {
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = usePassivePerceptionForm({ generalInfo });
 
@@ -42,18 +37,12 @@ export const PassivePerceptionForm = ({
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-
             onClose();
           },
         },
       );
     },
-    [characterId, onClose, queryClient, updateCharacter],
+    [characterId, onClose, updateCharacter],
   );
 
   return (

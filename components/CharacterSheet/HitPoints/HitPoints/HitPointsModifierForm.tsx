@@ -9,11 +9,7 @@ import {
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
-import { useQueryClient } from '@tanstack/react-query';
-import {
-  getCharacterGeneralInfoKey,
-  useUpdateGeneralInfoMutation,
-} from 'services/generalInfos/generalInfos';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
 type HitPointsModifierFormProps = {
@@ -25,11 +21,11 @@ export const HitPointsModifierForm = ({
   generalInfo,
   onClose,
 }: HitPointsModifierFormProps) => {
-  const queryClient = useQueryClient();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitPointsModifierForm();
 
-  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
+  const { mutate: updateGeneralInfo, isPending } =
+    useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: HitPointsModifierFormType) => {
@@ -65,16 +61,10 @@ export const HitPointsModifierForm = ({
         );
       }
 
-      updateCharacter(
+      updateGeneralInfo(
         { characterId: characterId!, hitPoints, temporaryHitPoints },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: getCharacterGeneralInfoKey({
-                characterId: characterId!,
-              }),
-            });
-
             onClose();
           },
         },
@@ -88,8 +78,7 @@ export const HitPointsModifierForm = ({
       generalInfo.hitPointsLimit,
       generalInfo?.temporaryHitPoints,
       onClose,
-      queryClient,
-      updateCharacter,
+      updateGeneralInfo,
     ],
   );
 
