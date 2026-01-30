@@ -1,10 +1,10 @@
 import { NewCharacter } from 'components/Characters/NewCharacter';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Container } from 'components/Container';
 
 export const NewCharacterScreen = () => {
   return (
-    <ScrollView contentContainerClassName="flex-1 flex-col">
+    <Container>
       <NewCharacter />
-    </ScrollView>
+    </Container>
   );
 };

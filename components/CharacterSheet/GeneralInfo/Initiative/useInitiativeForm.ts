@@ -6,7 +6,7 @@ import * as z from 'zod';
 
 export const schema = z.object({
   initiativeCustomBonus: z.coerce.number<number>().int().optional(),
-  initiaveExtraAttribute: z.enum(ATTRIBUTES).optional(),
+  initiativeExtraAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 
 export type InitiativeFormType = z.infer<typeof schema>;
@@ -19,7 +19,7 @@ export const useInitiativeForm = ({ generalInfo }: useInitiativeFormProps) => {
       resolver: zodResolver(schema),
       defaultValues: {
         initiativeCustomBonus: generalInfo.initiativeCustomBonus,
-        initiaveExtraAttribute: generalInfo.initiaveExtraAttribute,
+        initiativeExtraAttribute: generalInfo.initiativeExtraAttribute,
       },
     });
 

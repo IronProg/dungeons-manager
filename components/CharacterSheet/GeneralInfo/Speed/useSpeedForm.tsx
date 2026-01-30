@@ -4,9 +4,9 @@ import { CharacterGeneralInfo } from 'types/character';
 import * as z from 'zod';
 
 export const schema = z.object({
-  speed: z.coerce.number<number>().int(),
-  speedClimbing: z.coerce.number<number>().int().optional(),
-  speedFlying: z.coerce.number<number>().int().optional(),
+  speed: z.coerce.number<number>().int().optional().nullable(),
+  speedClimbing: z.coerce.number<number>().int().optional().nullable(),
+  speedFlying: z.coerce.number<number>().int().optional().nullable(),
 });
 
 export type SpeedFormType = z.infer<typeof schema>;

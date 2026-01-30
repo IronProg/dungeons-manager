@@ -21,9 +21,9 @@ export const HitPoints = ({
     <TouchableOpacity
       onLongPress={onLongPress}
       onPress={onPress}
-      className="relative flex flex-col items-center justify-center flex w-[90px]"
+      className="relative flex flex-col items-center justify-center w-[90px]"
     >
-      <Heart size={90} color={'#ccc'} fill={'#ddd'} />
+      <Heart size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
 
       <View className="absolute flex flex-col items-center justify-center h-full w-full">
         <Text className="text-gray-900 text-sm font-semibold text-center">

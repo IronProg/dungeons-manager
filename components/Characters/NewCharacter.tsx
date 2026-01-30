@@ -31,10 +31,7 @@ export const NewCharacter = () => {
   );
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerClassName="flex-1 pt-4"
-      enableOnAndroid
-    >
+    <KeyboardAwareScrollView contentContainerClassName="flex-1" enableOnAndroid>
       <View className="grow flex-col gap-4 px-4">
         <View>
           <Text className="text-lg font-medium">{i18n.t('general.name')}</Text>
@@ -58,7 +55,7 @@ export const NewCharacter = () => {
         </View>
       </View>
 
-      <View className="mt-auto px-4" style={{ paddingBottom: bottom + 20 }}>
+      <View className="mt-auto px-4" style={{ paddingBottom: bottom }}>
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={isPending}

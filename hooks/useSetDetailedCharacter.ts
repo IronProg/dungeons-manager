@@ -2,10 +2,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { getAllAttacksKey } from 'services/attacks/attack';
 import { getAllAttributesKey } from 'services/attributes/attributes';
-import {
-  getCharacterCurrencyKey,
-  getCharacterGeneralInfoKey,
-} from 'services/characters/character';
+import { getCharacterGeneralInfoKey } from 'services/generalInfos/generalInfos';
+import { getCharacterCurrencyKey } from 'services/characters/character';
 import { getAllFeaturesKey } from 'services/features/feature';
 import { getAllResourcesKey } from 'services/resources/resource';
 import { getAllSavesKey } from 'services/saves/save';

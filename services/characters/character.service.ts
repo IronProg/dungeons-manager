@@ -1,5 +1,5 @@
 import api from 'core/api';
-import { Character, CharacterGeneralInfo, Currencies } from 'types/character';
+import { Character, Currencies } from 'types/character';
 
 export const characterService = {
   fetchAll: () => api.get<Character[]>('/characters').then((res) => res.data),
@@ -7,9 +7,9 @@ export const characterService = {
     api.get<Character>(`/characters/${id}`).then((res) => res.data),
   create: ({ ...params }: CreateCharacterParams) =>
     api.post<Character>(`/characters`, params).then((res) => res.data),
-  fetchGeneralInfo: ({ characterId }: GetCharacterGeneralInfoParams) =>
+  update: ({ ...params }: UpdateCharacterParams) =>
     api
-      .get<CharacterGeneralInfo>(`/characters/${characterId}/general_info`)
+      .put<Character>(`/characters/${params.id}`, params)
       .then((res) => res.data),
   fetchCurrency: ({ characterId }: GetCharacterCurrencyParams) =>
     api

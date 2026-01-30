@@ -22,8 +22,8 @@ export const MainCharacterSheetAttributes = () => {
 
   return (
     <>
-      <View className="flex bg-gray-100 rounded-lg">
-        <View className="flex flex-row flex-wrap justify-between flex-wrap p-2 gap-y-2">
+      <View className="flex rounded-lg">
+        <View className="flex flex-row flex-wrap justify-between p-2 gap-y-2">
           <AttributeCard
             openModal={open}
             attribute={

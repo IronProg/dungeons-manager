@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
@@ -8,6 +8,13 @@ import {
 } from './useHitPointsModifierForm';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  getCharacterGeneralInfoKey,
+  useUpdateGeneralInfoMutation,
+} from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
 
 type HitPointsModifierFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -18,18 +25,23 @@ export const HitPointsModifierForm = ({
   generalInfo,
   onClose,
 }: HitPointsModifierFormProps) => {
+  const queryClient = useQueryClient();
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitPointsModifierForm();
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: HitPointsModifierFormType) => {
       let hitPoints = generalInfo.hitPoints;
-      let tempHitPoints = generalInfo?.temporaryHitPoints || 0;
+      let temporaryHitPoints: number | null =
+        generalInfo?.temporaryHitPoints || 0;
 
       if (values.damage) {
-        tempHitPoints -= values.damage;
+        temporaryHitPoints -= values.damage;
 
-        if (tempHitPoints < 0) {
-          hitPoints -= Math.abs(tempHitPoints);
+        if (temporaryHitPoints < 0) {
+          hitPoints -= Math.abs(temporaryHitPoints);
         }
       }
 
@@ -43,19 +55,42 @@ export const HitPointsModifierForm = ({
         }
       }
 
+      if (temporaryHitPoints < 0) temporaryHitPoints = null;
+      if (hitPoints < 0) hitPoints = 0;
+
       if (values.temporary) {
-        tempHitPoints = Math.max(values.temporary, tempHitPoints);
+        temporaryHitPoints = Math.max(
+          values.temporary,
+          temporaryHitPoints || 0,
+        );
       }
 
-      // updateGeneralInfo({
-      //   ...generalInfo,
-      //   hitPoints: Math.max(hitPoints, 0),
-      //   temporaryHitPoints: tempHitPoints <= 0 ? undefined : tempHitPoints,
-      // });
+      updateCharacter(
+        { characterId: characterId!, hitPoints, temporaryHitPoints },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: getCharacterGeneralInfoKey({
+                characterId: characterId!,
+              }),
+            });
+
+            onClose();
+          },
+        },
+      );
 
       onClose();
     },
-    [generalInfo, onClose],
+    [
+      characterId,
+      generalInfo.hitPoints,
+      generalInfo.hitPointsLimit,
+      generalInfo?.temporaryHitPoints,
+      onClose,
+      queryClient,
+      updateCharacter,
+    ],
   );
 
   return (
@@ -135,14 +170,7 @@ export const HitPointsModifierForm = ({
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.apply')}
-        </Text>
-      </TouchableOpacity>
+      <Button disabled={isPending} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

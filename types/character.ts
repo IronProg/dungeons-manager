@@ -40,7 +40,7 @@ export type CharacterGeneralInfo = {
   speedClimbing?: number;
   speedFlying?: number;
   initiativeCustomBonus?: number;
-  initiaveExtraAttribute?: AttributesType;
+  initiativeExtraAttribute?: AttributesType;
   passivePerceptionCustomBonus?: number;
   passivePerceptionExtraAttribute?: AttributesType;
   exhaustion: number;

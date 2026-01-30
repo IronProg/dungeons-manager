@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { InitiativeFormType, useInitiativeForm } from './useInitiativeForm';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -6,6 +6,13 @@ import { useCallback } from 'react';
 import { CharacterGeneralInfo } from 'types/character';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import {
+  getCharacterGeneralInfoKey,
+  useUpdateGeneralInfoMutation,
+} from 'services/generalInfos/generalInfos';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useQueryClient } from '@tanstack/react-query';
+import { Button } from 'components/ui/Button';
 
 type InitiativeFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -16,20 +23,31 @@ export const InitiativeForm = ({
   generalInfo,
   onClose,
 }: InitiativeFormProps) => {
+  const queryClient = useQueryClient();
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useInitiativeForm({ generalInfo });
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: InitiativeFormType) => {
-      const newGeneralInfo: CharacterGeneralInfo = {
-        ...generalInfo,
-        ...values,
-      };
+      console.log({ values });
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: getCharacterGeneralInfoKey({
+                characterId: characterId!,
+              }),
+            });
 
-      // updateGeneralInfo(newGeneralInfo);
-
-      onClose();
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose],
+    [characterId, onClose, queryClient, updateCharacter],
   );
 
   return (
@@ -42,7 +60,6 @@ export const InitiativeForm = ({
         <View>
           <Text className="font-medium mb-3">{i18n.t('general.base')}</Text>
           <Text className="text-center text-xl">2</Text>
-          {/* <Text className="text-center text-xl">{modifiers.dexterity}</Text> */}
         </View>
 
         <View className="min-w-0 flex-1">
@@ -71,7 +88,7 @@ export const InitiativeForm = ({
           </Text>
           <Controller
             control={control}
-            name="initiaveExtraAttribute"
+            name="initiativeExtraAttribute"
             render={({ field, fieldState: { error } }) => (
               <AttributePicker {...field} error={error?.message} />
             )}
@@ -79,14 +96,7 @@ export const InitiativeForm = ({
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button disabled={isPending} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

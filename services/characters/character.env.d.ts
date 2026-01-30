@@ -6,8 +6,12 @@ type CreateCharacterParams = {
   name: string;
 };
 
-type GetCharacterGeneralInfoParams = {
-  characterId?: number;
+type UpdateCharacterParams = {
+  id: number;
+  name?: string;
+  experience?: number;
+  level?: number;
+  proficiency?: number;
 };
 
 type GetCharacterCurrencyParams = {

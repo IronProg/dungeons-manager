@@ -22,6 +22,7 @@ export const pt = {
     damages: 'Danos',
     resourcesAndAmmunitions: 'Recursos e Munições',
     features: 'Características',
+    character: 'Personagem',
     characters: 'Personagens',
     newCharacter: 'Novo Personagem',
   },

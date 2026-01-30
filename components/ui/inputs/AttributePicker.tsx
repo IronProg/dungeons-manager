@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 type AttributePickerProps = {
-  value?: string;
+  value?: string | null;
   onChange?: (data: string | number) => void;
   error?: string;
 };

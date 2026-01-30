@@ -44,7 +44,7 @@ export const MainCharacterSheetSkills = () => {
 
   return (
     <>
-      <View className="flex flex-col bg-gray-100 rounded-lg px-4">
+      <View className="flex flex-col rounded-lg px-4">
         <View className="flex flex-row flex-wrap py-2 w-full">
           {isLoadingSaves && <ActivityIndicator />}
           {saves && saves.length > 0 ? (
@@ -112,7 +112,7 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row flex items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${save?.proficiency && 'bg-green-200'}`}
+        className={`flex flex-row items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${save?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 py-1">
           <Text
@@ -141,7 +141,7 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row flex items-center px-2 gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
+        className={`flex-row flex items-center px-2 gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 py-1">
           <Text className="grow text-gray-900 text-sm font-semibold rounded-md">

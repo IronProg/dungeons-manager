@@ -19,9 +19,9 @@ export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
   return (
     <TouchableOpacity
       onLongPress={onLongPress}
-      className="relative flex flex-col items-center justify-center flex w-[90px]"
+      className="relative flex flex-col items-center justify-center w-[90px]"
     >
-      <Zap size={90} color={'#ccc'} fill={'#ddd'} />
+      <Zap size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">
           {i18n.t('titles.initiative')}

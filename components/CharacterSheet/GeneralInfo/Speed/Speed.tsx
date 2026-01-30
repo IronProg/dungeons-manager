@@ -52,18 +52,18 @@ export const Speed = ({ generalInfo, onLongPress }: SpeedProps) => {
     <TouchableOpacity
       onLongPress={onLongPress}
       onPress={handleChangeSpeedType}
-      className="relative flex flex-col items-center justify-center flex w-[90px]"
+      className="relative flex flex-col items-center justify-center w-[90px]"
     >
       {activeSpeed?.type === 'normal' && (
-        <Footprints size={90} color={'#ccc'} fill={'#ddd'} />
+        <Footprints size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
       )}
 
       {activeSpeed?.type === 'climbing' && (
-        <Mountain size={90} color={'#ccc'} fill={'#ddd'} />
+        <Mountain size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
       )}
 
       {activeSpeed?.type === 'flying' && (
-        <Bird size={90} color={'#ccc'} fill={'#ddd'} />
+        <Bird size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
       )}
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
@@ -8,6 +8,13 @@ import { HIT_DICES } from 'core/enums/hitDices';
 import { ChevronDown } from 'lucide-react-native';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  getCharacterGeneralInfoKey,
+  useUpdateGeneralInfoMutation,
+} from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type HitDicesFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -15,15 +22,30 @@ type HitDicesFormProps = {
 };
 
 export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
+  const queryClient = useQueryClient();
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitDicesForm({ generalInfo });
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: HitDicesFormType) => {
-      // updateGeneralInfo({ ...generalInfo, ...values });
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: getCharacterGeneralInfoKey({
+                characterId: characterId!,
+              }),
+            });
 
-      onClose();
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose],
+    [characterId, onClose, queryClient, updateCharacter],
   );
 
   return (
@@ -116,14 +138,7 @@ export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

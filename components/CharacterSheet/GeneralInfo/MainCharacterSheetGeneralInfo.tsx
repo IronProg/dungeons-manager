@@ -13,7 +13,7 @@ import { ProficiencyForm } from './Proficiency/ProficiencyForm';
 import { InitiativeForm } from './Initiative/InitiativeForm';
 import { ArmorClassForm } from './ArmorClass/ArmorClassForm';
 import { SpeedForm } from './Speed/SpeedForm';
-import { useGetCharacterGeneralInfo } from 'services/characters/character';
+import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
 import { useCharacter } from 'contexts/CharacterContext';
 
 type GeneralInfoFormTypes =
@@ -27,7 +27,7 @@ type GeneralInfoFormTypes =
   | 'hitPoint';
 
 export const MainCharacterSheetGeneralInfo = () => {
-  const { character, characterId } = useCharacter();
+  const { characterId } = useCharacter();
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
     characterId: characterId!,
   });
@@ -68,10 +68,7 @@ export const MainCharacterSheetGeneralInfo = () => {
           </View>
 
           <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
-            <Proficiency
-              character={character!}
-              onLongPress={() => handleOpen('proficiency')}
-            />
+            <Proficiency onLongPress={() => handleOpen('proficiency')} />
 
             <Exhaustion generalInfo={generalInfo} />
 
@@ -105,7 +102,7 @@ export const MainCharacterSheetGeneralInfo = () => {
               <SpeedForm generalInfo={generalInfo} onClose={close} />
             )}
             {activeForm === 'proficiency' && (
-              <ProficiencyForm character={character!} onClose={close} />
+              <ProficiencyForm onClose={close} />
             )}
             {activeForm === 'passivePerception' && (
               <PassivePerceptionForm

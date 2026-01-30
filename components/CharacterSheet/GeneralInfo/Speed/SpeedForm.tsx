@@ -1,10 +1,17 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
 import i18n from 'i18n';
 import { CharacterGeneralInfo } from 'types/character';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCharacter } from 'contexts/CharacterContext';
+import {
+  getCharacterGeneralInfoKey,
+  useUpdateGeneralInfoMutation,
+} from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
 
 type SpeedFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -12,22 +19,31 @@ type SpeedFormProps = {
 };
 
 export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
-  const { control, handleSubmit } = useSpeedForm({
-    generalInfo,
-  });
+  const queryClient = useQueryClient();
+  const { characterId } = useCharacter();
+  const { control, handleSubmit } = useSpeedForm({ generalInfo });
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: SpeedFormType) => {
-      const newGeneralInfo = {
-        ...generalInfo,
-        ...values,
-      };
+      console.log({ values });
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: getCharacterGeneralInfoKey({
+                characterId: characterId!,
+              }),
+            });
 
-      // updateGeneralInfo(newGeneralInfo);
-
-      onClose();
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose],
+    [characterId, onClose, queryClient, updateCharacter],
   );
 
   return (
@@ -98,14 +114,7 @@ export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button disabled={isPending} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

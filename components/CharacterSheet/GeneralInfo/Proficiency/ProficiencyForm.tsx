@@ -1,26 +1,42 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ProficiencyFormType, useProficiencyForm } from './useProficiencyForm';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import i18n from 'i18n';
 import { useCharacter } from 'contexts/CharacterContext';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUpdateCharacterMutation } from 'services/characters/character';
+import { Button } from 'components/ui/Button';
 
 type ProficiencyFormProps = {
   onClose: () => void;
 };
 
 export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
+  const queryClient = useQueryClient();
+  const { characterId } = useCharacter();
   const { proficiency } = useCharacter();
   const { control, handleSubmit } = useProficiencyForm({ proficiency });
 
+  const { mutate: updateCharacter, isPending } = useUpdateCharacterMutation();
+
   const onSubmit = useCallback(
     (values: ProficiencyFormType) => {
-      // updateProficiency(values.proficiencyBonus);
+      updateCharacter(
+        { id: characterId!, ...values },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: ['characters', characterId!],
+            });
 
-      onClose();
+            onClose();
+          },
+        },
+      );
     },
-    [onClose],
+    [characterId, onClose, queryClient, updateCharacter],
   );
 
   return (
@@ -32,7 +48,7 @@ export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
       <View className="min-w-0 flex-1">
         <Controller
           control={control}
-          name="proficiencyBonus"
+          name="proficiency"
           render={({ field, fieldState: { error } }) => (
             <>
               <BottomSheetTextInput
@@ -48,14 +64,7 @@ export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
         />
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

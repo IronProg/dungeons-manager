@@ -9,8 +9,8 @@ import { HitDicesForm } from './HitDices/HitDicesForm';
 import { HitPoints } from './HitPoints/HitPoints';
 import { HitPointsForm } from './HitPoints/HitPointsForm';
 import { HitPointsModifierForm } from './HitPoints/HitPointsModifierForm';
-import { useGetCharacterGeneralInfo } from 'services/characters/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
 
 type HitPointsFormTypes =
   | 'hitPoints'

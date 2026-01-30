@@ -22,6 +22,7 @@ export const en = {
     damages: 'Damage',
     resourcesAndAmmunitions: 'Resources & Ammunition',
     features: 'Features',
+    character: 'Character',
     characters: 'Characters',
     newCharacter: 'New Character',
   },

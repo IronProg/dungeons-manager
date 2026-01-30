@@ -6,8 +6,8 @@ import * as z from 'zod';
 
 export const schema = z.object({
   armorClassBase: z.coerce.number<number>().int(),
-  armorClassFirstAttribute: z.enum(ATTRIBUTES).optional(),
-  armorClassSecondAttribute: z.enum(ATTRIBUTES).optional(),
+  armorClassFirstAttribute: z.enum(ATTRIBUTES).optional().nullable(),
+  armorClassSecondAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 
 export type ArmorClassFormType = z.infer<typeof schema>;

@@ -6,7 +6,7 @@ import * as z from 'zod';
 
 export const schema = z.object({
   passivePerceptionCustomBonus: z.coerce.number<number>().int().optional(),
-  passivePerceptionExtraAttribute: z.enum(ATTRIBUTES).optional(),
+  passivePerceptionExtraAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 
 export type PassivePerceptionFormType = z.infer<typeof schema>;

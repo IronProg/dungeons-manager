@@ -55,7 +55,7 @@ export const DrawerNavigator = () => {
             options={{
               drawerPosition: 'right',
               title: i18n.t('titles.character'),
-              headerStyle: { backgroundColor: '#aaf' },
+              headerStyle: { backgroundColor: '#94a3b8' },
             }}
             initialParams={{ characterId: characters[0].id }}
             name="CharacterSheet"
@@ -66,7 +66,7 @@ export const DrawerNavigator = () => {
           options={{
             drawerPosition: 'right',
             title: i18n.t('titles.newCharacter'),
-            headerStyle: { backgroundColor: '#aa9' },
+            headerStyle: { backgroundColor: '#94a3b8' },
           }}
           name="NewCharacter"
           component={NewCharacterScreen}

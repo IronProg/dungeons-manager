@@ -16,12 +16,12 @@ export const MainCharacterSheet = () => {
           {i18n.t('titles.characterSheet')}
         </Text>
 
-        <TouchableOpacity className="bg-gray-100 rounded-full p-2">
+        <TouchableOpacity className="bg-white rounded-full p-2">
           <SettingsIcon size={24} />
         </TouchableOpacity>
       </View>
 
-      <View className="bg-gray-100 rounded-lg flex-col items-stretch">
+      <View className="bg-white rounded-lg flex-col items-stretch">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.general')}
         </Text>
@@ -33,7 +33,7 @@ export const MainCharacterSheet = () => {
         <MainCharacterSheetGeneralInfo />
       </View>
 
-      <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
+      <View className="bg-white rounded-lg flex-col items-stretch mt-4">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.attributes')}
         </Text>
@@ -41,7 +41,7 @@ export const MainCharacterSheet = () => {
         <MainCharacterSheetAttributes />
       </View>
 
-      <View className="bg-gray-100 rounded-lg flex-col items-stretch mt-4">
+      <View className="bg-white rounded-lg flex-col items-stretch mt-4">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.savesAndSkills')}
         </Text>
