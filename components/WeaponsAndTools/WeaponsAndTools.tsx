@@ -10,9 +10,9 @@ import { Attack, Feature, Resource } from 'types/character';
 import { AttacksForm } from './Attacks/AttacksForm';
 import { FeaturesForm } from './Features/FeaturesForm';
 import { ResourcesForm } from './Resources/ResourcesForm';
-import { useGetCharacterCurrency } from 'services/characters/character';
 import { ActivityIndicator, Text } from 'react-native';
 import { useCharacter } from 'contexts/CharacterContext';
+import { useGetCharacterCurrency } from 'services/currencies/currencies';
 
 type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
@@ -20,6 +20,8 @@ export const WeaponsAndTools = () => {
   const { character } = useCharacter();
   const { data: currencies, isLoading: isLoadingCurrencies } =
     useGetCharacterCurrency({ characterId: character?.id });
+
+  console.log({ currencies });
 
   const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
     null,

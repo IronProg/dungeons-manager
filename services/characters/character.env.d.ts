@@ -13,7 +13,3 @@ type UpdateCharacterParams = {
   level?: number;
   proficiency?: number;
 };
-
-type GetCharacterCurrencyParams = {
-  characterId?: number;
-};

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { savesService } from './save.service';
 import { Save } from 'types/character';
 
@@ -14,5 +14,18 @@ export const useGetAllSaves = ({ characterId }: GetAllSavesParams) => {
     queryFn: () => savesService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
+  });
+};
+
+export const useUpdateSaveMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Save, Error, UpdateSaveParams>({
+    mutationFn: (params: UpdateSaveParams) => savesService.update(params),
+    onSuccess: (_, { characterId }) => {
+      queryClient.invalidateQueries({
+        queryKey: getAllSavesKey({ characterId }),
+      });
+    },
   });
 };

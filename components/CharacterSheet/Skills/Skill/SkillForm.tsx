@@ -1,10 +1,12 @@
 import { Controller } from 'react-hook-form';
-import { Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Switch, Text, View } from 'react-native';
 import { SkillFormType, useSkillForm } from './useSkillForm';
 import { Skill } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { useUpdateSkillMutation } from 'services/skills/skill';
+import { Button } from 'components/ui/Button';
 
 type AttributesFormProps = {
   characterId: number;
@@ -21,18 +23,17 @@ export const SkillForm = ({
 
   const proficiency = watch('proficiency');
 
+  const { mutate: updateSkill, isPending } = useUpdateSkillMutation();
+
   const onSubmit = (values: SkillFormType) => {
-    // const newSkills = skills.map((skill) => {
-    //   if (skill.name === values.name) {
-    //     return values;
-    //   }
-
-    //   return skill;
-    // });
-
-    // updateSkills(newSkills);
-
-    onClose();
+    updateSkill(
+      { characterId, id: skill.id!, ...values },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+      },
+    );
   };
 
   return (
@@ -122,14 +123,7 @@ export const SkillForm = ({
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

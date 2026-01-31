@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { skillsService } from './skill.service';
 import { Skill } from 'types/character';
 
@@ -14,5 +14,18 @@ export const useGetAllSkills = ({ characterId }: GetAllSkillsParams) => {
     queryFn: () => skillsService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
+  });
+};
+
+export const useUpdateSkillMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Skill, Error, UpdateSkillParams>({
+    mutationFn: (params: UpdateSkillParams) => skillsService.update(params),
+    onSuccess: (_, { characterId }) => {
+      queryClient.invalidateQueries({
+        queryKey: getAllSkillsKey({ characterId }),
+      });
+    },
   });
 };

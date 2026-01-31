@@ -1,10 +1,12 @@
 import { Controller } from 'react-hook-form';
-import { Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Switch, Text, View } from 'react-native';
 import { SaveFormType, useSaveForm } from './useSaveForm';
 import { Save } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { useUpdateSaveMutation } from 'services/saves/save';
+import { Button } from 'components/ui/Button';
 
 type AttributesFormProps = {
   characterId: number;
@@ -19,18 +21,17 @@ export const SaveForm = ({
 }: AttributesFormProps) => {
   const { control, handleSubmit } = useSaveForm({ save });
 
+  const { mutate: updateSave, isPending } = useUpdateSaveMutation();
+
   const onSubmit = (values: SaveFormType) => {
-    // const newSaves = saves.map((save) => {
-    //   if (save.mainAttribute === values.mainAttribute) {
-    //     return values;
-    //   }
-
-    //   return save;
-    // });
-
-    // updateSaves(newSaves);
-
-    onClose();
+    updateSave(
+      { characterId, id: save.id!, ...values },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+      },
+    );
   };
 
   return (
@@ -98,14 +99,7 @@ export const SaveForm = ({
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

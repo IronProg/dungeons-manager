@@ -1,11 +1,3 @@
-export type AttributesType =
-  | 'strength'
-  | 'dexterity'
-  | 'constitution'
-  | 'intelligence'
-  | 'wisdom'
-  | 'charisma';
-
 export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
 
 export type Character = {
