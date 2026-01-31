@@ -5,10 +5,13 @@ import { Attack } from 'types/character';
 import * as z from 'zod';
 
 const damageSchema = z.object({
-  dice: z.string().optional(),
+  id: z.coerce.number<number>().optional(),
+  diceSize: z.coerce.number<number>().optional(),
+  diceAmount: z.coerce.number<number>().optional(),
   mainAttribute: z.enum(ATTRIBUTES).optional(),
   kind: z.string().optional(),
   customBonus: z.string().optional(),
+  _destroy: z.boolean().optional(),
 });
 
 const schema = z.object({
@@ -19,7 +22,7 @@ const schema = z.object({
   customBonus: z.coerce.number<number>().optional(),
   properties: z.string().optional(),
   description: z.string().optional(),
-  damages: damageSchema.array(),
+  damagesAttributes: damageSchema.array(),
 });
 
 export type AttacksFormType = z.infer<typeof schema>;
@@ -29,15 +32,15 @@ type useAttacksFormProps = {
 };
 
 export const useAttacksForm = ({ attack }: useAttacksFormProps) => {
-  const { control, handleSubmit, watch, getValues, formState } =
+  const { control, handleSubmit, watch, getValues, formState, setValue } =
     useForm<AttacksFormType>({
       resolver: zodResolver(schema),
-      defaultValues: attack || {
-        name: '',
-        applyProficiency: false,
-        range: '',
-        properties: '',
-        damages: [{}],
+      defaultValues: {
+        applyProficiency: attack?.applyProficiency ?? false,
+        name: attack?.name ?? '',
+        range: attack?.range ?? '',
+        properties: attack?.properties ?? '',
+        damagesAttributes: attack?.damages ?? [],
       },
     });
 
@@ -46,6 +49,7 @@ export const useAttacksForm = ({ attack }: useAttacksFormProps) => {
     handleSubmit,
     watch,
     getValues,
+    setValue,
     formState,
     errors: formState.errors,
   };

@@ -32,7 +32,6 @@ export const PassivePerceptionForm = ({
 
   const onSubmit = useCallback(
     (values: PassivePerceptionFormType) => {
-      console.log({ values });
       updateCharacter(
         { characterId: characterId!, ...values },
         {

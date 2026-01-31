@@ -94,7 +94,8 @@ export type Attack = {
 
 export type Damage = {
   id?: number;
-  dice?: string;
+  diceAmount?: number;
+  diceSize?: number;
   mainAttribute?: AttributesType;
   kind?: string;
   customBonus?: string;

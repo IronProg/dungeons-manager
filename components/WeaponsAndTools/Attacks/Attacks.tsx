@@ -1,10 +1,19 @@
-import { Plus } from 'lucide-react-native';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Info, Plus, Trash } from 'lucide-react-native';
+import {
+  ActivityIndicator,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Attack } from 'types/character';
 import RNModal from 'react-native-modal';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import i18n from 'i18n';
-import { useGetAllAttacks } from 'services/attacks/attack';
+import {
+  useDeleteAttackMutation,
+  useGetAllAttacks,
+} from 'services/attacks/attack';
 import { useCharacter } from 'contexts/CharacterContext';
 
 type AttacksProps = {
@@ -17,12 +26,32 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
   const { data: attacks, isLoading } = useGetAllAttacks({
     characterId: characterId!,
   });
+
+  const { mutate: deleteAttack } = useDeleteAttackMutation();
+
   const [detailedAttack, setDetailedAttack] = useState<Attack>();
+  const [deleteMode, setDeleteMode] = useState<boolean>(false);
+
+  const handleDelete = useCallback(
+    (attack: Attack) => {
+      deleteAttack({ characterId: characterId!, id: attack.id! });
+    },
+    [characterId, deleteAttack],
+  );
 
   return (
     <>
       <View className="flex flex-row justify-between mb-2 items-center">
-        <View />
+        <TouchableHighlight
+          onPress={() => setDeleteMode((prev) => !prev)}
+          className={`rounded-full p-2 ${deleteMode ? 'bg-slate-500' : 'bg-red-500'}`}
+        >
+          {deleteMode ? (
+            <Info color="white" size={16} />
+          ) : (
+            <Trash color="white" size={16} />
+          )}
+        </TouchableHighlight>
 
         <Text className="mt-4 text-black text-2xl font-bold text-center">
           {i18n.t('titles.attacks')}
@@ -51,32 +80,45 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
 
           return (
             <TouchableOpacity
-              onPress={() => setDetailedAttack(attack)}
-              onLongPress={() => onSelect(attack)}
+              onPress={() => !deleteMode && setDetailedAttack(attack)}
+              onLongPress={() => !deleteMode && onSelect(attack)}
               key={index}
-              className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
+              className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 relative"
             >
               <View className="bg-gray-100 rounded-lg px-2 py-1 grow">
                 <Text>{attack.name}</Text>
                 <Text>{attack.range}</Text>
               </View>
               <Text className="bg-gray-100 rounded-lg px-2 py-1">
-                {attackBonus > 0 && '+'}
+                {attackBonus >= 0 && '+'}
                 {attackBonus}
               </Text>
               <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
                 {attack.damages.map((damage, index) => {
                   const attributeModifier = damage.mainAttribute ? 2 : 0;
 
+                  const diceText = `${damage.diceAmount && damage.diceAmount + 'd'}${damage.diceSize}`;
                   return (
                     <Text className="" key={index}>
-                      {damage.dice}{' '}
-                      {`${attributeModifier > 0 ? '+' : ''}${attributeModifier}`}{' '}
-                      {damage.customBonus && damage.customBonus} {damage.kind}
+                      {diceText}{' '}
+                      {`${attributeModifier >= 0 ? '+' : ''}${attributeModifier}`}{' '}
+                      {damage.customBonus && `+${damage.customBonus}`}{' '}
+                      {damage.kind}
                     </Text>
                   );
                 })}
               </View>
+
+              {deleteMode && (
+                <View className="absolute inset-y-0 right-2 flex flex-row items-center">
+                  <TouchableHighlight
+                    onPress={() => handleDelete(attack)}
+                    className="bg-red-500 rounded-full p-2"
+                  >
+                    <Trash size={16} color="white" />
+                  </TouchableHighlight>
+                </View>
+              )}
             </TouchableOpacity>
           );
         })

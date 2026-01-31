@@ -26,7 +26,6 @@ export const InitiativeForm = ({
 
   const onSubmit = useCallback(
     (values: InitiativeFormType) => {
-      console.log({ values });
       updateCharacter(
         { characterId: characterId!, ...values },
         {

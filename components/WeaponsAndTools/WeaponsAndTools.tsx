@@ -21,8 +21,6 @@ export const WeaponsAndTools = () => {
   const { data: currencies, isLoading: isLoadingCurrencies } =
     useGetCharacterCurrency({ characterId: character?.id });
 
-  console.log({ currencies });
-
   const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
     null,
   );
