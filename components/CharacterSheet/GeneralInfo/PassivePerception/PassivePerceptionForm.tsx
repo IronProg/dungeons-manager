@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import {
   PassivePerceptionFormType,
   usePassivePerceptionForm,
@@ -6,38 +6,42 @@ import {
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
-import { useSkills } from 'contexts/SkillsContext';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { CharacterGeneralInfo } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
 
 type PassivePerceptionFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
 export const PassivePerceptionForm = ({
+  generalInfo,
   onClose,
 }: PassivePerceptionFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
-  const { getSkillBonus } = useSkills();
-  const { control, handleSubmit } = usePassivePerceptionForm({
-    generalInfo,
-  });
+  const { characterId } = useCharacter();
+  const { control, handleSubmit } = usePassivePerceptionForm({ generalInfo });
 
-  const percetionBonus = getSkillBonus('perception');
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
+
+  // const percetionBonus = getSkillBonus('perception');
+  const percetionBonus = 0;
 
   const onSubmit = useCallback(
     (values: PassivePerceptionFormType) => {
-      const newGeneralInfo = {
-        ...generalInfo,
-        passivePerceptionCustomBonus: values.passivePerceptionCustomBonus,
-      };
-
-      updateGeneralInfo(newGeneralInfo);
-
-      onClose();
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [characterId, onClose, updateCharacter],
   );
 
   return (
@@ -93,14 +97,7 @@ export const PassivePerceptionForm = ({
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

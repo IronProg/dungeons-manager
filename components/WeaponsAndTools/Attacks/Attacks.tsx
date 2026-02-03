@@ -1,12 +1,14 @@
-import { useAttacks } from 'contexts/AttacksContext';
-import { useAttributes } from 'contexts/AttributesContext';
-import { useCharacters } from 'contexts/CharactersContext';
-import { Plus } from 'lucide-react-native';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Info, Plus, Trash } from 'lucide-react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Attack } from 'types/character';
 import RNModal from 'react-native-modal';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import i18n from 'i18n';
+import {
+  useDeleteAttackMutation,
+  useGetAllAttacks,
+} from 'services/attacks/attack';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type AttacksProps = {
   onCreate: () => void;
@@ -14,16 +16,36 @@ type AttacksProps = {
 };
 
 export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
-  const [detailedAttack, setDetailedAttack] = useState<Attack>();
+  const { characterId, modifiers, proficiency } = useCharacter();
+  const { data: attacks, isLoading } = useGetAllAttacks({
+    characterId: characterId!,
+  });
 
-  const { proficiency } = useCharacters();
-  const { modifiers } = useAttributes();
-  const { attacks } = useAttacks();
+  const { mutate: deleteAttack } = useDeleteAttackMutation();
+
+  const [detailedAttack, setDetailedAttack] = useState<Attack>();
+  const [deleteMode, setDeleteMode] = useState<boolean>(false);
+
+  const handleDelete = useCallback(
+    (attack: Attack) => {
+      deleteAttack({ characterId: characterId!, id: attack.id! });
+    },
+    [characterId, deleteAttack],
+  );
 
   return (
     <>
       <View className="flex flex-row justify-between mb-2 items-center">
-        <View />
+        <TouchableOpacity
+          onPress={() => setDeleteMode((prev) => !prev)}
+          className={`rounded-full p-2 ${deleteMode ? 'bg-slate-500' : 'bg-red-500'}`}
+        >
+          {deleteMode ? (
+            <Info color="white" size={16} />
+          ) : (
+            <Trash color="white" size={16} />
+          )}
+        </TouchableOpacity>
 
         <Text className="mt-4 text-black text-2xl font-bold text-center">
           {i18n.t('titles.attacks')}
@@ -37,47 +59,70 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
         </TouchableOpacity>
       </View>
 
-      {attacks?.map((attack, index) => {
-        const attributeModifier = attack.attribute
-          ? modifiers[attack.attribute]
-          : 0;
+      {isLoading && <ActivityIndicator />}
 
-        const attackBonus =
-          attributeModifier + (attack.applyProficiency ? proficiency : 0);
+      {attacks && attacks.length > 0 ? (
+        attacks?.map((attack, index) => {
+          let attackModifier = attack.customBonus || 0;
 
-        return (
-          <TouchableOpacity
-            onPress={() => setDetailedAttack(attack)}
-            onLongPress={() => onSelect(attack)}
-            key={index}
-            className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
-          >
-            <View className="bg-gray-100 rounded-lg px-2 py-1 grow">
-              <Text>{attack.name}</Text>
-              <Text>{attack.range}</Text>
-            </View>
-            <Text className="bg-gray-100 rounded-lg px-2 py-1">
-              {attackBonus > 0 && '+'}
-              {attackBonus}
-            </Text>
-            <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
-              {attack.damages.map((damage, index) => {
-                const attributeModifier = damage.attribute
-                  ? modifiers[damage.attribute]
-                  : 0;
+          if (modifiers && attack.mainAttribute) {
+            attackModifier += modifiers[attack.mainAttribute];
+          }
 
-                return (
-                  <Text className="" key={index}>
-                    {damage.dice}{' '}
-                    {`${attributeModifier > 0 ? '+' : ''}${attributeModifier}`}{' '}
-                    {damage.customBonus && damage.customBonus} {damage.kind}
-                  </Text>
-                );
-              })}
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+          if (attack.applyProficiency) attackModifier += proficiency;
+
+          return (
+            <TouchableOpacity
+              onPress={() => !deleteMode && setDetailedAttack(attack)}
+              onLongPress={() => !deleteMode && onSelect(attack)}
+              key={index}
+              className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 relative"
+            >
+              <View className="bg-white rounded-lg px-2 py-1 grow">
+                <Text>{attack.name}</Text>
+                <Text>{attack.range}</Text>
+              </View>
+              <Text className="bg-white rounded-lg px-2 py-1">
+                {attackModifier >= 0 && '+'}
+                {attackModifier}
+              </Text>
+              <View className="flex flex-col bg-white rounded-lg px-2 py-1 grow">
+                {attack.damages.map((damage, index) => {
+                  let attributeBonus = 0;
+
+                  if (modifiers && damage.mainAttribute) {
+                    attributeBonus += modifiers[damage.mainAttribute];
+                  }
+
+                  const diceText = `${damage.diceAmount && damage.diceAmount + 'd'}${damage.diceSize}`;
+
+                  return (
+                    <Text className="" key={index}>
+                      {diceText}{' '}
+                      {`${attributeBonus >= 0 ? '+' : ''}${attributeBonus}`}{' '}
+                      {damage.customBonus && `+${damage.customBonus}`}{' '}
+                      {damage.kind}
+                    </Text>
+                  );
+                })}
+              </View>
+
+              {deleteMode && (
+                <View className="absolute inset-y-0 right-2 flex flex-row items-center">
+                  <TouchableOpacity
+                    onPress={() => handleDelete(attack)}
+                    className="bg-red-500 rounded-full p-2"
+                  >
+                    <Trash size={16} color="white" />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </TouchableOpacity>
+          );
+        })
+      ) : (
+        <Text>No attacks found</Text>
+      )}
 
       <RNModal
         isVisible={!!detailedAttack}

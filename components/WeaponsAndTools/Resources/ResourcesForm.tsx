@@ -1,11 +1,16 @@
 import { Controller } from 'react-hook-form';
 import { Resource } from 'types/character';
 import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useResources } from 'contexts/ResourcesContext';
 import i18n from 'i18n';
+import {
+  useCreateResourceMutation,
+  useUpdateResourceMutation,
+} from 'services/resources/resource';
+import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from 'components/ui/Button';
 
 type ResourcesFormProps = {
   resource?: Resource;
@@ -13,20 +18,37 @@ type ResourcesFormProps = {
 };
 
 export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
-  const { appendResource, updateResource } = useResources();
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useResourcesForm({ resource });
+
+  const { mutate: createResource, isPending: createPending } =
+    useCreateResourceMutation();
+  const { mutate: updateResource, isPending: updatePending } =
+    useUpdateResourceMutation();
 
   const onSubmit = useCallback(
     (values: ResourcesFormType) => {
       if (!resource) {
-        appendResource(values);
+        createResource(
+          { characterId: characterId!, ...values },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+          },
+        );
       } else {
-        updateResource(resource, values);
+        updateResource(
+          { characterId: characterId!, id: resource.id!, ...values },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+          },
+        );
       }
-
-      onClose();
     },
-    [appendResource, resource, onClose, updateResource],
+    [resource, characterId, createResource, onClose, updateResource],
   );
 
   return (
@@ -101,14 +123,10 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
+      <Button
+        disabled={createPending || updatePending}
         onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 export const schema = z.object({
-  proficiencyBonus: z.coerce.number<number>().int(),
+  proficiency: z.coerce.number<number>().int(),
 });
 
 export type ProficiencyFormType = z.infer<typeof schema>;
@@ -16,7 +16,7 @@ export const useProficiencyForm = ({
   const { control, handleSubmit, watch, getValues, formState } =
     useForm<ProficiencyFormType>({
       resolver: zodResolver(schema),
-      defaultValues: { proficiencyBonus: proficiency },
+      defaultValues: { proficiency },
     });
 
   return {

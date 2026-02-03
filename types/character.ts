@@ -1,11 +1,3 @@
-export type AttributesType =
-  | 'strength'
-  | 'dexterity'
-  | 'constitution'
-  | 'intelligence'
-  | 'wisdom'
-  | 'charisma';
-
 export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
 
 export type Character = {
@@ -16,7 +8,7 @@ export type Character = {
   experience: number;
   generalInfo: CharacterGeneralInfo;
   currencies: Currencies;
-  attributes: Attribute[];
+  characterAttributes: Attribute[];
   saves: Save[];
   skills: Skill[];
   attacks: Attack[];
@@ -25,6 +17,7 @@ export type Character = {
 };
 
 export type CharacterGeneralInfo = {
+  id?: number;
   hitPoints: number;
   hitPointsLimit: number;
   hitPointsLimitTemporary?: number;
@@ -39,13 +32,14 @@ export type CharacterGeneralInfo = {
   speedClimbing?: number;
   speedFlying?: number;
   initiativeCustomBonus?: number;
-  initiaveExtraAttribute?: AttributesType;
+  initiativeExtraAttribute?: AttributesType;
   passivePerceptionCustomBonus?: number;
   passivePerceptionExtraAttribute?: AttributesType;
   exhaustion: number;
 };
 
 export type Attribute = {
+  id?: number;
   name: AttributesType;
   value: number;
   tempValue?: number;
@@ -53,21 +47,24 @@ export type Attribute = {
 };
 
 export type Save = {
-  attribute: AttributesType;
+  id?: number;
+  mainAttribute: AttributesType;
   proficiency: boolean;
   customBonus?: number;
   extraAttribute?: AttributesType;
 };
 
 export type Feature = {
+  id?: number;
   title: string;
   description: string;
   origin?: string;
 };
 
 export type Skill = {
+  id?: number;
   name: string;
-  attribute: AttributesType;
+  mainAttribute: AttributesType;
   proficiency: boolean;
   expertise?: boolean;
   customBonus?: number;
@@ -75,6 +72,7 @@ export type Skill = {
 };
 
 export type Currencies = {
+  id?: number;
   copperPoints: number;
   silverPoints: number;
   electrumPoints: number;
@@ -83,8 +81,9 @@ export type Currencies = {
 };
 
 export type Attack = {
+  id?: number;
   name: string;
-  attribute?: AttributesType;
+  mainAttribute?: AttributesType;
   applyProficiency: boolean;
   customBonus?: number;
   range?: string;
@@ -94,13 +93,16 @@ export type Attack = {
 };
 
 export type Damage = {
-  dice?: string;
-  attribute?: AttributesType;
+  id?: number;
+  diceAmount?: number;
+  diceSize?: number;
+  mainAttribute?: AttributesType;
   kind?: string;
   customBonus?: string;
 };
 
 export type Resource = {
+  id?: number;
   name: string;
   amount: number;
   max?: number;

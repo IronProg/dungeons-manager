@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { useCharacters } from 'contexts/CharactersContext';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Currency } from './Currency/Currency';
 import { Attacks } from './Attacks/Attacks';
@@ -11,11 +10,16 @@ import { Attack, Feature, Resource } from 'types/character';
 import { AttacksForm } from './Attacks/AttacksForm';
 import { FeaturesForm } from './Features/FeaturesForm';
 import { ResourcesForm } from './Resources/ResourcesForm';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useGetCharacterCurrency } from 'services/currencies/currencies';
 
 type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
 export const WeaponsAndTools = () => {
-  const { character } = useCharacters();
+  const { character } = useCharacter();
+  const { data: currencies, isLoading: isLoadingCurrencies } =
+    useGetCharacterCurrency({ characterId: character?.id });
 
   const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
     null,
@@ -47,38 +51,52 @@ export const WeaponsAndTools = () => {
   return (
     <>
       {character && (
-        <ScrollView scrollEnabled>
-          <Currency />
+        <ScrollView
+          scrollEnabled
+          contentContainerClassName="flex flex-col gap-4"
+        >
+          {isLoadingCurrencies && <ActivityIndicator />}
+          {currencies ? (
+            <Currency currencies={currencies!} />
+          ) : (
+            <Text>No currencies found</Text>
+          )}
 
-          <Attacks
-            onCreate={() => {
-              handleOpen('attacks');
-            }}
-            onSelect={(attack: Attack) => {
-              setHighlightedAttack(attack);
-              handleOpen('attacks');
-            }}
-          />
+          <View>
+            <Attacks
+              onCreate={() => {
+                handleOpen('attacks');
+              }}
+              onSelect={(attack: Attack) => {
+                setHighlightedAttack(attack);
+                handleOpen('attacks');
+              }}
+            />
+          </View>
 
-          <Resources
-            onCreate={() => {
-              handleOpen('resources');
-            }}
-            onSelect={(attack: Resource) => {
-              setHighlightedResource(attack);
-              handleOpen('resources');
-            }}
-          />
+          <View>
+            <Resources
+              onCreate={() => {
+                handleOpen('resources');
+              }}
+              onSelect={(resource: Resource) => {
+                setHighlightedResource(resource);
+                handleOpen('resources');
+              }}
+            />
+          </View>
 
-          <Features
-            onCreate={() => {
-              handleOpen('features');
-            }}
-            onSelect={(attack: Feature) => {
-              setHighlightedFeature(attack);
-              handleOpen('features');
-            }}
-          />
+          <View>
+            <Features
+              onCreate={() => {
+                handleOpen('features');
+              }}
+              onSelect={(feature: Feature) => {
+                setHighlightedFeature(feature);
+                handleOpen('features');
+              }}
+            />
+          </View>
         </ScrollView>
       )}
 

@@ -1,32 +1,31 @@
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
 import { Tent } from 'lucide-react-native';
 import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { CharacterGeneralInfo } from 'types/character';
 
 type HitDicesProps = {
+  generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
 };
 
-export const HitDices = ({ onLongPress }: HitDicesProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
-
+export const HitDices = ({ generalInfo, onLongPress }: HitDicesProps) => {
   const handleReduceHitDices = useCallback(() => {
     let newHitDices = 0;
     if (generalInfo.hitDices > 0) {
       newHitDices = generalInfo.hitDices - 1;
     }
 
-    updateGeneralInfo({ ...generalInfo, hitDices: newHitDices });
-  }, [generalInfo, updateGeneralInfo]);
+    // updateGeneralInfo({ ...generalInfo, hitDices: newHitDices });
+  }, [generalInfo]);
 
   return (
     <TouchableOpacity
       onLongPress={onLongPress}
       onPress={handleReduceHitDices}
-      className="relative flex flex-col items-center justify-center flex w-[90px]"
+      className="relative flex flex-col items-center justify-center w-[90px]"
     >
-      <Tent size={90} color={'#ccc'} fill={'#ddd'} />
+      <Tent size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
 
       <View className="absolute flex flex-col items-center justify-center h-full w-full">
         <Text className="text-gray-900 text-sm font-semibold text-center">

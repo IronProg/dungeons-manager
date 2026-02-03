@@ -1,31 +1,42 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { CharacterGeneralInfo } from 'types/character';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
+import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from 'components/ui/Button';
 
 type PassivePerceptionFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
-  const { control, handleSubmit } = useArmorClassForm({
-    generalInfo,
-  });
+export const ArmorClassForm = ({
+  generalInfo,
+  onClose,
+}: PassivePerceptionFormProps) => {
+  const { characterId } = useCharacter();
+  const { control, handleSubmit } = useArmorClassForm({ generalInfo });
+
+  const { mutate: updateGeneralInfo, isPending } =
+    useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: ArmorClassFormType) => {
-      const newGeneralInfo = { ...generalInfo, ...values };
-
-      updateGeneralInfo(newGeneralInfo);
-
-      onClose();
+      updateGeneralInfo(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [characterId, onClose, updateGeneralInfo],
   );
 
   return (
@@ -81,14 +92,7 @@ export const ArmorClassForm = ({ onClose }: PassivePerceptionFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

@@ -1,6 +1,7 @@
 export const pt = {
   titles: {
     characterSheet: 'Ficha do Personagem',
+    general: 'Geral',
     attributes: 'Atributos',
     savesAndSkills: 'Resistências e Habilidades',
     passivePerception: 'Percepção Passiva',
@@ -21,6 +22,9 @@ export const pt = {
     damages: 'Danos',
     resourcesAndAmmunitions: 'Recursos e Munições',
     features: 'Características',
+    character: 'Personagem',
+    characters: 'Personagens',
+    newCharacter: 'Novo Personagem',
   },
   general: {
     none: 'Nenhum',
@@ -50,6 +54,7 @@ export const pt = {
     description: 'Descrição',
     currentQuantity: 'Quantidade Atual',
     limit: 'Limite',
+    generateCharacter: 'Gerar Personagem',
   },
   hitPoints: {
     tempMaxHP: 'PV Máximo Temporário',
@@ -78,6 +83,7 @@ export const pt = {
   skills: {
     acrobatics: 'Acrobacia',
     animalHandling: 'Lidar com Animais',
+    animal_handling: 'Lidar com Animais',
     arcana: 'Arcanismo',
     athletics: 'Atletismo',
     deception: 'Engação',
@@ -92,6 +98,7 @@ export const pt = {
     persuasion: 'Persuasão',
     religion: 'Religião',
     sleightOfHand: 'Prestidigitação',
+    sleight_of_hand: 'Prestidigitação',
     stealth: 'Furtividade',
     survival: 'Sobrevivência',
   },
@@ -101,5 +108,9 @@ export const pt = {
     ep: 'PE',
     gp: 'PO',
     pp: 'PPl',
+  },
+  loadings: {
+    character: 'Carregando dados de personagem',
+    characters: 'Carregando personagens do usuário',
   },
 };

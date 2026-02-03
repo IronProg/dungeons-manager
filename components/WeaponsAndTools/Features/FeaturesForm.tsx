@@ -1,11 +1,16 @@
 import { Controller } from 'react-hook-form';
 import { Feature } from 'types/character';
 import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useFeatures } from 'contexts/FeaturesContext';
 import i18n from 'i18n';
+import { useCharacter } from 'contexts/CharacterContext';
+import {
+  useCreateFeatureMutation,
+  useUpdateFeatureMutation,
+} from 'services/features/feature';
+import { Button } from 'components/ui/Button';
 
 type FeaturesFormProps = {
   feature?: Feature;
@@ -13,20 +18,37 @@ type FeaturesFormProps = {
 };
 
 export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
-  const { appendFeature, updateFeature } = useFeatures();
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useFeaturesForm({ feature });
+
+  const { mutate: createFeature, isPending: createPending } =
+    useCreateFeatureMutation();
+  const { mutate: updateFeature, isPending: updatePending } =
+    useUpdateFeatureMutation();
 
   const onSubmit = useCallback(
     (values: FeaturesFormType) => {
       if (!feature) {
-        appendFeature(values);
+        createFeature(
+          { characterId: characterId!, ...values },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+          },
+        );
       } else {
-        updateFeature(feature, values);
+        updateFeature(
+          { characterId: characterId!, id: feature.id!, ...values },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+          },
+        );
       }
-
-      onClose();
     },
-    [appendFeature, feature, onClose, updateFeature],
+    [feature, characterId, createFeature, onClose, updateFeature],
   );
 
   return (
@@ -102,14 +124,10 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
+      <Button
+        disabled={createPending || updatePending}
         onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };

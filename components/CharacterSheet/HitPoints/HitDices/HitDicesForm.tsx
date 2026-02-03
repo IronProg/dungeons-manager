@@ -1,29 +1,40 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitDicesFormType, useHitDicesForm } from './useHitDicesForm';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import RNPickerSelect from 'react-native-picker-select';
 import { HIT_DICES } from 'core/enums/hitDices';
 import { ChevronDown } from 'lucide-react-native';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
+import { useCharacter } from 'contexts/CharacterContext';
 
 type HitDicesFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitDicesForm({ generalInfo });
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: HitDicesFormType) => {
-      updateGeneralInfo({ ...generalInfo, ...values });
-
-      onClose();
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [characterId, onClose, updateCharacter],
   );
 
   return (
@@ -116,14 +127,7 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
     </View>
   );
 };

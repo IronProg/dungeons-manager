@@ -1,33 +1,37 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
 
 type SpeedFormProps = {
+  generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const SpeedForm = ({ onClose }: SpeedFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
-  const { control, handleSubmit } = useSpeedForm({
-    generalInfo,
-  });
+export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
+  const { characterId } = useCharacter();
+  const { control, handleSubmit } = useSpeedForm({ generalInfo });
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: SpeedFormType) => {
-      const newGeneralInfo = {
-        ...generalInfo,
-        ...values,
-      };
-
-      updateGeneralInfo(newGeneralInfo);
-
-      onClose();
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [characterId, onClose, updateCharacter],
   );
 
   return (
@@ -98,14 +102,7 @@ export const SpeedForm = ({ onClose }: SpeedFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button disabled={isPending} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

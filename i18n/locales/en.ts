@@ -1,6 +1,7 @@
 export const en = {
   titles: {
     characterSheet: 'Character Sheet',
+    general: 'General',
     attributes: 'Attributes',
     savesAndSkills: 'Saving Throws & Skills',
     passivePerception: 'Passive Perception',
@@ -21,6 +22,9 @@ export const en = {
     damages: 'Damage',
     resourcesAndAmmunitions: 'Resources & Ammunition',
     features: 'Features',
+    character: 'Character',
+    characters: 'Characters',
+    newCharacter: 'New Character',
   },
   general: {
     none: 'None',
@@ -50,6 +54,7 @@ export const en = {
     description: 'Description',
     currentQuantity: 'Current Quantity',
     limit: 'Limit',
+    generateCharacter: 'Generate Character',
   },
   hitPoints: {
     tempMaxHP: 'Temporary Maximum HP',
@@ -78,6 +83,7 @@ export const en = {
   skills: {
     acrobatics: 'Acrobatics',
     animalHandling: 'Animal Handling',
+    animal_handling: 'Animal Handling',
     arcana: 'Arcana',
     athletics: 'Athletics',
     deception: 'Deception',
@@ -92,6 +98,7 @@ export const en = {
     persuasion: 'Persuasion',
     religion: 'Religion',
     sleightOfHand: 'Sleight of Hand',
+    sleight_of_hand: 'Sleight of Hand',
     stealth: 'Stealth',
     survival: 'Survival',
   },
@@ -101,5 +108,9 @@ export const en = {
     ep: 'EP',
     gp: 'GP',
     pp: 'PP',
+  },
+  loadings: {
+    character: 'Loading character data',
+    characters: 'Loading user characters',
   },
 };

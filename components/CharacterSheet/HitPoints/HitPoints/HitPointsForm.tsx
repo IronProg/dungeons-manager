@@ -1,24 +1,37 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitPointsFormType, useHitPointsForm } from './useHitPointsForm';
-import { useGeneralInfo } from 'contexts/GeneralInfoContext';
 import i18n from 'i18n';
+import { CharacterGeneralInfo } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
+import { Button } from 'components/ui/Button';
 
-type HitPointsFormProps = { onClose: () => void };
+type HitPointsFormProps = {
+  generalInfo: CharacterGeneralInfo;
+  onClose: () => void;
+};
 
-export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
-  const { generalInfo, updateGeneralInfo } = useGeneralInfo();
+export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitPointsForm({ generalInfo });
+
+  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = useCallback(
     (values: HitPointsFormType) => {
-      updateGeneralInfo({ ...generalInfo, ...values });
-
-      onClose();
+      updateCharacter(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            onClose();
+          },
+        },
+      );
     },
-    [generalInfo, onClose, updateGeneralInfo],
+    [characterId, onClose, updateCharacter],
   );
 
   return (
@@ -121,14 +134,7 @@ export const HitPointsForm = ({ onClose }: HitPointsFormProps) => {
         />
       </View>
 
-      <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+      <Button disabled={isPending} onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };

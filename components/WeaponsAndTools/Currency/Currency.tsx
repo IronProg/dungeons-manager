@@ -1,20 +1,45 @@
-import { useCurrencies } from 'contexts/CurrenciesContext';
-import { Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useCurrencyForm } from './useCurrencyForm';
 import { Controller } from 'react-hook-form';
 import i18n from 'i18n';
+import { Currencies } from 'types/character';
+import { useEffect, useState } from 'react';
+import { useUpdateCurrenciesMutation } from 'services/currencies/currencies';
+import { useDebounce } from 'use-debounce';
+import { useCharacter } from 'contexts/CharacterContext';
 
-export const Currency = () => {
-  const { currencies } = useCurrencies();
+type CurrencyProps = {
+  currencies: Currencies;
+};
+export const Currency = ({ currencies }: CurrencyProps) => {
+  const { characterId } = useCharacter();
+  const [lastFieldUpdate, setLastFieldUpdate] = useState('');
+  const { control, getValues } = useCurrencyForm({ currencies });
 
-  const { control } = useCurrencyForm({ currencies });
+  const [debouncedFieldUpdate] = useDebounce(lastFieldUpdate, 3000);
+
+  const { mutate: updateCurrencies, isPending } = useUpdateCurrenciesMutation();
+
+  useEffect(() => {
+    if (debouncedFieldUpdate) {
+      updateCurrencies({ characterId: characterId!, ...getValues() });
+    }
+  }, [characterId, debouncedFieldUpdate, getValues, updateCurrencies]);
 
   return (
     <>
-      <Text className="text-2xl font-bold text-center mb-2">
-        {i18n.t('titles.currencies')}
-      </Text>
+      <View className="w-full relative">
+        <Text className="text-2xl font-bold text-center mb-2">
+          {i18n.t('titles.currencies')}
+        </Text>
+
+        {isPending && (
+          <View className="absolute inset-y-0 flex items-center right-4">
+            <ActivityIndicator />
+          </View>
+        )}
+      </View>
 
       <ScrollView
         horizontal
@@ -30,7 +55,10 @@ export const Currency = () => {
                 <TextInput
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={field.onChange}
+                  onChangeText={(val) => {
+                    field.onChange(val);
+                    setLastFieldUpdate(`${field.name}-${val}`);
+                  }}
                 />
 
                 {error?.message && (
@@ -54,7 +82,10 @@ export const Currency = () => {
                 <TextInput
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={field.onChange}
+                  onChangeText={(val) => {
+                    field.onChange(val);
+                    setLastFieldUpdate(`${field.name}-${val}`);
+                  }}
                 />
 
                 {error?.message && (
@@ -78,7 +109,10 @@ export const Currency = () => {
                 <TextInput
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={field.onChange}
+                  onChangeText={(val) => {
+                    field.onChange(val);
+                    setLastFieldUpdate(`${field.name}-${val}`);
+                  }}
                 />
 
                 {error?.message && (
@@ -102,7 +136,10 @@ export const Currency = () => {
                 <TextInput
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={field.onChange}
+                  onChangeText={(val) => {
+                    field.onChange(val);
+                    setLastFieldUpdate(`${field.name}-${val}`);
+                  }}
                 />
 
                 {error?.message && (
@@ -126,7 +163,10 @@ export const Currency = () => {
                 <TextInput
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={field.onChange}
+                  onChangeText={(val) => {
+                    field.onChange(val);
+                    setLastFieldUpdate(`${field.name}-${val}`);
+                  }}
                 />
 
                 {error?.message && (

@@ -1,14 +1,19 @@
 import { Controller } from 'react-hook-form';
 import { Attack } from 'types/character';
 import { AttacksFormType, useAttacksForm } from './useAttacksForm';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { Switch } from 'react-native-gesture-handler';
-import { useAttacks } from 'contexts/AttacksContext';
 import { DamagesForm } from './DamagesForm';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import {
+  useCreateAttackMutation,
+  useUpdateAttackMutation,
+} from 'services/attacks/attack';
+import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from 'components/ui/Button';
 
 type AttacksFormProps = {
   attack?: Attack;
@@ -16,20 +21,37 @@ type AttacksFormProps = {
 };
 
 export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
-  const { appendAttack, updateAttack } = useAttacks();
+  const { characterId } = useCharacter();
   const { control, handleSubmit } = useAttacksForm({ attack });
+
+  const { mutate: createAttack, isPending: createPending } =
+    useCreateAttackMutation();
+  const { mutate: updateAttack, isPending: updatePending } =
+    useUpdateAttackMutation();
 
   const onSubmit = useCallback(
     (values: AttacksFormType) => {
       if (!attack) {
-        appendAttack(values);
+        createAttack(
+          { characterId: characterId!, ...values },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+          },
+        );
       } else {
-        updateAttack(attack, values);
+        updateAttack(
+          { characterId: characterId!, id: attack.id!, ...values },
+          {
+            onSuccess: () => {
+              onClose();
+            },
+          },
+        );
       }
-
-      onClose();
     },
-    [appendAttack, attack, onClose, updateAttack],
+    [attack, characterId, createAttack, onClose, updateAttack],
   );
 
   return (
@@ -64,7 +86,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
 
           <Controller
             control={control}
-            name="attribute"
+            name="mainAttribute"
             render={({ field, fieldState: { error } }) => (
               <AttributePicker {...field} error={error?.message} />
             )}
@@ -181,14 +203,10 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
+      <Button
         onPress={handleSubmit(onSubmit)}
-        className="w-full bg-primary-600 rounded-lg py-2"
-      >
-        <Text className="text-white font-bold text-2xl text-center">
-          {i18n.t('general.save')}
-        </Text>
-      </TouchableOpacity>
+        disabled={updatePending || createPending}
+      />
     </View>
   );
 };
