@@ -73,8 +73,8 @@ export const WeaponsAndTools = () => {
             onCreate={() => {
               handleOpen('resources');
             }}
-            onSelect={(attack: Resource) => {
-              setHighlightedResource(attack);
+            onSelect={(resource: Resource) => {
+              setHighlightedResource(resource);
               handleOpen('resources');
             }}
           />
@@ -83,8 +83,8 @@ export const WeaponsAndTools = () => {
             onCreate={() => {
               handleOpen('features');
             }}
-            onSelect={(attack: Feature) => {
-              setHighlightedFeature(attack);
+            onSelect={(feature: Feature) => {
+              setHighlightedFeature(feature);
               handleOpen('features');
             }}
           />

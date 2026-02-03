@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { resourcesService } from './resource.service';
 import { Resource } from 'types/character';
 
@@ -23,5 +23,47 @@ export const useGetAllResources = ({ characterId }: GetAllResourcesParams) => {
     queryFn: () => resourcesService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
     enabled: !!characterId,
+  });
+};
+
+export const useCreateResourceMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Resource, Error, CreateResourceParams>({
+    mutationFn: (params: CreateResourceParams) =>
+      resourcesService.create(params),
+    onSuccess: (_, { characterId }) => {
+      queryClient.invalidateQueries({
+        queryKey: getAllResourcesKey({ characterId }),
+      });
+    },
+  });
+};
+
+export const useUpdateResourceMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Resource, Error, UpdateResourceParams>({
+    mutationFn: (params: UpdateResourceParams) =>
+      resourcesService.update(params),
+    onSuccess: (_, { characterId }) => {
+      queryClient.invalidateQueries({
+        queryKey: getAllResourcesKey({ characterId }),
+      });
+    },
+  });
+};
+
+export const useDeleteResourceMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<Resource, Error, DeleteResourceParams>({
+    mutationFn: (params: DeleteResourceParams) =>
+      resourcesService.destroy(params),
+    onSuccess: (_, { characterId }) => {
+      queryClient.invalidateQueries({
+        queryKey: getAllResourcesKey({ characterId }),
+      });
+    },
   });
 };

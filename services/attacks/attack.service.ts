@@ -17,7 +17,7 @@ export const attacksService = {
         params,
       )
       .then((res) => res.data),
-  destroy: (params: DestroyAttackParams) =>
+  destroy: (params: DeleteAttackParams) =>
     api
       .delete<Attack>(`/characters/${params.characterId}/attacks/${params.id}`)
       .then((res) => res.data),

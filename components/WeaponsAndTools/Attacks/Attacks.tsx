@@ -1,11 +1,5 @@
 import { Info, Plus, Trash } from 'lucide-react-native';
-import {
-  ActivityIndicator,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Attack } from 'types/character';
 import RNModal from 'react-native-modal';
 import { useCallback, useState } from 'react';
@@ -42,7 +36,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
   return (
     <>
       <View className="flex flex-row justify-between mb-2 items-center">
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={() => setDeleteMode((prev) => !prev)}
           className={`rounded-full p-2 ${deleteMode ? 'bg-slate-500' : 'bg-red-500'}`}
         >
@@ -51,7 +45,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
           ) : (
             <Trash color="white" size={16} />
           )}
-        </TouchableHighlight>
+        </TouchableOpacity>
 
         <Text className="mt-4 text-black text-2xl font-bold text-center">
           {i18n.t('titles.attacks')}
@@ -111,12 +105,12 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
 
               {deleteMode && (
                 <View className="absolute inset-y-0 right-2 flex flex-row items-center">
-                  <TouchableHighlight
+                  <TouchableOpacity
                     onPress={() => handleDelete(attack)}
                     className="bg-red-500 rounded-full p-2"
                   >
                     <Trash size={16} color="white" />
-                  </TouchableHighlight>
+                  </TouchableOpacity>
                 </View>
               )}
             </TouchableOpacity>

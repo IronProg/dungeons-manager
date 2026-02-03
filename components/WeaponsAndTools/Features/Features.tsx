@@ -1,10 +1,13 @@
-import { Plus } from 'lucide-react-native';
+import { Info, Plus, Trash } from 'lucide-react-native';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Feature } from 'types/character';
 import RNModal from 'react-native-modal';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import i18n from 'i18n';
-import { useGetAllFeatures } from 'services/features/feature';
+import {
+  useDeleteFeatureMutation,
+  useGetAllFeatures,
+} from 'services/features/feature';
 import { useCharacter } from 'contexts/CharacterContext';
 
 type FeaturesProps = {
@@ -17,12 +20,31 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
   const { data: features, isLoading } = useGetAllFeatures({
     characterId: characterId!,
   });
+  const { mutate: deleteFeature } = useDeleteFeatureMutation();
+
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
+  const [deleteMode, setDeleteMode] = useState<boolean>(false);
+
+  const handleDelete = useCallback(
+    (resource: Feature) => {
+      deleteFeature({ characterId: characterId!, id: resource.id! });
+    },
+    [characterId, deleteFeature],
+  );
 
   return (
     <>
       <View className="flex flex-row justify-between mb-2 items-center">
-        <View />
+        <TouchableOpacity
+          onPress={() => setDeleteMode((prev) => !prev)}
+          className={`rounded-full p-2 ${deleteMode ? 'bg-slate-500' : 'bg-red-500'}`}
+        >
+          {deleteMode ? (
+            <Info color="white" size={16} />
+          ) : (
+            <Trash color="white" size={16} />
+          )}
+        </TouchableOpacity>
 
         <Text className="text-black text-2xl font-bold text-center">
           {i18n.t('titles.features')}
@@ -42,6 +64,7 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
         features?.map((feature, index) => {
           return (
             <TouchableOpacity
+              disabled={deleteMode}
               onPress={() => setDetailedFeature(feature)}
               onLongPress={() => onSelect(feature)}
               key={index}
@@ -54,6 +77,17 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
                   <Text className="text-gray-700">({feature.origin})</Text>
                 )}
               </View>
+
+              {deleteMode && (
+                <View className="absolute inset-y-0 right-2 flex flex-row items-center">
+                  <TouchableOpacity
+                    onPress={() => handleDelete(feature)}
+                    className="bg-red-500 rounded-full p-2"
+                  >
+                    <Trash size={16} color="white" />
+                  </TouchableOpacity>
+                </View>
+              )}
             </TouchableOpacity>
           );
         })
