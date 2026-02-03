@@ -1,7 +1,7 @@
 import { Control, Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 import { AttributesFormType, useAttributesForm } from './useAttributesForm';
-import { Attribute, AttributesType } from 'types/character';
+import { Attribute } from 'types/character';
 import { ATTRIBUTES } from 'core/enums/attributes';
 import { getModifier } from 'core/helpers/getModifier';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';

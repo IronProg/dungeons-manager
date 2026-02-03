@@ -70,7 +70,7 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
               key={index}
               className="rounded-lg gap-2 border-b border-gray-300 pb-2 mb-2"
             >
-              <View className="bg-gray-100 rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
+              <View className="bg-white rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
                 <Text>{feature.title}</Text>
 
                 {feature.origin && (

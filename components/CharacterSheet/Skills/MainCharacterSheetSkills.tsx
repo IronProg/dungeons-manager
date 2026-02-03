@@ -9,6 +9,7 @@ import i18n from 'i18n';
 import { useGetAllSkills } from 'services/skills/skill';
 import { useGetAllSaves } from 'services/saves/save';
 import { useCharacter } from 'contexts/CharacterContext';
+import { useGetSkillBonus } from 'hooks/useSkillBonus';
 
 export const MainCharacterSheetSkills = () => {
   const { characterId } = useCharacter();
@@ -106,7 +107,13 @@ export const MainCharacterSheetSkills = () => {
 type SaveCardProps = { save: Save; onLongPress: () => void };
 
 const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
-  const modifier = 0;
+  const { modifiers } = useCharacter();
+  let modifier =
+    (modifiers?.[save.mainAttribute] || 0) + (save.customBonus || 0);
+
+  if (modifiers && save.extraAttribute) {
+    modifier += modifiers[save.extraAttribute];
+  }
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
@@ -135,7 +142,9 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
 type SkillCardProps = { skill: Skill; onLongPress: () => void };
 
 const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
-  const modifier = 0;
+  const { getSkillBonus } = useGetSkillBonus();
+
+  const modifier = getSkillBonus(skill.name);
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">

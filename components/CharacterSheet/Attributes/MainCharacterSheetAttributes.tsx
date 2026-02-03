@@ -105,9 +105,7 @@ const AttributeCard = ({ attribute, openModal }: AttributeCardProps) => {
           {i18n.t(`attributes.${attribute.name}`)}
         </Text>
         <Text className="text-2xl font-bold text-center">
-          {/* {modifiers[attribute.name] > 0 && '+'}
-          {modifiers[attribute.name]} */}
-          0
+          {attribute.modifier}
         </Text>
         <View className="absolute rounded-full bg-gray-200 p-1 bottom-0 min-w-7">
           <Text className="text-gray-900 text-sm font-semibold text-center">

@@ -8,7 +8,7 @@ export const schema = z.object({
   mainAttribute: z.enum(ATTRIBUTES),
   proficiency: z.boolean(),
   customBonus: z.coerce.number<number>().int().optional(),
-  extraAttribute: z.enum(ATTRIBUTES).optional(),
+  extraAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 
 export type SaveFormType = z.infer<typeof schema>;

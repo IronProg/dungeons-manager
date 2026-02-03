@@ -1,3 +1,5 @@
+import { useCharacter } from 'contexts/CharacterContext';
+import { useGetSkillBonus } from 'hooks/useSkillBonus';
 import i18n from 'i18n';
 import { Eye } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -12,10 +14,14 @@ export const PassivePerception = ({
   generalInfo,
   onLongPress,
 }: PassivePerceptionProps) => {
-  const passivePercetion =
-    10 +
-    // getSkillBonus('perception') +
-    (generalInfo.passivePerceptionCustomBonus || 0);
+  const { getSkillBonus } = useGetSkillBonus();
+  const { modifiers } = useCharacter();
+
+  let passivePerception = 10 + getSkillBonus('perception');
+
+  if (modifiers && generalInfo.passivePerceptionExtraAttribute) {
+    passivePerception += modifiers[generalInfo.passivePerceptionExtraAttribute];
+  }
 
   return (
     <TouchableOpacity
@@ -28,7 +34,7 @@ export const PassivePerception = ({
           {i18n.t('titles.passivePerception')}
         </Text>
         <Text className="text-3xl font-bold text-center">
-          {passivePercetion}
+          {passivePerception}
         </Text>
       </View>
     </TouchableOpacity>

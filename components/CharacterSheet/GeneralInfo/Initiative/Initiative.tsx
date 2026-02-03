@@ -1,3 +1,4 @@
+import { useCharacter } from 'contexts/CharacterContext';
 import i18n from 'i18n';
 import { Zap } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -9,11 +10,16 @@ type InitiativeProps = {
 };
 
 export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
-  let modifier = 2;
-  // let modifier = modifiers['dexterity'];
+  const { modifiers } = useCharacter();
+
+  let modifier = modifiers?.['dexterity'] || 0;
 
   if (generalInfo.initiativeCustomBonus) {
     modifier += generalInfo.initiativeCustomBonus;
+  }
+
+  if (generalInfo.initiativeExtraAttribute) {
+    modifier += modifiers?.[generalInfo.initiativeExtraAttribute] || 0;
   }
 
   return (

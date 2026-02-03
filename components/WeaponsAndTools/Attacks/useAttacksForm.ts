@@ -8,7 +8,7 @@ const damageSchema = z.object({
   id: z.coerce.number<number>().optional(),
   diceSize: z.coerce.number<number>().optional(),
   diceAmount: z.coerce.number<number>().optional(),
-  mainAttribute: z.enum(ATTRIBUTES).optional(),
+  mainAttribute: z.enum(ATTRIBUTES).optional().nullable(),
   kind: z.string().optional(),
   customBonus: z.string().optional(),
   _destroy: z.boolean().optional(),
@@ -16,7 +16,7 @@ const damageSchema = z.object({
 
 const schema = z.object({
   name: z.string(),
-  mainAttribute: z.enum(ATTRIBUTES).optional(),
+  mainAttribute: z.enum(ATTRIBUTES).optional().nullable(),
   applyProficiency: z.boolean(),
   range: z.string().optional(),
   customBonus: z.coerce.number<number>().optional(),
@@ -37,10 +37,13 @@ export const useAttacksForm = ({ attack }: useAttacksFormProps) => {
       resolver: zodResolver(schema),
       defaultValues: {
         applyProficiency: attack?.applyProficiency ?? false,
+        customBonus: attack?.customBonus ?? 0,
+        description: attack?.description ?? '',
         name: attack?.name ?? '',
         range: attack?.range ?? '',
         properties: attack?.properties ?? '',
         damagesAttributes: attack?.damages ?? [],
+        mainAttribute: attack?.mainAttribute ?? null,
       },
     });
 

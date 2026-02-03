@@ -84,11 +84,11 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
               key={index}
               className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
             >
-              <Text className="bg-gray-100 rounded-lg px-2 py-1 grow">
+              <Text className="bg-white rounded-lg px-2 py-1 grow">
                 {resource.name}
               </Text>
 
-              <Text className="bg-gray-100 rounded-lg px-2 py-1" key={index}>
+              <Text className="bg-white rounded-lg px-2 py-1" key={index}>
                 {resource.amount}
                 {resource.max && resource.max > 0 && `/${resource.max}`}
               </Text>

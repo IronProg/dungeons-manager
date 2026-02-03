@@ -11,7 +11,7 @@ export const schema = z.object({
   proficiency: z.boolean(),
   expertise: z.boolean(),
   customBonus: z.coerce.number<number>().int().optional(),
-  extraAttribute: z.enum(ATTRIBUTES).optional(),
+  extraAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 
 export type SkillFormType = z.infer<typeof schema>;

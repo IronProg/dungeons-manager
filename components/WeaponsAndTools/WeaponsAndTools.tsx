@@ -10,7 +10,7 @@ import { Attack, Feature, Resource } from 'types/character';
 import { AttacksForm } from './Attacks/AttacksForm';
 import { FeaturesForm } from './Features/FeaturesForm';
 import { ResourcesForm } from './Resources/ResourcesForm';
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useCharacter } from 'contexts/CharacterContext';
 import { useGetCharacterCurrency } from 'services/currencies/currencies';
 
@@ -51,7 +51,10 @@ export const WeaponsAndTools = () => {
   return (
     <>
       {character && (
-        <ScrollView scrollEnabled>
+        <ScrollView
+          scrollEnabled
+          contentContainerClassName="flex flex-col gap-4"
+        >
           {isLoadingCurrencies && <ActivityIndicator />}
           {currencies ? (
             <Currency currencies={currencies!} />
@@ -59,35 +62,41 @@ export const WeaponsAndTools = () => {
             <Text>No currencies found</Text>
           )}
 
-          <Attacks
-            onCreate={() => {
-              handleOpen('attacks');
-            }}
-            onSelect={(attack: Attack) => {
-              setHighlightedAttack(attack);
-              handleOpen('attacks');
-            }}
-          />
+          <View>
+            <Attacks
+              onCreate={() => {
+                handleOpen('attacks');
+              }}
+              onSelect={(attack: Attack) => {
+                setHighlightedAttack(attack);
+                handleOpen('attacks');
+              }}
+            />
+          </View>
 
-          <Resources
-            onCreate={() => {
-              handleOpen('resources');
-            }}
-            onSelect={(resource: Resource) => {
-              setHighlightedResource(resource);
-              handleOpen('resources');
-            }}
-          />
+          <View>
+            <Resources
+              onCreate={() => {
+                handleOpen('resources');
+              }}
+              onSelect={(resource: Resource) => {
+                setHighlightedResource(resource);
+                handleOpen('resources');
+              }}
+            />
+          </View>
 
-          <Features
-            onCreate={() => {
-              handleOpen('features');
-            }}
-            onSelect={(feature: Feature) => {
-              setHighlightedFeature(feature);
-              handleOpen('features');
-            }}
-          />
+          <View>
+            <Features
+              onCreate={() => {
+                handleOpen('features');
+              }}
+              onSelect={(feature: Feature) => {
+                setHighlightedFeature(feature);
+                handleOpen('features');
+              }}
+            />
+          </View>
         </ScrollView>
       )}
 

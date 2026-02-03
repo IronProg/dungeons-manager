@@ -1,3 +1,4 @@
+import { useCharacter } from 'contexts/CharacterContext';
 import i18n from 'i18n';
 import { Shield } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -9,15 +10,17 @@ type ArmorClassProps = {
 };
 
 export const ArmorClass = ({ generalInfo, onLongPress }: ArmorClassProps) => {
-  const modifier = generalInfo.armorClassBase;
+  const { modifiers } = useCharacter();
 
-  // if (generalInfo.armorClassFirstAttribute) {
-  //   modifier += modifiers[generalInfo.armorClassFirstAttribute];
-  // }
+  let modifier = generalInfo.armorClassBase;
 
-  // if (generalInfo.armorClassSecondAttribute) {
-  //   modifier += modifiers[generalInfo.armorClassSecondAttribute];
-  // }
+  if (generalInfo.armorClassFirstAttribute) {
+    modifier += modifiers?.[generalInfo.armorClassFirstAttribute] || 0;
+  }
+
+  if (generalInfo.armorClassSecondAttribute) {
+    modifier += modifiers?.[generalInfo.armorClassSecondAttribute] || 0;
+  }
 
   return (
     <TouchableOpacity

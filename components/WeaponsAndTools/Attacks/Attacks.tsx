@@ -16,7 +16,7 @@ type AttacksProps = {
 };
 
 export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
-  const { characterId } = useCharacter();
+  const { characterId, modifiers, proficiency } = useCharacter();
   const { data: attacks, isLoading } = useGetAllAttacks({
     characterId: characterId!,
   });
@@ -63,14 +63,13 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
 
       {attacks && attacks.length > 0 ? (
         attacks?.map((attack, index) => {
-          // const attributeModifier = attack.mainAttribute
-          //   ? modifiers[attack.mainAttribute]
-          //   : 0;
-          const attributeModifier = 3;
+          let attackModifier = attack.customBonus || 0;
 
-          const attackBonus =
-            // attributeModifier + (attack.applyProficiency ? proficiency : 0);
-            attributeModifier + (attack.applyProficiency ? 2 : 0);
+          if (modifiers && attack.mainAttribute) {
+            attackModifier += modifiers[attack.mainAttribute];
+          }
+
+          if (attack.applyProficiency) attackModifier += proficiency;
 
           return (
             <TouchableOpacity
@@ -79,23 +78,28 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
               key={index}
               className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 relative"
             >
-              <View className="bg-gray-100 rounded-lg px-2 py-1 grow">
+              <View className="bg-white rounded-lg px-2 py-1 grow">
                 <Text>{attack.name}</Text>
                 <Text>{attack.range}</Text>
               </View>
-              <Text className="bg-gray-100 rounded-lg px-2 py-1">
-                {attackBonus >= 0 && '+'}
-                {attackBonus}
+              <Text className="bg-white rounded-lg px-2 py-1">
+                {attackModifier >= 0 && '+'}
+                {attackModifier}
               </Text>
-              <View className="flex flex-col bg-gray-100 rounded-lg px-2 py-1 grow">
+              <View className="flex flex-col bg-white rounded-lg px-2 py-1 grow">
                 {attack.damages.map((damage, index) => {
-                  const attributeModifier = damage.mainAttribute ? 2 : 0;
+                  let attributeBonus = 0;
+
+                  if (modifiers && damage.mainAttribute) {
+                    attributeBonus += modifiers[damage.mainAttribute];
+                  }
 
                   const diceText = `${damage.diceAmount && damage.diceAmount + 'd'}${damage.diceSize}`;
+
                   return (
                     <Text className="" key={index}>
                       {diceText}{' '}
-                      {`${attributeModifier >= 0 ? '+' : ''}${attributeModifier}`}{' '}
+                      {`${attributeBonus >= 0 ? '+' : ''}${attributeBonus}`}{' '}
                       {damage.customBonus && `+${damage.customBonus}`}{' '}
                       {damage.kind}
                     </Text>
