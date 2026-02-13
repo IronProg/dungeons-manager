@@ -12,7 +12,15 @@
     },
     "plugins": [
       "expo-localization",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,6 +37,7 @@
       "supportsTablet": true
     },
     "android": {
+      "usesCleartextTraffic": true,
       "softwareKeyboardLayoutMode": "resize",
       "package": "com.ironprog.dungeonsmanager",
       "adaptiveIcon": {

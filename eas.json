@@ -13,12 +13,16 @@
         "buildType": "apk"
       },
       "env": {
-        "YARN_VERSION": "1.22.22"
+        "YARN_VERSION": "1.22.22",
+        "EXPO_PUBLIC_SERVER_API_URL": "https://srv1337880.hstgr.cloud"
       },
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_SERVER_API_URL": "https://srv1337880.hstgr.cloud"
+      }
     },
     "android": {
       "env": {

@@ -19,7 +19,7 @@ export const AttributePicker = ({
     <>
       <RNPickerSelect
         onValueChange={onChange}
-        placeholder="Placeholder"
+        placeholder={{}}
         value={value}
         useNativeAndroidPickerStyle={false}
         style={{

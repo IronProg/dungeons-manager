@@ -12,10 +12,15 @@ declare module 'axios' {
 }
 
 const api = axios.create({
-  baseURL: 'http://192.168.1.8:3000',
-
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
   decamelizeRequest: true,
   camelizeResponse: true,
+  timeout: 15000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest', // Isso ajuda o Rails a entender que é uma chamada de API
+  },
 });
 
 // Decamelize request
