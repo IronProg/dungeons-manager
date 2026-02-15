@@ -20,7 +20,9 @@ export const NewCharacter = () => {
     (values: NewCharacterFormType) => {
       createCharacter(values, {
         onSuccess: (data) => {
-          navigation.navigate('CharacterSheet', { characterId: data.id! });
+          navigation.navigate('CharacterSheet', {
+            characterId: data.id!,
+          });
         },
         onError: (error) => {
           console.error({ error });

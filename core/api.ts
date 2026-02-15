@@ -2,7 +2,7 @@ import axios from 'axios';
 import humps from 'humps';
 import * as SecureStore from 'expo-secure-store';
 
-export const authKey = 'Authorization';
+export const authHeader = 'Authorization';
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -43,7 +43,7 @@ api.interceptors.request.use((config) => {
 
 // Send auth header
 api.interceptors.request.use((config) => {
-  config.headers.Authorization = SecureStore.getItem(authKey);
+  config.headers.Authorization = SecureStore.getItem(authHeader);
 
   return config;
 });
@@ -54,7 +54,7 @@ api.interceptors.response.use((response) => {
     response.headers['authorization'] &&
     response.headers['authorization'] !== '-'
   ) {
-    SecureStore.setItem(authKey, response.headers['authorization']);
+    SecureStore.setItem(authHeader, response.headers['authorization']);
   }
 
   return response;

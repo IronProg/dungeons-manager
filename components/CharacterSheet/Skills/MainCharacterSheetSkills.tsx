@@ -107,12 +107,16 @@ export const MainCharacterSheetSkills = () => {
 type SaveCardProps = { save: Save; onLongPress: () => void };
 
 const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
-  const { modifiers } = useCharacter();
+  const { modifiers, proficiency } = useCharacter();
   let modifier =
     (modifiers?.[save.mainAttribute] || 0) + (save.customBonus || 0);
 
   if (modifiers && save.extraAttribute) {
     modifier += modifiers[save.extraAttribute];
+  }
+
+  if (save.proficiency) {
+    modifier += proficiency;
   }
 
   return (
@@ -161,7 +165,7 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
 
         <Text className="font-bold text-center rounded-md">
           {modifier > 0 && '+'}
-          {modifier.toFixed(0)}
+          {modifier?.toFixed(0)}
         </Text>
       </TouchableOpacity>
     </View>

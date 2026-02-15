@@ -1,10 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import i18n from 'i18n';
+import { LogOut } from 'lucide-react-native';
 import { CharacterDrawerProps } from 'navigators/DrawerNavigator';
+import { useCallback } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSignOutMutation } from 'services/auth/auth';
 import { Character } from 'types/character';
 
 type CharactersDrawerProps = { characters: Character[] };
@@ -13,12 +16,26 @@ export const CharactersDrawer = ({ characters }: CharactersDrawerProps) => {
   const navigation = useNavigation<CharacterDrawerProps>();
   const { bottom } = useSafeAreaInsets();
 
+  const { mutate: signOut, isPending } = useSignOutMutation();
+
+  const handleLogout = useCallback(() => {
+    signOut();
+  }, [signOut]);
+
   return (
     <View className="flex-1 bg-slate-400 rounded-l-xl">
-      <View className="py-6">
+      <View className="py-6 flex flex-row justify-between">
         <Text className="text-center font-medium text-2xl text-slate-950">
           {i18n.t('titles.characters')}
         </Text>
+
+        <TouchableOpacity
+          className="bg-red-400 px-2 py-0.5 rounded-full flex items-center justify-center w-12 h-12"
+          disabled={isPending}
+          onPress={() => handleLogout()}
+        >
+          <LogOut size={24} color="white" />
+        </TouchableOpacity>
       </View>
 
       <ScrollView contentContainerClassName="flex flex-1 justify-end flex-col items-stretch gap-2 px-2 pb-4">

@@ -2,7 +2,7 @@ import {
   createDrawerNavigator,
   DrawerNavigationProp,
 } from '@react-navigation/drawer';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { CharacterNavigator } from './CharacterNavigator';
 import { useGetAllCharacters } from 'services/characters/character';
 import { ActivityIndicator, Text, View } from 'react-native';
@@ -39,39 +39,33 @@ export const DrawerNavigator = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={(props) => (
-          <CharactersDrawer characters={characters || []} {...props} />
-        )}
-        initialRouteName={
-          characters && characters.length > 0
-            ? 'CharacterSheet'
-            : 'NewCharacter'
-        }
-      >
-        {characters && characters.length > 0 && (
-          <Drawer.Screen
-            options={{
-              drawerPosition: 'right',
-              title: i18n.t('titles.character'),
-              headerStyle: { backgroundColor: '#94a3b8' },
-            }}
-            initialParams={{ characterId: characters[0].id }}
-            name="CharacterSheet"
-            component={CharacterNavigator}
-          />
-        )}
-        <Drawer.Screen
-          options={{
-            drawerPosition: 'right',
-            title: i18n.t('titles.newCharacter'),
-            headerStyle: { backgroundColor: '#94a3b8' },
-          }}
-          name="NewCharacter"
-          component={NewCharacterScreen}
-        />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Drawer.Navigator
+      drawerContent={(props) => (
+        <CharactersDrawer characters={characters || []} {...props} />
+      )}
+      initialRouteName={
+        characters && characters.length > 0 ? 'CharacterSheet' : 'NewCharacter'
+      }
+    >
+      <Drawer.Screen
+        options={{
+          drawerPosition: 'right',
+          title: i18n.t('titles.character'),
+          headerStyle: { backgroundColor: '#94a3b8' },
+        }}
+        initialParams={{ characterId: characters?.[0]?.id }}
+        name="CharacterSheet"
+        component={CharacterNavigator}
+      />
+      <Drawer.Screen
+        options={{
+          drawerPosition: 'right',
+          title: i18n.t('titles.newCharacter'),
+          headerStyle: { backgroundColor: '#94a3b8' },
+        }}
+        name="NewCharacter"
+        component={NewCharacterScreen}
+      />
+    </Drawer.Navigator>
   );
 };
