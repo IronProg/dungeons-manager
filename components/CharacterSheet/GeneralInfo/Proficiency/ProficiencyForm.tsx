@@ -1,12 +1,14 @@
-import { Text, View } from 'react-native';
-import { ProficiencyFormType, useProficiencyForm } from './useProficiencyForm';
-import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import i18n from 'i18n';
-import { useCharacter } from 'contexts/CharacterContext';
+import { Text, View } from 'react-native';
+import { Controller } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUpdateCharacterMutation } from 'services/characters/character';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import i18n from 'i18n';
+
+import { ProficiencyFormType, useProficiencyForm } from './useProficiencyForm';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useUpdateCharacterMutation } from 'services/characters/character.api';
+
 import { Button } from 'components/ui/Button';
 
 type ProficiencyFormProps = {

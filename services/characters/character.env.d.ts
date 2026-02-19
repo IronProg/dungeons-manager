@@ -13,3 +13,7 @@ type UpdateCharacterParams = {
   level?: number;
   proficiency?: number;
 };
+
+type DestroyCharacterParams = {
+  id?: number;
+};

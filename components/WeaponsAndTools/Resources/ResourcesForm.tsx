@@ -1,16 +1,19 @@
-import { Controller } from 'react-hook-form';
-import { Resource } from 'types/character';
-import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
-import { Text, View } from 'react-native';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
+import { Text, View } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
+
+import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
 import {
   useCreateResourceMutation,
   useUpdateResourceMutation,
 } from 'services/resources/resource';
 import { useCharacter } from 'contexts/CharacterContext';
+
 import { Button } from 'components/ui/Button';
+
+import { Resource } from 'types/character';
 
 type ResourcesFormProps = {
   resource?: Resource;
@@ -54,7 +57,9 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
   return (
     <View className="flex flex-col">
       <Text className="text-2xl font-medium text-center mb-2">
-        {resource ? 'Editar Característica' : 'Nova Característica'}
+        {resource
+          ? i18n.t('titles.editResource')
+          : i18n.t('titles.newResource')}
       </Text>
 
       <View className="flex flex-col items-stretch">

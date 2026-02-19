@@ -1,15 +1,19 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { Save, Skill } from 'types/character';
-import { SaveForm } from './Save/SaveForm';
-import { SkillForm } from './Skill/SkillForm';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import i18n from 'i18n';
+
 import { useGetAllSkills } from 'services/skills/skill';
 import { useGetAllSaves } from 'services/saves/save';
 import { useCharacter } from 'contexts/CharacterContext';
 import { useGetSkillBonus } from 'hooks/useSkillBonus';
+
+import { SaveForm } from './Save/SaveForm';
+import { SkillForm } from './Skill/SkillForm';
+
+import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+
+import type { Save, Skill } from 'types/character';
 
 export const MainCharacterSheetSkills = () => {
   const { characterId } = useCharacter();
@@ -151,15 +155,18 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
   const modifier = getSkillBonus(skill.name);
 
   return (
-    <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
+    <View className="flex items-center justify-center w-[50%] p-2 py-1.5">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex-row flex items-center px-2 gap-2 border rounded-lg w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
+        className={`flex-row flex items-center gap-2 rounded-lg px-3 py-2.5 border w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
       >
-        <View className="min-w-0 flex-1 py-1">
-          <Text className="grow text-gray-900 text-sm font-semibold rounded-md">
-            {i18n.t(`skills.${skill.name}`)}(
-            {i18n.t(`attributes.${skill.mainAttribute}`).substring(0, 3)})
+        <View className="min-w-0 flex-1 flex flex-row flex-wrap py-1 justify-start items-center">
+          <Text className="text-gray-900 text-sm font-semibold rounded-md">
+            {i18n.t(`skills.${skill.name}`)}{' '}
+          </Text>
+
+          <Text className="text-gray-400 text-xs font-semibold rounded-md">
+            ({i18n.t(`attributes.${skill.mainAttribute}`).substring(0, 3)})
           </Text>
         </View>
 

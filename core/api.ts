@@ -2,6 +2,8 @@ import axios from 'axios';
 import humps from 'humps';
 import * as SecureStore from 'expo-secure-store';
 
+import { queryClient } from './queryClient';
+
 export const authHeader = 'Authorization';
 
 declare module 'axios' {
@@ -59,6 +61,16 @@ api.interceptors.response.use((response) => {
 
   return response;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      queryClient.setQueryData(['auth'], null);
+    }
+    return Promise.reject(error);
+  },
+);
 
 // Camelize response
 api.interceptors.response.use((response) => {

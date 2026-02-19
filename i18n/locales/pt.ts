@@ -1,4 +1,8 @@
 export const pt = {
+  tabs: {
+    sheet: 'Ficha',
+    details: 'Detalhes',
+  },
   titles: {
     characterSheet: 'Ficha do Personagem',
     general: 'Geral',
@@ -25,6 +29,15 @@ export const pt = {
     character: 'Personagem',
     characters: 'Personagens',
     newCharacter: 'Novo Personagem',
+    newResource: 'Novo Recurso',
+    editResource: 'Editar Recurso',
+    newFeature: 'Nova Característica',
+    editFeature: 'Editar Característica',
+    logout: 'Sair',
+    welcomeBack: 'Sair',
+    noCharacters: 'Nenhum personagem cadastrado',
+    confirmation: 'Você tem certeza?',
+    confirmationSubtitle: 'Essa ação não pode ser desfeita.',
   },
   general: {
     none: 'Nenhum',
@@ -55,6 +68,9 @@ export const pt = {
     currentQuantity: 'Quantidade Atual',
     limit: 'Limite',
     generateCharacter: 'Gerar Personagem',
+    level: 'Nível',
+    confirm: 'Confirmar',
+    cancel: 'Cancelar',
   },
   hitPoints: {
     tempMaxHP: 'PV Máximo Temporário',
@@ -112,5 +128,26 @@ export const pt = {
   loadings: {
     character: 'Carregando dados de personagem',
     characters: 'Carregando personagens do usuário',
+  },
+  auth: {
+    welcomeBack: 'Bem-vindo de volta',
+    email: 'E-mail',
+    password: 'Senha',
+    passwordConfirmation: 'Confirmar senha',
+    signIn: 'Fazer Login',
+    signingIn: 'Fazendo Login',
+    signUp: 'Registrar-se',
+    noAccount: 'Não possui uma conta?',
+    getStarted: 'Vamos começar',
+    createAccount: 'Criar conta',
+    registerSubtitle: 'Registre-se para criar seus personagens',
+    creating: 'Criando',
+    register: 'Registrar-se',
+    hasAccount: 'Já possui uma conta?',
+  },
+  errors: {
+    min: 'Deve possuir ao menos %{min} caracteres',
+    invalidEmail: 'Não é um email válido',
+    passwordsDontMatch: 'As senhas não coincidem',
   },
 };

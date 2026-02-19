@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { authService } from './auth.service';
-import { User } from 'types/user';
+import { useAuthInvalidationAsync } from './auth.invalidate';
+
+import type { User } from 'types/user';
 
 export const authKey = ['auth'];
 
@@ -11,22 +14,26 @@ export const useGetCurrentUser = () =>
   });
 
 export const useSignInMutation = () => {
+  const { invalidateQueriesAsync } = useAuthInvalidationAsync();
   const queryClient = useQueryClient();
 
   return useMutation<User, Error, SignInParams>({
     mutationFn: (params: SignInParams) => authService.signIn(params),
-    onSuccess: (user) => {
+    onSuccess: async (user) => {
+      await invalidateQueriesAsync();
       queryClient.setQueryData(authKey, user);
     },
   });
 };
 
 export const useSignOutMutation = () => {
+  const { invalidateQueriesAsync } = useAuthInvalidationAsync();
   const queryClient = useQueryClient();
 
   return useMutation<null, Error>({
     mutationFn: () => authService.signOut(),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await invalidateQueriesAsync();
       queryClient.setQueryData(authKey, null);
     },
   });

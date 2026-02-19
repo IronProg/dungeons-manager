@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { characterService } from './character.service';
-import { Character } from 'types/character';
+
+import type { Character } from 'types/character';
 
 export const useGetAllCharacters = () => {
   return useQuery({
@@ -35,5 +37,16 @@ export const useUpdateCharacterMutation = () => {
   return useMutation<Character, Error, UpdateCharacterParams>({
     mutationFn: (params: UpdateCharacterParams) =>
       characterService.update(params),
+  });
+};
+
+export const useDestroyCharacterMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<null, Error, DestroyCharacterParams>({
+    mutationFn: (params) => characterService.destroy(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['characters'] });
+    },
   });
 };

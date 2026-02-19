@@ -1,15 +1,19 @@
+import { useEffect } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import i18n from 'i18n';
+
+import { useCharacter } from 'contexts/CharacterContext';
+
 import { WeaponsAndToolsScreen } from 'Screens/WeaponsAndToolsScreen';
 import { CharacterSheetScreen } from 'Screens/CharacterSheetScreen';
-import { useNavigation, useRoute } from '@react-navigation/native';
+
 import type {
   CharacterDrawerProps,
   CharacterRouteProps,
 } from './DrawerNavigator';
-import { useEffect } from 'react';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ActivityIndicator, Text, View } from 'react-native';
-import i18n from 'i18n';
+
 const Tab = createMaterialTopTabNavigator();
 
 export const CharacterNavigator = () => {
@@ -53,18 +57,19 @@ export const CharacterNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         swipeEnabled: true,
-        tabBarShowLabel: false,
-        tabBarShowIcon: false,
-        tabBarStyle: {
-          height: 0,
-          padding: 0,
-          margin: 0,
-        },
       }}
       tabIndex={0}
     >
-      <Tab.Screen name="Sheet" component={CharacterSheetScreen} />
-      <Tab.Screen name="Details" component={WeaponsAndToolsScreen} />
+      <Tab.Screen
+        name="Sheet"
+        component={CharacterSheetScreen}
+        options={{ tabBarLabel: i18n.t('tabs.sheet') }}
+      />
+      <Tab.Screen
+        name="Details"
+        component={WeaponsAndToolsScreen}
+        options={{ tabBarLabel: i18n.t('tabs.details') }}
+      />
     </Tab.Navigator>
   );
 };

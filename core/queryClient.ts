@@ -1,12 +1,12 @@
-import { QueryClient, focusManager } from '@tanstack/react-query';
 import { AppState } from 'react-native';
+import { QueryClient, focusManager } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 30_000,
       gcTime: 5 * 60_000,
-      retry: 1,
+      retry: false,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
     },
