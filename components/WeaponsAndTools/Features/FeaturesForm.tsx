@@ -1,16 +1,19 @@
-import { Controller } from 'react-hook-form';
-import { Feature } from 'types/character';
-import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
-import { Text, View } from 'react-native';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
+import { Text, View } from 'react-native';
+import { Controller } from 'react-hook-form';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
+
+import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
 import { useCharacter } from 'contexts/CharacterContext';
 import {
   useCreateFeatureMutation,
   useUpdateFeatureMutation,
 } from 'services/features/feature';
+
 import { Button } from 'components/ui/Button';
+
+import { Feature } from 'types/character';
 
 type FeaturesFormProps = {
   feature?: Feature;
@@ -54,7 +57,7 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
   return (
     <View className="flex flex-col">
       <Text className="text-2xl font-medium text-center mb-2">
-        {feature ? 'Editar Característica' : 'Nova Característica'}
+        {feature ? i18n.t('titles.editFeature') : i18n.t('titles.newFeature')}
       </Text>
 
       <View className="flex flex-col items-stretch">

@@ -1,12 +1,13 @@
+import { useCallback } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { NewCharacterFormType, useNewCharacter } from './useNewCharacter';
-import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useCallback } from 'react';
-import { useCreateCharacterMutation } from 'services/characters/character';
+import { Controller } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
+import i18n from 'i18n';
+
+import { NewCharacterFormType, useNewCharacter } from './useNewCharacter';
+import { useCreateCharacterMutation } from 'services/characters/character.api';
 import { CharacterDrawerProps } from 'navigators/DrawerNavigator';
 
 export const NewCharacter = () => {
@@ -23,9 +24,6 @@ export const NewCharacter = () => {
           navigation.navigate('CharacterSheet', {
             characterId: data.id!,
           });
-        },
-        onError: (error) => {
-          console.error({ error });
         },
       });
     },

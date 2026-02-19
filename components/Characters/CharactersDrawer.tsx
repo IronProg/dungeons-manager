@@ -1,70 +1,139 @@
-import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { LogOut, Plus, Trash2, Users } from 'lucide-react-native';
 import i18n from 'i18n';
-import { LogOut } from 'lucide-react-native';
-import { CharacterDrawerProps } from 'navigators/DrawerNavigator';
-import { useCallback } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useSignOutMutation } from 'services/auth/auth';
-import { Character } from 'types/character';
 
-type CharactersDrawerProps = { characters: Character[] };
+import { useDestroyCharacterMutation } from 'services/characters/character.api';
 
-export const CharactersDrawer = ({ characters }: CharactersDrawerProps) => {
-  const navigation = useNavigation<CharacterDrawerProps>();
-  const { bottom } = useSafeAreaInsets();
+import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 
-  const { mutate: signOut, isPending } = useSignOutMutation();
+import type { Character } from 'types/character';
 
-  const handleLogout = useCallback(() => {
-    signOut();
-  }, [signOut]);
+interface CharactersDrawerProps extends DrawerContentComponentProps {
+  characters: Character[];
+  onLogout: () => void;
+  onNewCharacter: () => void;
+}
+
+export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
+  navigation,
+  characters,
+  onLogout,
+  onNewCharacter,
+}) => {
+  const [characterToDelete, setCharacterToDelete] = useState<Character | null>(
+    null,
+  );
+
+  const { mutate: destroyCharacter } = useDestroyCharacterMutation();
+
+  const handleDelete = (character: Character) => {
+    destroyCharacter(
+      { id: character.id! },
+      { onSuccess: () => setCharacterToDelete(null) },
+    );
+  };
+
+  const renderCharacterItem = ({ item }: { item: Character }) => (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('CharacterSheet', { characterId: item.id })
+      }
+      className="bg-white rounded-xl p-4 mb-3 flex-row items-center shadow-sm"
+      activeOpacity={0.7}
+    >
+      <View className="w-12 h-12 rounded-full bg-indigo-500 items-center justify-center mr-3">
+        <Text className="text-white font-bold text-lg">
+          {item.name.charAt(0).toUpperCase()}
+        </Text>
+      </View>
+
+      <View className="flex-1">
+        <Text className="font-semibold text-base text-gray-800">
+          {item.name}
+        </Text>
+        <Text className="text-gray-400 text-sm">
+          {/* {item.race} • {item.class} {i18n.t('general.level')} {item.level} */}
+          {i18n.t('general.level')} {item.level}
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        onPress={() => setCharacterToDelete(item)}
+        className="p-2"
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      >
+        <Trash2 size={18} color="#EF4444" />
+      </TouchableOpacity>
+    </TouchableOpacity>
+  );
+
+  const ListEmptyComponent = () => (
+    <View className="items-center py-12">
+      <Users size={48} color="#CBD5E1" />
+
+      <Text className="text-gray-400 mt-4 text-center">
+        {i18n.t('titles.noCharacters')}
+      </Text>
+    </View>
+  );
 
   return (
-    <View className="flex-1 bg-slate-400 rounded-l-xl">
-      <View className="py-6 flex flex-row justify-between">
-        <Text className="text-center font-medium text-2xl text-slate-950">
-          {i18n.t('titles.characters')}
-        </Text>
+    <>
+      <SafeAreaView className="flex-1 bg-slate-100">
+        <View className="px-5 pt-4 pb-6 bg-indigo-600">
+          <Text className="text-white text-2xl font-bold">
+            {i18n.t('titles.characters')}
+          </Text>
+          <Text className="text-indigo-200 text-sm mt-1">
+            {characters.length} {i18n.t('titles.characters')}
+          </Text>
+        </View>
 
-        <TouchableOpacity
-          className="bg-red-400 px-2 py-0.5 rounded-full flex items-center justify-center w-12 h-12"
-          disabled={isPending}
-          onPress={() => handleLogout()}
-        >
-          <LogOut size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+        <View className="flex-1 px-4 pt-4">
+          <FlatList
+            data={characters}
+            renderItem={renderCharacterItem}
+            keyExtractor={(item: Character) => item.id!.toString()}
+            ListEmptyComponent={ListEmptyComponent}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 20 }}
+          />
+        </View>
 
-      <ScrollView contentContainerClassName="flex flex-1 justify-end flex-col items-stretch gap-2 px-2 pb-4">
-        {characters.map((character) => (
+        <View className="px-4 pb-4 gap-3">
           <TouchableOpacity
-            key={character.id}
-            onPress={() => {
-              navigation.navigate('CharacterSheet', {
-                characterId: character.id!,
-              });
-            }}
-            className="w-full bg-slate-300 rounded-lg py-2 px-4"
+            onPress={onNewCharacter}
+            className="bg-emerald-500 rounded-xl py-4 flex-row items-center justify-center shadow-md"
+            activeOpacity={0.8}
           >
-            <Text className="font-medium text-lg text-slate-950">
-              {character.id}. {character.name}
+            <Plus size={20} color="white" />
+            <Text className="text-white font-bold text-base ml-2">
+              {i18n.t('titles.newCharacter')}
             </Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-      <View className="mt-auto px-4" style={{ marginBottom: bottom }}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('NewCharacter')}
-          className="bg-green-700 px-4 py-2 rounded-lg"
-        >
-          <Text className="text-2xl text-center text-white font-medium">
-            {i18n.t('titles.newCharacter')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+
+          <TouchableOpacity
+            onPress={onLogout}
+            className="bg-white border border-red-200 rounded-xl py-3 flex-row items-center justify-center"
+            activeOpacity={0.8}
+          >
+            <LogOut size={18} color="#EF4444" />
+
+            <Text className="text-red-500 font-medium text-sm ml-2">
+              {i18n.t('titles.logout')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+
+      <ConfirmationModal
+        isVisible={!!characterToDelete}
+        onClose={() => setCharacterToDelete(null)}
+        onConfirm={() => handleDelete(characterToDelete!)}
+      />
+    </>
   );
 };

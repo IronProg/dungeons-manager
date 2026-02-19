@@ -1,12 +1,13 @@
 import React from 'react';
-import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
-import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPoints';
 import { ScrollView } from 'react-native-gesture-handler';
-import { MainCharacterSheetSkills } from './Skills/MainCharacterSheetSkills';
 import { SettingsIcon } from 'lucide-react-native';
 import i18n from 'i18n';
+
+import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
+import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
+import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPoints';
+import { MainCharacterSheetSkills } from './Skills/MainCharacterSheetSkills';
 
 export const MainCharacterSheet = () => {
   return (
@@ -21,7 +22,7 @@ export const MainCharacterSheet = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="bg-white rounded-lg flex-col items-stretch">
+      <View className="bg-white rounded-lg flex-col items-stretch shadow-sm">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.general')}
         </Text>
@@ -33,7 +34,7 @@ export const MainCharacterSheet = () => {
         <MainCharacterSheetGeneralInfo />
       </View>
 
-      <View className="bg-white rounded-lg flex-col items-stretch mt-4">
+      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.attributes')}
         </Text>
@@ -41,7 +42,7 @@ export const MainCharacterSheet = () => {
         <MainCharacterSheetAttributes />
       </View>
 
-      <View className="bg-white rounded-lg flex-col items-stretch mt-4">
+      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.savesAndSkills')}
         </Text>

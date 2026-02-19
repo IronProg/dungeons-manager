@@ -1,9 +1,11 @@
+import { ReactNode, useEffect, useState } from 'react';
+
 import { CharacterContext } from 'contexts/CharacterContext';
 import { buildModifiers } from 'core/helpers/buildModifiers';
 import { useDetailedCharacter } from 'hooks/useSetDetailedCharacter';
-import { ReactNode, useEffect, useState } from 'react';
-import { useGetCharacter } from 'services/characters/character';
-import { Character, Modifiers } from 'types/character';
+import { useGetCharacter } from 'services/characters/character.api';
+
+import type { Character, Modifiers } from 'types/character';
 
 export type CharacterProviderProps = {
   initialLoading: boolean;

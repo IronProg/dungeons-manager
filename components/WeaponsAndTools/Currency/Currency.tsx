@@ -1,17 +1,20 @@
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useCurrencyForm } from './useCurrencyForm';
 import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
-import { Currencies } from 'types/character';
-import { useEffect, useState } from 'react';
-import { useUpdateCurrenciesMutation } from 'services/currencies/currencies';
 import { useDebounce } from 'use-debounce';
+import i18n from 'i18n';
+
+import { useCurrencyForm } from './useCurrencyForm';
+import { useUpdateCurrenciesMutation } from 'services/currencies/currencies';
 import { useCharacter } from 'contexts/CharacterContext';
+
+import type { Currencies } from 'types/character';
 
 type CurrencyProps = {
   currencies: Currencies;
 };
+
 export const Currency = ({ currencies }: CurrencyProps) => {
   const { characterId } = useCharacter();
   const [lastFieldUpdate, setLastFieldUpdate] = useState('');
@@ -46,7 +49,9 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         scrollEnabled
         contentContainerClassName="w-full flex flex-row gap-4 justify-around"
       >
-        <View className="border border-gray-400 py-2 rounded-lg grow">
+        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+          <View className="w-4 h-4 rounded-full bg-amber-700 absolute bottom-2.5 right-2" />
+
           <Controller
             name="copperPoints"
             control={control}
@@ -73,7 +78,9 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow">
+        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+          <View className="w-4 h-4 rounded-full bg-gray-400 absolute bottom-2.5 right-2" />
+
           <Controller
             name="silverPoints"
             control={control}
@@ -100,7 +107,9 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow">
+        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+          <View className="w-4 h-4 rounded-full bg-blue-300 absolute bottom-2.5 right-2" />
+
           <Controller
             name="electrumPoints"
             control={control}
@@ -127,7 +136,9 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow">
+        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+          <View className="w-4 h-4 rounded-full bg-yellow-500 absolute bottom-2.5 right-2" />
+
           <Controller
             name="goldPoints"
             control={control}
@@ -154,7 +165,9 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow">
+        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+          <View className="w-4 h-4 rounded-full bg-slate-200 absolute bottom-2.5 right-2" />
+
           <Controller
             name="platinumPoints"
             control={control}

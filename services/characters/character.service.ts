@@ -1,5 +1,6 @@
 import api from 'core/api';
-import { Character } from 'types/character';
+
+import type { Character } from 'types/character';
 
 export const characterService = {
   fetchAll: () => api.get<Character[]>('/characters').then((res) => res.data),
@@ -11,4 +12,6 @@ export const characterService = {
     api
       .put<Character>(`/characters/${params.id}`, params)
       .then((res) => res.data),
+  destroy: ({ ...params }: DestroyCharacterParams) =>
+    api.delete<null>(`/characters/${params.id}`).then((res) => res.data),
 };

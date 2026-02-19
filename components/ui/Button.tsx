@@ -1,12 +1,22 @@
-import i18n from 'i18n';
 import { Text, TouchableOpacity } from 'react-native';
+import i18n from 'i18n';
 
-type ButtonProps = { text?: string; onPress?: () => void; disabled: boolean };
+type ButtonProps = {
+  className?: string;
+  text?: string;
+  onPress?: () => void;
+  disabled?: boolean;
+};
 
-export const Button = ({ text, onPress, disabled = false }: ButtonProps) => (
+export const Button = ({
+  className,
+  text,
+  onPress,
+  disabled = false,
+}: ButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
-    className={`w-full bg-green-600 rounded-lg py-2 ${disabled && 'opacity-75'}`}
+    className={`w-full bg-green-600 rounded-lg py-2 ${disabled && 'opacity-75'} ${className || ''}`}
     disabled={disabled}
   >
     <Text className="text-white font-bold text-2xl text-center">
