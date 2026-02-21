@@ -53,7 +53,7 @@ export const WeaponsAndTools = () => {
       {character && (
         <ScrollView
           scrollEnabled
-          contentContainerClassName="flex flex-col gap-4"
+          contentContainerClassName="flex flex-col gap-4 px-2"
         >
           {isLoadingCurrencies && <ActivityIndicator />}
           {currencies ? (

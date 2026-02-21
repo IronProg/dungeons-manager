@@ -11,7 +11,7 @@ export type CharacterProviderProps = {
   initialLoading: boolean;
   characterId?: number;
   character?: Character;
-  proficiency: number;
+  proficiencyBonus: number;
   isLoading: boolean;
   isFetching: boolean;
   setCharacterId: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -52,7 +52,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     initialLoading,
     character,
     characterId,
-    proficiency: character?.proficiency || 2,
+    proficiencyBonus: character?.proficiencyBonus || 2,
     isLoading,
     isFetching,
     setCharacterId,

@@ -8,7 +8,7 @@ type ProficiencyProps = {
 };
 
 export const Proficiency = ({ onLongPress }: ProficiencyProps) => {
-  const { proficiency } = useCharacter();
+  const { proficiencyBonus } = useCharacter();
 
   return (
     <TouchableOpacity
@@ -20,7 +20,9 @@ export const Proficiency = ({ onLongPress }: ProficiencyProps) => {
         <Text className="text-gray-900 text-sm font-semibold text-center">
           {i18n.t('general.proficiency')}
         </Text>
-        <Text className="text-3xl font-bold text-center">{proficiency}</Text>
+        <Text className="text-3xl font-bold text-center">
+          {proficiencyBonus}
+        </Text>
       </View>
     </TouchableOpacity>
   );

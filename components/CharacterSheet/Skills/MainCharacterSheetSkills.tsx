@@ -111,7 +111,7 @@ export const MainCharacterSheetSkills = () => {
 type SaveCardProps = { save: Save; onLongPress: () => void };
 
 const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
-  const { modifiers, proficiency } = useCharacter();
+  const { modifiers, proficiencyBonus } = useCharacter();
   let modifier =
     (modifiers?.[save.mainAttribute] || 0) + (save.customBonus || 0);
 
@@ -120,7 +120,7 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
   }
 
   if (save.proficiency) {
-    modifier += proficiency;
+    modifier += proficiencyBonus;
   }
 
   return (

@@ -38,6 +38,7 @@ export const pt = {
     noCharacters: 'Nenhum personagem cadastrado',
     confirmation: 'Você tem certeza?',
     confirmationSubtitle: 'Essa ação não pode ser desfeita.',
+    characterDetails: 'Detalhes do Personagem',
   },
   general: {
     none: 'Nenhum',
@@ -144,6 +145,21 @@ export const pt = {
     creating: 'Criando',
     register: 'Registrar-se',
     hasAccount: 'Já possui uma conta?',
+  },
+  background: {
+    race: 'Raça',
+    personalityTraits: 'Traços de Personalidade',
+    alignment: 'Alinhamento',
+    bonds: 'Elos',
+    flaws: 'Falhas',
+    ideals: 'Ideais',
+    background: 'História',
+  },
+  proficiency: {
+    armors: 'Proficiência em Armaduras',
+    weapons: 'Proficiência em Armas',
+    tools: 'Proficiência em Ferramentas',
+    languages: 'Idiomas Conhecidos',
   },
   errors: {
     min: 'Deve possuir ao menos %{min} caracteres',

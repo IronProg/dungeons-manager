@@ -1,24 +1,31 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SettingsIcon } from 'lucide-react-native';
+import { FileTextIcon } from 'lucide-react-native';
 import i18n from 'i18n';
 
 import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
 import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
 import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPoints';
 import { MainCharacterSheetSkills } from './Skills/MainCharacterSheetSkills';
+import { useRouter } from 'expo-router';
 
 export const MainCharacterSheet = () => {
+  const router = useRouter();
+
   return (
-    <ScrollView>
+    <ScrollView contentContainerClassName="px-2">
       <View className="flex flex-row justify-between items-center mb-2">
         <Text className="text-black text-2xl font-bold">
           {i18n.t('titles.characterSheet')}
         </Text>
 
-        <TouchableOpacity className="bg-white rounded-full p-2">
-          <SettingsIcon size={24} />
+        <TouchableOpacity
+          hitSlop={20}
+          onPress={() => router.push('/character-details')}
+          className="bg-white rounded-full p-2"
+        >
+          <FileTextIcon size={24} />
         </TouchableOpacity>
       </View>
 

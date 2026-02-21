@@ -78,7 +78,7 @@ export const MainCharacterSheetAttributes = () => {
       <ReusableBottomSheetModal
         onDismiss={close}
         ref={bottomSheetRef}
-        snapPoints={[600, 875]}
+        snapPoints={[550, 875]}
       >
         <AttributesForm
           characterAttributes={characterAttributes}
