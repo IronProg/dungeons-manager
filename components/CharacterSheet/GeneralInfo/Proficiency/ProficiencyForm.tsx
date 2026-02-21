@@ -18,8 +18,8 @@ type ProficiencyFormProps = {
 export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
-  const { proficiency } = useCharacter();
-  const { control, handleSubmit } = useProficiencyForm({ proficiency });
+  const { proficiencyBonus } = useCharacter();
+  const { control, handleSubmit } = useProficiencyForm({ proficiencyBonus });
 
   const { mutate: updateCharacter, isPending } = useUpdateCharacterMutation();
 
@@ -50,7 +50,7 @@ export const ProficiencyForm = ({ onClose }: ProficiencyFormProps) => {
       <View className="min-w-0 flex-1">
         <Controller
           control={control}
-          name="proficiency"
+          name="proficiencyBonus"
           render={({ field, fieldState: { error } }) => (
             <>
               <BottomSheetTextInput

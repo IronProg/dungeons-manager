@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
@@ -10,6 +10,7 @@ import { useDestroyCharacterMutation } from 'services/characters/character.api';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 
 import type { Character } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 interface CharactersDrawerProps extends DrawerContentComponentProps {
   characters: Character[];
@@ -23,6 +24,7 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
   onLogout,
   onNewCharacter,
 }) => {
+  const { setCharacterId } = useCharacter();
   const [characterToDelete, setCharacterToDelete] = useState<Character | null>(
     null,
   );
@@ -36,11 +38,17 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
     );
   };
 
+  const handleSelectCharacter = useCallback(
+    (item: Character) => {
+      setCharacterId(item.id!);
+      navigation.navigate('(tabs)');
+    },
+    [navigation, setCharacterId],
+  );
+
   const renderCharacterItem = ({ item }: { item: Character }) => (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('CharacterSheet', { characterId: item.id })
-      }
+      onPress={() => handleSelectCharacter(item)}
       className="bg-white rounded-xl p-4 mb-3 flex-row items-center shadow-sm"
       activeOpacity={0.7}
     >

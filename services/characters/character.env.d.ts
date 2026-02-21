@@ -11,7 +11,7 @@ type UpdateCharacterParams = {
   name?: string;
   experience?: number;
   level?: number;
-  proficiency?: number;
+  proficiencyBonus?: number;
 };
 
 type DestroyCharacterParams = {

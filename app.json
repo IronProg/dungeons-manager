@@ -8,9 +8,11 @@
       "favicon": "./assets/favicon.png"
     },
     "experiments": {
-      "tsconfigPaths": true
+      "tsconfigPaths": true,
+      "typedRoutes": true
     },
     "plugins": [
+      "expo-router",
       "expo-localization",
       "expo-secure-store",
       [
@@ -45,6 +47,7 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "scheme": "dungeons-manager-scheme",
     "extra": {
       "eas": {
         "projectId": "eca17c32-b071-4aca-9b2b-abff5ec3dd49"

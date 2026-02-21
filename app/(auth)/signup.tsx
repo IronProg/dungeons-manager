@@ -1,46 +1,59 @@
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { TextInput } from 'react-native-gesture-handler';
 import { Controller } from 'react-hook-form';
-import { BookOpen, Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
+import { Eye, EyeOff, Lock, Mail, Shield, UserPlus } from 'lucide-react-native';
 import i18n from 'i18n';
 
-import { LoginFormType, useLoginForm } from 'components/Auth/useLoginForm';
-import { useSignInMutation } from 'services/auth/auth.api';
-import { useAppNavigation } from 'hooks/useAppNavigation';
+import {
+  RegisterFormType,
+  useRegisterForm,
+} from 'components/Auth/useRegisterForm';
+import { useSignInMutation, useSignUpMutation } from 'services/auth/auth.api';
 
+import { TextInput } from 'react-native-gesture-handler';
 import { Container } from 'components/Container';
+import { useRouter } from 'expo-router';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
-export const LoginScreen = () => {
+export default function SignUpScreen() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const navigation = useAppNavigation();
 
-  const { handleSubmit, control } = useLoginForm();
+  const { handleSubmit, control } = useRegisterForm();
 
-  const { mutate: signIn, isPending } = useSignInMutation();
+  const { mutate: signIn } = useSignInMutation();
+  const { mutate: signUp, isPending } = useSignUpMutation();
 
   const onSubmit = useCallback(
-    (values: LoginFormType) => {
-      signIn({ user: values });
+    (values: RegisterFormType) => {
+      signUp(
+        { user: values },
+        {
+          onSuccess: () => {
+            signIn({ user: values });
+          },
+        },
+      );
     },
-    [signIn],
+    [signIn, signUp],
   );
 
   return (
     <Container>
       <KeyboardAwareScrollView
-        contentContainerClassName="flex-1 justify-center bg-slate-50 flex flex-col gap-4"
-        enableOnAndroid
+        className="flex-1"
+        contentContainerClassName="grow gap-4 flex flex-col justify-center "
       >
         <View className="bg-indigo-600 pt-12 pb-16 px-6 rounded-b-[40px]">
           <View className="items-center">
             <View className="w-20 h-20 bg-white/20 rounded-full items-center justify-center mb-4">
-              <BookOpen size={40} color="white" />
+              <UserPlus size={40} color="white" />
             </View>
-
             <Text className="text-white text-3xl font-bold">
-              Dungeons Manager
+              {i18n.t('auth.createAccount')}
+            </Text>
+            <Text className="text-indigo-200 mt-2">
+              {i18n.t('auth.registerSubtitle')}
             </Text>
           </View>
         </View>
@@ -48,7 +61,7 @@ export const LoginScreen = () => {
         <View className="flex-1 px-6 -mt-8">
           <View className="bg-white rounded-3xl p-6 shadow-lg shadow-black/10">
             <Text className="text-gray-800 text-xl font-bold mb-6">
-              {i18n.t('auth.welcomeBack')}
+              {i18n.t('auth.getStarted')}
             </Text>
 
             <Controller
@@ -66,7 +79,6 @@ export const LoginScreen = () => {
                     className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
                   >
                     <Mail size={20} color="#9CA3AF" />
-
                     <TextInput
                       className="flex-1 py-4 px-3 text-gray-800"
                       placeholder="exemplo@email.com"
@@ -77,7 +89,6 @@ export const LoginScreen = () => {
                       onChangeText={onChange}
                     />
                   </View>
-
                   {error?.message && (
                     <Text className="text-red-500 text-xs mt-1">
                       {error?.message}
@@ -87,8 +98,6 @@ export const LoginScreen = () => {
               )}
             />
 
-            {/* Email Input */}
-
             <Controller
               control={control}
               name="password"
@@ -96,7 +105,7 @@ export const LoginScreen = () => {
                 field: { value, onChange },
                 fieldState: { error },
               }) => (
-                <View className="mb-6">
+                <View className="mb-4">
                   <Text className="text-gray-600 text-sm font-medium mb-2">
                     {i18n.t('auth.password')}
                   </Text>
@@ -122,7 +131,39 @@ export const LoginScreen = () => {
                       )}
                     </TouchableOpacity>
                   </View>
+                  {error?.message && (
+                    <Text className="text-red-500 text-xs mt-1">
+                      {error?.message}
+                    </Text>
+                  )}
+                </View>
+              )}
+            />
 
+            <Controller
+              control={control}
+              name="passwordConfirmation"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <View className="mb-6">
+                  <Text className="text-gray-600 text-sm font-medium mb-2">
+                    {i18n.t('auth.passwordConfirmation')}
+                  </Text>
+                  <View
+                    className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
+                  >
+                    <Shield size={20} color="#9CA3AF" />
+                    <TextInput
+                      className="flex-1 py-4 px-3 text-gray-800"
+                      placeholder="••••••••"
+                      placeholderTextColor="#9CA3AF"
+                      secureTextEntry={!showPassword}
+                      value={value}
+                      onChangeText={onChange}
+                    />
+                  </View>
                   {error?.message && (
                     <Text className="text-red-500 text-xs mt-1">
                       {error?.message}
@@ -140,26 +181,30 @@ export const LoginScreen = () => {
             >
               {isPending ? (
                 <View className="flex-row items-center">
-                  <ActivityIndicator size={20} color={'white'} />
-
+                  <ActivityIndicator size={20} color="white" />
                   <Text className="text-white font-bold text-base ml-2">
-                    {i18n.t('auth.signingIn')}
+                    {i18n.t('auth.creating')}
                   </Text>
                 </View>
               ) : (
                 <Text className="text-white font-bold text-base">
-                  {i18n.t('auth.signIn')}
+                  {i18n.t('auth.register')}
                 </Text>
               )}
             </TouchableOpacity>
           </View>
 
           <View className="flex-row justify-center mt-6 mb-8">
-            <Text className="text-gray-500">{i18n.t('auth.noAccount')} </Text>
+            <Text className="text-gray-500">{i18n.t('auth.hasAccount')} </Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <TouchableOpacity
+              hitSlop={25}
+              onPress={() =>
+                router.navigate('/login', { relativeToDirectory: true })
+              }
+            >
               <Text className="text-indigo-600 font-bold">
-                {i18n.t('auth.signUp')}
+                {i18n.t('auth.signIn')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -167,4 +212,4 @@ export const LoginScreen = () => {
       </KeyboardAwareScrollView>
     </Container>
   );
-};
+}

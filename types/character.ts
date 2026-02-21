@@ -3,7 +3,7 @@ export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
 export type Character = {
   id?: number;
   name: string;
-  proficiency: number;
+  proficiencyBonus: number;
   level: number;
   experience: number;
   generalInfo: CharacterGeneralInfo;
@@ -115,4 +115,23 @@ export type Modifiers = {
   intelligence: number;
   wisdom: number;
   charisma: number;
+};
+
+export type Proficiency = {
+  id?: number;
+  armors: string;
+  weapons: string;
+  tools: string;
+  languages: string;
+};
+
+export type Background = {
+  id?: number;
+  alignment: string;
+  background: string;
+  bonds: string;
+  flaws: string;
+  ideals: string;
+  personalityTraits: string;
+  race: string;
 };

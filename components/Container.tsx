@@ -7,8 +7,6 @@ export const Container = ({
   className?: string;
 }) => {
   return (
-    <SafeAreaView className={'flex flex-1 px-2 bg-slate-100'}>
-      {children}
-    </SafeAreaView>
+    <SafeAreaView className={'flex-1 bg-slate-100'}>{children}</SafeAreaView>
   );
 };

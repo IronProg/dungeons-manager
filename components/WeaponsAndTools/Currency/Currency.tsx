@@ -50,7 +50,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         contentContainerClassName="w-full flex flex-row gap-4 justify-around"
       >
         <View className="border border-gray-400 py-2 rounded-lg grow relative">
-          <View className="w-4 h-4 rounded-full bg-amber-700 absolute bottom-2.5 right-2" />
+          <View className="w-4 h-4 rounded-full bg-amber-700 absolute top-1.5 right-1.5" />
 
           <Controller
             name="copperPoints"
@@ -79,7 +79,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow relative">
-          <View className="w-4 h-4 rounded-full bg-gray-400 absolute bottom-2.5 right-2" />
+          <View className="w-4 h-4 rounded-full bg-gray-400 absolute top-1.5 right-1.5" />
 
           <Controller
             name="silverPoints"
@@ -108,7 +108,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow relative">
-          <View className="w-4 h-4 rounded-full bg-blue-300 absolute bottom-2.5 right-2" />
+          <View className="w-4 h-4 rounded-full bg-blue-300 absolute top-1.5 right-1.5" />
 
           <Controller
             name="electrumPoints"
@@ -137,7 +137,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow relative">
-          <View className="w-4 h-4 rounded-full bg-yellow-500 absolute bottom-2.5 right-2" />
+          <View className="w-4 h-4 rounded-full bg-yellow-500 absolute top-1.5 right-1.5" />
 
           <Controller
             name="goldPoints"
@@ -166,7 +166,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg grow relative">
-          <View className="w-4 h-4 rounded-full bg-slate-200 absolute bottom-2.5 right-2" />
+          <View className="w-4 h-4 rounded-full bg-slate-200 absolute top-1.5 right-1.5" />
 
           <Controller
             name="platinumPoints"

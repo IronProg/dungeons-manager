@@ -4,8 +4,10 @@ import { AttributesFormType, useAttributesForm } from './useAttributesForm';
 import { Attribute } from 'types/character';
 import { ATTRIBUTES } from 'core/enums/attributes';
 import { getModifier } from 'core/helpers/getModifier';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {
+  BottomSheetScrollView,
+  BottomSheetTextInput,
+} from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { useUpdateAllAttributesMutation } from 'services/attributes/attributes';
 import { useCallback } from 'react';
@@ -53,26 +55,24 @@ export const AttributesForm = ({
   );
 
   return (
-    <KeyboardAwareScrollView className="flex-1">
-      <View className="flex flex-col gap-4">
-        <Text className="text-gray-900 font-bold text-2xl text-center">
-          Modificar Atributos
-        </Text>
+    <BottomSheetScrollView contentContainerClassName="grow flex flex-col gap-4 pb-14">
+      <Text className="text-gray-900 font-bold text-2xl text-center">
+        Modificar Atributos
+      </Text>
 
-        <View className="flex flex-row justify-between flex-wrap">
-          {ATTRIBUTES.map((attrName, index) => (
-            <AttributeFormItem
-              key={attrName}
-              control={control}
-              name={attrName}
-              index={index}
-            />
-          ))}
-        </View>
-
-        <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
+      <View className="flex flex-row justify-between flex-wrap">
+        {ATTRIBUTES.map((attrName, index) => (
+          <AttributeFormItem
+            key={attrName}
+            control={control}
+            name={attrName}
+            index={index}
+          />
+        ))}
       </View>
-    </KeyboardAwareScrollView>
+
+      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
+    </BottomSheetScrollView>
   );
 };
 

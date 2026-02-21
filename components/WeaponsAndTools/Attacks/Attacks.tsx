@@ -16,7 +16,7 @@ type AttacksProps = {
 };
 
 export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
-  const { characterId, modifiers, proficiency } = useCharacter();
+  const { characterId, modifiers, proficiencyBonus } = useCharacter();
   const { data: attacks, isLoading } = useGetAllAttacks({
     characterId: characterId!,
   });
@@ -69,7 +69,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
             attackModifier += modifiers[attack.mainAttribute];
           }
 
-          if (attack.applyProficiency) attackModifier += proficiency;
+          if (attack.applyProficiency) attackModifier += proficiencyBonus;
 
           return (
             <TouchableOpacity

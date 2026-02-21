@@ -38,6 +38,7 @@ export const en = {
     noCharacters: 'No characters found',
     confirmation: 'Are you sure?',
     confirmationSubtitle: 'This action cannot be undone.',
+    characterDetails: 'Character Details',
   },
   general: {
     none: 'None',
