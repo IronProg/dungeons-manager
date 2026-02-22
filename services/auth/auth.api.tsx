@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authService } from './auth.service';
 import { useAuthInvalidationAsync } from './auth.invalidate';
 
-import type { TokenResponse, User } from 'types/user';
+import type { TokenResponse } from 'types/user';
 import {
   removeAccessToken,
   removeRefreshToken,
@@ -25,9 +25,9 @@ export const useSignInMutation = () => {
 
   return useMutation<TokenResponse, Error, SignInParams>({
     mutationFn: (params: SignInParams) => authService.signIn(params),
-    onSuccess: async (user) => {
-      await setAccessToken(user.accessToken);
-      await setRefreshToken(user.refreshToken);
+    onSuccess: async ({ accessToken, refreshToken }) => {
+      await setAccessToken(accessToken);
+      await setRefreshToken(refreshToken);
       await invalidateQueriesAsync();
       queryClient.invalidateQueries({ queryKey: authKey });
     },
@@ -49,7 +49,17 @@ export const useSignOutMutation = () => {
   });
 };
 
-export const useSignUpMutation = () =>
-  useMutation<User, Error, SignUpParams>({
+export const useSignUpMutation = () => {
+  const { invalidateQueriesAsync } = useAuthInvalidationAsync();
+  const queryClient = useQueryClient();
+
+  return useMutation<TokenResponse, Error, SignUpParams>({
     mutationFn: (data: SignUpParams) => authService.register(data),
+    onSuccess: async ({ accessToken, refreshToken }) => {
+      await setAccessToken(accessToken);
+      await setRefreshToken(refreshToken);
+      await invalidateQueriesAsync();
+      queryClient.invalidateQueries({ queryKey: authKey });
+    },
   });
+};

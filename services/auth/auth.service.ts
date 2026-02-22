@@ -16,7 +16,7 @@ export const authService = {
     return res1.data;
   },
   register: (data: SignUpParams) =>
-    api.post('/signup', data).then((res) => res.data),
+    api.post<TokenResponse>('/signup', data).then((res) => res.data),
   refreshToken: ({ refreshToken }: { refreshToken: string }) =>
     refreshApi
       .post<TokenResponse>(`/refresh_token`, { refresh_token: refreshToken })

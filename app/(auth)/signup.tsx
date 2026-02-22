@@ -10,7 +10,7 @@ import {
   RegisterFormType,
   useRegisterForm,
 } from 'components/Auth/useRegisterForm';
-import { useSignInMutation, useSignUpMutation } from 'services/auth/auth.api';
+import { useSignUpMutation } from 'services/auth/auth.api';
 
 import { TextInput } from 'react-native-gesture-handler';
 import { Container } from 'components/Container';
@@ -21,7 +21,6 @@ export default function SignUpScreen() {
 
   const { handleSubmit, control } = useRegisterForm();
 
-  const { mutate: signIn } = useSignInMutation();
   const { mutate: signUp, isPending } = useSignUpMutation();
 
   const onSubmit = useCallback(
@@ -30,12 +29,12 @@ export default function SignUpScreen() {
         { user: values },
         {
           onSuccess: () => {
-            signIn({ user: values });
+            router.navigate('/(authenticated)/(drawer)/(tabs)');
           },
         },
       );
     },
-    [signIn, signUp],
+    [router, signUp],
   );
 
   return (
