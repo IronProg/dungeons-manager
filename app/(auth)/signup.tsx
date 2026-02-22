@@ -1,7 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { Eye, EyeOff, Lock, Mail, Shield, UserPlus } from 'lucide-react-native';
+import { Mail, UserPlus } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import i18n from 'i18n';
 
 import {
@@ -12,12 +14,10 @@ import { useSignInMutation, useSignUpMutation } from 'services/auth/auth.api';
 
 import { TextInput } from 'react-native-gesture-handler';
 import { Container } from 'components/Container';
-import { useRouter } from 'expo-router';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { PasswordInput } from 'components/Auth/shared/PasswordInput';
 
 export default function SignUpScreen() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
 
   const { handleSubmit, control } = useRegisterForm();
 
@@ -109,28 +109,13 @@ export default function SignUpScreen() {
                   <Text className="text-gray-600 text-sm font-medium mb-2">
                     {i18n.t('auth.password')}
                   </Text>
-                  <View
-                    className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
-                  >
-                    <Lock size={20} color="#9CA3AF" />
-                    <TextInput
-                      className="flex-1 py-4 px-3 text-gray-800"
-                      placeholder="••••••••"
-                      placeholderTextColor="#9CA3AF"
-                      secureTextEntry={!showPassword}
-                      value={value}
-                      onChangeText={onChange}
-                    />
-                    <TouchableOpacity
-                      onPress={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff size={20} color="#9CA3AF" />
-                      ) : (
-                        <Eye size={20} color="#9CA3AF" />
-                      )}
-                    </TouchableOpacity>
-                  </View>
+
+                  <PasswordInput
+                    onChangeText={onChange}
+                    value={value}
+                    error={error?.message}
+                  />
+
                   {error?.message && (
                     <Text className="text-red-500 text-xs mt-1">
                       {error?.message}
@@ -151,19 +136,13 @@ export default function SignUpScreen() {
                   <Text className="text-gray-600 text-sm font-medium mb-2">
                     {i18n.t('auth.passwordConfirmation')}
                   </Text>
-                  <View
-                    className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
-                  >
-                    <Shield size={20} color="#9CA3AF" />
-                    <TextInput
-                      className="flex-1 py-4 px-3 text-gray-800"
-                      placeholder="••••••••"
-                      placeholderTextColor="#9CA3AF"
-                      secureTextEntry={!showPassword}
-                      value={value}
-                      onChangeText={onChange}
-                    />
-                  </View>
+
+                  <PasswordInput
+                    onChangeText={onChange}
+                    value={value}
+                    error={error?.message}
+                  />
+
                   {error?.message && (
                     <Text className="text-red-500 text-xs mt-1">
                       {error?.message}
