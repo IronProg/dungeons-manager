@@ -155,6 +155,9 @@ export const pt = {
     ideals: 'Ideais',
     background: 'Antecedente',
   },
+  character: {
+    generatingCharacter: 'Gerando seu personagem',
+  },
   proficiency: {
     armors: 'Proficiência em Armaduras',
     weapons: 'Proficiência em Armas',

@@ -7,7 +7,7 @@ export const schema = z.object({ name: z.string() });
 export type NewCharacterFormType = z.infer<typeof schema>;
 
 export const useNewCharacter = () => {
-  const { control, handleSubmit, watch, getValues, formState } =
+  const { control, handleSubmit, watch, getValues, reset, formState } =
     useForm<NewCharacterFormType>({
       resolver: zodResolver(schema),
       defaultValues: { name: '' },
@@ -17,6 +17,7 @@ export const useNewCharacter = () => {
     control,
     handleSubmit,
     watch,
+    reset,
     getValues,
     formState,
     errors: formState.errors,

@@ -1,5 +1,11 @@
-import { useCallback } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Controller } from 'react-hook-form';
@@ -11,10 +17,12 @@ import { useRouter } from 'expo-router';
 import { useCharacter } from 'contexts/CharacterContext';
 
 export const NewCharacter = () => {
-  const { setCharacterId } = useCharacter();
-  const { control, handleSubmit } = useNewCharacter();
+  const { character, setCharacterId, characterId } = useCharacter();
+  const { control, handleSubmit, reset } = useNewCharacter();
   const navigation = useRouter();
   const { bottom } = useSafeAreaInsets();
+
+  const [waitingForCharacter, setWaitingForCharacter] = useState(false);
 
   const { mutate: createCharacter, isPending } = useCreateCharacterMutation();
 
@@ -23,12 +31,22 @@ export const NewCharacter = () => {
       createCharacter(values, {
         onSuccess: (data) => {
           setCharacterId(data.id!);
-          navigation.navigate('/(drawer)/(tabs)');
+          setWaitingForCharacter(true);
         },
       });
     },
-    [createCharacter, navigation, setCharacterId],
+    [createCharacter, setCharacterId],
   );
+
+  console.log({ character, characterId });
+
+  useEffect(() => {
+    if (waitingForCharacter && character) {
+      reset();
+      setWaitingForCharacter(false);
+      navigation.navigate('/(authenticated)/(drawer)/(tabs)');
+    }
+  }, [waitingForCharacter, navigation, character, reset]);
 
   return (
     <KeyboardAwareScrollView contentContainerClassName="flex-1" enableOnAndroid>
@@ -53,12 +71,22 @@ export const NewCharacter = () => {
             )}
           />
         </View>
+
+        {waitingForCharacter && (
+          <View className="flex flex-col w-full items-center pt-20 gap-2">
+            <Text className="text-xl font-medium">
+              {i18n.t('character.generatingCharacter')}
+            </Text>
+
+            <ActivityIndicator size={40} />
+          </View>
+        )}
       </View>
 
       <View className="mt-auto px-4" style={{ paddingBottom: bottom }}>
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
-          disabled={isPending}
+          disabled={isPending || waitingForCharacter}
           className={`bg-green-600 px-4 py-2 rounded-lg ${isPending && 'opacity-75'}`}
         >
           <Text className="text-2xl text-center text-white font-medium">
