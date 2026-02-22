@@ -1,5 +1,4 @@
 import api from 'core/api/api';
-import refreshApi from 'core/api/refresh-api';
 import { getRefreshToken } from 'core/utils/tokens';
 
 import { TokenResponse, User } from 'types/user';
@@ -17,8 +16,4 @@ export const authService = {
   },
   register: (data: SignUpParams) =>
     api.post<TokenResponse>('/signup', data).then((res) => res.data),
-  refreshToken: ({ refreshToken }: { refreshToken: string }) =>
-    refreshApi
-      .post<TokenResponse>(`/refresh_token`, { refresh_token: refreshToken })
-      .then((res) => res.data),
 };

@@ -1,15 +1,21 @@
 import { InternalAxiosRequestConfig } from 'axios';
-import { getAccessToken, setRefreshToken } from 'core/utils/tokens';
+import {
+  getAccessToken,
+  removeAccessToken,
+  removeRefreshToken,
+  setRefreshToken,
+} from 'core/utils/tokens';
 
 import { getRefreshToken, setAccessToken } from 'core/utils/tokens';
-import { authService } from 'services/auth/auth.service';
 
 import { jwtDecode } from 'jwt-decode';
+import { queryClient } from 'core/queryClient/queryClient';
+import { TokenResponse } from 'types/user';
+import refreshApi from '../refresh-api';
 
 const isExpired = (token: string) => {
   const { exp } = jwtDecode<{ exp: number }>(token);
 
-  console.log({ exp: new Date(exp * 1000) });
   return Date.now() >= exp * 1000 - 20_000;
 };
 
@@ -40,15 +46,21 @@ export const refreshTokenInterceptor = async (
     const refreshToken = await getRefreshToken();
 
     if (refreshToken) {
-      const { accessToken, refreshToken: newRefresh } =
-        await authService.refreshToken({ refreshToken });
+      try {
+        const { accessToken, refreshToken: newRefresh } =
+          await regenerateRefreshToken({
+            refreshToken,
+          });
 
-      console.log({ accessToken, newRefresh });
+        await setAccessToken(accessToken);
+        await setRefreshToken(newRefresh);
 
-      await setAccessToken(accessToken);
-      await setRefreshToken(newRefresh);
-
-      config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      } catch {
+        queryClient.invalidateQueries({ queryKey: ['auth'] });
+        await removeAccessToken();
+        await removeRefreshToken();
+      }
     }
   } else if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -56,3 +68,8 @@ export const refreshTokenInterceptor = async (
 
   return config;
 };
+
+const regenerateRefreshToken = ({ refreshToken }: { refreshToken: string }) =>
+  refreshApi
+    .post<TokenResponse>(`/refresh_token`, { refresh_token: refreshToken })
+    .then((res) => res.data);

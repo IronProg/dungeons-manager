@@ -4,9 +4,9 @@ import i18n from 'i18n';
 import { useGetCurrentUser } from 'services/auth/auth.api';
 
 export default function RootLayout() {
-  const { data: user } = useGetCurrentUser();
+  const { data: user, isFetching } = useGetCurrentUser();
 
-  if (!user) {
+  if (!user && !isFetching) {
     return <Redirect href="/(auth)/login" />;
   }
 

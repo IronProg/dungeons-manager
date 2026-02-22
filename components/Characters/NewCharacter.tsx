@@ -17,7 +17,7 @@ import { useRouter } from 'expo-router';
 import { useCharacter } from 'contexts/CharacterContext';
 
 export const NewCharacter = () => {
-  const { character, setCharacterId, characterId } = useCharacter();
+  const { character, setCharacterId } = useCharacter();
   const { control, handleSubmit, reset } = useNewCharacter();
   const navigation = useRouter();
   const { bottom } = useSafeAreaInsets();
@@ -37,8 +37,6 @@ export const NewCharacter = () => {
     },
     [createCharacter, setCharacterId],
   );
-
-  console.log({ character, characterId });
 
   useEffect(() => {
     if (waitingForCharacter && character) {

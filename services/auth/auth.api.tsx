@@ -44,7 +44,7 @@ export const useSignOutMutation = () => {
       await removeAccessToken();
       await removeRefreshToken();
       await invalidateQueriesAsync();
-      queryClient.invalidateQueries({ queryKey: authKey });
+      queryClient.setQueryData(authKey, null);
     },
   });
 };

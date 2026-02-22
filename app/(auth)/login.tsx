@@ -4,18 +4,17 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Controller } from 'react-hook-form';
 import { BookOpen, Mail } from 'lucide-react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { Redirect, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import i18n from 'i18n';
 
 import { LoginFormType, useLoginForm } from 'components/Auth/useLoginForm';
-import { useGetCurrentUser, useSignInMutation } from 'services/auth/auth.api';
+import { useSignInMutation } from 'services/auth/auth.api';
 
 import { Container } from 'components/Container';
 import { PasswordInput } from 'components/Auth/shared/PasswordInput';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { data: currentUser, isFetching } = useGetCurrentUser();
 
   const { handleSubmit, control } = useLoginForm();
 
@@ -34,10 +33,6 @@ export default function LoginScreen() {
     },
     [router, signIn],
   );
-
-  if (currentUser && !isFetching) {
-    return <Redirect href={'/(authenticated)/(drawer)/(tabs)'} />;
-  }
 
   return (
     <Container>
