@@ -154,6 +154,7 @@ export const pt = {
     flaws: 'Falhas',
     ideals: 'Ideais',
     background: 'Antecedente',
+    name: 'Nome',
   },
   character: {
     generatingCharacter: 'Gerando seu personagem',

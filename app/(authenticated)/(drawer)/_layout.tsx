@@ -45,6 +45,7 @@ export default function DrawerLayout() {
         drawerPosition: 'right',
         headerStyle: { backgroundColor: '#4f46e5' },
         headerTitleStyle: { color: 'white' },
+        headerTintColor: 'white',
         swipeEnabled: false,
       }}
     >

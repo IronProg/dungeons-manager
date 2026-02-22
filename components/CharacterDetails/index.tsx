@@ -20,7 +20,7 @@ export const CharacterDetails = ({ character }: CharacterDetailsProps) => {
         {character?.name}
       </Text>
 
-      <CharacterDetailsClasses character={character} />
+      <CharacterDetailsClasses characterId={character.id!} />
       <CharacterDetailsProficiencies character={character} />
       <CharacterDetailsBackground character={character} />
     </KeyboardAwareScrollView>

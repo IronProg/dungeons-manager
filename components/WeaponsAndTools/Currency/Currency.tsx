@@ -58,6 +58,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <TextInput
+                  keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
                   onChangeText={(val) => {
@@ -87,6 +88,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <TextInput
+                  keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
                   onChangeText={(val) => {
@@ -116,6 +118,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <TextInput
+                  keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
                   onChangeText={(val) => {
@@ -145,6 +148,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <TextInput
+                  keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
                   onChangeText={(val) => {
@@ -174,6 +178,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <TextInput
+                  keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
                   onChangeText={(val) => {

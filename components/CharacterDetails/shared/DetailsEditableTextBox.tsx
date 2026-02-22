@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import i18n from 'i18n';
 import { Skeleton } from 'components/ui/Skeleton';
@@ -20,6 +20,10 @@ export const DetailsEditableTextBox = ({
 }: DetailsEditableTextBoxProps) => {
   const [newText, setNewText] = useState(text);
   const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    setNewText(text ?? '');
+  }, [text]);
 
   if (isLoading) {
     return <Skeleton className="h-10" />;
