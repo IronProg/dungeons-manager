@@ -6,6 +6,7 @@ import {
   BottomSheetModal,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
+import { Keyboard } from 'react-native';
 
 type ReusableBottomSheetModalProps = {
   snapPoints?: Array<number | string>;
@@ -34,6 +35,12 @@ export const ReusableBottomSheetModal = forwardRef<
       [],
     );
 
+    const handleDismiss = useCallback(() => {
+      onDismiss?.();
+
+      Keyboard.dismiss();
+    }, [onDismiss]);
+
     return (
       <BottomSheetModal
         ref={ref}
@@ -41,7 +48,7 @@ export const ReusableBottomSheetModal = forwardRef<
         footerComponent={footerComponent}
         enablePanDownToClose
         backdropComponent={renderBackdrop}
-        onDismiss={onDismiss}
+        onDismiss={handleDismiss}
         keyboardBehavior="extend"
         keyboardBlurBehavior="restore"
         android_keyboardInputMode="adjustPan"
