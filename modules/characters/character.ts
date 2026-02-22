@@ -1,4 +1,4 @@
-import api from 'core/api';
+import api from 'core/api/api';
 import { WithId } from 'modules/modules';
 import { Character } from 'types/character';
 

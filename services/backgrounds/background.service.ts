@@ -1,4 +1,4 @@
-import api from 'core/api';
+import api from 'core/api/api';
 import { Background } from 'types/character';
 
 export const backgroundService = {

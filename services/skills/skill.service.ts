@@ -1,4 +1,4 @@
-import api from 'core/api';
+import api from 'core/api/api';
 import { Skill } from 'types/character';
 
 export const skillsService = {

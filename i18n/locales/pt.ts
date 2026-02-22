@@ -153,7 +153,7 @@ export const pt = {
     bonds: 'Elos',
     flaws: 'Falhas',
     ideals: 'Ideais',
-    background: 'História',
+    background: 'Antecedente',
   },
   proficiency: {
     armors: 'Proficiência em Armaduras',

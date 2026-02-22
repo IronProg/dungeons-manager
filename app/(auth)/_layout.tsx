@@ -9,8 +9,8 @@ export type AuthRoutesStack = {
 export default function AuthNavigator() {
   return (
     <Stack screenOptions={{ header: () => <View /> }}>
-      <Stack.Screen name="Login" />
-      <Stack.Screen name="SignUp" />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="signup" />
     </Stack>
   );
 }

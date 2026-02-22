@@ -1,4 +1,4 @@
-import api from 'core/api';
+import api from 'core/api/api';
 import { Resource } from 'types/character';
 
 export const resourcesService = {

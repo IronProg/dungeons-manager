@@ -4,7 +4,7 @@ import { SplashScreen, Stack } from 'expo-router';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import { queryClient } from 'core/queryClient';
+import { queryClient } from 'core/queryClient/queryClient';
 
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
