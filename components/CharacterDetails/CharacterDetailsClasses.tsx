@@ -1,112 +1,111 @@
-import {
-  useGetBackground,
-  useUpdateBackgroundMutation,
-} from 'services/backgrounds/background.api';
-import { DetailsEditableTextBox } from './shared/DetailsEditableTextBox';
-import { useCallback } from 'react';
+import { useMemo } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Edit } from 'lucide-react-native';
 import i18n from 'i18n';
-import { View } from 'react-native';
-import {
-  useGetCharacter,
-  useUpdateCharacterMutation,
-} from 'services/characters/character.api';
 
-type UpdateBackgroundFormData = Omit<UpdateBackgroundParams, 'characterId'>;
+import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
+import { useGetAllClasses } from 'services/classes/class';
+
+import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+import { ClassesForm } from './Forms/ClassesForm';
+
+import { Character, CharacterClass } from 'types/character';
 
 type CharacterDetailsProps = {
-  characterId: number;
+  character: Character;
 };
 
 export const CharacterDetailsClasses = ({
-  characterId,
+  character,
 }: CharacterDetailsProps) => {
-  const { data: character } = useGetCharacter({ id: characterId });
+  const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
-  const { data: background, isLoading: backgroundLoading } = useGetBackground({
-    characterId: character?.id,
+  const { data: characterClasses, isPending } = useGetAllClasses({
+    characterId: character.id!,
   });
 
-  const { mutate: updateBackground, isPending: backgroundPending } =
-    useUpdateBackgroundMutation();
-  const { mutate: updateCharacter, isPending: characterPending } =
-    useUpdateCharacterMutation();
+  const totalLevels = useMemo(() => {
+    if (!characterClasses || characterClasses.length === 0) return 0;
 
-  const handleSaveBackground = useCallback(
-    (params: UpdateBackgroundFormData, callback: () => void) => {
-      updateBackground(
-        { characterId, ...params },
-        { onSuccess: () => callback() },
-      );
-    },
-    [characterId, updateBackground],
-  );
+    const levels = characterClasses.map((cls) => cls.level || 0);
 
-  const handleSaveCharacter = useCallback(
-    (params: UpdateCharacterParams, callback: () => void) => {
-      updateCharacter(
-        { id: params.id, name: params.name },
-        { onSuccess: () => callback() },
-      );
-    },
-    [updateCharacter],
-  );
-
-  if (!character) return;
+    return levels.reduce((acc, item) => acc + item, 0);
+  }, [characterClasses]);
 
   return (
     <>
-      <View className="flex flex-row items-between flex-wrap gap-y-4">
-        <View className="w-1/2 pr-2">
-          <DetailsEditableTextBox
-            isLoading={characterPending}
-            text={character.name}
-            label={i18n.t('background.name')}
-            isPending={characterPending}
-            onSave={(newText, callback) =>
-              handleSaveCharacter(
-                { id: character.id!, name: newText },
-                callback,
-              )
-            }
-          />
+      <View className="flex flex-col gap-2 border-neutral-200 bg-white p-2 rounded-lg shadow-sm">
+        <View className="flex flex-row justify-between items-center">
+          <Text className="text-lg font-medium">{i18n.t('classes.title')}</Text>
+
+          {characterClasses && characterClasses.length > 0 && (
+            <Text className="text-lg font-medium">
+              {i18n.t('classes.level')}: {totalLevels}
+            </Text>
+          )}
+
+          <TouchableOpacity
+            onPress={open}
+            hitSlop={15}
+            className="rounded-full h-10 w-10 bg-purple-500 flex items-center justify-center"
+          >
+            <Edit size={16} color={'white'} />
+          </TouchableOpacity>
         </View>
 
-        <View className="w-1/2 pl-2">
-          <DetailsEditableTextBox
-            isLoading={backgroundLoading}
-            text={background?.race}
-            label={i18n.t('background.race')}
-            isPending={backgroundPending}
-            onSave={(newText, callback) =>
-              handleSaveBackground({ race: newText }, callback)
-            }
-          />
-        </View>
+        {isPending ? (
+          <View className="flex flex-row w-full justify-center">
+            <ActivityIndicator />
+          </View>
+        ) : (
+          <View className="flex flex-col gap-1">
+            <View className="flex flex-row">
+              <Text className="w-5/12 font-medium">
+                {i18n.t('classes.name')}
+              </Text>
+              <Text className="w-2/12 font-medium text-center">
+                {i18n.t('classes.level')}
+              </Text>
+              <Text className="w-5/12 font-medium">
+                {i18n.t('classes.castingKind')}
+              </Text>
+            </View>
 
-        <View className="w-1/2 pr-2">
-          <DetailsEditableTextBox
-            isLoading={backgroundLoading}
-            text={background?.background}
-            label={i18n.t('background.background')}
-            isPending={backgroundPending}
-            onSave={(newText, callback) =>
-              handleSaveBackground({ background: newText }, callback)
-            }
-          />
-        </View>
-
-        <View className="w-1/2 pl-2">
-          <DetailsEditableTextBox
-            isLoading={backgroundLoading}
-            text={background?.alignment}
-            label={i18n.t('background.alignment')}
-            isPending={backgroundPending}
-            onSave={(newText, callback) =>
-              handleSaveBackground({ alignment: newText }, callback)
-            }
-          />
-        </View>
+            {characterClasses?.map((characterClass) => (
+              <ClassListItem characterClass={characterClass} />
+            ))}
+          </View>
+        )}
       </View>
+
+      <ReusableBottomSheetModal
+        onDismiss={close}
+        ref={bottomSheetRef}
+        snapPoints={[700]}
+      >
+        <ClassesForm
+          onClose={close}
+          character={character}
+          characterClasses={characterClasses!}
+        />
+      </ReusableBottomSheetModal>
     </>
+  );
+};
+
+type ClassListItemProps = {
+  characterClass: CharacterClass;
+};
+const ClassListItem = ({ characterClass }: ClassListItemProps) => {
+  return (
+    <View className="flex flex-row border-neutral-200 border-t pt-1">
+      <Text className="w-5/12">{characterClass.name}</Text>
+      <Text className="w-2/12 text-center">{characterClass.level}</Text>
+      {characterClass.castingKind && (
+        <Text className="w-5/12">
+          {i18n.t(`classes.castingKinds.${characterClass.castingKind}`)}
+        </Text>
+      )}
+    </View>
   );
 };

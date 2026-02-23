@@ -159,6 +159,19 @@ export const pt = {
   character: {
     generatingCharacter: 'Gerando seu personagem',
   },
+  classes: {
+    title: 'Classes',
+    add: 'Nova classe',
+    name: 'Classe',
+    level: 'Nível',
+    castingKind: 'Conjuração',
+    castingKinds: {
+      full: 'Completo',
+      half: 'Meio',
+      third: 'Um Terço',
+      pact: 'Pacto',
+    },
+  },
   proficiency: {
     armors: 'Proficiência em Armaduras',
     weapons: 'Proficiência em Armas',

@@ -46,6 +46,13 @@ export type Attribute = {
   modifier: number;
 };
 
+export type CharacterClass = {
+  id?: number;
+  name: string;
+  level: number;
+  castingKind?: CastingKindType;
+};
+
 export type Save = {
   id?: number;
   mainAttribute: AttributesType;
