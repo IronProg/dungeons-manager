@@ -75,7 +75,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
           return (
             <View className="flex flex-row gap-2 w-full items-start">
               <TouchableOpacity
-                onPress={() => setAttackToDelete(attack)}
+                onPress={() => setDetailedAttack(attack)}
                 onLongPress={() => onSelect(attack)}
                 key={index}
                 className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 flex-1"
