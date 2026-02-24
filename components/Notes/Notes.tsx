@@ -13,7 +13,7 @@ export const Notes = () => {
 
   const { mutate: updateNote } = useUpdateNoteMutation();
 
-  const { data: note, isPending } = useGetNote({ characterId: characterId! });
+  const { data: note, isPending } = useGetNote();
 
   const [text, setText] = useState('');
 

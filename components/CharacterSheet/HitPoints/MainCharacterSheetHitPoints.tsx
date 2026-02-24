@@ -1,16 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
+
+import { useCharacter } from 'contexts/CharacterContext';
+import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
+import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
+
 import { Experience } from './Experience/Experience';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { ExperienceForm } from './Experience/ExperienceForm';
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { HitDices } from './HitDices/HitDices';
 import { HitDicesForm } from './HitDices/HitDicesForm';
 import { HitPoints } from './HitPoints/HitPoints';
 import { HitPointsForm } from './HitPoints/HitPointsForm';
 import { HitPointsModifierForm } from './HitPoints/HitPointsModifierForm';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
 
 type HitPointsFormTypes =
   | 'hitPoints'
@@ -19,10 +21,9 @@ type HitPointsFormTypes =
   | 'experience';
 
 export const MainCharacterSheetHitPoints = () => {
-  const { character, characterId } = useCharacter();
-  const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
-    characterId: characterId!,
-  });
+  const { character } = useCharacter();
+  const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
+
   const [activeForm, setActiveForm] = useState<null | HitPointsFormTypes>(null);
   const { ref, open, close } = useBottomSheetRef();
 

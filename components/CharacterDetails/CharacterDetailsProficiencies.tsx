@@ -16,9 +16,7 @@ type CharacterDetailsProps = {
 export const CharacterDetailsProficiencies = ({
   character,
 }: CharacterDetailsProps) => {
-  const { data: proficiency, isLoading } = useGetProficiency({
-    characterId: character.id!,
-  });
+  const { data: proficiency, isLoading } = useGetProficiency();
 
   const { mutate: udpateProficiency, isPending } =
     useUpdateProficiencyMutation();

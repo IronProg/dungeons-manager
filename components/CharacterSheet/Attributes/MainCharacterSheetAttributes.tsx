@@ -1,20 +1,19 @@
 import React from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { AttributesForm } from './AttributesForm';
-import { Attribute } from 'types/character';
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import i18n from 'i18n';
+
+import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetAllAttributes } from 'services/attributes/attributes';
-import { useCharacter } from 'contexts/CharacterContext';
+
+import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+import { AttributesForm } from './AttributesForm';
+
+import { Attribute } from 'types/character';
 
 export const MainCharacterSheetAttributes = () => {
-  const { characterId } = useCharacter();
   const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
-  const { data: characterAttributes } = useGetAllAttributes({
-    characterId: characterId!,
-  });
+  const { data: characterAttributes } = useGetAllAttributes();
 
   if (characterAttributes?.length !== 6) {
     return <ActivityIndicator />;

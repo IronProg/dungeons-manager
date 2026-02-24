@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { attacksService } from './attack.service';
 import { Attack } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllAttacksKey = ({
   characterId,
@@ -8,13 +9,15 @@ export const getAllAttacksKey = ({
   characterId: number;
 }): ['characters', number, 'attacks'] => ['characters', characterId, 'attacks'];
 
-export const useGetAllAttacks = ({ characterId }: GetAllAttacksParams) => {
+export const useGetAllAttacks = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<Attack[], Error, Attack[], ['characters', number, 'attacks']>(
     {
       queryKey: getAllAttacksKey({ characterId: characterId! }),
       queryFn: () => attacksService.fetchAll({ characterId: characterId! }),
       staleTime: 10 * 60_000,
-      enabled: !!characterId,
+      enabled: !!character,
     },
   );
 };

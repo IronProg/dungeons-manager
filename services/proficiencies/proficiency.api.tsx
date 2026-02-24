@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Proficiency } from 'types/character';
 import { proficiencyService } from './proficiency.service';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getProficiencyKey = ({
   characterId,
@@ -12,7 +13,9 @@ export const getProficiencyKey = ({
   'proficiency',
 ];
 
-export const useGetProficiency = ({ characterId }: GetProficiencyParams) => {
+export const useGetProficiency = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     Proficiency,
     Error,
@@ -22,7 +25,7 @@ export const useGetProficiency = ({ characterId }: GetProficiencyParams) => {
     queryKey: getProficiencyKey({ characterId: characterId! }),
     queryFn: () => proficiencyService.fetch({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

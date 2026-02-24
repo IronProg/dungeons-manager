@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { resourcesService } from './resource.service';
 import { Resource } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllResourcesKey = ({
   characterId,
@@ -12,7 +13,9 @@ export const getAllResourcesKey = ({
   'resources',
 ];
 
-export const useGetAllResources = ({ characterId }: GetAllResourcesParams) => {
+export const useGetAllResources = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     Resource[],
     Error,
@@ -22,7 +25,7 @@ export const useGetAllResources = ({ characterId }: GetAllResourcesParams) => {
     queryKey: getAllResourcesKey({ characterId: characterId! }),
     queryFn: () => resourcesService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

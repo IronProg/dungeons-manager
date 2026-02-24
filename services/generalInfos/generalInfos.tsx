@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CharacterGeneralInfo } from 'types/character';
 import { generalInfoService } from './generalInfos.service';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getCharacterGeneralInfoKey = ({
   characterId,
@@ -12,9 +13,9 @@ export const getCharacterGeneralInfoKey = ({
   'generalInfo',
 ];
 
-export const useGetCharacterGeneralInfo = ({
-  characterId,
-}: GetGeneralInfoParams) => {
+export const useGetCharacterGeneralInfo = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     CharacterGeneralInfo,
     Error,
@@ -24,7 +25,7 @@ export const useGetCharacterGeneralInfo = ({
     queryKey: getCharacterGeneralInfoKey({ characterId: characterId! }),
     queryFn: () => generalInfoService.fetch({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

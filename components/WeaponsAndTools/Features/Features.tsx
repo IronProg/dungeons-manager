@@ -21,9 +21,7 @@ type FeaturesProps = {
 
 export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
   const { characterId } = useCharacter();
-  const { data: features, isLoading } = useGetAllFeatures({
-    characterId: characterId!,
-  });
+  const { data: features, isLoading } = useGetAllFeatures();
   const { mutate: deleteFeature } = useDeleteFeatureMutation();
 
   const [detailedFeature, setDetailedFeature] = useState<Feature>();

@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Trash2 } from 'lucide-react-native';
 
-import { useCharacter } from 'contexts/CharacterContext';
 import { useGetAllEquipments } from 'services/equipments/equipment.api';
 
 import { Equipment } from 'types/character';
@@ -18,10 +17,7 @@ export const EquipmentsList = ({
   onEdit,
   onDelete,
 }: EquipmentsListProps) => {
-  const { characterId } = useCharacter();
-  const { data: equipments, isPending } = useGetAllEquipments({
-    characterId: characterId!,
-  });
+  const { data: equipments, isPending } = useGetAllEquipments();
 
   return (
     <View className="flex flex-col gap-2">

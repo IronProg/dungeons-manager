@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { equipmentService } from './equipment.service';
 import { Equipment } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllEquipmentsKey = ({
   characterId,
@@ -12,9 +13,9 @@ export const getAllEquipmentsKey = ({
   'equipments',
 ];
 
-export const useGetAllEquipments = ({
-  characterId,
-}: GetAllEquipmentsParams) => {
+export const useGetAllEquipments = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     Equipment[],
     Error,
@@ -24,7 +25,7 @@ export const useGetAllEquipments = ({
     queryKey: getAllEquipmentsKey({ characterId: characterId! }),
     queryFn: () => equipmentService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

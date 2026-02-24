@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Currencies } from 'types/character';
 import { currenciesService } from './currencies.service';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getCharacterCurrencyKey = ({
   characterId,
@@ -12,9 +13,9 @@ export const getCharacterCurrencyKey = ({
   'currencies',
 ];
 
-export const useGetCharacterCurrency = ({
-  characterId,
-}: GetCharacterCurrencyParams) => {
+export const useGetCharacterCurrency = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     Currencies,
     Error,
@@ -24,7 +25,7 @@ export const useGetCharacterCurrency = ({
     queryKey: getCharacterCurrencyKey({ characterId: characterId! }),
     queryFn: () => currenciesService.fetch({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

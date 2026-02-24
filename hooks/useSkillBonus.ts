@@ -3,8 +3,8 @@ import { useCallback } from 'react';
 import { useGetAllSkills } from 'services/skills/skill';
 
 export const useGetSkillBonus = () => {
-  const { characterId, modifiers, proficiencyBonus } = useCharacter();
-  const { data: skills } = useGetAllSkills({ characterId: characterId! });
+  const { modifiers, proficiencyBonus } = useCharacter();
+  const { data: skills } = useGetAllSkills();
 
   const getSkillBonus = useCallback(
     (name: string): number => {

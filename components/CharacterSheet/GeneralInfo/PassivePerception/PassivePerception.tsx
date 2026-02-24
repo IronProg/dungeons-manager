@@ -1,8 +1,10 @@
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Eye } from 'lucide-react-native';
+import i18n from 'i18n';
+
 import { useCharacter } from 'contexts/CharacterContext';
 import { useGetSkillBonus } from 'hooks/useSkillBonus';
-import i18n from 'i18n';
-import { Eye } from 'lucide-react-native';
-import { Text, TouchableOpacity, View } from 'react-native';
+
 import { CharacterGeneralInfo } from 'types/character';
 
 type PassivePerceptionProps = {

@@ -24,9 +24,7 @@ export const CharacterDetailsMain = ({
 }: CharacterDetailsProps) => {
   const { data: character } = useGetCharacter({ id: characterId });
 
-  const { data: background, isLoading: backgroundLoading } = useGetBackground({
-    characterId: character?.id,
-  });
+  const { data: background, isLoading: backgroundLoading } = useGetBackground();
 
   const { mutate: updateBackground, isPending: backgroundPending } =
     useUpdateBackgroundMutation();

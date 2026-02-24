@@ -13,6 +13,8 @@ import { queryClient } from 'core/queryClient/queryClient';
 import { TokenResponse } from 'types/user';
 import refreshApi from '../refresh-api';
 
+let refreshPromise: Promise<TokenResponse> | null = null;
+
 const isExpired = (token: string) => {
   const { exp } = jwtDecode<{ exp: number }>(token);
 
@@ -47,19 +49,26 @@ export const refreshTokenInterceptor = async (
 
     if (refreshToken) {
       try {
-        const { accessToken, refreshToken: newRefresh } =
-          await regenerateRefreshToken({
-            refreshToken,
-          });
+        if (!refreshPromise) {
+          refreshPromise = regenerateRefreshToken({ refreshToken });
+        }
+
+        const { accessToken, refreshToken: newRefresh } = await refreshPromise;
+
+        refreshPromise = null;
 
         await setAccessToken(accessToken);
         await setRefreshToken(newRefresh);
 
         config.headers.Authorization = `Bearer ${accessToken}`;
-      } catch {
+      } catch (error) {
+        refreshPromise = null;
+
         queryClient.invalidateQueries({ queryKey: ['auth'] });
         await removeAccessToken();
         await removeRefreshToken();
+
+        return Promise.reject(error);
       }
     }
   } else if (token) {

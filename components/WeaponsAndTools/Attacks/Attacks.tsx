@@ -21,9 +21,7 @@ type AttacksProps = {
 
 export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
   const { characterId, modifiers, proficiencyBonus } = useCharacter();
-  const { data: attacks, isLoading } = useGetAllAttacks({
-    characterId: characterId!,
-  });
+  const { data: attacks, isLoading } = useGetAllAttacks();
 
   const { mutate: deleteAttack } = useDeleteAttackMutation();
 

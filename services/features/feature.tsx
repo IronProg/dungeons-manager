@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { featuresService } from './feature.service';
 import { Feature } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllFeaturesKey = ({
   characterId,
@@ -12,7 +13,9 @@ export const getAllFeaturesKey = ({
   'features',
 ];
 
-export const useGetAllFeatures = ({ characterId }: GetAllFeaturesParams) => {
+export const useGetAllFeatures = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     Feature[],
     Error,
@@ -22,7 +25,7 @@ export const useGetAllFeatures = ({ characterId }: GetAllFeaturesParams) => {
     queryKey: getAllFeaturesKey({ characterId: characterId! }),
     queryFn: () => featuresService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

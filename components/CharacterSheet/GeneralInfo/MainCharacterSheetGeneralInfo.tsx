@@ -1,6 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
+
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
+import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
+
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { PassivePerception } from './PassivePerception/PassivePerception';
 import { ArmorClass } from './ArmorClass/ArmorClass';
@@ -13,8 +16,6 @@ import { ProficiencyForm } from './Proficiency/ProficiencyForm';
 import { InitiativeForm } from './Initiative/InitiativeForm';
 import { ArmorClassForm } from './ArmorClass/ArmorClassForm';
 import { SpeedForm } from './Speed/SpeedForm';
-import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
-import { useCharacter } from 'contexts/CharacterContext';
 
 type GeneralInfoFormTypes =
   | 'passivePerception'
@@ -27,10 +28,7 @@ type GeneralInfoFormTypes =
   | 'hitPoint';
 
 export const MainCharacterSheetGeneralInfo = () => {
-  const { characterId } = useCharacter();
-  const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo({
-    characterId: characterId!,
-  });
+  const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
 
   const [activeForm, setActiveForm] = useState<null | GeneralInfoFormTypes>(
     null,

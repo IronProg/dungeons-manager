@@ -20,9 +20,7 @@ export const CharacterDetailsClasses = ({
 }: CharacterDetailsProps) => {
   const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
-  const { data: characterClasses, isPending } = useGetAllClasses({
-    characterId: character.id!,
-  });
+  const { data: characterClasses, isPending } = useGetAllClasses();
 
   const totalLevels = useMemo(() => {
     if (!characterClasses || characterClasses.length === 0) return 0;

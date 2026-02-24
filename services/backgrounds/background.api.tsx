@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Background } from 'types/character';
 import { backgroundService } from './background.service';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getBackgroundKey = ({
   characterId,
@@ -12,7 +13,9 @@ export const getBackgroundKey = ({
   'background',
 ];
 
-export const useGetBackground = ({ characterId }: GetBackgroundParams) => {
+export const useGetBackground = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     Background,
     Error,
@@ -22,7 +25,7 @@ export const useGetBackground = ({ characterId }: GetBackgroundParams) => {
     queryKey: getBackgroundKey({ characterId: characterId! }),
     queryFn: () => backgroundService.fetch({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

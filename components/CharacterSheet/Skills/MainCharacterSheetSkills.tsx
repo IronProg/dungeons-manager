@@ -17,12 +17,8 @@ import type { Save, Skill } from 'types/character';
 
 export const MainCharacterSheetSkills = () => {
   const { characterId } = useCharacter();
-  const { data: saves, isLoading: isLoadingSaves } = useGetAllSaves({
-    characterId: characterId!,
-  });
-  const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills({
-    characterId: characterId!,
-  });
+  const { data: saves, isLoading: isLoadingSaves } = useGetAllSaves();
+  const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills();
 
   const [highlightedSave, setHighlightedSave] = useState<Save | null>(null);
   const [highlightedSkill, setHighlightedSkill] = useState<Skill | null>(null);

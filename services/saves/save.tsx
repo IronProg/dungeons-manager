@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { savesService } from './save.service';
 import { Save } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllSavesKey = ({
   characterId,
@@ -8,12 +9,14 @@ export const getAllSavesKey = ({
   characterId: number;
 }): ['characters', number, 'saves'] => ['characters', characterId, 'saves'];
 
-export const useGetAllSaves = ({ characterId }: GetAllSavesParams) => {
+export const useGetAllSaves = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<Save[], Error, Save[], ['characters', number, 'saves']>({
     queryKey: getAllSavesKey({ characterId: characterId! }),
     queryFn: () => savesService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

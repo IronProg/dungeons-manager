@@ -16,9 +16,7 @@ type CharacterDetailsProps = {
 export const CharacterDetailsBackground = ({
   character,
 }: CharacterDetailsProps) => {
-  const { data: background, isLoading } = useGetBackground({
-    characterId: character.id!,
-  });
+  const { data: background, isLoading } = useGetBackground();
 
   const { mutate: updateBackground, isPending } = useUpdateBackgroundMutation();
 

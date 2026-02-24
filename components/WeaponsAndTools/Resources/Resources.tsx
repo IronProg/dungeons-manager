@@ -21,9 +21,7 @@ type ResourcesProps = {
 
 export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
   const { characterId } = useCharacter();
-  const { data: resources, isLoading } = useGetAllResources({
-    characterId: characterId!,
-  });
+  const { data: resources, isLoading } = useGetAllResources();
   const { mutate: updateResource, isPending } = useUpdateResourceMutation();
 
   const { mutate: deleteResource } = useDeleteResourceMutation();

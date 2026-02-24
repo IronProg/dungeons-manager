@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { classService } from './class.service';
 import { CharacterClass } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllClassesKey = ({
   characterId,
@@ -12,7 +13,9 @@ export const getAllClassesKey = ({
   'characterClasses',
 ];
 
-export const useGetAllClasses = ({ characterId }: GetAllClassesParams) => {
+export const useGetAllClasses = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<
     CharacterClass[],
     Error,
@@ -22,7 +25,7 @@ export const useGetAllClasses = ({ characterId }: GetAllClassesParams) => {
     queryKey: getAllClassesKey({ characterId: characterId! }),
     queryFn: () => classService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { skillsService } from './skill.service';
 import { Skill } from 'types/character';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export const getAllSkillsKey = ({
   characterId,
@@ -8,12 +9,14 @@ export const getAllSkillsKey = ({
   characterId: number;
 }): ['characters', number, 'skills'] => ['characters', characterId, 'skills'];
 
-export const useGetAllSkills = ({ characterId }: GetAllSkillsParams) => {
+export const useGetAllSkills = () => {
+  const { character, characterId } = useCharacter();
+
   return useQuery<Skill[], Error, Skill[], ['characters', number, 'skills']>({
     queryKey: getAllSkillsKey({ characterId: characterId! }),
     queryFn: () => skillsService.fetchAll({ characterId: characterId! }),
     staleTime: 10 * 60_000,
-    enabled: !!characterId,
+    enabled: !!character,
   });
 };
 
