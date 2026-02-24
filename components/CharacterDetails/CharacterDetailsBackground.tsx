@@ -70,15 +70,6 @@ export const CharacterDetailsBackground = ({
           handleSaveBackground({ flaws: newText }, callback)
         }
       />
-      <DetailsEditableTextBox
-        isLoading={isLoading}
-        text={background?.background}
-        label={i18n.t('background.background')}
-        isPending={isPending}
-        onSave={(newText, callback) =>
-          handleSaveBackground({ background: newText }, callback)
-        }
-      />
     </>
   );
 };

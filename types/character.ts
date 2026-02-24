@@ -38,12 +38,24 @@ export type CharacterGeneralInfo = {
   exhaustion: number;
 };
 
+export type Note = {
+  id?: number;
+  text: string;
+};
+
 export type Attribute = {
   id?: number;
   name: AttributesType;
   value: number;
   tempValue?: number;
   modifier: number;
+};
+
+export type CharacterClass = {
+  id?: number;
+  name: string;
+  level: number;
+  castingKind?: CastingKindType;
 };
 
 export type Save = {
@@ -59,6 +71,13 @@ export type Feature = {
   title: string;
   description: string;
   origin?: string;
+};
+
+export type Equipment = {
+  id?: number;
+  name: string;
+  amount: number;
+  description: string;
 };
 
 export type Skill = {

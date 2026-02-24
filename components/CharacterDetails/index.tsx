@@ -1,10 +1,12 @@
 import { Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
-import { Character } from 'types/character';
 import { CharacterDetailsBackground } from './CharacterDetailsBackground';
 import { CharacterDetailsProficiencies } from './CharacterDetailsProficiencies';
+import { CharacterDetailsMain } from './CharacterDetailsMain';
 import { CharacterDetailsClasses } from './CharacterDetailsClasses';
+
+import { Character } from 'types/character';
 
 type CharacterDetailsProps = {
   character: Character;
@@ -21,6 +23,7 @@ export const CharacterDetails = ({ character }: CharacterDetailsProps) => {
       </Text>
 
       <CharacterDetailsClasses character={character} />
+      <CharacterDetailsMain characterId={character.id!} />
       <CharacterDetailsProficiencies character={character} />
       <CharacterDetailsBackground character={character} />
     </KeyboardAwareScrollView>

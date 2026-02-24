@@ -1,21 +1,20 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Controller } from 'react-hook-form';
-import { BookOpen, Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
+import { BookOpen, Mail } from 'lucide-react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { useRouter } from 'expo-router';
 import i18n from 'i18n';
 
 import { LoginFormType, useLoginForm } from 'components/Auth/useLoginForm';
-import { useGetCurrentUser, useSignInMutation } from 'services/auth/auth.api';
+import { useSignInMutation } from 'services/auth/auth.api';
 
 import { Container } from 'components/Container';
-import { Redirect, useRouter } from 'expo-router';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { PasswordInput } from 'components/Auth/shared/PasswordInput';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { data: currentUser, isFetching } = useGetCurrentUser();
-  const [showPassword, setShowPassword] = useState(false);
 
   const { handleSubmit, control } = useLoginForm();
 
@@ -34,10 +33,6 @@ export default function LoginScreen() {
     },
     [router, signIn],
   );
-
-  if (currentUser && !isFetching) {
-    return <Redirect href={'/(authenticated)/(drawer)/(tabs)'} />;
-  }
 
   return (
     <Container>
@@ -110,28 +105,11 @@ export default function LoginScreen() {
                   <Text className="text-gray-600 text-sm font-medium mb-2">
                     {i18n.t('auth.password')}
                   </Text>
-                  <View
-                    className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
-                  >
-                    <Lock size={20} color="#9CA3AF" />
-                    <TextInput
-                      className="flex-1 py-4 px-3 text-gray-800"
-                      placeholder="••••••••"
-                      placeholderTextColor="#9CA3AF"
-                      secureTextEntry={!showPassword}
-                      value={value}
-                      onChangeText={onChange}
-                    />
-                    <TouchableOpacity
-                      onPress={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff size={20} color="#9CA3AF" />
-                      ) : (
-                        <Eye size={20} color="#9CA3AF" />
-                      )}
-                    </TouchableOpacity>
-                  </View>
+                  <PasswordInput
+                    onChangeText={onChange}
+                    value={value}
+                    error={error?.message}
+                  />
 
                   {error?.message && (
                     <Text className="text-red-500 text-xs mt-1">

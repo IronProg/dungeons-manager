@@ -34,9 +34,14 @@ export const useCreateCharacterMutation = () => {
 };
 
 export const useUpdateCharacterMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<Character, Error, UpdateCharacterParams>({
     mutationFn: (params: UpdateCharacterParams) =>
       characterService.update(params),
+    onSuccess: ({ id }) => {
+      queryClient.invalidateQueries({ queryKey: ['characters', id] });
+    },
   });
 };
 

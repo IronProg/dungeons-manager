@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 import {
-  authErrorInterceptor,
   authRequestInterceptor,
+  refreshTokenInterceptor,
 } from './interceptors/auth.interceptors';
 import {
   camelizeRequestInterceptor,
@@ -32,9 +32,9 @@ const api = axios.create({
 
 api.interceptors.request.use(camelizeRequestInterceptor);
 
-api.interceptors.request.use(authRequestInterceptor);
+api.interceptors.request.use(refreshTokenInterceptor);
 
-api.interceptors.response.use((response) => response, authErrorInterceptor);
+api.interceptors.request.use(authRequestInterceptor);
 
 api.interceptors.response.use(decamelizeResponseInterceptor);
 

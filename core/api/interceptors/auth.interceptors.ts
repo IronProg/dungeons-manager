@@ -1,15 +1,23 @@
-import { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getAccessToken, setRefreshToken } from 'core/utils/tokens';
-
+import { InternalAxiosRequestConfig } from 'axios';
 import {
-  getRefreshToken,
+  getAccessToken,
   removeAccessToken,
   removeRefreshToken,
-  setAccessToken,
+  setRefreshToken,
 } from 'core/utils/tokens';
-import { authService } from 'services/auth/auth.service';
-import api from '../api';
+
+import { getRefreshToken, setAccessToken } from 'core/utils/tokens';
+
+import { jwtDecode } from 'jwt-decode';
 import { queryClient } from 'core/queryClient/queryClient';
+import { TokenResponse } from 'types/user';
+import refreshApi from '../refresh-api';
+
+const isExpired = (token: string) => {
+  const { exp } = jwtDecode<{ exp: number }>(token);
+
+  return Date.now() >= exp * 1000 - 20_000;
+};
 
 export const authRequestInterceptor = async (
   config: InternalAxiosRequestConfig,
@@ -29,84 +37,39 @@ export const authRequestInterceptor = async (
   return config;
 };
 
-let isRefreshing = false;
-let failedQueue: {
-  resolve: (token: string) => void;
-  reject: (error: unknown) => void;
-}[] = [];
+export const refreshTokenInterceptor = async (
+  config: InternalAxiosRequestConfig,
+) => {
+  const token = await getAccessToken();
 
-const processQueue = (error: unknown, token?: string) => {
-  failedQueue.forEach((promise) => {
-    if (error) {
-      promise.reject(error);
-    } else if (token) {
-      promise.resolve(token);
-    }
-  });
-
-  failedQueue = [];
-};
-
-export const authErrorInterceptor = async (error: AxiosError) => {
-  const originalRequest = error.config as InternalAxiosRequestConfig & {
-    _retry?: boolean;
-  };
-
-  if (!originalRequest) {
-    return Promise.reject(error);
-  }
-
-  if (error.response?.status !== 401) {
-    return Promise.reject(error);
-  }
-
-  if (originalRequest._retry) {
-    return Promise.reject(error);
-  }
-
-  if (isRefreshing) {
-    return new Promise((resolve, reject) => {
-      failedQueue.push({
-        resolve: (token: string) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          resolve(api(originalRequest));
-        },
-        reject,
-      });
-    });
-  }
-
-  originalRequest._retry = true;
-  isRefreshing = true;
-
-  try {
+  if (token && isExpired(token)) {
     const refreshToken = await getRefreshToken();
 
-    if (!refreshToken) {
-      throw new Error('No refresh token');
+    if (refreshToken) {
+      try {
+        const { accessToken, refreshToken: newRefresh } =
+          await regenerateRefreshToken({
+            refreshToken,
+          });
+
+        await setAccessToken(accessToken);
+        await setRefreshToken(newRefresh);
+
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      } catch {
+        queryClient.invalidateQueries({ queryKey: ['auth'] });
+        await removeAccessToken();
+        await removeRefreshToken();
+      }
     }
-
-    const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-      await authService.refreshToken({ refreshToken });
-
-    await setAccessToken(newAccessToken);
-    await setRefreshToken(newRefreshToken);
-
-    processQueue(null, newAccessToken);
-
-    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-    return api(originalRequest);
-  } catch (refreshError) {
-    processQueue(refreshError);
-
-    await removeAccessToken();
-    await removeRefreshToken();
-
-    queryClient.setQueryData(['auth'], null);
-
-    return Promise.reject(refreshError);
-  } finally {
-    isRefreshing = false;
+  } else if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
+
+  return config;
 };
+
+const regenerateRefreshToken = ({ refreshToken }: { refreshToken: string }) =>
+  refreshApi
+    .post<TokenResponse>(`/refresh_token`, { refresh_token: refreshToken })
+    .then((res) => res.data);

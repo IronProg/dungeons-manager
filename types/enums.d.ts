@@ -5,3 +5,5 @@ type AttributesType =
   | 'intelligence'
   | 'wisdom'
   | 'charisma';
+
+type CastingKindType = 'full' | 'half' | 'third' | 'pact';

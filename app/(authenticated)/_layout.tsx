@@ -3,10 +3,13 @@ import i18n from 'i18n';
 
 import { useGetCurrentUser } from 'services/auth/auth.api';
 
-export default function RootLayout() {
-  const { data: user } = useGetCurrentUser();
+import { useKeepAwake } from 'expo-keep-awake';
 
-  if (!user) {
+export default function RootLayout() {
+  const { data: user, isFetching } = useGetCurrentUser();
+  useKeepAwake();
+
+  if (!user && !isFetching) {
     return <Redirect href="/(auth)/login" />;
   }
 

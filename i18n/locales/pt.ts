@@ -2,6 +2,7 @@ export const pt = {
   tabs: {
     sheet: 'Ficha',
     details: 'Detalhes',
+    equipments: 'Notas/Equip.',
   },
   titles: {
     characterSheet: 'Ficha do Personagem',
@@ -154,6 +155,34 @@ export const pt = {
     flaws: 'Falhas',
     ideals: 'Ideais',
     background: 'Antecedente',
+    name: 'Nome',
+  },
+  character: {
+    generatingCharacter: 'Gerando seu personagem',
+  },
+  classes: {
+    title: 'Classes',
+    add: 'Nova classe',
+    name: 'Classe',
+    level: 'Nível',
+    castingKind: 'Conjuração',
+    castingKinds: {
+      full: 'Completo',
+      half: 'Meio',
+      third: 'Um Terço',
+      pact: 'Pacto',
+    },
+  },
+  notes: {
+    title: 'Notas',
+  },
+  equipments: {
+    title: 'Equipamentos',
+    new: 'Novo Equipamento',
+    edit: 'Editar Equipamento',
+    name: 'Nome',
+    amount: 'Quantidade',
+    description: 'Descrição',
   },
   proficiency: {
     armors: 'Proficiência em Armaduras',
