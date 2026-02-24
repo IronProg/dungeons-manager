@@ -47,6 +47,10 @@ export default function TabLayout() {
       }}
     >
       <TopTabs.Screen
+        name="equipments" // Arquivo: app/(drawer)/(tabs)/index.tsx
+        options={{ tabBarLabel: i18n.t('tabs.equipments') }}
+      />
+      <TopTabs.Screen
         name="index" // Arquivo: app/(drawer)/(tabs)/index.tsx
         options={{ tabBarLabel: i18n.t('tabs.sheet') }}
       />

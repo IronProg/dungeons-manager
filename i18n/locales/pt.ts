@@ -2,6 +2,7 @@ export const pt = {
   tabs: {
     sheet: 'Ficha',
     details: 'Detalhes',
+    equipments: 'Notas/Equip.',
   },
   titles: {
     characterSheet: 'Ficha do Personagem',
@@ -171,6 +172,17 @@ export const pt = {
       third: 'Um Terço',
       pact: 'Pacto',
     },
+  },
+  notes: {
+    title: 'Notas',
+  },
+  equipments: {
+    title: 'Equipamentos',
+    new: 'Novo Equipamento',
+    edit: 'Editar Equipamento',
+    name: 'Nome',
+    amount: 'Quantidade',
+    description: 'Descrição',
   },
   proficiency: {
     armors: 'Proficiência em Armaduras',
