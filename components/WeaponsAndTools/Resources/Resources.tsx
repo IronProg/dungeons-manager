@@ -1,13 +1,17 @@
-import { useCharacter } from 'contexts/CharacterContext';
-import i18n from 'i18n';
-import { Info, Plus, Trash } from 'lucide-react-native';
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Plus, Trash } from 'lucide-react-native';
+import i18n from 'i18n';
+
+import { useCharacter } from 'contexts/CharacterContext';
 import {
   useDeleteResourceMutation,
   useGetAllResources,
   useUpdateResourceMutation,
 } from 'services/resources/resource';
+
+import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+
 import { Resource } from 'types/character';
 
 type ResourcesProps = {
@@ -24,18 +28,24 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
 
   const { mutate: deleteResource } = useDeleteResourceMutation();
 
-  const [deleteMode, setDeleteMode] = useState<boolean>(false);
+  const [resourceToDelete, setResourceToDelete] = useState<Resource>();
 
-  const handleDelete = useCallback(
-    (resource: Resource) => {
-      deleteResource({ characterId: characterId!, id: resource.id! });
-    },
-    [characterId, deleteResource],
-  );
+  const handleDelete = useCallback(() => {
+    if (resourceToDelete) {
+      deleteResource(
+        { characterId: characterId!, id: resourceToDelete.id! },
+        {
+          onSuccess: () => {
+            setResourceToDelete(undefined);
+          },
+        },
+      );
+    }
+  }, [characterId, deleteResource, resourceToDelete]);
 
   const handleQuickUpdate = useCallback(
     (resource: Resource) => {
-      if (deleteMode || resource.amount <= 0) return;
+      if (resource.amount <= 0) return;
 
       updateResource({
         characterId: characterId!,
@@ -43,22 +53,13 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
         amount: resource.amount - 1,
       });
     },
-    [characterId, deleteMode, updateResource],
+    [characterId, updateResource],
   );
 
   return (
     <>
       <View className="flex flex-row justify-between mb-2 items-center">
-        <TouchableOpacity
-          onPress={() => setDeleteMode((prev) => !prev)}
-          className={`rounded-full p-2 ${deleteMode ? 'bg-slate-500' : 'bg-red-500'}`}
-        >
-          {deleteMode ? (
-            <Info color="white" size={16} />
-          ) : (
-            <Trash color="white" size={16} />
-          )}
-        </TouchableOpacity>
+        <View />
 
         <Text className="mt-4 text-black text-2xl font-bold text-center">
           {i18n.t('titles.resourcesAndAmmunitions')}
@@ -77,38 +78,42 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
       {resources && resources.length > 0 ? (
         resources?.map((resource, index) => {
           return (
-            <TouchableOpacity
-              disabled={isPending}
-              onPress={() => handleQuickUpdate(resource)}
-              onLongPress={() => !deleteMode && onSelect(resource)}
-              key={index}
-              className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2"
-            >
-              <Text className="bg-white rounded-lg px-2 py-1 grow">
-                {resource.name}
-              </Text>
+            <View className="flex flex-row gap-2 items-start">
+              <TouchableOpacity
+                disabled={isPending}
+                onPress={() => handleQuickUpdate(resource)}
+                onLongPress={() => onSelect(resource)}
+                key={index}
+                className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 flex-1"
+              >
+                <Text className="bg-white rounded-lg px-2 py-1 flex-1">
+                  {resource.name}
+                </Text>
 
-              <Text className="bg-white rounded-lg px-2 py-1" key={index}>
-                {resource.amount}
-                {resource.max && resource.max > 0 && `/${resource.max}`}
-              </Text>
+                <Text className="bg-white rounded-lg px-2 py-1" key={index}>
+                  {resource.amount}
+                  {resource.max && resource.max > 0 && `/${resource.max}`}
+                </Text>
+              </TouchableOpacity>
 
-              {deleteMode && (
-                <View className="absolute inset-y-0 right-2 flex flex-row items-center">
-                  <TouchableOpacity
-                    onPress={() => handleDelete(resource)}
-                    className="bg-red-500 rounded-full p-2"
-                  >
-                    <Trash size={16} color="white" />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setResourceToDelete(resource)}
+                className="bg-red-500 rounded-full p-2"
+              >
+                <Trash size={16} color="white" />
+              </TouchableOpacity>
+            </View>
           );
         })
       ) : (
-        <Text>No resources found.</Text>
+        <Text>{i18n.t('resources.noneFound')}</Text>
       )}
+
+      <ConfirmationModal
+        isVisible={!!resourceToDelete}
+        onClose={() => setResourceToDelete(undefined)}
+        onConfirm={handleDelete}
+      />
     </>
   );
 };
