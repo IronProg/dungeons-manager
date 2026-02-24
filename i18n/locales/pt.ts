@@ -173,6 +173,15 @@ export const pt = {
       pact: 'Pacto',
     },
   },
+  attacks: {
+    noneFound: 'Nenhum ataque cadastrado',
+  },
+  resources: {
+    noneFound: 'Nenhum recurso cadastrado',
+  },
+  features: {
+    noneFound: 'Nenhuma característica cadastrado',
+  },
   notes: {
     title: 'Notas',
   },

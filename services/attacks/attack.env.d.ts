@@ -5,7 +5,7 @@ type GetAllAttacksParams = {
 type CreateAttackParams = {
   characterId: number;
   name: string;
-  mainAttribute?: AttributesType;
+  mainAttribute?: AttributesType | null;
   applyProficiency: boolean;
   customBonus?: number;
   range?: string;
@@ -18,7 +18,7 @@ type UpdateAttackParams = {
   characterId: number;
   id: number;
   name?: string;
-  mainAttribute?: AttributesType;
+  mainAttribute?: AttributesType | null;
   applyProficiency?: boolean;
   customBonus?: number;
   range?: string;
@@ -36,7 +36,7 @@ type DamageParams = {
   id?: number;
   diceAmount?: number;
   diceSize?: number;
-  mainAttribute?: AttributesType;
+  mainAttribute?: AttributesType | null;
   kind?: string;
   customBonus?: string;
   _destroy?: boolean | null;

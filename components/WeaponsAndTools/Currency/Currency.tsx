@@ -49,7 +49,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
         scrollEnabled
         contentContainerClassName="w-full flex flex-row gap-4 justify-around"
       >
-        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+        <View className="border border-gray-400 py-2 rounded-lg flex-1 relative">
           <View className="w-4 h-4 rounded-full bg-amber-700 absolute top-1.5 right-1.5" />
 
           <Controller
@@ -79,7 +79,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+        <View className="border border-gray-400 py-2 rounded-lg flex-1 relative">
           <View className="w-4 h-4 rounded-full bg-gray-400 absolute top-1.5 right-1.5" />
 
           <Controller
@@ -109,7 +109,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+        <View className="border border-gray-400 py-2 rounded-lg flex-1 relative">
           <View className="w-4 h-4 rounded-full bg-blue-300 absolute top-1.5 right-1.5" />
 
           <Controller
@@ -139,7 +139,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+        <View className="border border-gray-400 py-2 rounded-lg flex-1 relative">
           <View className="w-4 h-4 rounded-full bg-yellow-500 absolute top-1.5 right-1.5" />
 
           <Controller
@@ -169,7 +169,7 @@ export const Currency = ({ currencies }: CurrencyProps) => {
           </Text>
         </View>
 
-        <View className="border border-gray-400 py-2 rounded-lg grow relative">
+        <View className="border border-gray-400 py-2 rounded-lg flex-1 relative">
           <View className="w-4 h-4 rounded-full bg-slate-200 absolute top-1.5 right-1.5" />
 
           <Controller

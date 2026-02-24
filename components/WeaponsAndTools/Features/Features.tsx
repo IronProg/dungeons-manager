@@ -1,14 +1,18 @@
-import { Info, Plus, Trash } from 'lucide-react-native';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { Feature } from 'types/character';
-import RNModal from 'react-native-modal';
 import { useCallback, useState } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Plus, Trash } from 'lucide-react-native';
+import RNModal from 'react-native-modal';
 import i18n from 'i18n';
+
+import { useCharacter } from 'contexts/CharacterContext';
+
 import {
   useDeleteFeatureMutation,
   useGetAllFeatures,
 } from 'services/features/feature';
-import { useCharacter } from 'contexts/CharacterContext';
+import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+
+import { Feature } from 'types/character';
 
 type FeaturesProps = {
   onCreate: () => void;
@@ -23,28 +27,25 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
   const { mutate: deleteFeature } = useDeleteFeatureMutation();
 
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
-  const [deleteMode, setDeleteMode] = useState<boolean>(false);
+  const [featureToDelete, setFeatureToDelete] = useState<Feature>();
 
-  const handleDelete = useCallback(
-    (resource: Feature) => {
-      deleteFeature({ characterId: characterId!, id: resource.id! });
-    },
-    [characterId, deleteFeature],
-  );
+  const handleDelete = useCallback(() => {
+    if (featureToDelete) {
+      deleteFeature(
+        { characterId: characterId!, id: featureToDelete.id! },
+        {
+          onSuccess: () => {
+            setFeatureToDelete(undefined);
+          },
+        },
+      );
+    }
+  }, [characterId, deleteFeature, featureToDelete]);
 
   return (
     <>
       <View className="flex flex-row justify-between mb-2 items-center">
-        <TouchableOpacity
-          onPress={() => setDeleteMode((prev) => !prev)}
-          className={`rounded-full p-2 ${deleteMode ? 'bg-slate-500' : 'bg-red-500'}`}
-        >
-          {deleteMode ? (
-            <Info color="white" size={16} />
-          ) : (
-            <Trash color="white" size={16} />
-          )}
-        </TouchableOpacity>
+        <View />
 
         <Text className="text-black text-2xl font-bold text-center">
           {i18n.t('titles.features')}
@@ -60,40 +61,47 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
 
       {isLoading && <ActivityIndicator />}
 
-      {features && features.length > 0 ? (
-        features?.map((feature, index) => {
-          return (
-            <TouchableOpacity
-              disabled={deleteMode}
-              onPress={() => setDetailedFeature(feature)}
-              onLongPress={() => onSelect(feature)}
-              key={index}
-              className="rounded-lg gap-2 border-b border-gray-300 pb-2 mb-2"
-            >
-              <View className="bg-white rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
-                <Text>{feature.title}</Text>
+      <View className="flex flex-col gap-2">
+        {features && features.length > 0 ? (
+          features?.map((feature, index) => {
+            return (
+              <View
+                key={index}
+                className="flex flex-row gap-2 items-start border-b border-gray-300"
+              >
+                <TouchableOpacity
+                  onPress={() => setDetailedFeature(feature)}
+                  onLongPress={() => onSelect(feature)}
+                  className="rounded-lg gap-2 py-1 grow"
+                >
+                  <View className="bg-white rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
+                    <Text>{feature.title}</Text>
 
-                {feature.origin && (
-                  <Text className="text-gray-700">({feature.origin})</Text>
-                )}
+                    {feature.origin && (
+                      <Text className="text-gray-700">({feature.origin})</Text>
+                    )}
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => setFeatureToDelete(feature)}
+                  className="bg-red-500 rounded-full p-2"
+                >
+                  <Trash size={16} color="white" />
+                </TouchableOpacity>
               </View>
+            );
+          })
+        ) : (
+          <Text>{i18n.t('features.noneFound')}</Text>
+        )}
+      </View>
 
-              {deleteMode && (
-                <View className="absolute inset-y-0 right-2 flex flex-row items-center">
-                  <TouchableOpacity
-                    onPress={() => handleDelete(feature)}
-                    className="bg-red-500 rounded-full p-2"
-                  >
-                    <Trash size={16} color="white" />
-                  </TouchableOpacity>
-                </View>
-              )}
-            </TouchableOpacity>
-          );
-        })
-      ) : (
-        <Text>No features found</Text>
-      )}
+      <ConfirmationModal
+        isVisible={!!featureToDelete}
+        onClose={() => setFeatureToDelete(undefined)}
+        onConfirm={handleDelete}
+      />
 
       <RNModal
         isVisible={!!detailedFeature}

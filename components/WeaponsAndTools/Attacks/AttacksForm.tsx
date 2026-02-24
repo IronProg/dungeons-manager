@@ -31,18 +31,21 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
 
   const onSubmit = useCallback(
     (values: AttacksFormType) => {
+      const params: CreateAttackParams = {
+        characterId: characterId!,
+        ...values,
+        mainAttribute: values.mainAttribute,
+      };
+
       if (!attack) {
-        createAttack(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              onClose();
-            },
+        createAttack(params, {
+          onSuccess: () => {
+            onClose();
           },
-        );
+        });
       } else {
         updateAttack(
-          { characterId: characterId!, id: attack.id!, ...values },
+          { ...params, id: attack.id! },
           {
             onSuccess: () => {
               onClose();
