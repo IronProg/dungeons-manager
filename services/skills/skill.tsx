@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { skillsService } from './skill.service';
 import { Skill } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getAllSkillsKey = ({
   characterId,
@@ -23,12 +25,15 @@ export const useGetAllSkills = () => {
 export const useUpdateSkillMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Skill, Error, UpdateSkillParams>({
+  return useMutation<Skill, AxiosError<ApiErrorResponse>, UpdateSkillParams>({
     mutationFn: (params: UpdateSkillParams) => skillsService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllSkillsKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CharacterGeneralInfo } from 'types/character';
 import { generalInfoService } from './generalInfos.service';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getCharacterGeneralInfoKey = ({
   characterId,
@@ -32,13 +34,20 @@ export const useGetCharacterGeneralInfo = () => {
 export const useUpdateGeneralInfoMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<CharacterGeneralInfo, Error, UpdateGeneralInfoParams>({
+  return useMutation<
+    CharacterGeneralInfo,
+    AxiosError<ApiErrorResponse>,
+    UpdateGeneralInfoParams
+  >({
     mutationFn: (params: UpdateGeneralInfoParams) =>
       generalInfoService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getCharacterGeneralInfoKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

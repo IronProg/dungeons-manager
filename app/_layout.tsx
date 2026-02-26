@@ -3,6 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SplashScreen, Stack } from 'expo-router';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClientProvider } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
 
 import { queryClient } from 'core/queryClient/queryClient';
 
@@ -42,6 +43,8 @@ export default function RootLayout() {
           </GestureHandlerRootView>
         </QueryClientProvider>
       </KeyboardProvider>
+
+      <Toast />
     </>
   );
 }

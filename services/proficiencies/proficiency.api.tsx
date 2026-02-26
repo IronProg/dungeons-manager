@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Proficiency } from 'types/character';
 import { proficiencyService } from './proficiency.service';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getProficiencyKey = ({
   characterId,
@@ -32,13 +34,20 @@ export const useGetProficiency = () => {
 export const useUpdateProficiencyMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Proficiency, Error, UpdateProficiencyParams>({
+  return useMutation<
+    Proficiency,
+    AxiosError<ApiErrorResponse>,
+    UpdateProficiencyParams
+  >({
     mutationFn: (params: UpdateProficiencyParams) =>
       proficiencyService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getProficiencyKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

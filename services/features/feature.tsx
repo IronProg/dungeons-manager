@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { featuresService } from './feature.service';
 import { Feature } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getAllFeaturesKey = ({
   characterId,
@@ -32,12 +34,19 @@ export const useGetAllFeatures = () => {
 export const useCreateFeatureMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Feature, Error, CreateFeatureParams>({
+  return useMutation<
+    Feature,
+    AxiosError<ApiErrorResponse>,
+    CreateFeatureParams
+  >({
     mutationFn: (params: CreateFeatureParams) => featuresService.create(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllFeaturesKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };
@@ -45,12 +54,19 @@ export const useCreateFeatureMutation = () => {
 export const useUpdateFeatureMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Feature, Error, UpdateFeatureParams>({
+  return useMutation<
+    Feature,
+    AxiosError<ApiErrorResponse>,
+    UpdateFeatureParams
+  >({
     mutationFn: (params: UpdateFeatureParams) => featuresService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllFeaturesKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };
@@ -58,13 +74,20 @@ export const useUpdateFeatureMutation = () => {
 export const useDeleteFeatureMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Feature, Error, DeleteFeatureParams>({
+  return useMutation<
+    Feature,
+    AxiosError<ApiErrorResponse>,
+    DeleteFeatureParams
+  >({
     mutationFn: (params: DeleteFeatureParams) =>
       featuresService.destroy(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllFeaturesKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

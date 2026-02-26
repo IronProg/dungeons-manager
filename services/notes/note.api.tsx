@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Note } from 'types/character';
 import { noteService } from './note.service';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getNoteKey = ({
   characterId,
@@ -23,12 +25,15 @@ export const useGetNote = () => {
 export const useUpdateNoteMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Note, Error, UpdateNoteParams>({
+  return useMutation<Note, AxiosError<ApiErrorResponse>, UpdateNoteParams>({
     mutationFn: (params: UpdateNoteParams) => noteService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getNoteKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

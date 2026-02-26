@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { resourcesService } from './resource.service';
 import { Resource } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getAllResourcesKey = ({
   characterId,
@@ -32,7 +34,11 @@ export const useGetAllResources = () => {
 export const useCreateResourceMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Resource, Error, CreateResourceParams>({
+  return useMutation<
+    Resource,
+    AxiosError<ApiErrorResponse>,
+    CreateResourceParams
+  >({
     mutationFn: (params: CreateResourceParams) =>
       resourcesService.create(params),
     onSuccess: (_, { characterId }) => {
@@ -40,13 +46,20 @@ export const useCreateResourceMutation = () => {
         queryKey: getAllResourcesKey({ characterId }),
       });
     },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
   });
 };
 
 export const useUpdateResourceMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Resource, Error, UpdateResourceParams>({
+  return useMutation<
+    Resource,
+    AxiosError<ApiErrorResponse>,
+    UpdateResourceParams
+  >({
     mutationFn: (params: UpdateResourceParams) =>
       resourcesService.update(params),
     onSuccess: (_, { characterId }) => {
@@ -54,19 +67,29 @@ export const useUpdateResourceMutation = () => {
         queryKey: getAllResourcesKey({ characterId }),
       });
     },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
   });
 };
 
 export const useDeleteResourceMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Resource, Error, DeleteResourceParams>({
+  return useMutation<
+    Resource,
+    AxiosError<ApiErrorResponse>,
+    DeleteResourceParams
+  >({
     mutationFn: (params: DeleteResourceParams) =>
       resourcesService.destroy(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllResourcesKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

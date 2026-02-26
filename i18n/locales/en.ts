@@ -1,3 +1,5 @@
+import { api } from './api/en';
+
 export const en = {
   tabs: {
     sheet: 'Sheet',
@@ -7,7 +9,7 @@ export const en = {
   titles: {
     characterSheet: 'Character Sheet',
     general: 'General',
-    attributes: 'Abilities',
+    attributes: 'Attributes',
     savesAndSkills: 'Saves and Skills',
     passivePerception: 'Passive Perception',
     perception: 'Perception',
@@ -20,12 +22,12 @@ export const en = {
     hitDices: 'Hit Dice',
     hp: 'HP',
     hitPoints: 'Hit Points',
-    currencies: 'Currency',
+    currencies: 'Currencies',
     attacks: 'Attacks',
     newAttack: 'New Attack',
     editAttack: 'Edit Attack',
-    damages: 'Damage',
-    resourcesAndAmmunitions: 'Resources and Ammo',
+    damages: 'Damages',
+    resourcesAndAmmunitions: 'Resources and Ammunitions',
     features: 'Features',
     character: 'Character',
     characters: 'Characters',
@@ -53,8 +55,8 @@ export const en = {
     base: 'Base',
     temp: 'Temp',
     temporary: 'Temporary',
-    attribute: 'Ability',
-    extraAttribute: 'Extra Ability',
+    attribute: 'Attribute',
+    extraAttribute: 'Extra Attribute',
     maximum: 'Maximum',
     current: 'Current',
     apply: 'Apply',
@@ -62,7 +64,7 @@ export const en = {
     healing: 'Healing',
     range: 'Range',
     properties: 'Properties',
-    dice: 'Die',
+    dice: 'Dice',
     type: 'Type',
     title: 'Title',
     origin: 'Origin',
@@ -78,7 +80,7 @@ export const en = {
     tempMaxHP: 'Temp Max HP',
   },
   speeds: {
-    normal: 'Walking',
+    normal: 'Normal',
     climbing: 'Climbing',
     flying: 'Flying',
   },
@@ -133,7 +135,7 @@ export const en = {
   },
   auth: {
     welcomeBack: 'Welcome back',
-    email: 'Email',
+    email: 'E-mail',
     password: 'Password',
     passwordConfirmation: 'Confirm password',
     signIn: 'Sign In',
@@ -148,7 +150,7 @@ export const en = {
     hasAccount: 'Already have an account?',
   },
   background: {
-    race: 'Species', // In D&D 2024, "Race" is now "Species"
+    race: 'Race',
     personalityTraits: 'Personality Traits',
     alignment: 'Alignment',
     bonds: 'Bonds',
@@ -162,15 +164,15 @@ export const en = {
   },
   classes: {
     title: 'Classes',
-    add: 'New Class',
+    add: 'New class',
     name: 'Class',
     level: 'Level',
     castingKind: 'Spellcasting',
     castingKinds: {
-      full: 'Full Caster',
-      half: 'Half Caster',
-      third: 'Third Caster',
-      pact: 'Pact Magic',
+      full: 'Full',
+      half: 'Half',
+      third: 'Third',
+      pact: 'Pact',
     },
   },
   attacks: {
@@ -194,14 +196,19 @@ export const en = {
     description: 'Description',
   },
   proficiency: {
-    armors: 'Armor Training', // D&D 2024 uses Training/Proficiency interchangeably
+    armors: 'Armor Proficiency',
     weapons: 'Weapon Proficiency',
     tools: 'Tool Proficiency',
-    languages: 'Languages',
+    languages: 'Known Languages',
   },
   errors: {
+    general: 'Error',
+    auth: 'Authentication error',
+    network_error: 'Network error',
+    unknown: 'An unknown error ocurred',
     min: 'Must have at least %{min} characters',
-    invalidEmail: 'Invalid email address',
-    passwordsDontMatch: 'Passwords do not match',
+    invalidEmail: 'Not a valid email',
+    passwordsDontMatch: "Passwords don't match",
   },
+  api,
 };
