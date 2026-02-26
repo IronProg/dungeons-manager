@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { savesService } from './save.service';
 import { Save } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getAllSavesKey = ({
   characterId,
@@ -23,12 +25,15 @@ export const useGetAllSaves = () => {
 export const useUpdateSaveMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Save, Error, UpdateSaveParams>({
+  return useMutation<Save, AxiosError<ApiErrorResponse>, UpdateSaveParams>({
     mutationFn: (params: UpdateSaveParams) => savesService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllSavesKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

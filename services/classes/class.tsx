@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { classService } from './class.service';
 import { CharacterClass } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getAllClassesKey = ({
   characterId,
@@ -32,13 +34,20 @@ export const useGetAllClasses = () => {
 export const useUpdateAllClassesMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<CharacterClass[], Error, UpdateAllClassesParams>({
+  return useMutation<
+    CharacterClass[],
+    AxiosError<ApiErrorResponse>,
+    UpdateAllClassesParams
+  >({
     mutationFn: (params: UpdateAllClassesParams) =>
       classService.updateAll(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: ['characters', characterId],
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

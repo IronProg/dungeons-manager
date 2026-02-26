@@ -1,3 +1,5 @@
+import { api } from './api/pt';
+
 export const pt = {
   tabs: {
     sheet: 'Ficha',
@@ -200,8 +202,13 @@ export const pt = {
     languages: 'Idiomas Conhecidos',
   },
   errors: {
+    general: 'Erro',
+    auth: 'Erro de autenticação',
+    network_error: 'Erro de rede',
+    unknown: 'Ocorreu um erro inesperado',
     min: 'Deve possuir ao menos %{min} caracteres',
     invalidEmail: 'Não é um email válido',
     passwordsDontMatch: 'As senhas não coincidem',
   },
+  api,
 };

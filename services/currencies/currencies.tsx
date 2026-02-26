@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Currencies } from 'types/character';
 import { currenciesService } from './currencies.service';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getCharacterCurrencyKey = ({
   characterId,
@@ -32,13 +34,20 @@ export const useGetCharacterCurrency = () => {
 export const useUpdateCurrenciesMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Currencies, Error, UpdateCurrenciesParams>({
+  return useMutation<
+    Currencies,
+    AxiosError<ApiErrorResponse>,
+    UpdateCurrenciesParams
+  >({
     mutationFn: (params: UpdateCurrenciesParams) =>
       currenciesService.update(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getCharacterCurrencyKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };

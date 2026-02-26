@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { equipmentService } from './equipment.service';
 import { Equipment } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
+import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import { AxiosError } from 'axios';
 
 export const getAllEquipmentsKey = ({
   characterId,
@@ -32,7 +34,11 @@ export const useGetAllEquipments = () => {
 export const useCreateEquipmentMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Equipment, Error, CreateEquipmentParams>({
+  return useMutation<
+    Equipment,
+    AxiosError<ApiErrorResponse>,
+    CreateEquipmentParams
+  >({
     mutationFn: (params: CreateEquipmentParams) =>
       equipmentService.create(params),
     onSuccess: (_, { characterId }) => {
@@ -40,13 +46,20 @@ export const useCreateEquipmentMutation = () => {
         queryKey: getAllEquipmentsKey({ characterId }),
       });
     },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
   });
 };
 
 export const useUpdateEquipmentMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Equipment, Error, UpdateEquipmentParams>({
+  return useMutation<
+    Equipment,
+    AxiosError<ApiErrorResponse>,
+    UpdateEquipmentParams
+  >({
     mutationFn: (params: UpdateEquipmentParams) =>
       equipmentService.update(params),
     onSuccess: (_, { characterId }) => {
@@ -54,19 +67,29 @@ export const useUpdateEquipmentMutation = () => {
         queryKey: getAllEquipmentsKey({ characterId }),
       });
     },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
   });
 };
 
 export const useDeleteEquipmentMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<Equipment, Error, DeleteEquipmentParams>({
+  return useMutation<
+    Equipment,
+    AxiosError<ApiErrorResponse>,
+    DeleteEquipmentParams
+  >({
     mutationFn: (params: DeleteEquipmentParams) =>
       equipmentService.destroy(params),
     onSuccess: (_, { characterId }) => {
       queryClient.invalidateQueries({
         queryKey: getAllEquipmentsKey({ characterId }),
       });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
     },
   });
 };
