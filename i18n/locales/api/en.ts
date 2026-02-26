@@ -1,7 +1,17 @@
 export const api = {
   authError: {
-    notFoundInDatabase: 'User not found, check your email and password',
-    invalid: 'Invalid email or password',
+    notFoundInDatabase: 'User not found. Please check your email and password.',
+    invalid: 'Invalid email or password.',
+    unauthenticated: 'You need to sign in or sign up before continuing.',
+    unconfirmed:
+      'Your account has not been confirmed yet. Please check your email.',
+    locked: 'Your account is locked due to too many failed login attempts.',
+    expired: 'Your session has expired. Please log in again to continue.',
+    alreadyAuthenticated: 'You are already signed in.',
+    timeout: 'Your session timed out. Please log in again.',
+    inactive: 'Your account has not been activated yet.',
+    notApproved: 'Your account has not been approved by an administrator yet.',
+    lastAttempt: 'You have one more attempt before your account is locked.',
   },
   errors: {
     default_field_error: 'Error saving record',

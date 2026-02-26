@@ -1,8 +1,20 @@
 export const api = {
   authError: {
-    notFoundInDatabase:
-      'Usuário não foi encontrado, verifique seu email e senha',
-    invalid: 'Email ou senha inválidos',
+    notFoundInDatabase: 'Usuário não encontrado. Verifique seu e-mail e senha.',
+    invalid: 'E-mail ou senha inválidos.',
+    unauthenticated:
+      'Você precisa fazer login ou registrar-se antes de prosseguir.',
+    unconfirmed: 'Sua conta ainda não foi confirmada. Verifique seu e-mail.',
+    locked:
+      'Sua conta está bloqueada devido a várias tentativas de login malsucedidas.',
+    expired:
+      'Sua sessão expirou. Por favor, faça login novamente para continuar.',
+    alreadyAuthenticated: 'Você já está logado.',
+    timeout: 'Sua sessão expirou. Por favor, faça login novamente.',
+    inactive: 'Sua conta ainda não foi ativada.',
+    notApproved: 'Sua conta ainda não foi aprovada por um administrador.',
+    lastAttempt:
+      'Você tem mais uma tentativa antes de sua conta ser bloqueada.',
   },
   errors: {
     default_field_error: 'Erro ao salvar registro',
