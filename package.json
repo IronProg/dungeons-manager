@@ -66,6 +66,7 @@
     "@types/react": "~19.1.10",
     "@typescript-eslint/eslint-plugin": "^8.52.0",
     "@typescript-eslint/parser": "^8.52.0",
+    "create-expo-app": "^2.1.1",
     "eslint": "^9.39.2",
     "eslint-config-expo": "~10.0.0",
     "eslint-config-prettier": "^10.1.8",

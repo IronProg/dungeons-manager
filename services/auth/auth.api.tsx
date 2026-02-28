@@ -35,7 +35,6 @@ export const useSignInMutation = () => {
         queryClient.invalidateQueries({ queryKey: authKey });
       },
       onError: ({ response }) => {
-        console.log({ response });
         handleErrorMessage(response?.data);
       },
     },

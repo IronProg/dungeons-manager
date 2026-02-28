@@ -59,6 +59,12 @@ export const api = {
       description: 'Descrição',
       customBonus: 'Bônus Personalizado',
       applyProficiency: 'Aplicar Proficiência',
+      damages: {
+        customBonus: 'Bônus de Dano',
+        kind: 'Tipo de Dano',
+        diceSize: 'Tipo do Dado',
+        diceAmount: 'Quantidade de Dados',
+      },
     },
     background: {
       alignment: 'Alinhamento',

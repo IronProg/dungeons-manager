@@ -42,6 +42,7 @@ export default function TabLayout() {
 
   return (
     <TopTabs
+      initialRouteName="index"
       screenOptions={{
         swipeEnabled: true,
       }}

@@ -71,7 +71,10 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
           if (attack.applyProficiency) attackModifier += proficiencyBonus;
 
           return (
-            <View className="flex flex-row gap-2 w-full items-start">
+            <View
+              key={attack.id}
+              className="flex flex-row gap-2 w-full items-start"
+            >
               <TouchableOpacity
                 onPress={() => setDetailedAttack(attack)}
                 onLongPress={() => onSelect(attack)}

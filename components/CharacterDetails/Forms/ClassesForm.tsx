@@ -79,7 +79,10 @@ export const ClassesForm = ({
         if (field._destroy) return;
 
         return (
-          <View className="flex flex-row gap-2 pb-2 border-b-neutral-200 w-full relative">
+          <View
+            key={field.fieldId}
+            className="flex flex-row gap-2 pb-2 border-b-neutral-200 w-full relative"
+          >
             <Controller
               control={control}
               name={`classes.${index}.name`}

@@ -76,7 +76,7 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
       {resources && resources.length > 0 ? (
         resources?.map((resource, index) => {
           return (
-            <View className="flex flex-row gap-2 items-start">
+            <View key={resource.id} className="flex flex-row gap-2 items-start">
               <TouchableOpacity
                 disabled={isPending}
                 onPress={() => handleQuickUpdate(resource)}
