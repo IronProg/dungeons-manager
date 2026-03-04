@@ -58,19 +58,25 @@ export const CharacterDetailsClasses = ({
         ) : (
           <View className="flex flex-col gap-1">
             <View className="flex flex-row">
-              <Text className="w-5/12 font-medium">
+              <Text className="w-4/12 font-medium">
                 {i18n.t('classes.name')}
               </Text>
               <Text className="w-2/12 font-medium text-center">
                 {i18n.t('classes.level')}
               </Text>
-              <Text className="w-5/12 font-medium">
+              <Text className="w-2/12 font-medium text-center">
+                {i18n.t('classes.hitDice')}
+              </Text>
+              <Text className="w-4/12 font-medium">
                 {i18n.t('classes.castingKind')}
               </Text>
             </View>
 
             {characterClasses?.map((characterClass) => (
-              <ClassListItem characterClass={characterClass} />
+              <ClassListItem
+                key={characterClass.id}
+                characterClass={characterClass}
+              />
             ))}
           </View>
         )}
@@ -97,10 +103,11 @@ type ClassListItemProps = {
 const ClassListItem = ({ characterClass }: ClassListItemProps) => {
   return (
     <View className="flex flex-row border-neutral-200 border-t pt-1">
-      <Text className="w-5/12">{characterClass.name}</Text>
+      <Text className="w-4/12">{characterClass.name}</Text>
       <Text className="w-2/12 text-center">{characterClass.level}</Text>
+      <Text className="w-2/12 text-center">{characterClass.hitDice}</Text>
       {characterClass.castingKind && (
-        <Text className="w-5/12">
+        <Text className="w-4/12">
           {i18n.t(`classes.castingKinds.${characterClass.castingKind}`)}
         </Text>
       )}

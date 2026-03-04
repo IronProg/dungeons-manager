@@ -44,6 +44,7 @@ export const pt = {
     characterDetails: 'Detalhes do Personagem',
   },
   general: {
+    total: 'Total',
     none: 'Nenhum',
     save: 'Salvar',
     mod: 'Mod',
@@ -167,6 +168,7 @@ export const pt = {
     add: 'Nova classe',
     name: 'Classe',
     level: 'Nível',
+    hitDice: 'Dado',
     castingKind: 'Conjuração',
     castingKinds: {
       full: 'Completo',
@@ -200,6 +202,10 @@ export const pt = {
     weapons: 'Proficiência em Armas',
     tools: 'Proficiência em Ferramentas',
     languages: 'Idiomas Conhecidos',
+  },
+  hitDices: {
+    title: 'Gerenciar Dados de Vida',
+    currentAmount: 'Quantidade Atual',
   },
   errors: {
     general: 'Erro',
