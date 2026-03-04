@@ -49,8 +49,9 @@ export const ClassesForm = ({
       if (field.id) {
         const newClasses = classes.map((item, i) => ({
           ...item,
-          _destroy: i === index ? true : undefined,
+          _destroy: i === index ? true : item._destroy,
         }));
+
         replace(newClasses);
       } else {
         remove(index);
