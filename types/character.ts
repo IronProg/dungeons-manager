@@ -26,9 +26,6 @@ export type CharacterGeneralInfo = {
   armorClassFirstAttribute?: AttributesType;
   armorClassSecondAttribute?: AttributesType;
   speed: number;
-  hitDices: number;
-  hitDicesMaximum: number;
-  hitDicesSize: HitDicesType;
   speedClimbing?: number;
   speedFlying?: number;
   initiativeCustomBonus?: number;
@@ -55,6 +52,8 @@ export type CharacterClass = {
   id?: number;
   name: string;
   level: number;
+  hitDice: HitDicesType;
+  hitDiceAmount: number;
   castingKind?: CastingKindType;
 };
 

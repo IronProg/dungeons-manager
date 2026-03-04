@@ -1,40 +1,91 @@
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
-import { HitDicesFormType, useHitDicesForm } from './useHitDicesForm';
-import RNPickerSelect from 'react-native-picker-select';
-import { HIT_DICES } from 'core/enums/hitDices';
-import { ChevronDown } from 'lucide-react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Minus, Plus } from 'lucide-react-native';
 import i18n from 'i18n';
-import { CharacterGeneralInfo } from 'types/character';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { Button } from 'components/ui/Button';
+
 import { useCharacter } from 'contexts/CharacterContext';
+import {
+  useGetAllClasses,
+  useUpdateAllClassesMutation,
+} from 'services/classes/class';
+
+import { Button } from 'components/ui/Button';
+
+import { CharacterClass, CharacterGeneralInfo } from 'types/character';
+
+type handleAddFunction = {
+  characterClass: CharacterClass;
+  full?: boolean;
+};
 
 type HitDicesFormProps = {
   generalInfo: CharacterGeneralInfo;
   onClose: () => void;
 };
 
-export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
+export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
+  const { data: fetchedCharacterClasses } = useGetAllClasses();
+
+  const [characterClasses, setCharacterClasses] = useState<CharacterClass[]>(
+    fetchedCharacterClasses ?? [],
+  );
+
   const { characterId } = useCharacter();
-  const { control, handleSubmit } = useHitDicesForm({ generalInfo });
 
-  const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
+  const { mutate: updateAllCharacters, isPending } =
+    useUpdateAllClassesMutation();
 
-  const onSubmit = useCallback(
-    (values: HitDicesFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            onClose();
-          },
+  useEffect(() => {
+    if (fetchedCharacterClasses) {
+      setCharacterClasses(fetchedCharacterClasses);
+    } else {
+      setCharacterClasses([]);
+    }
+  }, [fetchedCharacterClasses]);
+
+  const onSubmit = useCallback(() => {
+    updateAllCharacters(
+      { characterId: characterId!, classes: characterClasses },
+      {
+        onSuccess: () => {
+          onClose();
         },
+      },
+    );
+  }, [characterClasses, characterId, onClose, updateAllCharacters]);
+
+  const handleAdd = useCallback(
+    ({ characterClass, full = false }: handleAddFunction) => {
+      setCharacterClasses((prev) =>
+        prev?.map((cls) => {
+          if (cls.id !== characterClass.id) return cls;
+
+          return {
+            ...characterClass,
+            hitDiceAmount: full
+              ? cls.level
+              : Math.min(cls.level, cls.hitDiceAmount + 1),
+          };
+        }),
       );
     },
-    [characterId, onClose, updateCharacter],
+    [],
+  );
+
+  const handleDecrease = useCallback(
+    ({ characterClass, full = false }: handleAddFunction) => {
+      setCharacterClasses((prev) =>
+        prev?.map((cls) => {
+          if (cls.id !== characterClass.id) return cls;
+
+          return {
+            ...characterClass,
+            hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
+          };
+        }),
+      );
+    },
+    [],
   );
 
   return (
@@ -43,91 +94,67 @@ export const HitDicesForm = ({ generalInfo, onClose }: HitDicesFormProps) => {
         {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
       </Text>
 
-      <View className="flex flex-row gap-2">
-        <View className="min-w-0 flex-1">
-          <Controller
-            control={control}
-            name="hitDices"
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <BottomSheetTextInput
-                  className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
-                  onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
-                  keyboardType="numeric"
-                />
+      <View className="flex flex-col gap-2 pb-4">
+        <View className="flex flex-row">
+          <View className="w-8/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('hitDices.currentAmount')}
+            </Text>
+          </View>
 
-                <Text className="text-red-400 text-sm">{error?.message}</Text>
-              </>
-            )}
-          />
+          <View className="w-2/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('classes.hitDice')}
+            </Text>
+          </View>
+
+          <View className="w-2/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('general.total')}
+            </Text>
+          </View>
         </View>
 
-        <Text className="mt-4">/</Text>
+        {characterClasses?.map((characterClass) => (
+          <View key={characterClass.id} className="flex flex-row items-center">
+            <View className="w-8/12 flex flex-row gap-6 justify-center px-2 py-2">
+              <TouchableOpacity
+                hitSlop={10}
+                onPress={() => handleDecrease({ characterClass })}
+                onLongPress={() =>
+                  handleDecrease({ characterClass, full: true })
+                }
+                className="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center shadow-sm"
+              >
+                <Minus size={24} color="white" />
+              </TouchableOpacity>
 
-        <View className="min-w-0 flex-1">
-          <Controller
-            control={control}
-            name="hitDicesMaximum"
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <BottomSheetTextInput
-                  className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
-                  onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
-                  keyboardType="numeric"
-                />
+              <Text className="font-bold text-lg">
+                {characterClass.hitDiceAmount}
+              </Text>
 
-                <Text className="text-red-400 text-sm">{error?.message}</Text>
-              </>
-            )}
-          />
-        </View>
+              <TouchableOpacity
+                hitSlop={10}
+                onPress={() => handleAdd({ characterClass })}
+                onLongPress={() => handleAdd({ characterClass, full: true })}
+                className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm"
+              >
+                <Plus size={24} color="white" />
+              </TouchableOpacity>
+            </View>
 
-        <View className="flex flex-col items-center">
-          <Controller
-            control={control}
-            name="hitDicesSize"
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <RNPickerSelect
-                  onValueChange={field.onChange}
-                  placeholder="Placeholder"
-                  value={field.value || ''}
-                  useNativeAndroidPickerStyle={false}
-                  style={{
-                    viewContainer: {
-                      backgroundColor: '#f3f3f3ff',
-                      width: 120,
-                      borderRadius: 20,
-                      overflow: 'hidden',
-                    },
-                  }}
-                  items={[
-                    { label: 'None', value: null },
-                    ...HIT_DICES.map((dice) => ({
-                      label: dice,
-                      value: dice,
-                    })),
-                  ]}
-                >
-                  <View className="rounded-lg bg-gray-100 px-4 h-15 py-3 flex flex-row justify-between items-center gap-2">
-                    <Text className="text-xl">{field.value}</Text>
+            <View className="w-2/12 px-2">
+              <Text className="text-center">{characterClass.hitDice}</Text>
+            </View>
 
-                    <View className="pt-1">
-                      <ChevronDown size={12} />
-                    </View>
-                  </View>
-                </RNPickerSelect>
-
-                <Text className="text-red-400 text-sm">{error?.message}</Text>
-              </>
-            )}
-          />
-        </View>
+            <View className="w-2/12 px-2">
+              <Text className="text-center">{characterClass.level}</Text>
+            </View>
+          </View>
+        ))}
       </View>
 
-      <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
+      <Button onPress={onSubmit} disabled={isPending} />
     </View>
   );
 };

@@ -1,14 +1,18 @@
-import { Button } from 'components/ui/Button';
-import i18n from 'i18n';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Character, CharacterClass } from 'types/character';
-import { ClassesFormType, useClassesForm } from './useClassesForm';
-import { Controller, useFieldArray } from 'react-hook-form';
-import { CastingKindPicker } from 'components/ui/inputs/CastingKindPicker';
-import { useUpdateAllClassesMutation } from 'services/classes/class';
 import { useCallback } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Controller, useFieldArray } from 'react-hook-form';
 import { Trash2 } from 'lucide-react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import i18n from 'i18n';
+
+import { useUpdateAllClassesMutation } from 'services/classes/class';
+
+import { Button } from 'components/ui/Button';
+import { CastingKindPicker } from 'components/ui/inputs/CastingKindPicker';
+import { HitDicePicker } from 'components/ui/inputs/HitDicePicker';
+
+import { ClassesFormType, useClassesForm } from './useClassesForm';
+import { Character, CharacterClass } from 'types/character';
 
 type ClassesFormProps = {
   character: Character;
@@ -58,10 +62,7 @@ export const ClassesForm = ({
   const onSubmit = useCallback(
     (data: ClassesFormType) => {
       updateAllClasses(
-        {
-          characterId: character.id!,
-          classes: data.classes,
-        },
+        { characterId: character.id!, classes: data.classes },
         {
           onSuccess: () => {
             reset();
@@ -116,6 +117,26 @@ export const ClassesForm = ({
 
             <Controller
               control={control}
+              name={`classes.${index}.hitDice`}
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <View>
+                  <Text className="font-medium">
+                    {i18n.t('classes.hitDice')}
+                  </Text>
+                  <HitDicePicker
+                    value={value}
+                    onChange={onChange}
+                    error={error?.message}
+                  />
+                </View>
+              )}
+            />
+
+            <Controller
+              control={control}
               name={`classes.${index}.castingKind`}
               render={({ field: { value, onChange } }) => (
                 <View className="flex-1 min-w-20">
@@ -144,7 +165,7 @@ export const ClassesForm = ({
         <Button
           text={i18n.t('classes.add')}
           className="bg-purple-600"
-          onPress={() => append({ name: '', level: 1 })}
+          onPress={() => append({ name: '', level: 1, hitDice: 'd6' })}
         />
 
         <Button disabled={isPending} onPress={handleSubmit(onSubmit)} />

@@ -12,14 +12,12 @@ import { Speed } from './Speed/Speed';
 import { Proficiency } from './Proficiency/Proficiency';
 import { Exhaustion } from './Exhaustion/Exhaustion';
 import { PassivePerceptionForm } from './PassivePerception/PassivePerceptionForm';
-import { ProficiencyForm } from './Proficiency/ProficiencyForm';
 import { InitiativeForm } from './Initiative/InitiativeForm';
 import { ArmorClassForm } from './ArmorClass/ArmorClassForm';
 import { SpeedForm } from './Speed/SpeedForm';
 
 type GeneralInfoFormTypes =
   | 'passivePerception'
-  | 'proficiency'
   | 'speed'
   | 'initiative'
   | 'armorClass'
@@ -66,7 +64,7 @@ export const MainCharacterSheetGeneralInfo = () => {
           </View>
 
           <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
-            <Proficiency onLongPress={() => handleOpen('proficiency')} />
+            <Proficiency />
 
             <Exhaustion generalInfo={generalInfo} />
 
@@ -98,9 +96,6 @@ export const MainCharacterSheetGeneralInfo = () => {
             )}
             {activeForm === 'speed' && (
               <SpeedForm generalInfo={generalInfo} onClose={close} />
-            )}
-            {activeForm === 'proficiency' && (
-              <ProficiencyForm onClose={close} />
             )}
             {activeForm === 'passivePerception' && (
               <PassivePerceptionForm

@@ -44,6 +44,7 @@ export const en = {
     characterDetails: 'Character Details',
   },
   general: {
+    total: 'Total',
     none: 'None',
     save: 'Save',
     mod: 'Mod',
@@ -167,6 +168,7 @@ export const en = {
     add: 'New class',
     name: 'Class',
     level: 'Level',
+    hitDice: 'Dice',
     castingKind: 'Spellcasting',
     castingKinds: {
       full: 'Full',
@@ -200,6 +202,10 @@ export const en = {
     weapons: 'Weapon Proficiency',
     tools: 'Tool Proficiency',
     languages: 'Known Languages',
+  },
+  hitDices: {
+    title: 'Manage Hit Dices',
+    currentAmount: 'Current Amount',
   },
   errors: {
     general: 'Error',
