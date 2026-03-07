@@ -1,31 +1,32 @@
 import { Controller } from 'react-hook-form';
 import { Switch, Text, View } from 'react-native';
-import { SaveFormType, useSaveForm } from './useSaveForm';
-import { Save } from 'types/character';
+import { SavingThrowFormType, useSavingThrowForm } from './useSavingThrowForm';
+import { SavingThrow } from 'types/character';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { useUpdateSaveMutation } from 'services/saves/save';
+import { useUpdateSavingThrowMutation } from 'services/savingThrows/savingThrow';
 import { Button } from 'components/ui/Button';
 
 type AttributesFormProps = {
   characterId: number;
-  save: Save;
+  savingThrow: SavingThrow;
   onClose: () => void;
 };
 
-export const SaveForm = ({
+export const SavingThrowForm = ({
   characterId,
-  save,
+  savingThrow,
   onClose,
 }: AttributesFormProps) => {
-  const { control, handleSubmit } = useSaveForm({ save });
+  const { control, handleSubmit } = useSavingThrowForm({ savingThrow });
 
-  const { mutate: updateSave, isPending } = useUpdateSaveMutation();
+  const { mutate: updateSavingThrow, isPending } =
+    useUpdateSavingThrowMutation();
 
-  const onSubmit = (values: SaveFormType) => {
-    updateSave(
-      { characterId, id: save.id!, ...values },
+  const onSubmit = (values: SavingThrowFormType) => {
+    updateSavingThrow(
+      { characterId, id: savingThrow.id!, ...values },
       {
         onSuccess: () => {
           onClose();
@@ -37,7 +38,7 @@ export const SaveForm = ({
   return (
     <View className="flex flex-col gap-4">
       <Text className="text-gray-900 font-bold text-2xl text-center">
-        {i18n.t(`saves.${save.mainAttribute}`)}
+        {i18n.t(`savingThrows.${savingThrow.mainAttribute}`)}
       </Text>
 
       <View className="flex flex-row gap-4 flex-wrap">

@@ -10,7 +10,7 @@ export const en = {
     characterSheet: 'Character Sheet',
     general: 'General',
     attributes: 'Attributes',
-    savesAndSkills: 'Saves and Skills',
+    savingThrowsAndSkills: 'Saving Throws and Skills',
     passivePerception: 'Passive Perception',
     perception: 'Perception',
     exhaustion: 'Exhaustion',
@@ -93,7 +93,7 @@ export const en = {
     wisdom: 'Wisdom',
     charisma: 'Charisma',
   },
-  saves: {
+  savingThrows: {
     strength: 'Strength Save',
     dexterity: 'Dexterity Save',
     constitution: 'Constitution Save',

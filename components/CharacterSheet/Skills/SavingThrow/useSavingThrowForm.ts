@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ATTRIBUTES } from 'core/enums/attributes';
 import { useForm } from 'react-hook-form';
-import { Save } from 'types/character';
+import { SavingThrow } from 'types/character';
 import * as z from 'zod';
 
 export const schema = z.object({
@@ -11,21 +11,23 @@ export const schema = z.object({
   extraAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 
-export type SaveFormType = z.infer<typeof schema>;
+export type SavingThrowFormType = z.infer<typeof schema>;
 
-type useSaveFormProps = {
-  save: Save;
+type useSavingThrowFormProps = {
+  savingThrow: SavingThrow;
 };
 
-export const useSaveForm = ({ save }: useSaveFormProps) => {
+export const useSavingThrowForm = ({
+  savingThrow,
+}: useSavingThrowFormProps) => {
   const { control, handleSubmit, watch, getValues, formState } =
-    useForm<SaveFormType>({
+    useForm<SavingThrowFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
-        mainAttribute: save.mainAttribute,
-        proficiency: save?.proficiency,
-        customBonus: save.customBonus,
-        extraAttribute: save.extraAttribute,
+        mainAttribute: savingThrow.mainAttribute,
+        proficiency: savingThrow?.proficiency,
+        customBonus: savingThrow.customBonus,
+        extraAttribute: savingThrow.extraAttribute,
       },
     });
 

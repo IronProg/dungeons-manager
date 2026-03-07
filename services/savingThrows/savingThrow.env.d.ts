@@ -1,8 +1,8 @@
-type GetAllSavesParams = {
+type GetAllSavingThrowsParams = {
   characterId?: number;
 };
 
-type UpdateSaveParams = {
+type UpdateSavingThrowParams = {
   characterId: number;
   id: number;
   proficiency?: boolean;

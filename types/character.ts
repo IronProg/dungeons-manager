@@ -9,7 +9,7 @@ export type Character = {
   generalInfo: CharacterGeneralInfo;
   currencies: Currencies;
   characterAttributes: Attribute[];
-  saves: Save[];
+  savingThrows: SavingThrow[];
   skills: Skill[];
   attacks: Attack[];
   resources: Resource[];
@@ -57,7 +57,7 @@ export type CharacterClass = {
   castingKind?: CastingKindType;
 };
 
-export type Save = {
+export type SavingThrow = {
   id?: number;
   mainAttribute: AttributesType;
   proficiency: boolean;

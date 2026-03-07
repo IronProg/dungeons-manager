@@ -6,7 +6,7 @@ import { getCharacterGeneralInfoKey } from 'services/generalInfos/generalInfos';
 import { getCharacterCurrencyKey } from 'services/currencies/currencies';
 import { getAllFeaturesKey } from 'services/features/feature';
 import { getAllResourcesKey } from 'services/resources/resource';
-import { getAllSavesKey } from 'services/saves/save';
+import { getAllSavingThrowsKey } from 'services/savingThrows/savingThrow';
 import { getAllSkillsKey } from 'services/skills/skill';
 import { Character } from 'types/character';
 
@@ -43,8 +43,8 @@ export const useDetailedCharacter = ({
       );
 
       queryClient.setQueryData(
-        getAllSavesKey({ characterId: character.id! }),
-        character.saves,
+        getAllSavingThrowsKey({ characterId: character.id! }),
+        character.savingThrows,
       );
 
       queryClient.setQueryData(

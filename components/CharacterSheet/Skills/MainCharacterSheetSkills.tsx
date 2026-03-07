@@ -4,31 +4,34 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { useGetAllSkills } from 'services/skills/skill';
-import { useGetAllSaves } from 'services/saves/save';
+import { useGetAllSavingThrows } from 'services/savingThrows/savingThrow';
 import { useCharacter } from 'contexts/CharacterContext';
 import { useGetSkillBonus } from 'hooks/useSkillBonus';
 
-import { SaveForm } from './Save/SaveForm';
+import { SavingThrowForm } from './SavingThrow/SavingThrowForm';
 import { SkillForm } from './Skill/SkillForm';
 
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 
-import type { Save, Skill } from 'types/character';
+import type { SavingThrow, Skill } from 'types/character';
 
 export const MainCharacterSheetSkills = () => {
   const { characterId } = useCharacter();
-  const { data: saves, isLoading: isLoadingSaves } = useGetAllSaves();
+  const { data: savingThrows, isLoading: isLoadingSavingThrows } =
+    useGetAllSavingThrows();
+
   const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills();
 
-  const [highlightedSave, setHighlightedSave] = useState<Save | null>(null);
+  const [highlightedSavingThrow, setHighlightedSavingThrow] =
+    useState<SavingThrow | null>(null);
   const [highlightedSkill, setHighlightedSkill] = useState<Skill | null>(null);
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const handleOpen = useCallback(
-    ({ save, skill }: { save?: Save; skill?: Skill }) => {
-      if (save) {
-        setHighlightedSave(save);
+    ({ savingThrow, skill }: { savingThrow?: SavingThrow; skill?: Skill }) => {
+      if (savingThrow) {
+        setHighlightedSavingThrow(savingThrow);
       } else if (skill) {
         setHighlightedSkill(skill);
       }
@@ -38,7 +41,7 @@ export const MainCharacterSheetSkills = () => {
   );
 
   const handleClose = useCallback(() => {
-    setHighlightedSave(null);
+    setHighlightedSavingThrow(null);
     setHighlightedSkill(null);
     bottomSheetRef.current?.dismiss();
   }, []);
@@ -47,13 +50,13 @@ export const MainCharacterSheetSkills = () => {
     <>
       <View className="flex flex-col rounded-lg px-4">
         <View className="flex flex-row flex-wrap py-2 w-full">
-          {isLoadingSaves && <ActivityIndicator />}
-          {saves && saves.length > 0 ? (
-            saves.map((save, index) => (
-              <SaveCard
+          {isLoadingSavingThrows && <ActivityIndicator />}
+          {savingThrows && savingThrows.length > 0 ? (
+            savingThrows.map((savingThrow, index) => (
+              <SavingThrowCard
                 key={index}
-                save={save}
-                onLongPress={() => handleOpen({ save })}
+                savingThrow={savingThrow}
+                onLongPress={() => handleOpen({ savingThrow })}
               />
             ))
           ) : (
@@ -84,10 +87,10 @@ export const MainCharacterSheetSkills = () => {
         onDismiss={handleClose}
         snapPoints={[300, 600]}
       >
-        {highlightedSave && (
-          <SaveForm
+        {highlightedSavingThrow && (
+          <SavingThrowForm
             characterId={characterId!}
-            save={highlightedSave}
+            savingThrow={highlightedSavingThrow}
             onClose={handleClose}
           />
         )}
@@ -104,18 +107,25 @@ export const MainCharacterSheetSkills = () => {
   );
 };
 
-type SaveCardProps = { save: Save; onLongPress: () => void };
+type SavingThrowCardProps = {
+  savingThrow: SavingThrow;
+  onLongPress: () => void;
+};
 
-const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
+const SavingThrowCard = ({
+  savingThrow,
+  onLongPress,
+}: SavingThrowCardProps) => {
   const { modifiers, proficiencyBonus } = useCharacter();
   let modifier =
-    (modifiers?.[save.mainAttribute] || 0) + (save.customBonus || 0);
+    (modifiers?.[savingThrow.mainAttribute] || 0) +
+    (savingThrow.customBonus || 0);
 
-  if (modifiers && save.extraAttribute) {
-    modifier += modifiers[save.extraAttribute];
+  if (modifiers && savingThrow.extraAttribute) {
+    modifier += modifiers[savingThrow.extraAttribute];
   }
 
-  if (save.proficiency) {
+  if (savingThrow.proficiency) {
     modifier += proficiencyBonus;
   }
 
@@ -123,14 +133,14 @@ const SaveCard = ({ save, onLongPress }: SaveCardProps) => {
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onLongPress={onLongPress}
-        className={`flex flex-row items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${save?.proficiency && 'bg-green-200'}`}
+        className={`flex flex-row items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${savingThrow?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 py-1">
           <Text
             numberOfLines={0}
             className="text-gray-900 text-sm font-semibold"
           >
-            {i18n.t(`attributes.${save.mainAttribute}`)}
+            {i18n.t(`attributes.${savingThrow.mainAttribute}`)}
           </Text>
         </View>
 

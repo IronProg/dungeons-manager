@@ -6,6 +6,7 @@ import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 import { useCallback } from 'react';
+import { DamageDicePicker } from 'components/ui/inputs/DamageDicePicker';
 
 type DamagesFormProps = { control: Control<AttacksFormType> };
 
@@ -93,11 +94,10 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                   name={`damagesAttributes.${index}.diceSize`}
                   render={({ field, fieldState: { error } }) => (
                     <>
-                      <BottomSheetTextInput
-                        className="rounded-lg bg-gray-100 h-15 text-base grow"
-                        onChangeText={field.onChange}
-                        keyboardType="numeric"
-                        value={`${field.value || ''}`}
+                      <DamageDicePicker
+                        onChange={field.onChange}
+                        value={field.value}
+                        error={error?.message}
                       />
 
                       <Text className="text-red-400 text-sm">

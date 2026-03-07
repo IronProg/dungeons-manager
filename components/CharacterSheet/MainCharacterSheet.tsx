@@ -51,7 +51,7 @@ export const MainCharacterSheet = () => {
 
       <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
         <Text className="text-gray-900 text-lg font-semibold text-center">
-          {i18n.t('titles.savesAndSkills')}
+          {i18n.t('titles.savingThrowsAndSkills')}
         </Text>
 
         <MainCharacterSheetSkills />

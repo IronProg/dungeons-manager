@@ -121,7 +121,7 @@ export const api = {
       proficiency: 'Proficiency',
       expertise: 'Expertise',
     },
-    save: {
+    savingThrow: {
       mainAttribute: 'Saving Throw Attribute',
       customBonus: 'Custom Bonus',
       proficiency: 'Proficiency',

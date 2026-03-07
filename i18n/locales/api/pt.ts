@@ -124,7 +124,7 @@ export const api = {
       proficiency: 'Proficiência',
       expertise: 'Especialização',
     },
-    save: {
+    savingThrow: {
       mainAttribute: 'Atributo de Salvaguarda',
       customBonus: 'Bônus Customizado',
       proficiency: 'Proficiência',

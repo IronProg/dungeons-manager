@@ -10,7 +10,7 @@ export const pt = {
     characterSheet: 'Ficha do Personagem',
     general: 'Geral',
     attributes: 'Atributos',
-    savesAndSkills: 'Resistências e Habilidades',
+    savingThrowsAndSkills: 'Resistências e Habilidades',
     passivePerception: 'Percepção Passiva',
     perception: 'Percepção',
     exhaustion: 'Exaustão',
@@ -93,7 +93,7 @@ export const pt = {
     wisdom: 'Sabedoria',
     charisma: 'Carisma',
   },
-  saves: {
+  savingThrows: {
     strength: 'Resistência de Força',
     dexterity: 'Resistência de Destreza',
     constitution: 'Resistência de Constituição',
