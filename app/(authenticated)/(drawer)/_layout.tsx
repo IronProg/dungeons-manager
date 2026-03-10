@@ -57,6 +57,14 @@ export default function DrawerLayout() {
       />
 
       <Drawer.Screen
+        name="tables"
+        options={{
+          title: i18n.t('tables.title') || 'Tables',
+          headerStyle: { backgroundColor: '#4f46e5' },
+        }}
+      />
+
+      <Drawer.Screen
         name="new-character"
         options={{
           title: i18n.t('titles.newCharacter'),

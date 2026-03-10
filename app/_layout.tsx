@@ -11,6 +11,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 import '../global.css';
 import { CharacterProvider } from 'providers/CharacterProvider';
+import { TableProvider } from 'providers/TableProvider';
 
 // Impede que a Splash suma antes da hora
 SplashScreen.preventAutoHideAsync();
@@ -26,19 +27,21 @@ export default function RootLayout() {
         <QueryClientProvider client={queryClient}>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <CharacterProvider>
-              <BottomSheetModalProvider>
-                <Stack
-                  screenOptions={{
-                    headerShown: false,
-                    contentStyle: { backgroundColor: '#fff' },
-                  }}
-                >
-                  <Stack.Screen
-                    name="(authenticated)"
-                    options={{ headerShown: false }}
-                  />
-                </Stack>
-              </BottomSheetModalProvider>
+              <TableProvider>
+                <BottomSheetModalProvider>
+                  <Stack
+                    screenOptions={{
+                      headerShown: false,
+                      contentStyle: { backgroundColor: '#fff' },
+                    }}
+                  >
+                    <Stack.Screen
+                      name="(authenticated)"
+                      options={{ headerShown: false }}
+                    />
+                  </Stack>
+                </BottomSheetModalProvider>
+              </TableProvider>
             </CharacterProvider>
           </GestureHandlerRootView>
         </QueryClientProvider>

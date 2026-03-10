@@ -5,11 +5,14 @@ import { characterService } from './character.service';
 import type { Character } from 'types/character';
 import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
 import { AxiosError } from 'axios';
+import { useTable } from 'contexts/TableContext';
 
 export const useGetAllCharacters = () => {
+  const { tableId } = useTable();
+
   return useQuery({
     queryKey: ['characters'],
-    queryFn: characterService.fetchAll,
+    queryFn: () => characterService.fetchAll({ params: { tableId } }),
     staleTime: 10 * 60_000,
   });
 };
@@ -25,6 +28,7 @@ export const useGetCharacter = ({ id }: GetCharacterParams) => {
 
 export const useCreateCharacterMutation = () => {
   const queryClient = useQueryClient();
+  const { tableId } = useTable();
 
   return useMutation<
     Character,
@@ -32,7 +36,7 @@ export const useCreateCharacterMutation = () => {
     CreateCharacterParams
   >({
     mutationFn: (params: CreateCharacterParams) =>
-      characterService.create(params),
+      characterService.create({ ...params, tableId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
     },

@@ -1,3 +1,5 @@
+import { Table } from './table';
+
 export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
 
 export type Character = {
@@ -6,6 +8,7 @@ export type Character = {
   proficiencyBonus: number;
   level: number;
   experience: number;
+  table?: Table;
   generalInfo: CharacterGeneralInfo;
   currencies: Currencies;
   characterAttributes: Attribute[];
@@ -23,8 +26,11 @@ export type CharacterGeneralInfo = {
   hitPointsLimitTemporary?: number;
   temporaryHitPoints?: number;
   armorClassBase: number;
-  armorClassFirstAttribute?: AttributesType;
-  armorClassSecondAttribute?: AttributesType;
+  armorClassFirstAttribute?: AttributesType | null;
+  armorClassSecondAttribute?: AttributesType | null;
+  hitDices?: number;
+  hitDicesMaximum?: number;
+  hitDicesSize?: HitDicesType;
   speed: number;
   speedClimbing?: number;
   speedFlying?: number;

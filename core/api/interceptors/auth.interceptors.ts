@@ -18,7 +18,12 @@ let refreshPromise: Promise<TokenResponse> | null = null;
 const isExpired = (token: string) => {
   const { exp } = jwtDecode<{ exp: number }>(token);
 
-  return Date.now() >= exp * 1000 - 20_000;
+  console.log({
+    now: new Date().toLocaleString(),
+    expired: Date.now() >= exp * 1000,
+    expiration: new Date(exp * 1000).toLocaleString(),
+  });
+  return Date.now() >= exp * 1000;
 };
 
 export const authRequestInterceptor = async (

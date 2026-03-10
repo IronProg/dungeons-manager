@@ -3,11 +3,13 @@ import ReactNativeModal from 'react-native-modal';
 import i18n from 'i18n';
 
 import { Button } from '../Button';
+import { cn } from 'core/helpers/cn';
 
 type ConfirmationModalProps = {
   isVisible: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  buttonClassName?: string;
   title?: string;
   subTitle?: string;
 };
@@ -16,6 +18,7 @@ export const ConfirmationModal = ({
   onClose,
   isVisible,
   onConfirm,
+  buttonClassName,
   title,
   subTitle,
 }: ConfirmationModalProps) => {
@@ -41,7 +44,7 @@ export const ConfirmationModal = ({
 
           <View className="grow">
             <Button
-              className="bg-red-500"
+              className={cn('bg-red-500', buttonClassName)}
               text={i18n.t('general.confirm')}
               onPress={onConfirm}
             />
