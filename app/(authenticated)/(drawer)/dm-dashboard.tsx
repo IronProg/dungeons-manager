@@ -8,6 +8,7 @@ import { Container } from 'components/Container';
 import { useGetTableCharactersResume } from 'services/tables/table.api';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useQueryClient } from '@tanstack/react-query';
+import { TableChannelCallback, useTableChannel } from 'hooks/useTableChannel';
 
 export default function DMDashboard() {
   const queryClient = useQueryClient();
@@ -19,6 +20,17 @@ export default function DMDashboard() {
       queryKey: ['tables', tableId, 'characters'],
     });
   }, [queryClient, tableId]);
+
+  const callback = useCallback(
+    (data: TableChannelCallback) => {
+      if (data.invalidate === 'table') {
+        handleRefresh();
+      }
+    },
+    [handleRefresh],
+  );
+
+  useTableChannel({ tableId: table?.id, callback });
 
   if (isPending) {
     return (
@@ -39,7 +51,7 @@ export default function DMDashboard() {
           refreshControl={
             <RefreshControl
               refreshing={isLoadingCharacters}
-              onRefresh={() => handleRefresh}
+              onRefresh={handleRefresh}
             />
           }
           data={characters || []}

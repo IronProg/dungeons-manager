@@ -36,7 +36,6 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
   const { setCharacterId } = useCharacter();
   const { tableId, table, clearTableId } = useTable();
 
-  console.log({ table });
   const [characterToDelete, setCharacterToDelete] = useState<Character | null>(
     null,
   );
@@ -49,8 +48,6 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
       { onSuccess: () => setCharacterToDelete(null) },
     );
   };
-
-  console.log({ table });
 
   const handleSelectCharacter = useCallback(
     (item: Character) => {
@@ -171,16 +168,19 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
               </Text>
             </TouchableOpacity>
           )}
-          <TouchableOpacity
-            onPress={onNewCharacter}
-            className="bg-emerald-500 rounded-xl py-4 flex-row items-center justify-center shadow-md"
-            activeOpacity={0.8}
-          >
-            <Plus size={20} color="white" />
-            <Text className="text-white font-bold text-base ml-2">
-              {i18n.t('titles.newCharacter')}
-            </Text>
-          </TouchableOpacity>
+
+          {table && (
+            <TouchableOpacity
+              onPress={onNewCharacter}
+              className="bg-emerald-500 rounded-xl py-4 flex-row items-center justify-center shadow-md"
+              activeOpacity={0.8}
+            >
+              <Plus size={20} color="white" />
+              <Text className="text-white font-bold text-base ml-2">
+                {i18n.t('titles.newCharacter')}
+              </Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             onPress={onLogout}
             className="bg-white border border-red-200 rounded-xl py-3 flex-row items-center justify-center"

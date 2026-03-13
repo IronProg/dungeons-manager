@@ -1,4 +1,4 @@
-import { InternalAxiosRequestConfig } from 'axios';
+import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import {
   getAccessToken,
   removeAccessToken,
@@ -14,16 +14,28 @@ import { TokenResponse } from 'types/user';
 import refreshApi from '../refresh-api';
 
 let refreshPromise: Promise<TokenResponse> | null = null;
+let clockOffset = 0; // serverTime - localTime
+
+const BUFFER_SECONDS = 30;
 
 const isExpired = (token: string) => {
   const { exp } = jwtDecode<{ exp: number }>(token);
+  const serverNow = Math.floor((Date.now() + clockOffset) / 1000);
 
-  console.log({
-    now: new Date().toLocaleString(),
-    expired: Date.now() >= exp * 1000,
-    expiration: new Date(exp * 1000).toLocaleString(),
-  });
-  return Date.now() >= exp * 1000;
+  const expired = serverNow >= exp - BUFFER_SECONDS;
+
+  return expired;
+};
+
+export const clockSyncInterceptor = (response: AxiosResponse) => {
+  const serverDateHeader = response.headers?.['x-server-time'];
+
+  if (serverDateHeader) {
+    const serverTime = new Date(serverDateHeader).getTime();
+    const localTime = Date.now();
+    clockOffset = serverTime - localTime;
+  }
+  return response;
 };
 
 export const authRequestInterceptor = async (

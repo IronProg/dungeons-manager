@@ -1,6 +1,8 @@
+import { useCallback } from 'react';
+import { useFocusEffect } from 'expo-router';
 import { ActionCable, Cable } from '@kesha-antonov/react-native-action-cable';
+
 import { getAccessTokenNonAsync } from 'core/utils/tokens';
-import { useMemo } from 'react';
 
 export type TableChannelCallback = {
   invalidate: 'table';
@@ -10,34 +12,40 @@ export type TableChannelCallback = {
 type useTableChannelProps = {
   tableId?: number;
   callback: (params: TableChannelCallback) => void;
+  onConnect?: () => void;
+  onDisconnect?: () => void;
 };
 
-export function useTableChannel({ tableId, callback }: useTableChannelProps) {
+export function useTableChannel({
+  tableId,
+  callback,
+  onConnect,
+  onDisconnect,
+}: useTableChannelProps) {
   const accessToken = getAccessTokenNonAsync();
-  console.log({ accessToken });
 
-  const actionCable = useMemo(
-    () =>
-      ActionCable.createConsumer(
+  useFocusEffect(
+    useCallback(() => {
+      if (!accessToken || !tableId) return;
+
+      const consumer = ActionCable.createConsumer(
         `${process.env.EXPO_PUBLIC_WEBSOCKET_URL || ''}?access_token=${accessToken}`,
-      ),
-    [accessToken],
+      );
+      const cable = new Cable({});
+
+      const subscription = consumer.subscriptions.create({
+        channel: 'TableChannel',
+        id: tableId,
+      });
+      const channel = cable.setChannel('TableChannel', subscription);
+      channel
+        .on('received', callback)
+        .on('connected', () => onConnect?.())
+        .on('disconnected', () => onDisconnect?.());
+      return () => {
+        // This closes the socket and cleans up all subscriptions
+        consumer.disconnect();
+      };
+    }, [accessToken, callback, onConnect, onDisconnect, tableId]),
   );
-
-  const cable = new Cable({});
-
-  if (!tableId) return;
-
-  const channel = cable.setChannel(
-    'TableChannel',
-    actionCable.subscriptions.create({
-      channel: 'TableChannel',
-      id: tableId,
-    }),
-  );
-
-  channel
-    .on('received', callback)
-    .on('connected', () => console.log('Connected!'))
-    .on('disconnected', () => console.log('Disconnected'));
 }
