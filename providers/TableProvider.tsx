@@ -27,6 +27,8 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
     isError,
   } = useGetTable({ id: tableId });
 
+  console.log({ tableId, table, isError });
+
   const setTableId = useCallback((id: number) => {
     setTableIdState(id);
   }, []);

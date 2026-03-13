@@ -9,6 +9,7 @@ import {
   Trash2,
   Users,
   XCircle,
+  LayoutDashboard,
 } from 'lucide-react-native';
 import i18n from 'i18n';
 
@@ -34,6 +35,8 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
 }) => {
   const { setCharacterId } = useCharacter();
   const { tableId, table, clearTableId } = useTable();
+
+  console.log({ table });
   const [characterToDelete, setCharacterToDelete] = useState<Character | null>(
     null,
   );
@@ -46,6 +49,8 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
       { onSuccess: () => setCharacterToDelete(null) },
     );
   };
+
+  console.log({ table });
 
   const handleSelectCharacter = useCallback(
     (item: Character) => {
@@ -151,6 +156,18 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
               <TableIcon size={20} color="#4f46e5" />
               <Text className="text-indigo-600 font-bold text-base ml-2">
                 {i18n.t('tables.title') || 'Tables'}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {table?.isCreator && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('dm-dashboard')}
+              className="bg-indigo-100 border border-indigo-200 rounded-xl py-4 flex-row items-center justify-center shadow-sm"
+              activeOpacity={0.8}
+            >
+              <LayoutDashboard size={20} color="#4f46e5" />
+              <Text className="text-indigo-600 font-bold text-base ml-2">
+                DM Dashboard
               </Text>
             </TouchableOpacity>
           )}

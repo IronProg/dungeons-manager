@@ -50,7 +50,7 @@ export type Attribute = {
   id?: number;
   name: AttributesType;
   value: number;
-  tempValue?: number;
+  tempValue?: number | null;
   modifier: number;
 };
 

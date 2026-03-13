@@ -6,5 +6,6 @@ export type Table = {
   inviteCode?: string;
   usersCount: number;
   charactersCount: number;
+  isCreator?: boolean;
   characters: Character[];
 };

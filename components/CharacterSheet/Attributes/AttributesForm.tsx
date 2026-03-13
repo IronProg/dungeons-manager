@@ -32,15 +32,20 @@ export const AttributesForm = ({
   const onSubmit = useCallback(
     (values: AttributesFormType) => {
       const newAttributes: Attribute[] =
-        values.characterAttributesAttributes.map((attrVal) => ({
-          id: attrVal.id,
-          name: attrVal.name,
-          value: attrVal.value,
-          tempValue: attrVal.tempValue,
-          modifier: attrVal.tempValue
-            ? getModifier(attrVal.tempValue)
-            : getModifier(attrVal.value),
-        }));
+        values.characterAttributesAttributes.map((attrVal) => {
+          const hasTempValue =
+            attrVal.tempValue !== null && attrVal.tempValue !== undefined;
+
+          return {
+            id: attrVal.id,
+            name: attrVal.name as AttributesType,
+            value: attrVal.value,
+            tempValue: attrVal.tempValue,
+            modifier: hasTempValue
+              ? getModifier(attrVal.tempValue as number)
+              : getModifier(attrVal.value),
+          };
+        });
 
       updateAllAttributes(
         { characterId: characterId!, attributes: newAttributes },
@@ -109,7 +114,7 @@ const AttributeFormItem = ({
                   {...field}
                   onChangeText={field.onChange}
                   maxLength={3}
-                  value={`${field.value || ''}`}
+                  value={(field.value ?? '').toString()}
                 />
 
                 {error?.message && (
@@ -137,7 +142,7 @@ const AttributeFormItem = ({
                   {...field}
                   onChangeText={field.onChange}
                   maxLength={3}
-                  value={`${field.value || ''}`}
+                  value={(field.value ?? '').toString()}
                 />
 
                 {error?.message && (

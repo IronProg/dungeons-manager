@@ -71,6 +71,14 @@ export default function DrawerLayout() {
           headerStyle: { backgroundColor: '#94a3b8' },
         }}
       />
+
+      <Drawer.Screen
+        name="dm-dashboard"
+        options={{
+          title: 'DM Dashboard',
+          drawerItemStyle: { display: 'none' },
+        }}
+      />
     </Drawer>
   );
 }

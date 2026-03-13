@@ -1,9 +1,14 @@
 import api from 'core/api/api';
 
 import type { Table } from 'types/table';
+import type { TableCharacter } from 'types/table_character';
 
 export const tableService = {
   fetchAll: () => api.get<Table[]>('/tables').then((res) => res.data),
+  fetchCharactersResume: ({ id }: GetTableParams) =>
+    api
+      .get<TableCharacter[]>(`/tables/${id}/characters_resume`)
+      .then((res) => res.data),
   fetch: ({ id }: GetTableParams) =>
     api.get<Table>(`/tables/${id}`).then((res) => res.data),
   create: ({ ...params }: CreateTableParams) =>

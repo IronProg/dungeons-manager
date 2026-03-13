@@ -8,7 +8,13 @@ export const attributeSchema = z.object({
   id: z.coerce.number<number>(),
   name: z.enum(ATTRIBUTES),
   value: z.coerce.number<number>().int(),
-  tempValue: z.coerce.number<number>().int().optional(),
+  tempValue: z
+    .any()
+    .transform((v) =>
+      v === '' || v === null || v === undefined ? null : Number(v),
+    )
+    .pipe(z.number().int().nullable())
+    .optional(),
 });
 
 export const schema = z.object({
