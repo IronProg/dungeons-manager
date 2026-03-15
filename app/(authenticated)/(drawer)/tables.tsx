@@ -24,7 +24,9 @@ import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 import type { Table } from 'types/table';
 
 export default function TablesScreen() {
-  const [inviteCode, setInviteCode] = useState('');
+  const [inviteCode, setInviteCode] = useState<string>(
+    process.env.EXPO_PUBLIC_TABLE_CODE || '',
+  );
   const [tableToSelect, setTableToSelect] = useState<Table | null>(null);
 
   const { data: tables, isLoading: isLoadingTables } = useGetAllTables();

@@ -85,7 +85,7 @@ export const CharacterDetailsClasses = ({
       <ReusableBottomSheetModal
         onDismiss={close}
         ref={bottomSheetRef}
-        snapPoints={[700]}
+        snapPoints={['100%']}
       >
         <ClassesForm
           onClose={close}

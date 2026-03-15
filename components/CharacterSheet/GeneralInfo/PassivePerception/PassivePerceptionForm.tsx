@@ -12,6 +12,7 @@ import { CharacterGeneralInfo } from 'types/character';
 import { useCharacter } from 'contexts/CharacterContext';
 import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
+import { useGetSkillBonus } from 'hooks/useSkillBonus';
 
 type PassivePerceptionFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -23,12 +24,12 @@ export const PassivePerceptionForm = ({
   onClose,
 }: PassivePerceptionFormProps) => {
   const { characterId } = useCharacter();
+  const { getSkillBonus } = useGetSkillBonus();
   const { control, handleSubmit } = usePassivePerceptionForm({ generalInfo });
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  // const percetionBonus = getSkillBonus('perception');
-  const percetionBonus = 0;
+  const percetionBonus = getSkillBonus('perception');
 
   const onSubmit = useCallback(
     (values: PassivePerceptionFormType) => {
@@ -87,13 +88,16 @@ export const PassivePerceptionForm = ({
           <Text className="font-medium">
             {i18n.t('general.extraAttribute')}
           </Text>
-          <Controller
-            control={control}
-            name="passivePerceptionExtraAttribute"
-            render={({ field, fieldState: { error } }) => (
-              <AttributePicker {...field} error={error?.message} />
-            )}
-          />
+
+          <View className="-mt-4">
+            <Controller
+              control={control}
+              name="passivePerceptionExtraAttribute"
+              render={({ field, fieldState: { error } }) => (
+                <AttributePicker {...field} error={error?.message} />
+              )}
+            />
+          </View>
         </View>
       </View>
 

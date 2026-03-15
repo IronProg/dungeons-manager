@@ -110,14 +110,12 @@ export const EquipmentsForm = ({ equipment, onClose }: EquipmentsFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="px-4 rounded-lg bg-gray-100 overflow-hidden h-40"
-                  style={{
-                    textAlignVertical: 'top',
-                  }}
+                  className="px-4 rounded-lg bg-gray-100"
+                  style={{ textAlignVertical: 'top' }}
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   multiline
-                  numberOfLines={5}
+                  scrollEnabled={false}
                 />
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>

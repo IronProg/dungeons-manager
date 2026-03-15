@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Currency } from './Currency/Currency';
 import { Attacks } from './Attacks/Attacks';
@@ -13,10 +13,12 @@ import { ResourcesForm } from './Resources/ResourcesForm';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useCharacter } from 'contexts/CharacterContext';
 import { useGetCharacterCurrency } from 'services/currencies/currencies';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
 export const WeaponsAndTools = () => {
+  const { bottom } = useSafeAreaInsets();
   const { character } = useCharacter();
   const { data: currencies, isLoading: isLoadingCurrencies } =
     useGetCharacterCurrency();
@@ -24,6 +26,7 @@ export const WeaponsAndTools = () => {
   const [activeForm, setActiveForm] = useState<null | WeaponsAndToolsFormTypes>(
     null,
   );
+  const [snapPoints, setSnapPoints] = useState<(number | string)[]>([]);
 
   const [highlightedAttack, setHighlightedAttack] = useState<Attack>();
   const [highlightedResource, setHighlightedResource] = useState<Resource>();
@@ -31,12 +34,22 @@ export const WeaponsAndTools = () => {
 
   const { ref, open, close } = useBottomSheetRef();
 
+  const getFormTypeSnapPoints = useMemo(
+    () => ({
+      attacks: ['95%'],
+      resources: [590 + bottom],
+      features: ['95%'],
+    }),
+    [bottom],
+  );
+
   const handleOpen = useCallback(
     (formName: WeaponsAndToolsFormTypes) => {
       setActiveForm(formName);
+      setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
       open();
     },
-    [open],
+    [getFormTypeSnapPoints, bottom, open],
   );
 
   const handleClose = useCallback(() => {
@@ -102,7 +115,7 @@ export const WeaponsAndTools = () => {
 
       <ReusableBottomSheetModal
         ref={ref}
-        snapPoints={[600, '95%']}
+        snapPoints={snapPoints}
         onDismiss={handleClose}
       >
         {activeForm === 'attacks' && (

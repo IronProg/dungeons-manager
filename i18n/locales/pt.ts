@@ -76,6 +76,7 @@ export const pt = {
     level: 'Nível',
     confirm: 'Confirmar',
     cancel: 'Cancelar',
+    damageType: 'Tipo de dano',
   },
   hitPoints: {
     tempMaxHP: 'PV Máximo Temporário',

@@ -27,13 +27,25 @@ export const api = {
     inclusion: '%{attribute} não é uma opção válida',
     taken: '%{attribute} já está em uso',
     not_a_number: '%{attribute} precisa ser um número',
+    not_authorized: 'Você não tem permissão para %{method} este(a) %{model}',
+  },
+  actions: {
+    index: 'listar',
+    show: 'visualizar',
+    create: 'criar',
+    update: 'atualizar',
+    destroy: 'excluir',
+    new: 'criar',
+    edit: 'editar',
   },
   models: {
     user: {
+      _name: 'usuário',
       email: 'E-mail',
       password: 'Senha',
     },
     character: {
+      _name: 'personagem',
       name: 'Nome',
       proficiencyBonus: 'Bônus de Proficiência',
       experience: 'Experiência',
@@ -53,6 +65,7 @@ export const api = {
       speedFlying: 'Deslocamento de Voo',
     },
     attack: {
+      _name: 'ataque',
       name: 'Nome do Ataque',
       range: 'Alcance',
       properties: 'Propriedades',
@@ -67,6 +80,7 @@ export const api = {
       },
     },
     background: {
+      _name: 'antecedente',
       alignment: 'Alinhamento',
       background: 'Antecedente',
       race: 'Raça',
@@ -94,16 +108,19 @@ export const api = {
       diceAmount: 'Quantidade de Dados',
     },
     equipment: {
+      _name: 'item',
       name: 'Nome do Item',
       description: 'Descrição',
       amount: 'Quantidade',
     },
     feature: {
+      _name: 'característica',
       title: 'Título da Característica',
       origin: 'Origem',
       description: 'Descrição',
     },
     note: {
+      _name: 'anotação',
       text: 'Texto da Anotação',
     },
     proficiency: {
@@ -113,11 +130,13 @@ export const api = {
       weapons: 'Armas',
     },
     resource: {
+      _name: 'recurso',
       name: 'Nome do Recurso',
       amount: 'Quantidade Atual',
       max: 'Quantidade Máxima',
     },
     skill: {
+      _name: 'perícia',
       name: 'Nome da Perícia',
       mainAttribute: 'Atributo Base',
       customBonus: 'Bônus Customizado',
@@ -125,6 +144,7 @@ export const api = {
       expertise: 'Especialização',
     },
     savingThrow: {
+      _name: 'salvaguarda',
       mainAttribute: 'Atributo de Salvaguarda',
       customBonus: 'Bônus Customizado',
       proficiency: 'Proficiência',

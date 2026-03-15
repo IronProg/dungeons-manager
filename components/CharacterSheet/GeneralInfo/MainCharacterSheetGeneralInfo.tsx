@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
@@ -20,25 +21,36 @@ type GeneralInfoFormTypes =
   | 'passivePerception'
   | 'speed'
   | 'initiative'
-  | 'armorClass'
-  | 'experience'
-  | 'hitDice'
-  | 'hitPoint';
+  | 'armorClass';
 
 export const MainCharacterSheetGeneralInfo = () => {
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
+  const { bottom } = useSafeAreaInsets();
 
   const [activeForm, setActiveForm] = useState<null | GeneralInfoFormTypes>(
     null,
   );
+  const [snapPoints, setSnapPoints] = useState<(number | string)[]>([]);
+
   const { ref, open, close } = useBottomSheetRef();
+
+  const getFormTypeSnapPoints = useMemo(
+    () => ({
+      passivePerception: [510 + bottom],
+      speed: [510 + bottom],
+      initiative: [510 + bottom],
+      armorClass: [525 + bottom],
+    }),
+    [bottom],
+  );
 
   const handleOpen = useCallback(
     (formName: GeneralInfoFormTypes) => {
       setActiveForm(formName);
+      setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
       open();
     },
-    [open],
+    [getFormTypeSnapPoints, bottom, open],
   );
 
   return (
@@ -82,9 +94,8 @@ export const MainCharacterSheetGeneralInfo = () => {
 
       <ReusableBottomSheetModal
         ref={ref}
-        onDismiss={() => {
-          setActiveForm(null);
-        }}
+        snapPoints={snapPoints}
+        onDismiss={() => setActiveForm(null)}
       >
         {generalInfo && (
           <>

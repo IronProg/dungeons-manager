@@ -24,13 +24,25 @@ export const api = {
     inclusion: '%{attribute} is not a valid option',
     taken: '%{attribute} has already been taken',
     not_a_number: '%{attribute} must be a number',
+    not_authorized: 'You are not authorized to %{method} this %{model}',
+  },
+  actions: {
+    index: 'list',
+    show: 'view',
+    create: 'create',
+    update: 'update',
+    destroy: 'delete',
+    new: 'create',
+    edit: 'edit',
   },
   models: {
     user: {
+      _name: 'user',
       email: 'E-mail',
       password: 'Password',
     },
     character: {
+      _name: 'character',
       name: 'Name',
       proficiencyBonus: 'Proficiency Bonus',
       experience: 'Experience',
@@ -50,6 +62,7 @@ export const api = {
       speedFlying: 'Flying Speed',
     },
     attack: {
+      _name: 'attack',
       name: 'Attack Name',
       range: 'Range',
       properties: 'Properties',
@@ -64,6 +77,7 @@ export const api = {
       },
     },
     background: {
+      _name: 'background',
       alignment: 'Alignment',
       background: 'Background',
       race: 'Race',
@@ -91,16 +105,19 @@ export const api = {
       diceAmount: 'Dice Amount',
     },
     equipment: {
+      _name: 'item',
       name: 'Item Name',
       description: 'Description',
       amount: 'Amount',
     },
     feature: {
+      _name: 'feature',
       title: 'Feature Title',
       origin: 'Origin',
       description: 'Description',
     },
     note: {
+      _name: 'note',
       text: 'Note Text',
     },
     proficiency: {
@@ -110,11 +127,13 @@ export const api = {
       weapons: 'Weapons',
     },
     resource: {
+      _name: 'resource',
       name: 'Resource Name',
       amount: 'Current Amount',
       max: 'Maximum Amount',
     },
     skill: {
+      _name: 'skill',
       name: 'Skill Name',
       mainAttribute: 'Base Attribute',
       customBonus: 'Custom Bonus',
@@ -122,6 +141,7 @@ export const api = {
       expertise: 'Expertise',
     },
     savingThrow: {
+      _name: 'saving throw',
       mainAttribute: 'Saving Throw Attribute',
       customBonus: 'Custom Bonus',
       proficiency: 'Proficiency',

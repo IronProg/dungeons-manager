@@ -76,6 +76,7 @@ export const en = {
     level: 'Level',
     confirm: 'Confirm',
     cancel: 'Cancel',
+    damageType: 'Damage type',
   },
   hitPoints: {
     tempMaxHP: 'Temp Max HP',

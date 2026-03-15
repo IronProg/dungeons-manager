@@ -11,8 +11,10 @@ import { Equipment } from 'types/character';
 import { EquipmentsForm } from './Form/EquipmentsForm';
 import { EquipmentsList } from './EquipmentsList';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Equipments = () => {
+  const { bottom } = useSafeAreaInsets();
   const { characterId } = useCharacter();
   const { mutate: deleteEquipment } = useDeleteEquipmentMutation();
 
@@ -102,7 +104,11 @@ export const Equipments = () => {
         </View>
       </ReactNativeModal>
 
-      <ReusableBottomSheetModal ref={ref} onDismiss={close} snapPoints={[830]}>
+      <ReusableBottomSheetModal
+        ref={ref}
+        onDismiss={close}
+        snapPoints={[830 + bottom]}
+      >
         <EquipmentsForm onClose={close} equipment={equipmentToEdit} />
       </ReusableBottomSheetModal>
     </>
