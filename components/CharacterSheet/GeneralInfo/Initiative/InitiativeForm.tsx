@@ -74,6 +74,7 @@ export const InitiativeForm = ({
           <Text className="font-medium">
             {i18n.t('general.extraAttribute')}
           </Text>
+
           <Controller
             control={control}
             name="initiativeExtraAttribute"

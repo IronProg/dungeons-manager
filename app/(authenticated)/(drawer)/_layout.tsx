@@ -8,18 +8,24 @@ import { CharactersDrawer } from 'components/Characters/CharactersDrawer';
 import { useCharacter } from 'contexts/CharacterContext';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
+import { useTable } from 'contexts/TableContext';
 
 export default function DrawerLayout() {
   const router = useRouter();
   const { data: characters, isLoading } = useGetAllCharacters();
   const { mutate: signOut } = useSignOutMutation();
   const { characterId, setCharacterId } = useCharacter();
+  const { table } = useTable();
 
   useEffect(() => {
     if (!characterId && characters && characters.length > 0) {
       setCharacterId(characters[0].id!);
     } else if (characters?.length === 0) {
-      router.replace('/(authenticated)/(drawer)/new-character');
+      if (table) {
+        router.replace('/(authenticated)/(drawer)/new-character');
+      } else {
+        router.replace('/(authenticated)/(drawer)/tables');
+      }
     }
   });
 
@@ -57,12 +63,32 @@ export default function DrawerLayout() {
       />
 
       <Drawer.Screen
-        name="new-character"
+        name="tables"
         options={{
-          title: i18n.t('titles.newCharacter'),
-          headerStyle: { backgroundColor: '#94a3b8' },
+          title: i18n.t('tables.title') || 'Tables',
+          headerStyle: { backgroundColor: '#4f46e5' },
         }}
       />
+
+      {table && (
+        <>
+          <Drawer.Screen
+            name="new-character"
+            options={{
+              title: i18n.t('titles.newCharacter'),
+              headerStyle: { backgroundColor: '#94a3b8' },
+            }}
+          />
+
+          <Drawer.Screen
+            name="dm-dashboard"
+            options={{
+              title: 'DM Dashboard',
+              drawerItemStyle: { display: 'none' },
+            }}
+          />
+        </>
+      )}
     </Drawer>
   );
 }

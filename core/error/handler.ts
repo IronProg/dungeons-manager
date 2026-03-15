@@ -35,6 +35,12 @@ export const handleErrorMessage = (error?: ApiErrorResponse) => {
     return;
   }
 
+  if (type === 'not_authorized' && params) {
+    notAuthorizedError(params);
+
+    return;
+  }
+
   unknownError(type, params);
 };
 
@@ -94,5 +100,32 @@ const recordInvalidError = (details: ApiErrorDetail[]) => {
         }),
       }),
     });
+  });
+};
+
+const notAuthorizedError = (params: Record<string, unknown>) => {
+  const cleanParams = humps.camelizeKeys(params) as Record<string, unknown>;
+
+  const model = cleanParams.model
+    ? i18n.t(`api.models.${cleanParams.model}._name`, {
+        defaultValue: cleanParams.model,
+      })
+    : '';
+
+  const method = cleanParams.method
+    ? i18n.t(`api.actions.${cleanParams.method}`, {
+        defaultValue: cleanParams.method,
+      })
+    : '';
+
+  Toast.show({
+    type: 'error',
+    text1: i18n.t('errors.general'),
+    text2: i18n.t(`api.errors.not_authorized`, {
+      ...cleanParams,
+      model,
+      method,
+      defaultValue: i18n.t('errors.unknown'),
+    }),
   });
 };

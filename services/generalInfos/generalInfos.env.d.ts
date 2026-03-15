@@ -9,8 +9,8 @@ type UpdateGeneralInfoParams = {
   hitPointsLimitTemporary?: number;
   temporaryHitPoints?: number | null;
   armorClassBase?: number;
-  armorClassFirstAttribute?: AttributesType;
-  armorClassSecondAttribute?: AttributesType;
+  armorClassFirstAttribute?: AttributesType | null;
+  armorClassSecondAttribute?: AttributesType | null;
   speed?: number | null;
   hitDices?: number;
   hitDicesMaximum?: number;

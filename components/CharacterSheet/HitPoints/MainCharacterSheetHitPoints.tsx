@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 
 import { useCharacter } from 'contexts/CharacterContext';
@@ -13,6 +13,7 @@ import { HitDicesForm } from './HitDices/HitDicesForm';
 import { HitPoints } from './HitPoints/HitPoints';
 import { HitPointsForm } from './HitPoints/HitPointsForm';
 import { HitPointsModifierForm } from './HitPoints/HitPointsModifierForm';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type HitPointsFormTypes =
   | 'hitPoints'
@@ -23,16 +24,32 @@ type HitPointsFormTypes =
 export const MainCharacterSheetHitPoints = () => {
   const { character } = useCharacter();
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
+  const { bottom } = useSafeAreaInsets();
 
   const [activeForm, setActiveForm] = useState<null | HitPointsFormTypes>(null);
+  const [snapPoints, setSnapPoints] = useState<(number | string)[]>([
+    300,
+    '65%',
+  ]);
   const { ref, open, close } = useBottomSheetRef();
+
+  const getFormTypeSnapPoints = useMemo(
+    () => ({
+      hitPoints: [585 + bottom],
+      hitPointModifier: [510 + bottom],
+      hitDices: [],
+      experience: [495 + bottom],
+    }),
+    [bottom],
+  );
 
   const handleOpen = useCallback(
     (formName: HitPointsFormTypes) => {
       setActiveForm(formName);
+      setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
       open();
     },
-    [open],
+    [getFormTypeSnapPoints, bottom, open],
   );
 
   return (
@@ -60,7 +77,7 @@ export const MainCharacterSheetHitPoints = () => {
 
         <ReusableBottomSheetModal
           ref={ref}
-          snapPoints={[300, 650]}
+          snapPoints={snapPoints}
           onDismiss={() => {
             setActiveForm(null);
           }}

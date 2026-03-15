@@ -76,6 +76,7 @@ export const en = {
     level: 'Level',
     confirm: 'Confirm',
     cancel: 'Cancel',
+    damageType: 'Damage type',
   },
   hitPoints: {
     tempMaxHP: 'Temp Max HP',
@@ -215,6 +216,20 @@ export const en = {
     min: 'Must have at least %{min} characters',
     invalidEmail: 'Not a valid email',
     passwordsDontMatch: "Passwords don't match",
+  },
+  tables: {
+    table: 'Table',
+    title: 'Tables',
+    joinTable: 'Join a table',
+    myTables: 'My tables',
+    inviteCode: 'Invite code',
+    inviteCodePlaceholder: 'Enter invite code',
+    join: 'Join',
+    joining: 'Joining',
+    joined: 'Joined the table successfully!',
+    noTables: 'No tables found',
+    selectTable: 'Enter this table?',
+    unselectTable: 'Leave Current Table',
   },
   api,
 };

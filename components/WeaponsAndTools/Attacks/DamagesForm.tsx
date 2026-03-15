@@ -40,7 +40,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
   }, [fields, remove, update]);
 
   return (
-    <View className="flex flex-col items-stretch">
+    <View className="flex flex-col items-stretch gap-8">
       <View className="flex flex-row justify-between">
         <TouchableOpacity
           onPress={handleRemove}
@@ -63,41 +63,81 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
         if (field._destroy) return null;
 
         return (
-          <View key={field.fieldId} className="flex flex-row gap-2">
-            <View className="grow flex-1">
-              <Text>{i18n.t('general.dice')}</Text>
+          <View
+            key={field.fieldId}
+            className="flex flex-col gap-0 border-b border-gray-200 mb-2"
+          >
+            <View className="flex flex-row gap-2">
+              <View className="grow flex-1">
+                <Text>{i18n.t('general.dice')}</Text>
 
-              <View className="flex flex-row items-center gap-1">
+                <View className="flex flex-row items-center gap-1">
+                  <Controller
+                    control={control}
+                    name={`damagesAttributes.${index}.diceAmount`}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <BottomSheetTextInput
+                          className="rounded-lg bg-gray-100 h-15 text-base grow"
+                          onChangeText={field.onChange}
+                          keyboardType="numeric"
+                          value={`${field.value || ''}`}
+                        />
+
+                        <Text className="text-red-400 text-sm">
+                          {error?.message}
+                        </Text>
+                      </>
+                    )}
+                  />
+
+                  <Text>d</Text>
+
+                  <Controller
+                    control={control}
+                    name={`damagesAttributes.${index}.diceSize`}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <DamageDicePicker
+                          onChange={field.onChange}
+                          value={field.value}
+                          error={error?.message}
+                        />
+
+                        <Text className="text-red-400 text-sm">
+                          {error?.message}
+                        </Text>
+                      </>
+                    )}
+                  />
+                </View>
+              </View>
+
+              <View className="w-24">
+                <Text>Atributo</Text>
+
                 <Controller
                   control={control}
-                  name={`damagesAttributes.${index}.diceAmount`}
+                  name={`damagesAttributes.${index}.mainAttribute`}
+                  render={({ field, fieldState: { error } }) => (
+                    <AttributePicker {...field} error={error?.message} />
+                  )}
+                />
+              </View>
+
+              <View className="w-16">
+                <Text>{i18n.t('general.mod')}</Text>
+
+                <Controller
+                  control={control}
+                  name={`damagesAttributes.${index}.customBonus`}
                   render={({ field, fieldState: { error } }) => (
                     <>
                       <BottomSheetTextInput
-                        className="rounded-lg bg-gray-100 h-15 text-base grow"
+                        className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        keyboardType="numeric"
                         value={`${field.value || ''}`}
-                      />
-
-                      <Text className="text-red-400 text-sm">
-                        {error?.message}
-                      </Text>
-                    </>
-                  )}
-                />
-
-                <Text>d</Text>
-
-                <Controller
-                  control={control}
-                  name={`damagesAttributes.${index}.diceSize`}
-                  render={({ field, fieldState: { error } }) => (
-                    <>
-                      <DamageDicePicker
-                        onChange={field.onChange}
-                        value={field.value}
-                        error={error?.message}
+                        keyboardType="numeric"
                       />
 
                       <Text className="text-red-400 text-sm">
@@ -109,61 +149,28 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               </View>
             </View>
 
-            <View className="w-24">
-              <Text>Atributo</Text>
-
-              <Controller
-                control={control}
-                name={`damagesAttributes.${index}.mainAttribute`}
-                render={({ field, fieldState: { error } }) => (
-                  <AttributePicker {...field} error={error?.message} />
-                )}
-              />
-            </View>
-
-            <View className="w-16">
-              <Text>{i18n.t('general.mod')}</Text>
-
-              <Controller
-                control={control}
-                name={`damagesAttributes.${index}.customBonus`}
-                render={({ field, fieldState: { error } }) => (
-                  <>
-                    <BottomSheetTextInput
-                      className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
-                      onChangeText={field.onChange}
-                      value={`${field.value || ''}`}
-                      keyboardType="numeric"
-                    />
-
-                    <Text className="text-red-400 text-sm">
-                      {error?.message}
-                    </Text>
-                  </>
-                )}
-              />
-            </View>
-
             <View className="flex-1">
-              <Text>{i18n.t('general.type')}</Text>
+              <View className="flex-1">
+                <Text>{i18n.t('general.damageType')}</Text>
 
-              <Controller
-                control={control}
-                name={`damagesAttributes.${index}.kind`}
-                render={({ field, fieldState: { error } }) => (
-                  <>
-                    <BottomSheetTextInput
-                      className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
-                      onChangeText={field.onChange}
-                      value={`${field.value || ''}`}
-                    />
+                <Controller
+                  control={control}
+                  name={`damagesAttributes.${index}.kind`}
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <BottomSheetTextInput
+                        className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
+                        onChangeText={field.onChange}
+                        value={`${field.value || ''}`}
+                      />
 
-                    <Text className="text-red-400 text-sm">
-                      {error?.message}
-                    </Text>
-                  </>
-                )}
-              />
+                      <Text className="text-red-400 text-sm">
+                        {error?.message}
+                      </Text>
+                    </>
+                  )}
+                />
+              </View>
             </View>
           </View>
         );

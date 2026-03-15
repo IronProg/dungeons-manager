@@ -4,6 +4,7 @@ type GetCharacterParams = {
 
 type CreateCharacterParams = {
   name: string;
+  tableId?: number;
 };
 
 type UpdateCharacterParams = {

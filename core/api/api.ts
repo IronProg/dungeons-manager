@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {
   authRequestInterceptor,
+  clockSyncInterceptor,
   refreshTokenInterceptor,
 } from './interceptors/auth.interceptors';
 import {
@@ -35,7 +36,7 @@ api.interceptors.request.use(camelizeRequestInterceptor);
 api.interceptors.request.use(refreshTokenInterceptor);
 
 api.interceptors.request.use(authRequestInterceptor);
-
+api.interceptors.response.use(clockSyncInterceptor);
 api.interceptors.response.use(decamelizeResponseInterceptor);
 
 export default api;

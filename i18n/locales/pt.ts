@@ -76,6 +76,7 @@ export const pt = {
     level: 'Nível',
     confirm: 'Confirmar',
     cancel: 'Cancelar',
+    damageType: 'Tipo de dano',
   },
   hitPoints: {
     tempMaxHP: 'PV Máximo Temporário',
@@ -215,6 +216,20 @@ export const pt = {
     min: 'Deve possuir ao menos %{min} caracteres',
     invalidEmail: 'Não é um email válido',
     passwordsDontMatch: 'As senhas não coincidem',
+  },
+  tables: {
+    table: 'Mesa',
+    title: 'Mesas',
+    joinTable: 'Entrar em uma mesa',
+    myTables: 'Minhas mesas',
+    inviteCode: 'Código de convite',
+    inviteCodePlaceholder: 'Digite o código de convite',
+    join: 'Entrar',
+    joining: 'Entrando',
+    joined: 'Entrou na mesa com sucesso!',
+    noTables: 'Nenhuma mesa encontrada',
+    selectTable: 'Entrar na mesa?',
+    unselectTable: 'Sair da Mesa Atual',
   },
   api,
 };

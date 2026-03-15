@@ -11,7 +11,7 @@ const TopTabs = withLayoutContext(createMaterialTopTabNavigator().Navigator);
 export default function TabLayout() {
   const navigation = useNavigation();
 
-  const { character, initialLoading } = useCharacter();
+  const { character, isLoading, initialLoading } = useCharacter();
 
   useEffect(() => {
     if (character) {
@@ -21,7 +21,7 @@ export default function TabLayout() {
     }
   }, [character, navigation]);
 
-  if (initialLoading) {
+  if (initialLoading || isLoading) {
     return (
       <View className="flex-1 flex flex-col justify-center items-center">
         <Text className="mb-4 text-2xl font-medium">

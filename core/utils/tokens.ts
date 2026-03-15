@@ -1,10 +1,19 @@
-import { getItemAsync, setItemAsync, deleteItemAsync } from 'expo-secure-store';
+import {
+  getItemAsync,
+  setItemAsync,
+  deleteItemAsync,
+  getItem,
+} from 'expo-secure-store';
 
 const access_token = 'access_token';
 const refresh_token = 'refresh_token';
 
 export const setAccessToken = (token: string): Promise<void> => {
   return setItemAsync(access_token, token);
+};
+
+export const getAccessTokenNonAsync = (): string | null => {
+  return getItem(access_token);
 };
 
 export const getAccessToken = (): Promise<string | null> => {

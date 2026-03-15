@@ -25,6 +25,10 @@ export const PassivePerception = ({
     passivePerception += modifiers[generalInfo.passivePerceptionExtraAttribute];
   }
 
+  if (generalInfo.passivePerceptionCustomBonus) {
+    passivePerception += generalInfo.passivePerceptionCustomBonus;
+  }
+
   return (
     <TouchableOpacity
       onLongPress={onLongPress}
