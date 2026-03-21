@@ -1,6 +1,17 @@
 import { Table } from './table';
 
 export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
+export type SpellSlotKindType = 'normal' | 'pact';
+export type SpellSlotLevelType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type SpellSchoolType =
+  | 'abjuration'
+  | 'conjuration'
+  | 'divination'
+  | 'enchantment'
+  | 'evocation'
+  | 'illusion'
+  | 'necromancy'
+  | 'transmutation';
 
 export type Character = {
   id?: number;
@@ -158,4 +169,32 @@ export type Background = {
   ideals: string;
   personalityTraits: string;
   race: string;
+};
+
+export type Spell = {
+  id?: number;
+  name: string;
+  level: number;
+  school: string;
+  castingTime: string;
+  components: string;
+  concentration: boolean;
+  description: string;
+  duration: string;
+  higherLevelDescription: string;
+  innateAmount: number;
+  material: boolean;
+  prepared: boolean;
+  range: string;
+  somatic: boolean;
+  target: string;
+  verbal: boolean;
+};
+
+export type SpellSlot = {
+  id?: number;
+  level: number;
+  kind: SpellSlotKindType;
+  total: number;
+  amount: number;
 };

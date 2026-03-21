@@ -48,16 +48,20 @@ export default function TabLayout() {
       }}
     >
       <TopTabs.Screen
-        name="equipments" // Arquivo: app/(drawer)/(tabs)/index.tsx
+        name="equipments"
         options={{ tabBarLabel: i18n.t('tabs.equipments') }}
       />
       <TopTabs.Screen
-        name="index" // Arquivo: app/(drawer)/(tabs)/index.tsx
+        name="index"
         options={{ tabBarLabel: i18n.t('tabs.sheet') }}
       />
       <TopTabs.Screen
-        name="weapons" // Arquivo: app/(drawer)/(tabs)/weapons.tsx
+        name="weapons"
         options={{ tabBarLabel: i18n.t('tabs.details') }}
+      />
+      <TopTabs.Screen
+        name="spells"
+        options={{ tabBarLabel: i18n.t('tabs.spells') }}
       />
     </TopTabs>
   );
