@@ -1,24 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Spell } from 'types/character';
+import { AxiosError } from 'axios';
+
 import { spellService } from './spell.service';
 import { useCharacter } from 'contexts/CharacterContext';
+
 import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
+
+import { Spell, SpellSlotLevelType } from 'types/character';
 
 export const getCharacterSpellsKey = ({
   characterId,
   level,
 }: {
   characterId: number;
-  level: number;
-}): ['characters', number, 'spells', number] => [
+  level: SpellSlotLevelType;
+}): ['characters', number, 'spells', SpellSlotLevelType] => [
   'characters',
   characterId,
   'spells',
   level,
 ];
 
-export const useGetCharacterSpells = (level: number) => {
+export const useGetCharacterSpells = (level: SpellSlotLevelType) => {
   const { character, characterId } = useCharacter();
 
   return useQuery<
@@ -34,15 +37,16 @@ export const useGetCharacterSpells = (level: number) => {
   });
 };
 
-export const useUpdateSpellMutation = (level: number) => {
+export const useUpdateSpellMutation = () => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
   return useMutation<Spell, AxiosError<ApiErrorResponse>, Partial<Spell>>({
-    mutationFn: (params: Partial<Spell>) => spellService.update(params),
+    mutationFn: (params: Partial<Spell>) =>
+      spellService.update(characterId!, params),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: getCharacterSpellsKey({ characterId: characterId!, level }),
+        queryKey: ['characters', characterId, 'spells'],
       });
     },
     onError: ({ response }) => {
@@ -51,12 +55,30 @@ export const useUpdateSpellMutation = (level: number) => {
   });
 };
 
-export const useDeleteSpellMutation = (level: number) => {
+export const useCreateSpellMutation = (level: SpellSlotLevelType) => {
+  const queryClient = useQueryClient();
+  const { characterId } = useCharacter();
+
+  return useMutation<Spell, AxiosError<ApiErrorResponse>, Partial<Spell>>({
+    mutationFn: (params: Partial<Spell>) =>
+      spellService.create(characterId!, { ...params, level }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['characters', characterId, 'spells'],
+      });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
+  });
+};
+
+export const useDeleteSpellMutation = (level: SpellSlotLevelType) => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
   return useMutation<null, AxiosError<ApiErrorResponse>, number>({
-    mutationFn: (id: number) => spellService.delete(id),
+    mutationFn: (id: number) => spellService.delete(characterId!, id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: getCharacterSpellsKey({ characterId: characterId!, level }),

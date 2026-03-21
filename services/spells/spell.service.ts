@@ -1,4 +1,5 @@
 import api from 'core/api/api';
+
 import { Spell } from 'types/character';
 
 export const spellService = {
@@ -6,15 +7,17 @@ export const spellService = {
     api
       .get<Spell[]>(`/characters/${characterId}/spells?level=${level}`)
       .then((res) => res.data),
-
   create: (characterId: number, params: Partial<Spell>) =>
     api
       .post<Spell>(`/characters/${characterId}/spells`, params)
       .then((res) => res.data),
+  update: (characterId: number, params: Partial<Spell>) =>
+    api
+      .put<Spell>(`/characters/${characterId}/spells/${params.id}`, params)
+      .then((res) => res.data),
 
-  update: (params: Partial<Spell>) =>
-    api.put<Spell>(`/spells/${params.id}`, params).then((res) => res.data),
-
-  delete: (id: number) =>
-    api.delete<null>(`/spells/${id}`).then((res) => res.data),
+  delete: (characterId: number, id: number) =>
+    api
+      .delete<null>(`/characters/${characterId}/spells/${id}`)
+      .then((res) => res.data),
 };

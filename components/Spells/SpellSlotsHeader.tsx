@@ -9,8 +9,9 @@ import {
   useUpdateSpellSlotMutation,
 } from 'services/spellSlots/spellSlot';
 
-import { SpellSlotLevelType } from 'types/character';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+
+import { SpellSlot, SpellSlotLevelType } from 'types/character';
 
 interface SpellSlotsHeaderProps {
   level: SpellSlotLevelType;
@@ -24,20 +25,25 @@ export const SpellSlotsHeader = ({ level }: SpellSlotsHeaderProps) => {
   const { mutate: updateSlot } = useUpdateSpellSlotMutation(level);
   const { mutate: resetAllSpellSlots } = useResetAllSpellSlotsMutation();
 
+  const pactSlot = useMemo(
+    () => slots?.find((slot) => slot.kind === 'pact'),
+    [slots],
+  );
+
   const currentSlot = useMemo(
     () => slots?.find((slot) => slot.kind === 'normal' && slot.level === level),
     [slots, level],
   );
 
-  const handleDecreaseSlot = () => {
-    if (currentSlot && currentSlot.amount > 0) {
-      updateSlot({ id: currentSlot.id, amount: currentSlot.amount - 1 });
+  const handleDecreaseSlot = (slot: SpellSlot) => {
+    if (slot && slot.amount > 0) {
+      updateSlot({ id: slot.id, amount: slot.amount - 1 });
     }
   };
 
-  const handleIncreaseSlot = () => {
-    if (currentSlot && currentSlot.amount < currentSlot.total) {
-      updateSlot({ id: currentSlot.id, amount: currentSlot.amount + 1 });
+  const handleIncreaseSlot = (slot: SpellSlot) => {
+    if (slot && slot.amount < slot.total) {
+      updateSlot({ id: slot.id, amount: slot.amount + 1 });
     }
   };
 
@@ -50,52 +56,90 @@ export const SpellSlotsHeader = ({ level }: SpellSlotsHeaderProps) => {
   };
 
   return (
-    <View className="bg-white border-b border-gray-200 px-4 py-3 flex flex-row items-center justify-between z-10 shadow-sm">
-      <Text className="text-lg font-bold">{i18n.t('spellSlots.slots')}</Text>
-
-      {isLoadingSlots ? (
-        <ActivityIndicator size="small" />
-      ) : currentSlot ? (
-        <View className="flex flex-row items-center gap-3">
-          <TouchableOpacity
-            onPress={handleDecreaseSlot}
-            className="bg-gray-200 p-2 rounded-full"
-          >
-            <Minus size={16} color="black" />
-          </TouchableOpacity>
-
+    <View className="z-10 shadow-sm">
+      {pactSlot && (
+        <View className="bg-white border-b border-gray-200 px-4 py-3 flex flex-row items-center justify-between">
           <Text className="text-lg font-bold">
-            {currentSlot.amount} / {currentSlot.total}
+            {i18n.t('spellSlots.pactMagic')}{' '}
+            {`${i18n.t('spellSlots.level')} ${pactSlot.level}`}
           </Text>
 
-          <TouchableOpacity
-            onPress={handleIncreaseSlot}
-            className="bg-gray-200 p-2 rounded-full"
-          >
-            <Plus size={16} color="black" />
-          </TouchableOpacity>
+          <View className="flex flex-row items-center gap-3">
+            <TouchableOpacity
+              onPress={() => handleDecreaseSlot(pactSlot)}
+              className="bg-gray-200 p-2 rounded-full"
+            >
+              <Minus size={16} color="black" />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => setResetting(true)}
-            className="bg-blue-100 p-2 rounded-full ml-2"
-          >
-            <RotateCcw size={16} color="#3b82f6" />
-          </TouchableOpacity>
+            <Text className="text-lg font-bold">
+              {pactSlot.amount} / {pactSlot.total}
+            </Text>
+
+            <TouchableOpacity
+              onPress={() => handleIncreaseSlot(pactSlot)}
+              className="bg-gray-200 p-2 rounded-full"
+            >
+              <Plus size={16} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setResetting(true)}
+              className="bg-blue-100 p-2 rounded-full ml-2"
+            >
+              <RotateCcw size={16} color="#3b82f6" />
+            </TouchableOpacity>
+          </View>
         </View>
-      ) : (
-        <Text className="text-gray-500 italic">
-          {i18n.t('spellSlots.noSlotsSetup')}
-        </Text>
       )}
 
-      <ConfirmationModal
-        isVisible={!!resetting}
-        onClose={() => setResetting(false)}
-        onConfirm={handleResetSlot}
-        title={i18n.t('spellSlots.reset')}
-        subTitle={i18n.t('spellSlots.resetDescription')}
-        buttonClassName="bg-indigo-500"
-      />
+      <View className="bg-white border-b border-gray-200 px-4 py-3 flex flex-row items-center justify-between">
+        <Text className="text-lg font-bold">{i18n.t('spellSlots.slots')}</Text>
+
+        {isLoadingSlots ? (
+          <ActivityIndicator size="small" />
+        ) : currentSlot ? (
+          <View className="flex flex-row items-center gap-3">
+            <TouchableOpacity
+              onPress={() => handleDecreaseSlot(currentSlot)}
+              className="bg-gray-200 p-2 rounded-full"
+            >
+              <Minus size={16} color="black" />
+            </TouchableOpacity>
+
+            <Text className="text-lg font-bold">
+              {currentSlot.amount} / {currentSlot.total}
+            </Text>
+
+            <TouchableOpacity
+              onPress={() => handleIncreaseSlot(currentSlot)}
+              className="bg-gray-200 p-2 rounded-full"
+            >
+              <Plus size={16} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setResetting(true)}
+              className="bg-blue-100 p-2 rounded-full ml-2"
+            >
+              <RotateCcw size={16} color="#3b82f6" />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Text className="text-gray-500 italic">
+            {i18n.t('spellSlots.noSlotsSetup')}
+          </Text>
+        )}
+
+        <ConfirmationModal
+          isVisible={!!resetting}
+          onClose={() => setResetting(false)}
+          onConfirm={handleResetSlot}
+          title={i18n.t('spellSlots.reset')}
+          subTitle={i18n.t('spellSlots.resetDescription')}
+          buttonClassName="bg-indigo-500"
+        />
+      </View>
     </View>
   );
 };

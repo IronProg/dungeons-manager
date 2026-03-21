@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import i18n from 'i18n';
 
 import { useCharacter } from 'contexts/CharacterContext';
-import { useGetCharacterSpells } from 'services/spells/spell';
+import { useGetCharacterSpells } from 'services/spells/spell.api';
 
 import { SpellCard } from './SpellCard';
 import { SpellLevelNavigator } from './SpellLevelNavigator';
 import { SpellSlotsHeader } from './SpellSlotsHeader';
+import { SpellsHeader } from './SpellsHeader';
 
 import { SpellSlotLevelType } from 'types/character';
-import { FlashList } from '@shopify/flash-list';
 
 export const Spells = () => {
   const [level, setLevel] = useState<SpellSlotLevelType>(0);
@@ -18,6 +19,8 @@ export const Spells = () => {
 
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
+
+  const spellHeader = useMemo(() => <SpellsHeader level={level} />, [level]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,6 +30,7 @@ export const Spells = () => {
         contentContainerStyle={{ padding: 16, paddingBottom: 96 }}
         data={spells}
         renderItem={({ item }) => <SpellCard spell={item} />}
+        ListHeaderComponent={spellHeader}
         ListEmptyComponent={
           isLoadingSpells ? (
             <ActivityIndicator className="mt-4" />

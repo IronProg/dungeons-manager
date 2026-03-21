@@ -1,0 +1,38 @@
+import { Text, TouchableOpacity, View } from 'react-native';
+import { FilePlus } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
+import i18n from 'i18n';
+
+import { SpellSlotLevelType } from 'types/character';
+
+interface SpellsHeaderProps {
+  level: SpellSlotLevelType;
+}
+
+export const SpellsHeader = ({ level }: SpellsHeaderProps) => {
+  const router = useRouter();
+
+  const handleCreateSpell = () => {
+    router.push({
+      pathname: '/spell-form',
+      params: { level },
+    });
+  };
+
+  return (
+    <View className="px-4 py-3 flex flex-row items-center justify-between z-10">
+      <Text className="text-lg font-bold">
+        {level === 0
+          ? i18n.t('spellSlots.cantrips')
+          : `${i18n.t('spellSlots.level')} ${level}`}
+      </Text>
+      <TouchableOpacity
+        hitSlop={20}
+        onPress={handleCreateSpell}
+        className="bg-indigo-100 p-1.5 rounded-full"
+      >
+        <FilePlus size={18} color="#4f46e5" />
+      </TouchableOpacity>
+    </View>
+  );
+};

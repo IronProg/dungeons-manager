@@ -174,16 +174,17 @@ export type Background = {
 export type Spell = {
   id?: number;
   name: string;
-  level: number;
-  school: string;
+  level: SpellSlotLevelType;
+  school: SpellSchoolType;
   castingTime: string;
   components: string;
   concentration: boolean;
   description: string;
   duration: string;
   higherLevelDescription: string;
-  innateAmount: number;
+  innateTotal: number;
   material: boolean;
+  materialDescription?: string;
   prepared: boolean;
   range: string;
   somatic: boolean;
