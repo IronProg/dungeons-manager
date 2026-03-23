@@ -19,6 +19,7 @@ export const SkillForm = ({
   skill,
   onClose,
 }: AttributesFormProps) => {
+  console.log({ skill });
   const { control, handleSubmit, watch } = useSkillForm({ skill });
 
   const proficiency = watch('proficiency');

@@ -14,6 +14,7 @@ import { SkillForm } from './Skill/SkillForm';
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 
 import type { SavingThrow, Skill } from 'types/character';
+import { useDiceRoll } from 'contexts/DiceRollContext';
 
 export const MainCharacterSheetSkills = () => {
   const { characterId } = useCharacter();
@@ -116,6 +117,7 @@ const SavingThrowCard = ({
   savingThrow,
   onLongPress,
 }: SavingThrowCardProps) => {
+  const { roll } = useDiceRoll();
   const { modifiers, proficiencyBonus } = useCharacter();
   let modifier =
     (modifiers?.[savingThrow.mainAttribute] || 0) +
@@ -129,9 +131,14 @@ const SavingThrowCard = ({
     modifier += proficiencyBonus;
   }
 
+  const handleRoll = useCallback(() => {
+    roll([modifier], { diceSize: 20 });
+  }, [modifier, roll]);
+
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
+        onPress={handleRoll}
         onLongPress={onLongPress}
         className={`flex flex-row items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${savingThrow?.proficiency && 'bg-green-200'}`}
       >
@@ -156,13 +163,19 @@ const SavingThrowCard = ({
 type SkillCardProps = { skill: Skill; onLongPress: () => void };
 
 const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
+  const { roll } = useDiceRoll();
   const { getSkillBonus } = useGetSkillBonus();
 
   const modifier = getSkillBonus(skill.name);
 
+  const handleRoll = useCallback(() => {
+    roll([modifier], { diceSize: 20 });
+  }, [modifier, roll]);
+
   return (
     <View className="flex items-center justify-center w-[50%] p-2 py-1.5">
       <TouchableOpacity
+        onPress={handleRoll}
         onLongPress={onLongPress}
         className={`flex-row flex items-center gap-2 rounded-lg px-3 py-2.5 border w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
       >

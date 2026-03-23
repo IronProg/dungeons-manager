@@ -1,62 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { FileTextIcon } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
+import { CircleQuestionMark, FileTextIcon } from 'lucide-react-native';
 import i18n from 'i18n';
 
 import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
 import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
 import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPoints';
 import { MainCharacterSheetSkills } from './Skills/MainCharacterSheetSkills';
-import { useRouter } from 'expo-router';
+import { HintsModal } from './HintsModal';
 
 export const MainCharacterSheet = () => {
+  const [hintsOpen, setHintsOpen] = useState(false);
   const router = useRouter();
 
   return (
-    <ScrollView contentContainerClassName="px-2">
-      <View className="flex flex-row justify-between items-center mb-2">
-        <Text className="text-black text-2xl font-bold">
-          {i18n.t('titles.characterSheet')}
-        </Text>
+    <>
+      <ScrollView contentContainerClassName="px-2">
+        <View className="flex flex-row justify-between items-center mb-2">
+          <Text className="text-black text-2xl font-bold">
+            {i18n.t('titles.characterSheet')}
+          </Text>
 
-        <TouchableOpacity
-          hitSlop={20}
-          onPress={() => router.push('/character-details')}
-          className="bg-white rounded-full p-2"
-        >
-          <FileTextIcon size={24} />
-        </TouchableOpacity>
-      </View>
+          <View className="flex flex-row gap-2">
+            <TouchableOpacity
+              hitSlop={20}
+              onPress={() => setHintsOpen(true)}
+              className="bg-white rounded-full p-2"
+            >
+              <CircleQuestionMark size={24} />
+            </TouchableOpacity>
 
-      <View className="bg-white rounded-lg flex-col items-stretch shadow-sm">
-        <Text className="text-gray-900 text-lg font-semibold text-center">
-          {i18n.t('titles.general')}
-        </Text>
+            <TouchableOpacity
+              hitSlop={20}
+              onPress={() => router.push('/character-details')}
+              className="bg-white rounded-full p-2"
+            >
+              <FileTextIcon size={24} />
+            </TouchableOpacity>
+          </View>
+        </View>
 
-        <MainCharacterSheetHitPoints />
+        <View className="bg-white rounded-lg flex-col items-stretch shadow-sm">
+          <Text className="text-gray-900 text-lg font-semibold text-center">
+            {i18n.t('titles.general')}
+          </Text>
 
-        <View className={styles.separator} />
+          <MainCharacterSheetHitPoints />
 
-        <MainCharacterSheetGeneralInfo />
-      </View>
+          <View className={styles.separator} />
 
-      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
-        <Text className="text-gray-900 text-lg font-semibold text-center">
-          {i18n.t('titles.attributes')}
-        </Text>
+          <MainCharacterSheetGeneralInfo />
+        </View>
 
-        <MainCharacterSheetAttributes />
-      </View>
+        <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
+          <Text className="text-gray-900 text-lg font-semibold text-center">
+            {i18n.t('titles.attributes')}
+          </Text>
 
-      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
-        <Text className="text-gray-900 text-lg font-semibold text-center">
-          {i18n.t('titles.savingThrowsAndSkills')}
-        </Text>
+          <MainCharacterSheetAttributes />
+        </View>
 
-        <MainCharacterSheetSkills />
-      </View>
-    </ScrollView>
+        <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
+          <Text className="text-gray-900 text-lg font-semibold text-center">
+            {i18n.t('titles.savingThrowsAndSkills')}
+          </Text>
+
+          <MainCharacterSheetSkills />
+        </View>
+      </ScrollView>
+
+      <HintsModal visible={hintsOpen} onClose={() => setHintsOpen(false)} />
+    </>
   );
 };
 
