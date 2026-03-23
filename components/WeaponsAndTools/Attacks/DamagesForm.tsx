@@ -114,7 +114,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               </View>
 
               <View className="w-24">
-                <Text>Atributo</Text>
+                <Text>{i18n.t('general.attribute')}</Text>
 
                 <Controller
                   control={control}

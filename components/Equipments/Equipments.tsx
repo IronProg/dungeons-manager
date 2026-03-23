@@ -1,17 +1,20 @@
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
-import i18n from 'i18n';
-import { Plus } from 'lucide-react-native';
 import { useCallback, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import ReactNativeModal from 'react-native-modal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Plus } from 'lucide-react-native';
+import i18n from 'i18n';
+
+import { useCharacter } from 'contexts/CharacterContext';
+import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useDeleteEquipmentMutation } from 'services/equipments/equipment.api';
-import { Equipment } from 'types/character';
+
+import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { EquipmentsForm } from './Form/EquipmentsForm';
 import { EquipmentsList } from './EquipmentsList';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BaseModal } from 'components/ui/Modals/BaseModal';
+
+import { Equipment } from 'types/character';
 
 export const Equipments = () => {
   const { bottom } = useSafeAreaInsets();
@@ -81,13 +84,9 @@ export const Equipments = () => {
         onConfirm={handleDelete}
       />
 
-      <ReactNativeModal
-        isVisible={!!detailedEquipment}
-        onBackdropPress={() =>
-          requestAnimationFrame(() => {
-            setDetailedEquipment(undefined);
-          })
-        }
+      <BaseModal
+        visible={!!detailedEquipment}
+        onClose={() => setDetailedEquipment(undefined)}
       >
         <View className="flex flex-col rounded-lg bg-white gap-4 items-stretch p-4">
           <Text className="text-2xl font-medium text-center">
@@ -102,7 +101,7 @@ export const Equipments = () => {
             <Text>{detailedEquipment?.description}</Text>
           </View>
         </View>
-      </ReactNativeModal>
+      </BaseModal>
 
       <ReusableBottomSheetModal
         ref={ref}

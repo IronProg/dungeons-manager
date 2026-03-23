@@ -133,7 +133,7 @@ export type Damage = {
   diceSize?: number;
   mainAttribute?: AttributesType;
   kind?: string;
-  customBonus?: string;
+  customBonus?: number;
 };
 
 export type Resource = {

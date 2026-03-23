@@ -1,8 +1,7 @@
 import { Text, View } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 
 import { DAMAGE_DICES } from 'core/enums/damageDices';
-import { cn } from 'core/helpers/cn';
 
 type DamageDicePickerProps = {
   value?: number | null;
@@ -17,33 +16,22 @@ export const DamageDicePicker = ({
 }: DamageDicePickerProps) => {
   return (
     <>
-      <RNPickerSelect
-        onValueChange={onChange}
-        placeholder={{}}
-        value={value}
-        useNativeAndroidPickerStyle={false}
-        style={{
-          viewContainer: {
-            backgroundColor: '#f3f3f3ff',
-            width: 120,
-            borderRadius: 20,
-            overflow: 'hidden',
-          },
-        }}
-        items={DAMAGE_DICES.map((dice) => ({ label: `d${dice}`, value: dice }))}
+      <View
+        className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-12"
+        style={{ width: 100 }}
       >
-        <View
-          className={cn(
-            'rounded-lg bg-gray-100 w-20 px-4 h-15 py-2.5 flex flex-row',
-            'justify-between items-center gap-2 text-center',
-          )}
-          style={{ width: 50 }}
+        <Picker
+          style={{ width: '100%', height: 50 }}
+          selectedValue={value}
+          onValueChange={(itemValue) => itemValue && onChange(itemValue)}
         >
-          <Text className="text-xl flex-1" numberOfLines={1}>
-            {value}
-          </Text>
-        </View>
-      </RNPickerSelect>
+          <Picker.Item label={'--'} value={null} />
+
+          {DAMAGE_DICES.map((dice) => (
+            <Picker.Item key={dice} label={`d${dice}`} value={dice} />
+          ))}
+        </Picker>
+      </View>
 
       <Text className="text-red-400 text-sm">{error}</Text>
     </>

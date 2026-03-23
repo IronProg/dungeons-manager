@@ -1,8 +1,8 @@
-import { CASTING_KINDS } from 'core/enums/castingKinds';
+import { Picker } from '@react-native-picker/picker';
 import i18n from 'i18n';
-import { ChevronDown } from 'lucide-react-native';
 import { Text, View } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+
+import { CASTING_KINDS } from 'core/enums/castingKinds';
 
 type CastingKindPickerProps = {
   value?: string | null;
@@ -17,39 +17,25 @@ export const CastingKindPicker = ({
 }: CastingKindPickerProps) => {
   return (
     <>
-      <RNPickerSelect
-        onValueChange={onChange}
-        placeholder={{}}
-        value={value}
-        useNativeAndroidPickerStyle={false}
-        style={{
-          viewContainer: {
-            backgroundColor: '#f3f3f3ff',
-            width: 120,
-            borderRadius: 20,
-            overflow: 'hidden',
-          },
-        }}
-        items={[
-          { label: i18n.t('general.none'), value: null },
-          ...CASTING_KINDS.map((kind) => ({
-            label: i18n.t(`classes.castingKinds.${kind}`),
-            value: kind,
-          })),
-        ]}
+      <View
+        className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-12"
+        style={{ width: '100%' }}
       >
-        <View className="rounded-lg bg-gray-100 px-4 h-15 py-2.5 flex flex-row justify-between items-center gap-2">
-          <Text className="text-xl flex-1" numberOfLines={1}>
-            {value
-              ? i18n.t(`classes.castingKinds.${value}`)
-              : i18n.t('general.none')}
-          </Text>
-
-          <View className="pt-1">
-            <ChevronDown size={12} />
-          </View>
-        </View>
-      </RNPickerSelect>
+        <Picker
+          style={{ width: '100%', height: 50 }}
+          selectedValue={value}
+          onValueChange={(itemValue) => itemValue && onChange(itemValue)}
+        >
+          <Picker.Item label={i18n.t('general.none')} value={null} />
+          {CASTING_KINDS.map((kind) => (
+            <Picker.Item
+              key={kind}
+              label={i18n.t(`classes.castingKinds.${kind}`)}
+              value={kind}
+            />
+          ))}
+        </Picker>
+      </View>
 
       <Text className="text-red-400 text-sm">{error}</Text>
     </>

@@ -5,7 +5,7 @@ export const en = {
     sheet: 'Sheet',
     details: 'Details',
     spells: 'Spells',
-    equipments: 'Notes/Equip.',
+    equipments: 'Equip.',
   },
   titles: {
     characterSheet: 'Character Sheet',

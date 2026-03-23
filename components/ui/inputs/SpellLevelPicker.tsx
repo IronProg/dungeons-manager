@@ -1,6 +1,5 @@
 import { Text, View } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
-import { ChevronDown } from 'lucide-react-native';
+import { Picker } from '@react-native-picker/picker';
 import i18n from 'i18n';
 
 import { SPELL_SLOT_LEVELS } from 'core/enums/spellSlotLevel';
@@ -20,26 +19,24 @@ export const SpellLevelPicker = ({
 }: SpellLevelPickerProps) => {
   return (
     <View className="flex-1">
-      <RNPickerSelect
-        onValueChange={onChange}
-        placeholder={{}}
-        value={value}
-        useNativeAndroidPickerStyle={false}
-        items={SPELL_SLOT_LEVELS.map((lvl) => ({
-          label: lvl === 0 ? i18n.t('spells.cantrip') : `${lvl}`,
-          value: lvl,
-        }))}
+      <View
+        className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-11"
+        style={{ width: '100%' }}
       >
-        <View className="rounded-lg bg-gray-100 px-4 h-15 py-2.5 flex flex-row justify-between items-center gap-2">
-          <Text className="text-xl flex-1" numberOfLines={1}>
-            {value === 0 ? i18n.t('spells.cantrip') : value}
-          </Text>
-
-          <View className="pt-1">
-            <ChevronDown size={12} />
-          </View>
-        </View>
-      </RNPickerSelect>
+        <Picker
+          style={{ width: '100%', height: 50 }}
+          selectedValue={value}
+          onValueChange={(itemValue) => itemValue && onChange(itemValue)}
+        >
+          {SPELL_SLOT_LEVELS.map((lvl) => (
+            <Picker.Item
+              key={lvl}
+              label={lvl === 0 ? i18n.t('spells.cantrip') : `${lvl}`}
+              value={lvl}
+            />
+          ))}
+        </Picker>
+      </View>
 
       {error && <Text className="text-red-400 text-sm">{error}</Text>}
     </View>

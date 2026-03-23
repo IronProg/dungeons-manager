@@ -5,7 +5,7 @@ export const pt = {
     sheet: 'Ficha',
     details: 'Detalhes',
     spells: 'Magias',
-    equipments: 'Notas/Equip.',
+    equipments: 'Equip.',
   },
   titles: {
     characterSheet: 'Ficha do Personagem',

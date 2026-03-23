@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
-import RNModal from 'react-native-modal';
 import i18n from 'i18n';
 
 import {
@@ -11,6 +10,7 @@ import {
 import { useCharacter } from 'contexts/CharacterContext';
 
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+import { BaseModal } from 'components/ui/Modals/BaseModal';
 
 import { Attack } from 'types/character';
 
@@ -134,13 +134,9 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
         onConfirm={handleDelete}
       />
 
-      <RNModal
-        isVisible={!!detailedAttack}
-        onBackdropPress={() =>
-          requestAnimationFrame(() => {
-            setDetailedAttack(undefined);
-          })
-        }
+      <BaseModal
+        visible={!!detailedAttack}
+        onClose={() => setDetailedAttack(undefined)}
       >
         <View className="flex flex-col rounded-lg bg-white gap-4 items-stretch p-4">
           <Text className="text-2xl font-medium text-center">
@@ -167,7 +163,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
             </View>
           )}
         </View>
-      </RNModal>
+      </BaseModal>
     </>
   );
 };

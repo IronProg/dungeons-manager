@@ -65,30 +65,24 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="tables"
         options={{
-          title: i18n.t('tables.title') || 'Tables',
-          headerStyle: { backgroundColor: '#4f46e5' },
+          title: i18n.t('tables.title'),
         }}
       />
 
-      {table && (
-        <>
-          <Drawer.Screen
-            name="new-character"
-            options={{
-              title: i18n.t('titles.newCharacter'),
-              headerStyle: { backgroundColor: '#94a3b8' },
-            }}
-          />
+      <Drawer.Screen
+        name="new-character"
+        options={{
+          title: i18n.t('titles.newCharacter'),
+        }}
+      />
 
-          <Drawer.Screen
-            name="dm-dashboard"
-            options={{
-              title: 'DM Dashboard',
-              drawerItemStyle: { display: 'none' },
-            }}
-          />
-        </>
-      )}
+      <Drawer.Screen
+        name="dm-dashboard"
+        options={{
+          title: 'DM Dashboard',
+          drawerItemStyle: { display: 'none' },
+        }}
+      />
     </Drawer>
   );
 }

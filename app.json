@@ -14,7 +14,9 @@
     "plugins": [
       "expo-router",
       "expo-localization",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-build-properties",
+      "expo-image"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,7 +30,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ironprog.dungeonsmanager",
+      "jsEngine": "hermes"
     },
     "android": {
       "softwareKeyboardLayoutMode": "resize",
@@ -36,7 +40,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "jsEngine": "hermes"
     },
     "scheme": "dungeons-manager-scheme",
     "extra": {
