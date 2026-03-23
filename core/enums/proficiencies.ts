@@ -1,3 +1,5 @@
+import { SkillType } from 'types/character';
+
 export const PROFICIENCIES = [
   { name: 'acrobatics', attribute: 'dexterity' },
   { name: 'animalHandling', attribute: 'wisdom' },
@@ -17,4 +19,25 @@ export const PROFICIENCIES = [
   { name: 'sleightOfHand', attribute: 'dexterity' },
   { name: 'stealth', attribute: 'dexterity' },
   { name: 'survival', attribute: 'wisdom' },
+];
+
+export const SKILLS: SkillType[] = [
+  'acrobatics',
+  'animal_handling',
+  'arcana',
+  'athletics',
+  'deception',
+  'history',
+  'insight',
+  'intimidation',
+  'investigation',
+  'medicine',
+  'nature',
+  'perception',
+  'performance',
+  'persuasion',
+  'religion',
+  'sleight_of_hand',
+  'stealth',
+  'survival',
 ];
