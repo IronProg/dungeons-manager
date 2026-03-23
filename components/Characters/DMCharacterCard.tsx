@@ -95,7 +95,6 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
       </View>
 
       <View className="p-4">
-        {/* Vital Stats Row */}
         <View className="flex-row flex-wrap justify-between mb-4 border-b border-slate-100 pb-4">
           <StatBox
             icon={<Heart size={16} color="#ef4444" />}
@@ -107,16 +106,19 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
                 : undefined
             }
           />
+
           <StatBox
             icon={<Shield size={16} color="#3b82f6" />}
             label={i18n.t('titles.ac')}
             value={generalInfo.armorClassBase}
           />
+
           <StatBox
             icon={<Zap size={16} color="#eab308" />}
             label={i18n.t('titles.initiative')}
-            value={generalInfo.initiativeCustomBonus || 0} // Simplify for DM view
+            value={generalInfo.initiativeCustomBonus || 0}
           />
+
           <StatBox
             icon={<Footprints size={16} color="#8b5cf6" />}
             label={i18n.t('titles.speed')}

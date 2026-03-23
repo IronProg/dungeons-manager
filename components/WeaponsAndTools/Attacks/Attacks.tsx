@@ -13,6 +13,7 @@ import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 import { BaseModal } from 'components/ui/Modals/BaseModal';
 
 import { Attack } from 'types/character';
+import { DiceRollButton } from 'components/ui/DiceRollButton';
 
 type AttacksProps = {
   onCreate: () => void;
@@ -81,6 +82,8 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
                 key={index}
                 className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 flex-1"
               >
+                <DiceRollButton bonuses={[attackModifier]} />
+
                 <View className="bg-white rounded-lg px-2 py-1 flex-1">
                   <Text className="line-clamp-1">{attack.name}</Text>
                   {attack.range && attack.range.length > 0 && (
@@ -93,7 +96,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
                   {attackModifier}
                 </Text>
 
-                <View className="bg-white rounded-lg px-2 py-1 flex-1">
+                <View className="bg-white rounded-lg px-2 py-1 flex-1 flex flex-col">
                   {attack.damages.map((damage, index) => {
                     let attributeBonus = 0;
 
@@ -104,12 +107,24 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
                     const diceText = `${damage.diceAmount && damage.diceAmount + 'd'}${damage.diceSize}`;
 
                     return (
-                      <Text className="" key={index}>
-                        {diceText}{' '}
-                        {`${attributeBonus >= 0 ? '+' : ''}${attributeBonus}`}{' '}
-                        {damage.customBonus && `+${damage.customBonus}`}{' '}
-                        {damage.kind}
-                      </Text>
+                      <View
+                        key={index}
+                        className="flex flex-row justify-between items-center border-b border-gray-300 py-0.5"
+                      >
+                        <Text className="flex-1">
+                          {diceText}{' '}
+                          {`${attributeBonus >= 0 ? '+' : ''}${attributeBonus}`}{' '}
+                          {damage.customBonus && `+${damage.customBonus}`}{' '}
+                          {damage.kind}
+                        </Text>
+
+                        <DiceRollButton
+                          style={{ width: 14, height: 14 }}
+                          containerClassName="p-1.5"
+                          bonuses={[attributeBonus, damage.customBonus || 0]}
+                          diceSize={damage.diceSize}
+                        />
+                      </View>
                     );
                   })}
                 </View>

@@ -277,5 +277,39 @@ export const pt = {
     resetDescription: 'Essa ação vai restaurar todos os seus espaços de magia.',
     noSlotsSetup: 'Nenhum espaço de magia nesse nível.',
   },
+  roll: {
+    criticalRoll: '✦ 20 Natural ✦',
+    criticalFailure: '✦ Falha Crítica ✦',
+    rolling: 'Rolando...',
+    result: 'Resultado',
+  },
+
+  hints: {
+    title: 'Como usar',
+    equipmentsBase:
+      'Equipmentos são todos os items que você pode adicionar, pressionar eles mostra a descrição.',
+    equipmentsNotes:
+      'Notas é simplesmente um campo de texto, use-a como quiser.',
+    sheetHP:
+      'Especificamente para PV, você pode pressionar para causar dano/curar/ganhar pontos de vida temporários. Pressione e segure para editar. (PV máximo temporário substituirá seu PV máximo sem remover o PV temporário)',
+    sheetInitiativeSavingThrowsSkills:
+      'Iniciativa, testes de resistência e perícias podem ser rolados ao pressioná-los.',
+    sheetEdit: 'Para editar um campo nesta tela, basta pressionar e segurar.',
+    sheetDetails:
+      'O ícone de arquivo abre a ficha de detalhes do personagem, onde você pode editar suas classes no Ícone de Editar e configurar os antecedentes e proficiências do seu personagem',
+    detailsAttacks:
+      'Aqui você pode adicionar seus ataques, configurando muitos danos para cada ataque. O ícone de rolagem à esquerda rola o ataque, e os ícones de rolagem em cada dano rolam aquele dano específico.',
+    detailsAttacksLongPress: 'Pressionar e segurar o ataque o edita.',
+    detailsResourcesAmmunitions:
+      'Recursos e munições são itens/recursos/efeitos que podem ser consumidos, e podem ser pressionados para consumir uma unidade. Pressionar e segurar também o edita.',
+    detailsFeatures:
+      'Features são todas as habilidades que seu personagem tem, e pressionar elas mostra a descrição. Pressionar e segurar também o edita.',
+    spellsBase:
+      'Magias são todas as magias que seu personagem tem, e pressionar elas mostra a descrição. Pressionar e segurar edita aquela magia específica.',
+    spellsSlots:
+      'Cada classe configurada nos detalhes do seu personagem define quantos espaços de magia você tem.',
+    spellsSlotsButtons:
+      'Você pode aumentar ou diminuir a quantidade de espaços de magia pressionando os botões nas laterais de cada nível de espaço de magia',
+  },
   api,
 };

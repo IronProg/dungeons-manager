@@ -1,6 +1,8 @@
 import { useCharacter } from 'contexts/CharacterContext';
+import { useDiceRoll } from 'contexts/DiceRollContext';
 import i18n from 'i18n';
 import { Zap } from 'lucide-react-native';
+import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { CharacterGeneralInfo } from 'types/character';
 
@@ -10,6 +12,7 @@ type InitiativeProps = {
 };
 
 export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
+  const { roll } = useDiceRoll();
   const { modifiers } = useCharacter();
 
   let modifier = modifiers?.['dexterity'] || 0;
@@ -22,8 +25,13 @@ export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
     modifier += modifiers?.[generalInfo.initiativeExtraAttribute] || 0;
   }
 
+  const handleRoll = useCallback(() => {
+    roll([modifier], { diceSize: 20 });
+  }, [modifier, roll]);
+
   return (
     <TouchableOpacity
+      onPress={handleRoll}
       onLongPress={onLongPress}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >
