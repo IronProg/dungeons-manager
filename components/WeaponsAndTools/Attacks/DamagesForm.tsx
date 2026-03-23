@@ -113,18 +113,6 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                 </View>
               </View>
 
-              <View className="w-24">
-                <Text>Atributo</Text>
-
-                <Controller
-                  control={control}
-                  name={`damagesAttributes.${index}.mainAttribute`}
-                  render={({ field, fieldState: { error } }) => (
-                    <AttributePicker {...field} error={error?.message} />
-                  )}
-                />
-              </View>
-
               <View className="w-16">
                 <Text>{i18n.t('general.mod')}</Text>
 
@@ -149,7 +137,19 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               </View>
             </View>
 
-            <View className="flex-1">
+            <View className="flex flex-row gap-2">
+              <View className="w-40">
+                <Text>{i18n.t('general.attribute')}</Text>
+
+                <Controller
+                  control={control}
+                  name={`damagesAttributes.${index}.mainAttribute`}
+                  render={({ field, fieldState: { error } }) => (
+                    <AttributePicker {...field} error={error?.message} />
+                  )}
+                />
+              </View>
+
               <View className="flex-1">
                 <Text>{i18n.t('general.damageType')}</Text>
 

@@ -9,6 +9,7 @@ import { useCharacter } from 'contexts/CharacterContext';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { useTable } from 'contexts/TableContext';
+import { DiceRollProvider } from 'providers/DiceRollProvider';
 
 export default function DrawerLayout() {
   const router = useRouter();
@@ -38,57 +39,53 @@ export default function DrawerLayout() {
   }
 
   return (
-    <Drawer
-      drawerContent={(props) => (
-        <CharactersDrawer
-          {...props}
-          characters={characters || []}
-          onLogout={signOut}
-          onNewCharacter={() => props.navigation.navigate('new-character')}
-        />
-      )}
-      screenOptions={{
-        drawerPosition: 'right',
-        headerStyle: { backgroundColor: '#4f46e5' },
-        headerTitleStyle: { color: 'white' },
-        headerTintColor: 'white',
-        swipeEnabled: false,
-      }}
-    >
-      <Drawer.Screen
-        name="(tabs)"
-        options={{
-          title: i18n.t('titles.character'),
-        }}
-      />
-
-      <Drawer.Screen
-        name="tables"
-        options={{
-          title: i18n.t('tables.title') || 'Tables',
+    <DiceRollProvider>
+      <Drawer
+        drawerContent={(props) => (
+          <CharactersDrawer
+            {...props}
+            characters={characters || []}
+            onLogout={signOut}
+            onNewCharacter={() => props.navigation.navigate('new-character')}
+          />
+        )}
+        screenOptions={{
+          drawerPosition: 'right',
           headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+          swipeEnabled: false,
         }}
-      />
+      >
+        <Drawer.Screen
+          name="(tabs)"
+          options={{
+            title: i18n.t('titles.character'),
+          }}
+        />
 
-      {table && (
-        <>
-          <Drawer.Screen
-            name="new-character"
-            options={{
-              title: i18n.t('titles.newCharacter'),
-              headerStyle: { backgroundColor: '#94a3b8' },
-            }}
-          />
+        <Drawer.Screen
+          name="tables"
+          options={{
+            title: i18n.t('tables.title'),
+          }}
+        />
 
-          <Drawer.Screen
-            name="dm-dashboard"
-            options={{
-              title: 'DM Dashboard',
-              drawerItemStyle: { display: 'none' },
-            }}
-          />
-        </>
-      )}
-    </Drawer>
+        <Drawer.Screen
+          name="new-character"
+          options={{
+            title: i18n.t('titles.newCharacter'),
+          }}
+        />
+
+        <Drawer.Screen
+          name="dm-dashboard"
+          options={{
+            title: 'DM Dashboard',
+            drawerItemStyle: { display: 'none' },
+          }}
+        />
+      </Drawer>
+    </DiceRollProvider>
   );
 }

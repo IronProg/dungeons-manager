@@ -12,6 +12,25 @@ export type SpellSchoolType =
   | 'illusion'
   | 'necromancy'
   | 'transmutation';
+export type SkillType =
+  | 'acrobatics'
+  | 'animal_handling'
+  | 'arcana'
+  | 'athletics'
+  | 'deception'
+  | 'history'
+  | 'insight'
+  | 'intimidation'
+  | 'investigation'
+  | 'medicine'
+  | 'nature'
+  | 'perception'
+  | 'performance'
+  | 'persuasion'
+  | 'religion'
+  | 'sleight_of_hand'
+  | 'stealth'
+  | 'survival';
 
 export type Character = {
   id?: number;
@@ -98,7 +117,7 @@ export type Equipment = {
 
 export type Skill = {
   id?: number;
-  name: string;
+  name: SkillType;
   mainAttribute: AttributesType;
   proficiency: boolean;
   expertise?: boolean;
@@ -133,7 +152,7 @@ export type Damage = {
   diceSize?: number;
   mainAttribute?: AttributesType;
   kind?: string;
-  customBonus?: string;
+  customBonus?: number;
 };
 
 export type Resource = {

@@ -5,7 +5,7 @@ export const en = {
     sheet: 'Sheet',
     details: 'Details',
     spells: 'Spells',
-    equipments: 'Notes/Equip.',
+    equipments: 'Equip.',
   },
   titles: {
     characterSheet: 'Character Sheet',
@@ -276,6 +276,38 @@ export const en = {
     level: 'Level',
     resetDescription: 'This action will restore all your spell slots.',
     noSlotsSetup: 'No spell slots at this level.',
+  },
+  roll: {
+    criticalRoll: '✦ Natural 20 ✦',
+    criticalFailure: '✦ Natural 1 ✦',
+    rolling: 'Rolling...',
+    result: 'Result',
+  },
+  hints: {
+    title: 'How to use',
+    equipmentsBase:
+      'Equipments are all the items you can add, and pressing it shows the description.',
+    equipmentsNotes: 'Notes is simply a text field, use as you wish.',
+    sheetHP:
+      'Specifically for HP, you can press it to damage/heal/gain temporary hit points. Long press it to edit it. (Temporary max HP will overwrite your HP maximum without removing the temporary HP)',
+    sheetInitiativeSavingThrowsSkills:
+      'Initiative, saving throws and skills can be rolled by pressing on them.',
+    sheetEdit: 'For editing a field on this screen, simply long press on it.',
+    sheetDetails:
+      'The file icon opens the character details sheet, where you can edit your classes on the Edit Icon an setup your character backgrounds and proficiencies',
+    detailsAttacks:
+      'Here you can add your attacks, configuring many damages for each attack. The roll icon on the left rolls the attack, and the rolls on each damage rolls for that specific damage.',
+    detailsAttacksLongPress: 'Long pressing the attack edits it',
+    detailsResourcesAmmunitions:
+      'Resources and Ammunitions are items/resources/effects that can be consumed, and they can be pressed to consume one unit. Long pressing also edits it.',
+    detailsFeatures:
+      'Features are all the abilities your character has, and pressing it shows the description. Long pressing also edits it.',
+    spellsBase:
+      'Spells are all the spells your character has, and pressing it shows the description. Long pressing edits that specific spell.',
+    spellsSlots:
+      'Each class configured on your character details define how many spell slots you have.',
+    spellsSlotsButtons:
+      'You can raise or lower the amount of spell slots by pressing the buttons on the sides of each spell slot level',
   },
   api,
 };

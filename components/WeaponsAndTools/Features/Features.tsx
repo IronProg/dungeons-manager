@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
-import RNModal from 'react-native-modal';
 import i18n from 'i18n';
 
 import { useCharacter } from 'contexts/CharacterContext';
@@ -11,6 +10,7 @@ import {
   useGetAllFeatures,
 } from 'services/features/feature';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+import { BaseModal } from 'components/ui/Modals/BaseModal';
 
 import { Feature } from 'types/character';
 
@@ -101,13 +101,9 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
         onConfirm={handleDelete}
       />
 
-      <RNModal
-        isVisible={!!detailedFeature}
-        onBackdropPress={() =>
-          requestAnimationFrame(() => {
-            setDetailedFeature(undefined);
-          })
-        }
+      <BaseModal
+        visible={!!detailedFeature}
+        onClose={() => setDetailedFeature(undefined)}
       >
         <View className="flex flex-col rounded-lg bg-white gap-4 items-stretch p-4">
           <Text className="text-2xl font-medium text-center">
@@ -130,7 +126,7 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
             <Text>{detailedFeature?.description}</Text>
           </View>
         </View>
-      </RNModal>
+      </BaseModal>
     </>
   );
 };
