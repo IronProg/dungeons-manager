@@ -1,0 +1,209 @@
+import { useCallback, useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Minus, Plus } from 'lucide-react-native';
+import i18n from 'i18n';
+
+import { useCharacter } from 'contexts/CharacterContext';
+import {
+  useGetAllClasses,
+  useUpdateAllClassesMutation,
+} from 'services/classes/class';
+
+import { Button } from 'components/ui/Button';
+import { BaseModal } from 'components/ui/Modals/BaseModal';
+import { useDiceRoll } from 'contexts/DiceRollContext';
+
+import { CharacterClass } from 'types/character';
+
+type handleAlterFunction = {
+  characterClass: CharacterClass;
+  full?: boolean;
+};
+
+interface HitDicesRollFormProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export const HitDicesRollForm = ({ open, onClose }: HitDicesRollFormProps) => {
+  const { composeRoll } = useDiceRoll();
+  const { characterId, modifiers } = useCharacter();
+
+  const constitutionModifier = modifiers?.constitution ?? 0;
+
+  const { mutate: updateAllCharacters, isPending } =
+    useUpdateAllClassesMutation();
+
+  const { data: fetchedCharacterClasses } = useGetAllClasses();
+
+  const [characterClasses, setCharacterClasses] = useState<CharacterClass[]>(
+    fetchedCharacterClasses ?? [],
+  );
+
+  useEffect(() => {
+    if (fetchedCharacterClasses) {
+      setCharacterClasses(
+        fetchedCharacterClasses.map((cls) => ({
+          ...cls,
+          hitDiceAmount: 0,
+          level: cls.hitDiceAmount,
+        })),
+      );
+    } else {
+      setCharacterClasses([]);
+    }
+  }, [fetchedCharacterClasses]);
+
+  const onSubmit = useCallback(() => {
+    onClose();
+    const updatedClasses = fetchedCharacterClasses?.map((cls) => {
+      const characterClass = characterClasses?.find((c) => c.id === cls.id);
+
+      return {
+        ...cls,
+        hitDiceAmount: cls.hitDiceAmount - (characterClass?.hitDiceAmount ?? 0),
+      };
+    });
+
+    updateAllCharacters(
+      { characterId: characterId!, classes: updatedClasses! },
+      {
+        onSuccess: () => {
+          const rolls = characterClasses
+            ?.filter((cls) => cls.hitDiceAmount > 0)
+            .map((cls) => {
+              return {
+                label: `${cls.name}(${cls.hitDice})`,
+                amount: cls.hitDiceAmount,
+                diceSize: +cls.hitDice.replace('d', ''),
+                bonuses: Array(cls.hitDiceAmount).fill(constitutionModifier),
+              };
+            });
+
+          composeRoll(rolls);
+
+          requestAnimationFrame(() => {
+            onClose();
+          });
+        },
+      },
+    );
+  }, [
+    characterClasses,
+    characterId,
+    composeRoll,
+    constitutionModifier,
+    fetchedCharacterClasses,
+    onClose,
+    updateAllCharacters,
+  ]);
+
+  const handleAdd = useCallback(
+    ({ characterClass, full = false }: handleAlterFunction) => {
+      setCharacterClasses((prev) =>
+        prev?.map((cls) => {
+          if (cls.id !== characterClass.id) return cls;
+
+          return {
+            ...characterClass,
+            hitDiceAmount: full
+              ? cls.level
+              : Math.min(cls.level, cls.hitDiceAmount + 1),
+          };
+        }),
+      );
+    },
+    [],
+  );
+
+  const handleDecrease = useCallback(
+    ({ characterClass, full = false }: handleAlterFunction) => {
+      setCharacterClasses((prev) =>
+        prev?.map((cls) => {
+          if (cls.id !== characterClass.id) return cls;
+
+          return {
+            ...characterClass,
+            hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
+          };
+        }),
+      );
+    },
+    [],
+  );
+
+  return (
+    <BaseModal visible={open} onClose={onClose}>
+      <View className="flex flex-col items-center">
+        <Text className="text-2xl text-center font-medium">
+          {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
+        </Text>
+
+        <View className="flex flex-col gap-2 pb-4">
+          <View className="flex flex-row">
+            <View className="w-8/12 px-2">
+              <Text className="text-center font-medium">
+                {i18n.t('hitDices.currentAmount')}
+              </Text>
+            </View>
+
+            <View className="w-2/12 px-2">
+              <Text className="text-center font-medium">
+                {i18n.t('classes.hitDice')}
+              </Text>
+            </View>
+
+            <View className="w-2/12 px-2">
+              <Text className="text-center font-medium">
+                {i18n.t('general.total')}
+              </Text>
+            </View>
+          </View>
+
+          {characterClasses?.map((characterClass) => (
+            <View
+              key={characterClass.id}
+              className="flex flex-row items-center"
+            >
+              <View className="w-8/12 flex flex-row gap-6 justify-center px-2 py-2">
+                <TouchableOpacity
+                  hitSlop={10}
+                  onPress={() => handleDecrease({ characterClass })}
+                  onLongPress={() =>
+                    handleDecrease({ characterClass, full: true })
+                  }
+                  className="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center shadow-sm"
+                >
+                  <Minus size={24} color="white" />
+                </TouchableOpacity>
+
+                <Text className="font-bold text-lg">
+                  {characterClass.hitDiceAmount}
+                </Text>
+
+                <TouchableOpacity
+                  hitSlop={10}
+                  onPress={() => handleAdd({ characterClass })}
+                  onLongPress={() => handleAdd({ characterClass, full: true })}
+                  className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm"
+                >
+                  <Plus size={24} color="white" />
+                </TouchableOpacity>
+              </View>
+
+              <View className="w-2/12 px-2">
+                <Text className="text-center">{characterClass.hitDice}</Text>
+              </View>
+
+              <View className="w-2/12 px-2">
+                <Text className="text-center">{characterClass.level}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+
+        <Button onPress={onSubmit} disabled={isPending} />
+      </View>
+    </BaseModal>
+  );
+};

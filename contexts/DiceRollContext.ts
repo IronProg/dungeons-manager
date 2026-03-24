@@ -1,7 +1,17 @@
 import { createContext, useContext } from 'react';
 
+export type ComposeRollParams = {
+  label?: string;
+  amount: number;
+  diceSize: number;
+  bonuses: number[];
+}[];
+
 export type DiceRollContextType = {
-  roll: (bonuses: number[], { diceSize }: { diceSize: number }) => void;
+  simpleRoll: (bonuses: number[]) => void;
+  composeRoll: (params: ComposeRollParams) => void;
+  enabled: boolean;
+  setEnabled: (enabled: boolean) => void;
 };
 
 export const DiceRollContext = createContext<DiceRollContextType | null>(null);

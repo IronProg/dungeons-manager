@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, Switch } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
-import { CircleQuestionMark, FileTextIcon } from 'lucide-react-native';
+import {
+  CircleOff,
+  CircleQuestionMark,
+  Dice6,
+  FileTextIcon,
+} from 'lucide-react-native';
 import i18n from 'i18n';
+
+import { colors } from 'core/utils/colors';
+import { useDiceRoll } from 'contexts/DiceRollContext';
 
 import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
 import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
@@ -14,6 +22,7 @@ import { HintsModal } from './HintsModal';
 export const MainCharacterSheet = () => {
   const [hintsOpen, setHintsOpen] = useState(false);
   const router = useRouter();
+  const { enabled, setEnabled } = useDiceRoll();
 
   return (
     <>
@@ -24,6 +33,20 @@ export const MainCharacterSheet = () => {
           </Text>
 
           <View className="flex flex-row gap-2">
+            <View className="bg-white rounded-full px-2 flex flex-row gap-2 items-center">
+              <View className="relative p-0.5">
+                <Dice6 size={24} />
+
+                {!enabled && (
+                  <View className="absolute inset-0 rounded-full w-2 h-2">
+                    <CircleOff size={28} color={colors.red['500']} />
+                  </View>
+                )}
+              </View>
+
+              <Switch value={enabled} onValueChange={setEnabled} />
+            </View>
+
             <TouchableOpacity
               hitSlop={20}
               onPress={() => setHintsOpen(true)}

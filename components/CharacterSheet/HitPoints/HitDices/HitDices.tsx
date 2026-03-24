@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Tent } from 'lucide-react-native';
 import i18n from 'i18n';
@@ -6,6 +6,7 @@ import i18n from 'i18n';
 import { useGetAllClasses } from 'services/classes/class';
 
 import { CharacterGeneralInfo } from 'types/character';
+import { HitDicesRollForm } from './HitDicesRollModal';
 
 type HitDicesProps = {
   generalInfo: CharacterGeneralInfo;
@@ -14,6 +15,8 @@ type HitDicesProps = {
 
 export const HitDices = ({ onLongPress }: HitDicesProps) => {
   const { data: characterClasses } = useGetAllClasses();
+
+  const [open, setOpen] = useState(false);
 
   const { hitDicesMaximum, hitDiceAmount } = useMemo(
     () => ({
@@ -28,6 +31,7 @@ export const HitDices = ({ onLongPress }: HitDicesProps) => {
 
   return (
     <TouchableOpacity
+      onPress={() => setOpen(true)}
       onLongPress={onLongPress}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >
@@ -41,6 +45,8 @@ export const HitDices = ({ onLongPress }: HitDicesProps) => {
           {hitDiceAmount}/{hitDicesMaximum}
         </Text>
       </View>
+
+      <HitDicesRollForm onClose={() => setOpen(false)} open={open} />
     </TouchableOpacity>
   );
 };

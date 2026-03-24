@@ -14,6 +14,7 @@ import { BaseModal } from 'components/ui/Modals/BaseModal';
 
 import { Attack } from 'types/character';
 import { DiceRollButton } from 'components/ui/DiceRollButton';
+import { ComposeDiceRollButton } from 'components/ui/ComposeDiceRollButton';
 
 type AttacksProps = {
   onCreate: () => void;
@@ -74,13 +75,13 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
           return (
             <View
               key={attack.id}
-              className="flex flex-row gap-2 w-full items-start"
+              className="flex flex-row gap-2 w-full items-center border-b border-gray-300"
             >
               <TouchableOpacity
                 onPress={() => setDetailedAttack(attack)}
                 onLongPress={() => onSelect(attack)}
                 key={index}
-                className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 flex-1"
+                className="rounded-lg flex flex-row items-center gap-2 mb-2 flex-1"
               >
                 <DiceRollButton bonuses={[attackModifier]} />
 
@@ -95,6 +96,23 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
                   {attackModifier >= 0 && '+'}
                   {attackModifier}
                 </Text>
+
+                <ComposeDiceRollButton
+                  style={{ width: 14, height: 14 }}
+                  containerClassName="p-1.5"
+                  rolls={attack.damages.map((damage) => {
+                    const attributeBonus = damage.mainAttribute
+                      ? (modifiers?.[damage.mainAttribute] ?? 0)
+                      : 0;
+
+                    return {
+                      label: damage.kind,
+                      amount: damage.diceAmount || 0,
+                      diceSize: damage.diceSize || 20,
+                      bonuses: [attributeBonus, damage.customBonus || 0],
+                    };
+                  })}
+                />
 
                 <View className="bg-white rounded-lg px-2 py-1 flex-1 flex flex-col">
                   {attack.damages.map((damage, index) => {
@@ -117,13 +135,6 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
                           {damage.customBonus && `+${damage.customBonus}`}{' '}
                           {damage.kind}
                         </Text>
-
-                        <DiceRollButton
-                          style={{ width: 14, height: 14 }}
-                          containerClassName="p-1.5"
-                          bonuses={[attributeBonus, damage.customBonus || 0]}
-                          diceSize={damage.diceSize}
-                        />
                       </View>
                     );
                   })}
@@ -132,7 +143,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
 
               <TouchableOpacity
                 onPress={() => setAttackToDelete(attack)}
-                className="bg-red-500 rounded-full p-2 mt-2"
+                className="bg-red-500 rounded-full p-2"
               >
                 <Trash size={16} color="white" />
               </TouchableOpacity>

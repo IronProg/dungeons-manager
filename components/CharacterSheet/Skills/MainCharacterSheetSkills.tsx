@@ -6,15 +6,14 @@ import i18n from 'i18n';
 import { useGetAllSkills } from 'services/skills/skill';
 import { useGetAllSavingThrows } from 'services/savingThrows/savingThrow';
 import { useCharacter } from 'contexts/CharacterContext';
+import { useDiceRoll } from 'contexts/DiceRollContext';
 import { useGetSkillBonus } from 'hooks/useSkillBonus';
 
 import { SavingThrowForm } from './SavingThrow/SavingThrowForm';
 import { SkillForm } from './Skill/SkillForm';
-
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 
 import type { SavingThrow, Skill } from 'types/character';
-import { useDiceRoll } from 'contexts/DiceRollContext';
 
 export const MainCharacterSheetSkills = () => {
   const { characterId } = useCharacter();
@@ -117,7 +116,7 @@ const SavingThrowCard = ({
   savingThrow,
   onLongPress,
 }: SavingThrowCardProps) => {
-  const { roll } = useDiceRoll();
+  const { simpleRoll } = useDiceRoll();
   const { modifiers, proficiencyBonus } = useCharacter();
   let modifier =
     (modifiers?.[savingThrow.mainAttribute] || 0) +
@@ -132,8 +131,8 @@ const SavingThrowCard = ({
   }
 
   const handleRoll = useCallback(() => {
-    roll([modifier], { diceSize: 20 });
-  }, [modifier, roll]);
+    simpleRoll([modifier]);
+  }, [modifier, simpleRoll]);
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
@@ -163,14 +162,14 @@ const SavingThrowCard = ({
 type SkillCardProps = { skill: Skill; onLongPress: () => void };
 
 const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
-  const { roll } = useDiceRoll();
+  const { simpleRoll } = useDiceRoll();
   const { getSkillBonus } = useGetSkillBonus();
 
   const modifier = getSkillBonus(skill.name);
 
   const handleRoll = useCallback(() => {
-    roll([modifier], { diceSize: 20 });
-  }, [modifier, roll]);
+    simpleRoll([modifier]);
+  }, [modifier, simpleRoll]);
 
   return (
     <View className="flex items-center justify-center w-[50%] p-2 py-1.5">
