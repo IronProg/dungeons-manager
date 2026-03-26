@@ -267,6 +267,9 @@ export const pt = {
     target: 'Alvo',
     noneFound: 'Nenhuma magia encontrada',
     noDescription: 'Nenhuma descrição fornecida.',
+    cast: 'Conjurar',
+    noSpellSlotAvailable: 'Nenhum espaço de magia desse nível está disponível',
+    hasAttack: 'Possui ataque',
   },
   spellSlots: {
     pactMagic: 'Magia de Pacto',
@@ -283,7 +286,6 @@ export const pt = {
     rolling: 'Rolando...',
     result: 'Resultado',
   },
-
   hints: {
     title: 'Como usar',
     equipmentsBase:

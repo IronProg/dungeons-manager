@@ -143,6 +143,7 @@ export type Attack = {
   range?: string;
   properties?: string;
   description?: string;
+  originKind?: string;
   damages: Damage[];
 };
 
@@ -153,6 +154,7 @@ export type Damage = {
   mainAttribute?: AttributesType;
   kind?: string;
   customBonus?: number;
+  higherLevel?: boolean;
 };
 
 export type Resource = {
@@ -209,6 +211,9 @@ export type Spell = {
   somatic: boolean;
   target: string;
   verbal: boolean;
+  attack?: Attack;
+  damages: Damage[];
+  higherLevelsDamages: Damage[];
 };
 
 export type SpellSlot = {

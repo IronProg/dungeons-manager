@@ -1,0 +1,42 @@
+type CreateSpellParams = {
+  characterId: number;
+  name?: string | null;
+  level?: SpellSlotLevelType | null;
+  school?: SpellSchoolType | null;
+  castingTime?: string | null;
+  components?: string | null;
+  concentration?: boolean | null;
+  description?: string | null;
+  duration?: string | null;
+  higherLevelDescription?: string | null;
+  innateTotal?: number | null;
+  material?: boolean | null;
+  materialDescription?: string | null;
+  prepared?: boolean | null;
+  range?: string | null;
+  somatic?: boolean | null;
+  target?: string | null;
+  verbal?: boolean | null;
+};
+
+type UpdateSpellParams = {
+  characterId: number;
+  id: number;
+  name?: string | null;
+  level?: SpellSlotLevelType | null;
+  school?: SpellSchoolType | null;
+  castingTime?: string | null;
+  components?: string | null;
+  concentration?: boolean | null;
+  description?: string | null;
+  duration?: string | null;
+  higherLevelDescription?: string | null;
+  innateTotal?: number | null;
+  material?: boolean | null;
+  materialDescription?: string | null;
+  prepared?: boolean | null;
+  range?: string | null;
+  somatic?: boolean | null;
+  target?: string | null;
+  verbal?: boolean | null;
+};

@@ -1,10 +1,13 @@
 import api from 'core/api/api';
+
 import { SpellSlot } from 'types/character';
 
 export const spellSlotService = {
-  fetchAll: (characterId: number, level: number) =>
+  fetchAll: (characterId: number, level?: number) =>
     api
-      .get<SpellSlot[]>(`/characters/${characterId}/spell_slots?level=${level}`)
+      .get<SpellSlot[]>(`/characters/${characterId}/spell_slots`, {
+        params: { level },
+      })
       .then((res) => res.data),
 
   update: (characterId: number, params: Partial<SpellSlot>) =>

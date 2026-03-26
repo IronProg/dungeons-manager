@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ATTRIBUTES } from 'core/enums/attributes';
 import { useForm } from 'react-hook-form';
-import { Attack } from 'types/character';
 import * as z from 'zod';
 
-const damageSchema = z.object({
+import { ATTRIBUTES } from 'core/enums/attributes';
+
+import { Attack } from 'types/character';
+
+export const damageSchema = z.object({
   id: z.coerce.number<number>().optional(),
   diceSize: z.coerce.number<number>().optional(),
   diceAmount: z.coerce.number<number>().optional(),
@@ -15,6 +17,7 @@ const damageSchema = z.object({
 });
 
 const schema = z.object({
+  id: z.coerce.number<number>().optional(),
   name: z.string(),
   mainAttribute: z.enum(ATTRIBUTES).optional().nullable(),
   applyProficiency: z.boolean(),

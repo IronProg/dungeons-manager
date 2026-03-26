@@ -41,8 +41,8 @@ export const useUpdateSpellMutation = () => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
-  return useMutation<Spell, AxiosError<ApiErrorResponse>, Partial<Spell>>({
-    mutationFn: (params: Partial<Spell>) =>
+  return useMutation<Spell, AxiosError<ApiErrorResponse>, UpdateSpellParams>({
+    mutationFn: (params: UpdateSpellParams) =>
       spellService.update(characterId!, params),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -59,8 +59,8 @@ export const useCreateSpellMutation = (level: SpellSlotLevelType) => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
-  return useMutation<Spell, AxiosError<ApiErrorResponse>, Partial<Spell>>({
-    mutationFn: (params: Partial<Spell>) =>
+  return useMutation<Spell, AxiosError<ApiErrorResponse>, CreateSpellParams>({
+    mutationFn: (params: CreateSpellParams) =>
       spellService.create(characterId!, { ...params, level }),
     onSuccess: () => {
       queryClient.invalidateQueries({

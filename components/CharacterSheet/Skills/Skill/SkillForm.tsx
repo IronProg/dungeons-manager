@@ -1,12 +1,15 @@
-import { Controller } from 'react-hook-form';
 import { Switch, Text, View } from 'react-native';
-import { SkillFormType, useSkillForm } from './useSkillForm';
-import { Skill } from 'types/character';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { Controller } from 'react-hook-form';
 import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+
 import { useUpdateSkillMutation } from 'services/skills/skill';
+import { SkillFormType, useSkillForm } from './useSkillForm';
+
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 import { Button } from 'components/ui/Button';
+
+import { Skill } from 'types/character';
 
 type AttributesFormProps = {
   characterId: number;
@@ -19,7 +22,6 @@ export const SkillForm = ({
   skill,
   onClose,
 }: AttributesFormProps) => {
-  console.log({ skill });
   const { control, handleSubmit, watch } = useSkillForm({ skill });
 
   const proficiency = watch('proficiency');

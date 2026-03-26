@@ -10,12 +10,15 @@ import { SpellCard } from './SpellCard';
 import { SpellLevelNavigator } from './SpellLevelNavigator';
 import { SpellSlotsHeader } from './SpellSlotsHeader';
 import { SpellsHeader } from './SpellsHeader';
+import { SpellCastingModal } from './SpellCastingModal';
 
-import { SpellSlotLevelType } from 'types/character';
+import { Spell, SpellSlotLevelType } from 'types/character';
 
 export const Spells = () => {
-  const [level, setLevel] = useState<SpellSlotLevelType>(0);
   const { character } = useCharacter();
+
+  const [level, setLevel] = useState<SpellSlotLevelType>(0);
+  const [spellToCast, setSpellToCast] = useState<Spell>();
 
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
@@ -29,7 +32,9 @@ export const Spells = () => {
       <FlashList
         contentContainerStyle={{ padding: 16, paddingBottom: 96 }}
         data={spells}
-        renderItem={({ item }) => <SpellCard spell={item} />}
+        renderItem={({ item }) => (
+          <SpellCard onCast={() => setSpellToCast(item)} spell={item} />
+        )}
         ListHeaderComponent={spellHeader}
         ListEmptyComponent={
           isLoadingSpells ? (
@@ -43,6 +48,11 @@ export const Spells = () => {
       />
 
       <SpellLevelNavigator setLevel={setLevel} level={level} />
+
+      <SpellCastingModal
+        spell={spellToCast}
+        onClose={() => setSpellToCast(undefined)}
+      />
     </View>
   );
 };

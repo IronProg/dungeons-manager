@@ -266,7 +266,10 @@ export const en = {
     materialDescription: 'Material Description',
     target: 'Target',
     noneFound: 'No spells found',
+    cast: 'Cast',
     noDescription: 'No description provided.',
+    noSpellSlotAvailable: 'No spell slot available at this level.',
+    hasAttack: 'Has attack',
   },
   spellSlots: {
     pactMagic: 'Pact Magic',

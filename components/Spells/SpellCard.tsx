@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import { Image } from 'expo-image';
-import { ChevronDown, ChevronUp, Edit } from 'lucide-react-native';
+import {
+  ChevronDown,
+  ChevronUp,
+  Crosshair,
+  Edit,
+  WandSparkles,
+} from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import i18n from 'i18n';
 
+import { colors } from 'core/utils/colors';
+import { useSpellDamage } from 'hooks/useSpellDamage';
 import { useUpdateSpellMutation } from 'services/spells/spell.api';
+import { useCharacter } from 'contexts/CharacterContext';
+import { useDiceRoll } from 'contexts/DiceRollContext';
 
 import { Spell } from 'types/character';
 
@@ -14,12 +24,31 @@ const headIcon = require('assets/icons/head.svg') as string;
 
 type SpellCardProps = {
   spell: Spell;
+  onCast: () => void;
 };
 
-export const SpellCard = ({ spell }: SpellCardProps) => {
-  const [expanded, setExpanded] = useState(false);
-  const { mutate: updateSpell } = useUpdateSpellMutation();
+export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
   const router = useRouter();
+  const { calculateCantripDamage } = useSpellDamage();
+  const { simpleRoll, composeRoll } = useDiceRoll();
+  const { characterId, modifiers, proficiencyBonus } = useCharacter();
+  const { mutate: updateSpell } = useUpdateSpellMutation();
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleAttack = () => {
+    if (!spell.attack) return;
+
+    const attack = spell.attack;
+
+    const bonuses = [];
+
+    if (attack.customBonus) bonuses.push(attack.customBonus);
+    if (attack.mainAttribute) bonuses.push(modifiers![attack.mainAttribute]);
+    if (attack.applyProficiency) bonuses.push(proficiencyBonus);
+
+    simpleRoll(bonuses);
+  };
 
   const handleEdit = () => {
     router.push({
@@ -29,7 +58,11 @@ export const SpellCard = ({ spell }: SpellCardProps) => {
   };
 
   const togglePrepared = () => {
-    updateSpell({ id: spell.id, prepared: !spell.prepared });
+    updateSpell({
+      characterId: characterId!,
+      id: spell.id!,
+      prepared: !spell.prepared,
+    });
   };
 
   const getComponentsString = () => {
@@ -45,6 +78,16 @@ export const SpellCard = ({ spell }: SpellCardProps) => {
     return str;
   };
 
+  const handleCast = () => {
+    if (spell.level !== 0) {
+      return onCast();
+    }
+
+    const dices = calculateCantripDamage({ spell });
+
+    composeRoll(dices);
+  };
+
   return (
     <View className="bg-white rounded-lg p-3 mb-3 border border-gray-200">
       <View className="flex flex-row justify-between items-start mb-2">
@@ -52,8 +95,27 @@ export const SpellCard = ({ spell }: SpellCardProps) => {
           <View className="flex flex-row items-start gap-1">
             <Text className="text-xl font-bold flex-1">{spell.name}</Text>
 
-            <TouchableOpacity onPress={handleEdit} className="p-1">
-              <Edit size={16} color="#4f46e5" />
+            {!!spell.attack && (
+              <TouchableOpacity
+                disabled={!spell.attack}
+                onPress={handleAttack}
+                className="pt-1 px-2 pb-2"
+                hitSlop={10}
+              >
+                <Crosshair size={20} color={colors.purple['600']} />
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity
+              onPress={handleCast}
+              className="pt-1 px-2 pb-2"
+              hitSlop={10}
+            >
+              <WandSparkles size={20} color={colors.purple['600']} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleEdit} className="pt-1 px-2 pb-2">
+              <Edit size={20} color={colors.indigo['600']} />
             </TouchableOpacity>
 
             {spell.concentration && (

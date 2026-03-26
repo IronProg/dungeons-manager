@@ -8,6 +8,7 @@ import {
   useResetAllSpellSlotsMutation,
   useUpdateSpellSlotMutation,
 } from 'services/spellSlots/spellSlot';
+import { useCharacter } from 'contexts/CharacterContext';
 
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 
@@ -18,6 +19,7 @@ interface SpellSlotsHeaderProps {
 }
 
 export const SpellSlotsHeader = ({ level }: SpellSlotsHeaderProps) => {
+  const { characterId } = useCharacter();
   const [resetting, setResetting] = useState(false);
 
   const { data: slots, isLoading: isLoadingSlots } =
@@ -37,13 +39,21 @@ export const SpellSlotsHeader = ({ level }: SpellSlotsHeaderProps) => {
 
   const handleDecreaseSlot = (slot: SpellSlot) => {
     if (slot && slot.amount > 0) {
-      updateSlot({ id: slot.id, amount: slot.amount - 1 });
+      updateSlot({
+        id: slot.id!,
+        amount: slot.amount - 1,
+        characterId: characterId!,
+      });
     }
   };
 
   const handleIncreaseSlot = (slot: SpellSlot) => {
     if (slot && slot.amount < slot.total) {
-      updateSlot({ id: slot.id, amount: slot.amount + 1 });
+      updateSlot({
+        id: slot.id!,
+        amount: slot.amount + 1,
+        characterId: characterId!,
+      });
     }
   };
 

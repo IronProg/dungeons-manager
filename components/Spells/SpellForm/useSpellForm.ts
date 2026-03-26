@@ -3,8 +3,17 @@ import { Resolver, useForm } from 'react-hook-form';
 import z from 'zod';
 
 import { SPELL_SCHOOLS } from 'core/enums/spellSchool';
+import { ATTRIBUTES } from 'core/enums/attributes';
+import { damageSchema } from 'components/WeaponsAndTools/Attacks/useAttacksForm';
 
 import { Spell, SpellSlotLevelType } from 'types/character';
+
+const spellAttackSchema = z.object({
+  id: z.coerce.number<number>().optional(),
+  mainAttribute: z.enum(ATTRIBUTES).optional().nullable(),
+  applyProficiency: z.boolean(),
+  customBonus: z.coerce.number<number>().optional(),
+});
 
 const schema = z.object({
   id: z.number().optional(),
@@ -23,6 +32,10 @@ const schema = z.object({
   description: z.string(),
   higherLevelDescription: z.string(),
   innateTotal: z.coerce.number<number>().optional(),
+  hasAttack: z.boolean(),
+  attackAttributes: spellAttackSchema.optional(),
+  damagesAttributes: damageSchema.array(),
+  higherLevelsDamagesAttributes: damageSchema.array(),
 });
 
 export type SpellFormValues = Omit<z.infer<typeof schema>, 'level'> & {
@@ -51,6 +64,15 @@ export const useSpellForm = (
       description: spell?.description ?? '',
       higherLevelDescription: spell?.higherLevelDescription ?? '',
       innateTotal: spell?.innateTotal ?? 0,
+      hasAttack: !!spell?.attack,
+      attackAttributes: {
+        id: spell?.attack?.id,
+        mainAttribute: spell?.attack?.mainAttribute ?? null,
+        customBonus: spell?.attack?.customBonus,
+        applyProficiency: spell?.attack?.applyProficiency ?? false,
+      },
+      damagesAttributes: spell?.damages || [],
+      higherLevelsDamagesAttributes: spell?.higherLevelsDamages || [],
     },
   });
 };
