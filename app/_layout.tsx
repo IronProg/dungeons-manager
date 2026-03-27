@@ -26,7 +26,10 @@ export default function RootLayout() {
     <>
       <StatusBar style="auto" />
 
-      <KeyboardProvider>
+      <KeyboardProvider
+        statusBarTranslucent={true}
+        navigationBarTranslucent={true}
+      >
         <QueryClientProvider client={queryClient}>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <CharacterProvider>

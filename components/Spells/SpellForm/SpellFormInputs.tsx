@@ -43,6 +43,7 @@ export const SpellFormInputs = ({
                 onChangeText={onChange}
                 value={value}
                 placeholder={i18n.t('spells.name')}
+                placeholderTextColor={'#9ca3af'}
               />
             )}
           />

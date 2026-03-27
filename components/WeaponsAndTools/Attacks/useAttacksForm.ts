@@ -11,8 +11,8 @@ export const damageSchema = z.object({
   diceSize: z.coerce.number<number>().optional(),
   diceAmount: z.coerce.number<number>().optional(),
   mainAttribute: z.enum(ATTRIBUTES).optional().nullable(),
-  kind: z.string().optional(),
-  customBonus: z.coerce.number<number>().optional(),
+  kind: z.string().optional().nullable(),
+  customBonus: z.coerce.number<number>().optional().nullable(),
   _destroy: z.boolean().optional(),
 });
 

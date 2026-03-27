@@ -35,7 +35,7 @@
       "jsEngine": "hermes"
     },
     "android": {
-      "softwareKeyboardLayoutMode": "resize",
+      "softwareKeyboardLayoutMode": "adjustPan",
       "package": "com.ironprog.dungeonsmanager",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

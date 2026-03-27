@@ -73,7 +73,7 @@ export const HitDicesRollForm = ({ open, onClose }: HitDicesRollFormProps) => {
             ?.filter((cls) => cls.hitDiceAmount > 0)
             .map((cls) => {
               return {
-                label: `${cls.name}(${cls.hitDice})`,
+                label: cls.name,
                 amount: cls.hitDiceAmount,
                 diceSize: +cls.hitDice.replace('d', ''),
                 bonuses: Array(cls.hitDiceAmount).fill(constitutionModifier),
