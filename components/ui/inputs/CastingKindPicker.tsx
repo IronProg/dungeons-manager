@@ -3,6 +3,7 @@ import i18n from 'i18n';
 import { Text, View } from 'react-native';
 
 import { CASTING_KINDS } from 'core/enums/castingKinds';
+import { colors } from 'core/utils/colors';
 
 type CastingKindPickerProps = {
   value?: string | null;
@@ -22,7 +23,7 @@ export const CastingKindPicker = ({
         style={{ width: '100%' }}
       >
         <Picker
-          style={{ width: '100%', height: 50 }}
+          style={{ width: '100%', height: 50, color: colors.gray[900] }}
           selectedValue={value}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
         >

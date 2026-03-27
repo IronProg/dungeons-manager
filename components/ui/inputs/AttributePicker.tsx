@@ -1,5 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
 import { ATTRIBUTES } from 'core/enums/attributes';
+import { colors } from 'core/utils/colors';
 import i18n from 'i18n';
 import { Text, View } from 'react-native';
 
@@ -21,7 +22,7 @@ export const AttributePicker = ({
         style={{ width: '100%' }}
       >
         <Picker
-          style={{ width: '100%', height: 50 }}
+          style={{ width: '100%', height: 50, color: colors.gray[900] }}
           selectedValue={value}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
         >

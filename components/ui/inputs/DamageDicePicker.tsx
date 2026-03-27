@@ -2,6 +2,7 @@ import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import { DAMAGE_DICES } from 'core/enums/damageDices';
+import { colors } from 'core/utils/colors';
 
 type DamageDicePickerProps = {
   value?: number | null;
@@ -21,7 +22,7 @@ export const DamageDicePicker = ({
         style={{ width: 100 }}
       >
         <Picker
-          style={{ width: '100%', height: 50 }}
+          style={{ width: '100%', height: 50, color: colors.gray[900] }}
           selectedValue={value}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
         >
