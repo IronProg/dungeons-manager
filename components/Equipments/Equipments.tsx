@@ -60,6 +60,11 @@ export const Equipments = () => {
     setDetailedEquipment(equipment);
   }, []);
 
+  const handleClose = useCallback(() => {
+    setEquipmentToEdit(undefined);
+    close();
+  }, [close]);
+
   return (
     <>
       <View className="relative flex flex-col gap-2">
@@ -105,10 +110,10 @@ export const Equipments = () => {
 
       <ReusableBottomSheetModal
         ref={ref}
-        onDismiss={close}
+        onDismiss={handleClose}
         snapPoints={[830 + bottom]}
       >
-        <EquipmentsForm onClose={close} equipment={equipmentToEdit} />
+        <EquipmentsForm onClose={handleClose} equipment={equipmentToEdit} />
       </ReusableBottomSheetModal>
     </>
   );

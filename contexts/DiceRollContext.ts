@@ -11,7 +11,7 @@ export type DiceRollContextType = {
   simpleRoll: (bonuses: number[]) => void;
   composeRoll: (params: ComposeRollParams) => void;
   enabled: boolean;
-  setEnabled: (enabled: boolean) => void;
+  setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const DiceRollContext = createContext<DiceRollContextType | null>(null);

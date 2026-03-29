@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView, Switch } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import {
   CircleOff,
@@ -28,12 +28,15 @@ export const MainCharacterSheet = () => {
     <>
       <ScrollView contentContainerClassName="px-2">
         <View className="flex flex-row justify-between items-center mb-2">
-          <Text className="text-black text-2xl font-bold">
+          <Text className="text-black text-2xl font-bold flex-1">
             {i18n.t('titles.characterSheet')}
           </Text>
 
-          <View className="flex flex-row gap-2">
-            <View className="bg-white rounded-full px-2 flex flex-row gap-2 items-center">
+          <View className="flex flex-row gap-2 flex-wrap">
+            <TouchableOpacity
+              onPress={() => setEnabled((prev) => !prev)}
+              className="bg-white rounded-full px-2 flex flex-row gap-2 items-center"
+            >
               <View className="relative p-0.5">
                 <Dice6 size={24} />
 
@@ -43,12 +46,10 @@ export const MainCharacterSheet = () => {
                   </View>
                 )}
               </View>
-
-              <Switch value={enabled} onValueChange={setEnabled} />
-            </View>
+            </TouchableOpacity>
 
             <TouchableOpacity
-              hitSlop={20}
+              hitSlop={10}
               onPress={() => setHintsOpen(true)}
               className="bg-white rounded-full p-2"
             >
@@ -56,7 +57,7 @@ export const MainCharacterSheet = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              hitSlop={20}
+              hitSlop={10}
               onPress={() => router.push('/character-details')}
               className="bg-white rounded-full p-2"
             >

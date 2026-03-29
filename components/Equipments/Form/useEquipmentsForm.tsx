@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Equipment } from 'types/character';
 import * as z from 'zod';
@@ -17,31 +16,12 @@ type useEquipmentsFormProps = {
 };
 
 export const useEquipmentsForm = ({ equipment }: useEquipmentsFormProps) => {
-  const formValues = useMemo(
-    () => ({
+  return useForm<EquipmentsFormType>({
+    resolver: zodResolver(schema),
+    defaultValues: {
       name: equipment?.name ?? '',
       amount: equipment?.amount ?? 1,
       description: equipment?.description ?? '',
-    }),
-    [equipment],
-  );
-
-  const { control, handleSubmit, watch, reset, getValues, formState } =
-    useForm<EquipmentsFormType>({
-      resolver: zodResolver(schema),
-      defaultValues: formValues,
-    });
-
-  useEffect(() => {
-    reset(formValues);
-  }, [reset, formValues]);
-
-  return {
-    control,
-    handleSubmit,
-    watch,
-    getValues,
-    formState,
-    errors: formState.errors,
-  };
+    },
+  });
 };
