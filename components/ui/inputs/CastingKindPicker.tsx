@@ -25,6 +25,7 @@ export const CastingKindPicker = ({
         <Picker
           style={{ width: '100%', height: 50, color: colors.gray[900] }}
           selectedValue={value}
+          dropdownIconColor={colors.gray[900]}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
         >
           <Picker.Item label={i18n.t('general.none')} value={null} />

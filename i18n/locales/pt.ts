@@ -286,6 +286,16 @@ export const pt = {
     rolling: 'Rolando...',
     result: 'Resultado',
   },
+  spellList: {
+    importFromExternalList: 'Importar da lista externa',
+    title: 'Importar Magia',
+    downloadTitle: 'Baixar Magias',
+    downloadSubTitle:
+      'Você deseja baixar o pacote de magias da comunidade? Isso só precisa ser feito uma vez.',
+    noSpellsFound: 'Nenhuma magia encontrada',
+    searchPlaceholder: 'Buscar magias...',
+    downloading: 'Baixando magias...',
+  },
   hints: {
     title: 'Como usar',
     equipmentsBase:

@@ -23,6 +23,7 @@ export const HitDicePicker = ({
       >
         <Picker
           style={{ width: '100%', height: 50, color: colors.gray[900] }}
+          dropdownIconColor={colors.gray[900]}
           selectedValue={value}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
         >

@@ -2526,6 +2526,11 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
+await-lock@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/await-lock/-/await-lock-2.2.2.tgz#a95a9b269bfd2f69d22b17a321686f551152bcef"
+  integrity sha512-aDczADvlvTGajTDjcjpJMqRkOF6Qdz3YbPZm/PyW6tKPkx2hlYBzxMhEywM/tU72HrVZjgl5VCdRuMlA7pZ8Gw==
+
 axios@^1.13.3:
   version "1.13.6"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.13.6.tgz#c3f92da917dc209a15dd29936d20d5089b6b6c98"
@@ -3913,6 +3918,13 @@ expo-server@^55.0.6:
   version "55.0.6"
   resolved "https://registry.yarnpkg.com/expo-server/-/expo-server-55.0.6.tgz#db8c2e13e82537a398ea4a420903499efe89235c"
   integrity sha512-xI72FTm469FfuuBL2R5aNtthgH+GR7ygOpsx/KcPS0K8AZaZd7VjtEExbzn9/qyyYkWW3T+3dAmCDKOMX8gdmQ==
+
+expo-sqlite@~55.0.11:
+  version "55.0.11"
+  resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-55.0.11.tgz#3a192ad053c4e6019702f3caa1223f943c266378"
+  integrity sha512-lDGJrE0m1lw/3y1ZSsER2kfXnS+9WzgaKcIFp/RKbTfyhs0v8l86Ulqdr+6peRFOfzi0kdj4Ty0LzE2Adx93tg==
+  dependencies:
+    await-lock "^2.2.2"
 
 expo-status-bar@^55.0.4:
   version "55.0.4"

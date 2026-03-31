@@ -286,6 +286,16 @@ export const en = {
     rolling: 'Rolling...',
     result: 'Result',
   },
+  spellList: {
+    title: 'Import Spell',
+    importFromExternalList: 'Import from external list',
+    downloadTitle: 'Download Spells',
+    downloadSubTitle:
+      'Do you want to download the community spell pack? This only needs to be done once.',
+    noSpellsFound: 'No spells found',
+    searchPlaceholder: 'Search spells...',
+    downloading: 'Downloading spells...',
+  },
   hints: {
     title: 'How to use',
     equipmentsBase:
