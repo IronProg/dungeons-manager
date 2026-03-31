@@ -93,7 +93,25 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
       <View className="flex flex-row justify-between items-start mb-2">
         <View className="flex-1">
           <View className="flex flex-row items-start gap-1">
-            <Text className="text-xl font-bold flex-1">{spell.name}</Text>
+            <View className="flex-1 flex-col gap-2">
+              <Text className="text-xl font-bold flex-1">{spell.name}</Text>
+
+              <View className="flex flex-row items-center gap-1">
+                <Text className="text-sm italic text-gray-500">
+                  {i18n.t(`spells.schools.${spell.school}`)}
+                </Text>
+
+                {spell.concentration && (
+                  <Image source={headIcon} style={{ width: 20, height: 20 }} />
+                )}
+
+                {spell.ritual && (
+                  <Text className="text-xs font-bold">
+                    {i18n.t('spells.ritual')}
+                  </Text>
+                )}
+              </View>
+            </View>
 
             {!!spell.attack && (
               <TouchableOpacity
@@ -106,23 +124,21 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
               </TouchableOpacity>
             )}
 
-            <TouchableOpacity
-              onPress={handleCast}
-              className="pt-1 px-2 pb-2"
-              hitSlop={10}
-            >
-              <WandSparkles size={20} color={colors.purple['600']} />
-            </TouchableOpacity>
+            {(spell.damages?.length > 0 ||
+              spell.higherLevelsDamages?.length > 0) && (
+              <TouchableOpacity
+                onPress={handleCast}
+                className="pt-1 px-2 pb-2"
+                hitSlop={10}
+              >
+                <WandSparkles size={20} color={colors.purple['600']} />
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity onPress={handleEdit} className="pt-1 px-2 pb-2">
               <Edit size={20} color={colors.indigo['600']} />
             </TouchableOpacity>
-
-            {spell.concentration && (
-              <Image source={headIcon} style={{ width: 20, height: 20 }} />
-            )}
           </View>
-          <Text className="text-sm italic text-gray-500">{spell.school}</Text>
         </View>
 
         {spell.level > 0 && (

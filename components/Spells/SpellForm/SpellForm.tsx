@@ -45,10 +45,10 @@ export const SpellForm = ({
   const [editingAttack, setEditingAttack] = useState(false);
 
   const { mutate: createSpell, isPending: isCreating } =
-    useCreateSpellMutation(defaultLevel);
+    useCreateSpellMutation();
   const { mutate: updateSpell, isPending: isUpdating } =
     useUpdateSpellMutation();
-  const { mutate: deleteSpell } = useDeleteSpellMutation(defaultLevel);
+  const { mutate: deleteSpell } = useDeleteSpellMutation();
 
   const { control, handleSubmit, watch } = useSpellForm({ spell: initialData });
 

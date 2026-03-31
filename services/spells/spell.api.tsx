@@ -8,6 +8,12 @@ import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
 
 import { Spell, SpellSlotLevelType } from 'types/character';
 
+export const getAllCharacterSpellsKey = ({
+  characterId,
+}: {
+  characterId: number;
+}): ['characters', number, 'spells'] => ['characters', characterId, 'spells'];
+
 export const getCharacterSpellsKey = ({
   characterId,
   level,
@@ -55,13 +61,13 @@ export const useUpdateSpellMutation = () => {
   });
 };
 
-export const useCreateSpellMutation = (level: SpellSlotLevelType) => {
+export const useCreateSpellMutation = () => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
   return useMutation<Spell, AxiosError<ApiErrorResponse>, CreateSpellParams>({
     mutationFn: (params: CreateSpellParams) =>
-      spellService.create(characterId!, { ...params, level }),
+      spellService.create(characterId!, params),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['characters', characterId, 'spells'],
@@ -73,7 +79,7 @@ export const useCreateSpellMutation = (level: SpellSlotLevelType) => {
   });
 };
 
-export const useDeleteSpellMutation = (level: SpellSlotLevelType) => {
+export const useDeleteSpellMutation = () => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
@@ -81,7 +87,7 @@ export const useDeleteSpellMutation = (level: SpellSlotLevelType) => {
     mutationFn: (id: number) => spellService.delete(characterId!, id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: getCharacterSpellsKey({ characterId: characterId!, level }),
+        queryKey: getAllCharacterSpellsKey({ characterId: characterId! }),
       });
     },
     onError: ({ response }) => {

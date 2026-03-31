@@ -201,6 +201,15 @@ export const SpellFormInputs = ({
               <Switch value={value} onValueChange={onChange} />
             )}
           />
+
+          <Text className="text-xs font-bold">{i18n.t('spells.ritual')}</Text>
+          <Controller
+            control={control}
+            name="ritual"
+            render={({ field: { onChange, value } }) => (
+              <Switch value={value} onValueChange={onChange} />
+            )}
+          />
         </View>
       </View>
 

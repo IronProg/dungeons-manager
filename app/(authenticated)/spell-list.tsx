@@ -87,7 +87,9 @@ export default function SpellListScreen() {
   };
 
   const handleSpellSelect = (spellId: number) => {
-    router.navigate({
+    router.dismiss();
+
+    router.replace({
       pathname: '/(authenticated)/spell-form',
       params: { importedSpellId: String(spellId), level: level || '0' },
     });

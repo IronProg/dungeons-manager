@@ -200,6 +200,7 @@ export type Spell = {
   castingTime: string;
   components: string;
   concentration: boolean;
+  ritual: boolean;
   description: string;
   duration: string;
   higherLevelDescription: string;
