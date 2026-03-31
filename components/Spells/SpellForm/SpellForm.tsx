@@ -37,7 +37,7 @@ export const SpellForm = ({
   defaultLevel,
   onSuccess,
 }: SpellFormProps) => {
-  const { back } = useRouter();
+  const router = useRouter();
   const { characterId } = useCharacter();
   const isEditing = !!initialData?.id;
 
@@ -66,11 +66,11 @@ export const SpellForm = ({
   const handleDelete = useCallback(() => {
     deleteSpell(initialData!.id!, {
       onSuccess: () => {
-        back();
+        router.back();
       },
     });
     setDeleting(false);
-  }, [back, deleteSpell, initialData]);
+  }, [router, deleteSpell, initialData]);
 
   const insets = useSafeAreaInsets();
   const isSubmitting = isCreating || isUpdating;
@@ -87,6 +87,23 @@ export const SpellForm = ({
         keyboardShouldPersistTaps="handled"
       >
         <View className="gap-4">
+          {!isEditing && !editingAttack && (
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: '/(authenticated)/spell-list',
+                  params: { level: defaultLevel.toString() },
+                })
+              }
+              disabled={isSubmitting}
+              className={`bg-indigo-100 border border-indigo-300 p-4 rounded-xl items-center mb-2`}
+            >
+              <Text className="text-indigo-800 font-bold text-lg">
+                {i18n.t('spellList.importFromExternalList')}
+              </Text>
+            </TouchableOpacity>
+          )}
+
           {editingAttack ? (
             <SpellAttackForm control={control} watch={watch} />
           ) : (
