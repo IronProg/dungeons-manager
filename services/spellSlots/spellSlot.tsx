@@ -64,7 +64,7 @@ export const useGetAllCharacterSpellSlots = () => {
   });
 };
 
-export const useUpdateSpellSlotMutation = (level: number) => {
+export const useUpdateSpellSlotMutation = () => {
   const queryClient = useQueryClient();
   const { characterId } = useCharacter();
 
@@ -77,10 +77,7 @@ export const useUpdateSpellSlotMutation = (level: number) => {
       spellSlotService.update(characterId!, params),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: getCharacterSpellSlotsKey({
-          characterId: characterId!,
-          level,
-        }),
+        queryKey: ['characters', characterId, 'spellSlots'],
       });
     },
     onError: ({ response }) => {

@@ -24,7 +24,7 @@ export const SpellSlotsHeader = ({ level }: SpellSlotsHeaderProps) => {
 
   const { data: slots, isLoading: isLoadingSlots } =
     useGetCharacterSpellSlots(level);
-  const { mutate: updateSlot } = useUpdateSpellSlotMutation(level);
+  const { mutate: updateSlot } = useUpdateSpellSlotMutation();
   const { mutate: resetAllSpellSlots } = useResetAllSpellSlotsMutation();
 
   const pactSlot = useMemo(

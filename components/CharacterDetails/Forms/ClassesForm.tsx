@@ -83,71 +83,79 @@ export const ClassesForm = ({
         return (
           <View
             key={field.fieldId}
-            className="flex flex-row gap-2 pb-2 border-b-neutral-200 w-full relative"
+            className="flex flex-col gap-2 pb-2 border-b-neutral-200 w-full relative"
           >
-            <Controller
-              control={control}
-              name={`classes.${index}.name`}
-              render={({ field: { value, onChange } }) => (
-                <View className="flex-1">
-                  <Text className="font-medium">{i18n.t('classes.name')}</Text>
-                  <BottomSheetTextInput
-                    className="bg-slate-100 px-2 rounded-lg"
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                </View>
-              )}
-            />
+            <View className="flex flex-row gap-2 pb-2 w-full">
+              <Controller
+                control={control}
+                name={`classes.${index}.name`}
+                render={({ field: { value, onChange } }) => (
+                  <View className="flex-1">
+                    <Text className="font-medium">
+                      {i18n.t('classes.name')}
+                    </Text>
+                    <BottomSheetTextInput
+                      className="bg-slate-100 px-2 rounded-lg"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  </View>
+                )}
+              />
 
-            <Controller
-              control={control}
-              name={`classes.${index}.level`}
-              render={({ field: { value, onChange } }) => (
-                <View>
-                  <Text className="font-medium">{i18n.t('classes.level')}</Text>
-                  <BottomSheetTextInput
-                    className="bg-slate-100 px-2 rounded-lg text-center w-12"
-                    maxLength={2}
-                    onChangeText={onChange}
-                    value={`${value}`}
-                  />
-                </View>
-              )}
-            />
+              <Controller
+                control={control}
+                name={`classes.${index}.level`}
+                render={({ field: { value, onChange } }) => (
+                  <View>
+                    <Text className="font-medium">
+                      {i18n.t('classes.level')}
+                    </Text>
+                    <BottomSheetTextInput
+                      className="bg-slate-100 px-2 rounded-lg text-center w-20"
+                      maxLength={2}
+                      onChangeText={onChange}
+                      value={`${value}`}
+                    />
+                  </View>
+                )}
+              />
+            </View>
 
-            <Controller
-              control={control}
-              name={`classes.${index}.hitDice`}
-              render={({
-                field: { value, onChange },
-                fieldState: { error },
-              }) => (
-                <View>
-                  <Text className="font-medium">
-                    {i18n.t('classes.hitDice')}
-                  </Text>
-                  <HitDicePicker
-                    value={value}
-                    onChange={onChange}
-                    error={error?.message}
-                  />
-                </View>
-              )}
-            />
+            <View className="flex flex-row gap-2 pb-2 w-full">
+              <Controller
+                control={control}
+                name={`classes.${index}.hitDice`}
+                render={({
+                  field: { value, onChange },
+                  fieldState: { error },
+                }) => (
+                  <View>
+                    <Text className="font-medium">
+                      {i18n.t('classes.hitDice')}
+                    </Text>
+                    <HitDicePicker
+                      value={value}
+                      onChange={onChange}
+                      error={error?.message}
+                    />
+                  </View>
+                )}
+              />
 
-            <Controller
-              control={control}
-              name={`classes.${index}.castingKind`}
-              render={({ field: { value, onChange } }) => (
-                <View className="flex-1 min-w-20">
-                  <Text className="font-medium">
-                    {i18n.t('classes.castingKind')}
-                  </Text>
-                  <CastingKindPicker onChange={onChange} value={value} />
-                </View>
-              )}
-            />
+              <Controller
+                control={control}
+                name={`classes.${index}.castingKind`}
+                render={({ field: { value, onChange } }) => (
+                  <View className="flex-1 min-w-20">
+                    <Text className="font-medium">
+                      {i18n.t('classes.castingKind')}
+                    </Text>
+                    <CastingKindPicker onChange={onChange} value={value} />
+                  </View>
+                )}
+              />
+            </View>
 
             <View className="absolute -top-2 right-0">
               <TouchableOpacity

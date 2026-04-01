@@ -32,9 +32,7 @@ export const SpellCastingModal = ({
   const { calculateSpellDamage } = useSpellDamage();
   const { characterId } = useCharacter();
 
-  const { mutate: updateSpellSlot, isPending } = useUpdateSpellSlotMutation(
-    spell?.level || 1,
-  );
+  const { mutate: updateSpellSlot, isPending } = useUpdateSpellSlotMutation();
   const initialDamages: Damage[] = useMemo(() => spell?.damages || [], [spell]);
   const higherLevelsDamage: Damage[] = useMemo(
     () => spell?.higherLevelsDamages || [],
