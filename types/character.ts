@@ -47,6 +47,7 @@ export type Character = {
   attacks: Attack[];
   resources: Resource[];
   features: Feature[];
+  isOwner?: boolean;
 };
 
 export type CharacterGeneralInfo = {

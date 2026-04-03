@@ -19,7 +19,7 @@ type WeaponsAndToolsFormTypes = 'attacks' | 'resources' | 'features';
 
 export const WeaponsAndTools = () => {
   const { bottom } = useSafeAreaInsets();
-  const { character } = useCharacter();
+  const { character, canEdit } = useCharacter();
   const { data: currencies, isLoading: isLoadingCurrencies } =
     useGetCharacterCurrency();
 
@@ -45,11 +45,12 @@ export const WeaponsAndTools = () => {
 
   const handleOpen = useCallback(
     (formName: WeaponsAndToolsFormTypes) => {
+      if (!canEdit) return;
       setActiveForm(formName);
       setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
       open();
     },
-    [getFormTypeSnapPoints, bottom, open],
+    [getFormTypeSnapPoints, bottom, open, canEdit],
   );
 
   const handleClose = useCallback(() => {
@@ -70,7 +71,7 @@ export const WeaponsAndTools = () => {
         >
           {isLoadingCurrencies && <ActivityIndicator />}
           {currencies ? (
-            <Currency currencies={currencies!} />
+            <Currency currencies={currencies!} canEdit={canEdit} />
           ) : (
             <Text>No currencies found</Text>
           )}
@@ -84,6 +85,7 @@ export const WeaponsAndTools = () => {
                 setHighlightedAttack(attack);
                 handleOpen('attacks');
               }}
+              canEdit={canEdit}
             />
           </View>
 
@@ -96,6 +98,7 @@ export const WeaponsAndTools = () => {
                 setHighlightedResource(resource);
                 handleOpen('resources');
               }}
+              canEdit={canEdit}
             />
           </View>
 
@@ -108,6 +111,7 @@ export const WeaponsAndTools = () => {
                 setHighlightedFeature(feature);
                 handleOpen('features');
               }}
+              canEdit={canEdit}
             />
           </View>
         </ScrollView>

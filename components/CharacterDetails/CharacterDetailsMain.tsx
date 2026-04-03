@@ -17,10 +17,12 @@ type UpdateBackgroundFormData = Omit<UpdateBackgroundParams, 'characterId'>;
 
 type CharacterDetailsProps = {
   characterId: number;
+  canEdit: boolean;
 };
 
 export const CharacterDetailsMain = ({
   characterId,
+  canEdit,
 }: CharacterDetailsProps) => {
   const { data: character } = useGetCharacter({ id: characterId });
 
@@ -58,6 +60,7 @@ export const CharacterDetailsMain = ({
       <View className="flex flex-row items-between flex-wrap gap-y-4">
         <View className="w-1/2 pr-2">
           <DetailsEditableTextBox
+            disabled={!canEdit}
             isLoading={characterPending}
             text={character.name}
             label={i18n.t('background.name')}
@@ -73,6 +76,7 @@ export const CharacterDetailsMain = ({
 
         <View className="w-1/2 pl-2">
           <DetailsEditableTextBox
+            disabled={!canEdit}
             isLoading={backgroundLoading}
             text={background?.race}
             label={i18n.t('background.race')}
@@ -85,6 +89,7 @@ export const CharacterDetailsMain = ({
 
         <View className="w-1/2 pr-2">
           <DetailsEditableTextBox
+            disabled={!canEdit}
             isLoading={backgroundLoading}
             text={background?.background}
             label={i18n.t('background.background')}
@@ -97,6 +102,7 @@ export const CharacterDetailsMain = ({
 
         <View className="w-1/2 pl-2">
           <DetailsEditableTextBox
+            disabled={!canEdit}
             isLoading={backgroundLoading}
             text={background?.alignment}
             label={i18n.t('background.alignment')}

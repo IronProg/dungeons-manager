@@ -11,10 +11,12 @@ type UpdateProficiencyFormData = Omit<UpdateProficiencyParams, 'characterId'>;
 
 type CharacterDetailsProps = {
   character: Character;
+  canEdit: boolean;
 };
 
 export const CharacterDetailsProficiencies = ({
   character,
+  canEdit,
 }: CharacterDetailsProps) => {
   const { data: proficiency, isLoading } = useGetProficiency();
 
@@ -34,6 +36,7 @@ export const CharacterDetailsProficiencies = ({
   return (
     <>
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={proficiency?.armors}
         label={i18n.t('proficiency.armors')}
@@ -43,6 +46,7 @@ export const CharacterDetailsProficiencies = ({
         }
       />
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={proficiency?.weapons}
         label={i18n.t('proficiency.weapons')}
@@ -52,6 +56,7 @@ export const CharacterDetailsProficiencies = ({
         }
       />
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={proficiency?.tools}
         label={i18n.t('proficiency.tools')}
@@ -61,6 +66,7 @@ export const CharacterDetailsProficiencies = ({
         }
       />
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={proficiency?.languages}
         label={i18n.t('proficiency.languages')}

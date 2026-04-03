@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { CharacterContext } from 'contexts/CharacterContext';
 import { buildModifiers } from 'core/helpers/buildModifiers';
@@ -17,6 +17,7 @@ export type CharacterProviderProps = {
   setCharacterId: React.Dispatch<React.SetStateAction<number | undefined>>;
   modifiers?: Modifiers;
   setModifiers: React.Dispatch<React.SetStateAction<Modifiers | undefined>>;
+  canEdit: boolean;
 };
 
 export const CharacterProvider = ({ children }: { children: ReactNode }) => {
@@ -33,6 +34,8 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     isLoading,
     isFetching,
   } = useGetCharacter({ id: characterId });
+
+  const canEdit = useMemo(() => character?.isOwner ?? false, [character]);
 
   useEffect(() => {
     if (!character) {
@@ -58,6 +61,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     setCharacterId,
     modifiers,
     setModifiers,
+    canEdit,
   };
 
   return (

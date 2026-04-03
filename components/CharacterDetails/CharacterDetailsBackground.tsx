@@ -11,10 +11,12 @@ type UpdateBackgroundFormData = Omit<UpdateBackgroundParams, 'characterId'>;
 
 type CharacterDetailsProps = {
   character: Character;
+  canEdit: boolean;
 };
 
 export const CharacterDetailsBackground = ({
   character,
+  canEdit,
 }: CharacterDetailsProps) => {
   const { data: background, isLoading } = useGetBackground();
 
@@ -33,6 +35,7 @@ export const CharacterDetailsBackground = ({
   return (
     <>
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={background?.personalityTraits}
         label={i18n.t('background.personalityTraits')}
@@ -42,6 +45,7 @@ export const CharacterDetailsBackground = ({
         }
       />
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={background?.ideals}
         label={i18n.t('background.ideals')}
@@ -51,6 +55,7 @@ export const CharacterDetailsBackground = ({
         }
       />
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={background?.bonds}
         label={i18n.t('background.bonds')}
@@ -60,6 +65,7 @@ export const CharacterDetailsBackground = ({
         }
       />
       <DetailsEditableTextBox
+        disabled={!canEdit}
         isLoading={isLoading}
         text={background?.flaws}
         label={i18n.t('background.flaws')}

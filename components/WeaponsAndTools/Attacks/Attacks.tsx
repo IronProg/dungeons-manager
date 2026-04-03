@@ -19,9 +19,10 @@ import { ComposeDiceRollButton } from 'components/ui/ComposeDiceRollButton';
 type AttacksProps = {
   onCreate: () => void;
   onSelect: (attack: Attack) => void;
+  canEdit: boolean;
 };
 
-export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
+export const Attacks = ({ onCreate, onSelect, canEdit }: AttacksProps) => {
   const { characterId, modifiers, proficiencyBonus } = useCharacter();
   const { data: attacks, isLoading } = useGetAllAttacks();
 
@@ -48,16 +49,18 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
       <View className="flex flex-row justify-between mb-2 items-center">
         <View />
 
-        <Text className="mt-4 text-black text-2xl font-bold text-center">
+        <Text className="mt-4 text-black text-2xl font-bold text-center flex-1 grow">
           {i18n.t('titles.attacks')}
         </Text>
 
-        <TouchableOpacity
-          onPress={onCreate}
-          className="rounded-full bg-green-500 p-2"
-        >
-          <Plus size={16} color={'white'} />
-        </TouchableOpacity>
+        {canEdit && (
+          <TouchableOpacity
+            onPress={onCreate}
+            className="rounded-full bg-green-500 p-2"
+          >
+            <Plus size={16} color={'white'} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {isLoading && <ActivityIndicator />}
@@ -79,7 +82,7 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
             >
               <TouchableOpacity
                 onPress={() => setDetailedAttack(attack)}
-                onLongPress={() => onSelect(attack)}
+                onLongPress={canEdit ? () => onSelect(attack) : undefined}
                 key={index}
                 className="rounded-lg flex flex-row items-center gap-2 mb-2 flex-1"
               >
@@ -141,12 +144,14 @@ export const Attacks = ({ onCreate, onSelect }: AttacksProps) => {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => setAttackToDelete(attack)}
-                className="bg-red-500 rounded-full p-2"
-              >
-                <Trash size={16} color="white" />
-              </TouchableOpacity>
+              {canEdit && (
+                <TouchableOpacity
+                  onPress={() => setAttackToDelete(attack)}
+                  className="bg-red-500 rounded-full p-2"
+                >
+                  <Trash size={16} color="white" />
+                </TouchableOpacity>
+              )}
             </View>
           );
         })

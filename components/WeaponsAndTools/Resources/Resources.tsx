@@ -17,9 +17,10 @@ import { Resource } from 'types/character';
 type ResourcesProps = {
   onCreate: () => void;
   onSelect: (resource: Resource) => void;
+  canEdit: boolean;
 };
 
-export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
+export const Resources = ({ onCreate, onSelect, canEdit }: ResourcesProps) => {
   const { characterId } = useCharacter();
   const { data: resources, isLoading } = useGetAllResources();
   const { mutate: updateResource, isPending } = useUpdateResourceMutation();
@@ -43,7 +44,7 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
 
   const handleQuickUpdate = useCallback(
     (resource: Resource) => {
-      if (resource.amount <= 0) return;
+      if (!canEdit || resource.amount <= 0) return;
 
       updateResource({
         characterId: characterId!,
@@ -51,7 +52,7 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
         amount: resource.amount - 1,
       });
     },
-    [characterId, updateResource],
+    [characterId, updateResource, canEdit],
   );
 
   return (
@@ -59,16 +60,18 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
       <View className="flex flex-row justify-between mb-2 items-center">
         <View />
 
-        <Text className="mt-4 text-black text-2xl font-bold text-center">
+        <Text className="mt-4 text-black text-2xl font-bold text-center flex-1 grow">
           {i18n.t('titles.resourcesAndAmmunitions')}
         </Text>
 
-        <TouchableOpacity
-          onPress={onCreate}
-          className="rounded-full bg-green-500 p-2"
-        >
-          <Plus size={16} color={'white'} />
-        </TouchableOpacity>
+        {canEdit && (
+          <TouchableOpacity
+            onPress={onCreate}
+            className="rounded-full bg-green-500 p-2"
+          >
+            <Plus size={16} color={'white'} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {isLoading && <ActivityIndicator />}
@@ -80,7 +83,7 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
               <TouchableOpacity
                 disabled={isPending}
                 onPress={() => handleQuickUpdate(resource)}
-                onLongPress={() => onSelect(resource)}
+                onLongPress={canEdit ? () => onSelect(resource) : undefined}
                 key={index}
                 className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 flex-1"
               >
@@ -94,12 +97,14 @@ export const Resources = ({ onCreate, onSelect }: ResourcesProps) => {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => setResourceToDelete(resource)}
-                className="bg-red-500 rounded-full p-2"
-              >
-                <Trash size={16} color="white" />
-              </TouchableOpacity>
+              {canEdit && (
+                <TouchableOpacity
+                  onPress={() => setResourceToDelete(resource)}
+                  className="bg-red-500 rounded-full p-2"
+                >
+                  <Trash size={16} color="white" />
+                </TouchableOpacity>
+              )}
             </View>
           );
         })

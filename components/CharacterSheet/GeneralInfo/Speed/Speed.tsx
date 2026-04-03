@@ -12,9 +12,10 @@ export type SpeedHighlight = {
 type SpeedProps = {
   generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
+  canEdit: boolean;
 };
 
-export const Speed = ({ generalInfo, onLongPress }: SpeedProps) => {
+export const Speed = ({ generalInfo, onLongPress, canEdit }: SpeedProps) => {
   const [speedIndex, setSpeedIndex] = useState<number>(0);
 
   const activeSpeeds = useMemo(() => {
@@ -51,7 +52,7 @@ export const Speed = ({ generalInfo, onLongPress }: SpeedProps) => {
 
   return (
     <TouchableOpacity
-      onLongPress={onLongPress}
+      onLongPress={canEdit ? onLongPress : undefined}
       onPress={handleChangeSpeedType}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >

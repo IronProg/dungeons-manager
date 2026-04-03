@@ -7,9 +7,14 @@ import { CharacterGeneralInfo } from 'types/character';
 type ArmorClassProps = {
   generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
+  canEdit: boolean;
 };
 
-export const ArmorClass = ({ generalInfo, onLongPress }: ArmorClassProps) => {
+export const ArmorClass = ({
+  generalInfo,
+  onLongPress,
+  canEdit,
+}: ArmorClassProps) => {
   const { modifiers } = useCharacter();
 
   let modifier = generalInfo.armorClassBase;
@@ -24,6 +29,7 @@ export const ArmorClass = ({ generalInfo, onLongPress }: ArmorClassProps) => {
 
   return (
     <TouchableOpacity
+      disabled={!canEdit}
       onLongPress={onLongPress}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >

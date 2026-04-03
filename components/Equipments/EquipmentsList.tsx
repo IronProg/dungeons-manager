@@ -10,12 +10,14 @@ type EquipmentsListProps = {
   onShow: (equipment: Equipment) => void;
   onEdit: (equipment: Equipment) => void;
   onDelete: (equipment: Equipment) => void;
+  canEdit: boolean;
 };
 
 export const EquipmentsList = ({
   onShow,
   onEdit,
   onDelete,
+  canEdit,
 }: EquipmentsListProps) => {
   const { data: equipments, isPending } = useGetAllEquipments();
 
@@ -35,7 +37,7 @@ export const EquipmentsList = ({
               onPress={() =>
                 equipment.description?.length > 0 && onShow(equipment)
               }
-              onLongPress={() => onEdit(equipment)}
+              onLongPress={canEdit ? () => onEdit(equipment) : undefined}
               className="flex flex-row gap-2 bg-white rounded-lg py-1 px-2 grow"
             >
               <Text className="flex-1 border-r border-neutral-500 line-clamp-1">
@@ -45,12 +47,14 @@ export const EquipmentsList = ({
               <Text>{equipment.amount}x</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => onDelete(equipment)}
-              className="rounded-full h-8 w-8 flex items-center justify-center bg-red-500"
-            >
-              <Trash2 size={16} color={'white'} />
-            </TouchableOpacity>
+            {canEdit && (
+              <TouchableOpacity
+                onPress={() => onDelete(equipment)}
+                className="rounded-full h-8 w-8 flex items-center justify-center bg-red-500"
+              >
+                <Trash2 size={16} color={'white'} />
+              </TouchableOpacity>
+            )}
           </View>
         ))
       )}

@@ -15,7 +15,7 @@ import { SpellCastingModal } from './SpellCastingModal';
 import { Spell, SpellSlotLevelType } from 'types/character';
 
 export const Spells = () => {
-  const { character } = useCharacter();
+  const { character, canEdit } = useCharacter();
 
   const [level, setLevel] = useState<SpellSlotLevelType>(0);
   const [spellToCast, setSpellToCast] = useState<Spell>();
@@ -23,7 +23,10 @@ export const Spells = () => {
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
 
-  const spellHeader = useMemo(() => <SpellsHeader level={level} />, [level]);
+  const spellHeader = useMemo(
+    () => <SpellsHeader level={level} canEdit={canEdit} />,
+    [level, canEdit],
+  );
 
   return (
     <View style={{ flex: 1 }}>
@@ -33,7 +36,11 @@ export const Spells = () => {
         contentContainerStyle={{ padding: 16, paddingBottom: 96 }}
         data={spells}
         renderItem={({ item }) => (
-          <SpellCard onCast={() => setSpellToCast(item)} spell={item} />
+          <SpellCard
+            onCast={() => setSpellToCast(item)}
+            spell={item}
+            canEdit={canEdit}
+          />
         )}
         ListHeaderComponent={spellHeader}
         ListEmptyComponent={

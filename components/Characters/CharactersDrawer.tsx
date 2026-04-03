@@ -10,6 +10,7 @@ import {
   Users,
   XCircle,
   LayoutDashboard,
+  Eye,
 } from 'lucide-react-native';
 import i18n from 'i18n';
 
@@ -57,44 +58,51 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
     [navigation, setCharacterId],
   );
 
-  const renderCharacterItem = ({ item }: { item: Character }) => (
-    <TouchableOpacity
-      onPress={() => handleSelectCharacter(item)}
-      className="bg-white rounded-xl p-4 mb-3 flex-row items-center shadow-sm"
-      activeOpacity={0.7}
-    >
-      <View className="w-12 h-12 rounded-full bg-indigo-500 items-center justify-center mr-3">
-        <Text className="text-white font-bold text-lg">
-          {item.name.charAt(0).toUpperCase()}
-        </Text>
-      </View>
+  const renderCharacterItem = ({ item }: { item: Character }) => {
+    const isViewOnly = table?.isCreator && !item.isOwner;
 
-      <View className="flex-1 gap-1">
-        <Text className="font-semibold text-base text-gray-800">
-          {item.name}
-        </Text>
-        <Text className="text-gray-400 text-sm">
-          {i18n.t('general.level')} {item.level}
-        </Text>
-        {item.table && (
-          <View className="flex flex-row gap-1 items-center">
-            <Text className="font-bold text-gray-600 text-sm">
-              {i18n.t('tables.table')}:
-            </Text>
-            <Text className="text-gray-400 text-sm">{item.table.name}</Text>
-          </View>
-        )}
-      </View>
-
+    return (
       <TouchableOpacity
-        onPress={() => setCharacterToDelete(item)}
-        className="p-2"
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        onPress={() => handleSelectCharacter(item)}
+        className="bg-white rounded-xl p-4 mb-3 flex-row items-center shadow-sm"
+        activeOpacity={0.7}
       >
-        <Trash2 size={18} color="#EF4444" />
+        <View className="w-12 h-12 rounded-full bg-indigo-500 items-center justify-center mr-3">
+          <Text className="text-white font-bold text-lg">
+            {item.name.charAt(0).toUpperCase()}
+          </Text>
+        </View>
+
+        <View className="flex-1 gap-1">
+          <View className="flex-row items-center gap-1">
+            {isViewOnly && <Eye size={14} color="#6366f1" />}
+            <Text className="font-semibold text-base text-gray-800">
+              {item.name}
+            </Text>
+          </View>
+          <Text className="text-gray-400 text-sm">
+            {i18n.t('general.level')} {item.level}
+          </Text>
+          {item.table && (
+            <View className="flex flex-row gap-1 items-center">
+              <Text className="font-bold text-gray-600 text-sm">
+                {i18n.t('tables.table')}:
+              </Text>
+              <Text className="text-gray-400 text-sm">{item.table.name}</Text>
+            </View>
+          )}
+        </View>
+
+        <TouchableOpacity
+          onPress={() => setCharacterToDelete(item)}
+          className="p-2"
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Trash2 size={18} color="#EF4444" />
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
-  );
+    );
+  };
 
   const ListEmptyComponent = () => (
     <View className="items-center py-12">

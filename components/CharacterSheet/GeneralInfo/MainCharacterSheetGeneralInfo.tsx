@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
+import { useCharacter } from 'contexts/CharacterContext';
 
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { PassivePerception } from './PassivePerception/PassivePerception';
@@ -26,6 +27,7 @@ type GeneralInfoFormTypes =
 export const MainCharacterSheetGeneralInfo = () => {
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
   const { bottom } = useSafeAreaInsets();
+  const { canEdit } = useCharacter();
 
   const [activeForm, setActiveForm] = useState<null | GeneralInfoFormTypes>(
     null,
@@ -46,11 +48,12 @@ export const MainCharacterSheetGeneralInfo = () => {
 
   const handleOpen = useCallback(
     (formName: GeneralInfoFormTypes) => {
+      if (!canEdit) return;
       setActiveForm(formName);
       setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
       open();
     },
-    [getFormTypeSnapPoints, bottom, open],
+    [getFormTypeSnapPoints, bottom, open, canEdit],
   );
 
   return (
@@ -62,29 +65,33 @@ export const MainCharacterSheetGeneralInfo = () => {
             <ArmorClass
               generalInfo={generalInfo}
               onLongPress={() => handleOpen('armorClass')}
+              canEdit={canEdit}
             />
 
             <Initiative
               generalInfo={generalInfo}
               onLongPress={() => handleOpen('initiative')}
+              canEdit={canEdit}
             />
 
             <Speed
               generalInfo={generalInfo}
               onLongPress={() => handleOpen('speed')}
+              canEdit={canEdit}
             />
           </View>
 
           <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
             <Proficiency />
 
-            <Exhaustion generalInfo={generalInfo} />
+            <Exhaustion generalInfo={generalInfo} canEdit={canEdit} />
 
             <PassivePerception
               generalInfo={generalInfo}
               onLongPress={() => {
                 handleOpen('passivePerception');
               }}
+              canEdit={canEdit}
             />
           </View>
         </>

@@ -3,16 +3,19 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useTable } from 'contexts/TableContext';
 import { DMCharacterCard } from 'components/Characters/DMCharacterCard';
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { Container } from 'components/Container';
 import { useGetTableCharactersResume } from 'services/tables/table.api';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useQueryClient } from '@tanstack/react-query';
 import { TableChannelCallback, useTableChannel } from 'hooks/useTableChannel';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export default function DMDashboard() {
+  const { navigate } = useRouter();
   const queryClient = useQueryClient();
   const { table, tableId, isPending } = useTable();
+  const { setCharacterId } = useCharacter();
   const { data: characters, isLoading: isLoadingCharacters } =
     useGetTableCharactersResume({ id: tableId! });
   const handleRefresh = useCallback(() => {
@@ -55,7 +58,15 @@ export default function DMDashboard() {
             />
           }
           data={characters || []}
-          renderItem={({ item }) => <DMCharacterCard character={item} />}
+          renderItem={({ item }) => (
+            <DMCharacterCard
+              character={item}
+              onPress={() => {
+                setCharacterId(item.id!);
+                navigate('/(authenticated)/(drawer)/(tabs)');
+              }}
+            />
+          )}
           keyExtractor={(item) => item.id!.toString()}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import { Image } from 'expo-image';
 import {
@@ -25,9 +25,10 @@ const headIcon = require('assets/icons/head.svg') as string;
 type SpellCardProps = {
   spell: Spell;
   onCast: () => void;
+  canEdit: boolean;
 };
 
-export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
+export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
   const router = useRouter();
   const { calculateCantripDamage } = useSpellDamage();
   const { simpleRoll, composeRoll } = useDiceRoll();
@@ -65,7 +66,7 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
     });
   };
 
-  const getComponentsString = () => {
+  const componentsString = useMemo(() => {
     const comps = [];
     if (spell.verbal) comps.push('V');
     if (spell.somatic) comps.push('S');
@@ -76,7 +77,7 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
       str += ` (${spell.components})`;
     }
     return str;
-  };
+  }, [spell.components, spell.material, spell.somatic, spell.verbal]);
 
   const handleCast = () => {
     if (spell.level !== 0) {
@@ -135,9 +136,11 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
               </TouchableOpacity>
             )}
 
-            <TouchableOpacity onPress={handleEdit} className="pt-1 px-2 pb-2">
-              <Edit size={20} color={colors.indigo['600']} />
-            </TouchableOpacity>
+            {canEdit && (
+              <TouchableOpacity onPress={handleEdit} className="pt-1 px-2 pb-2">
+                <Edit size={20} color={colors.indigo['600']} />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
@@ -151,6 +154,7 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
               onValueChange={togglePrepared}
               trackColor={{ false: '#d1d5db', true: '#10b981' }}
               thumbColor={'#ffffff'}
+              disabled={!canEdit}
             />
           </View>
         )}
@@ -177,7 +181,7 @@ export const SpellCard = ({ spell, onCast }: SpellCardProps) => {
           <Text className="text-xs font-bold">
             {i18n.t('spells.components')}:
           </Text>
-          <Text className="text-sm">{getComponentsString()}</Text>
+          <Text className="text-sm">{componentsString}</Text>
         </View>
         {spell.innateTotal > 0 && (
           <View>

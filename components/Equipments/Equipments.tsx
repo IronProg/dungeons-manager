@@ -18,7 +18,7 @@ import { Equipment } from 'types/character';
 
 export const Equipments = () => {
   const { bottom } = useSafeAreaInsets();
-  const { characterId } = useCharacter();
+  const { characterId, canEdit } = useCharacter();
   const { mutate: deleteEquipment } = useDeleteEquipmentMutation();
 
   const { ref, open, close } = useBottomSheetRef();
@@ -41,20 +41,26 @@ export const Equipments = () => {
   }, [characterId, deleteEquipment, equipmentToDelete]);
 
   const onCreate = useCallback(() => {
+    if (!canEdit) return;
     open();
-  }, [open]);
+  }, [open, canEdit]);
 
   const onEdit = useCallback(
     (equipment: Equipment) => {
+      if (!canEdit) return;
       setEquipmentToEdit(equipment);
       open();
     },
-    [open],
+    [open, canEdit],
   );
 
-  const onDelete = useCallback((equipment: Equipment) => {
-    setEquipmentToDelete(equipment);
-  }, []);
+  const onDelete = useCallback(
+    (equipment: Equipment) => {
+      if (!canEdit) return;
+      setEquipmentToDelete(equipment);
+    },
+    [canEdit],
+  );
 
   const onShow = useCallback((equipment: Equipment) => {
     setDetailedEquipment(equipment);
@@ -72,15 +78,22 @@ export const Equipments = () => {
           {i18n.t('equipments.title')}
         </Text>
 
-        <TouchableOpacity
-          onPress={onCreate}
-          className="rounded-full bg-green-500 p-2 absolute top-0 right-0"
-          hitSlop={15}
-        >
-          <Plus size={16} color={'white'} />
-        </TouchableOpacity>
+        {canEdit && (
+          <TouchableOpacity
+            onPress={onCreate}
+            className="rounded-full bg-green-500 p-2 absolute top-0 right-0"
+            hitSlop={15}
+          >
+            <Plus size={16} color={'white'} />
+          </TouchableOpacity>
+        )}
 
-        <EquipmentsList onShow={onShow} onDelete={onDelete} onEdit={onEdit} />
+        <EquipmentsList
+          onShow={onShow}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          canEdit={canEdit}
+        />
       </View>
 
       <ConfirmationModal

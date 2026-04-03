@@ -13,10 +13,12 @@ import { Character, CharacterClass } from 'types/character';
 
 type CharacterDetailsProps = {
   character: Character;
+  canEdit: boolean;
 };
 
 export const CharacterDetailsClasses = ({
   character,
+  canEdit,
 }: CharacterDetailsProps) => {
   const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
 
@@ -42,13 +44,15 @@ export const CharacterDetailsClasses = ({
             </Text>
           )}
 
-          <TouchableOpacity
-            onPress={open}
-            hitSlop={15}
-            className="rounded-full h-10 w-10 bg-purple-500 flex items-center justify-center"
-          >
-            <Edit size={16} color={'white'} />
-          </TouchableOpacity>
+          {canEdit && (
+            <TouchableOpacity
+              onPress={open}
+              hitSlop={15}
+              className="rounded-full h-10 w-10 bg-purple-500 flex items-center justify-center"
+            >
+              <Edit size={16} color={'white'} />
+            </TouchableOpacity>
+          )}
         </View>
 
         {isPending ? (
@@ -57,20 +61,22 @@ export const CharacterDetailsClasses = ({
           </View>
         ) : (
           <View className="flex flex-col gap-1">
-            <View className="flex flex-row">
-              <Text className="w-4/12 font-medium">
-                {i18n.t('classes.name')}
-              </Text>
-              <Text className="w-2/12 font-medium text-center">
-                {i18n.t('classes.level')}
-              </Text>
-              <Text className="w-2/12 font-medium text-center">
-                {i18n.t('classes.hitDice')}
-              </Text>
-              <Text className="w-4/12 font-medium">
-                {i18n.t('classes.castingKind')}
-              </Text>
-            </View>
+            {characterClasses && characterClasses.length > 0 && (
+              <View className="flex flex-row">
+                <Text className="w-4/12 font-medium">
+                  {i18n.t('classes.name')}
+                </Text>
+                <Text className="w-2/12 font-medium text-center">
+                  {i18n.t('classes.level')}
+                </Text>
+                <Text className="w-2/12 font-medium text-center">
+                  {i18n.t('classes.hitDice')}
+                </Text>
+                <Text className="w-4/12 font-medium">
+                  {i18n.t('classes.castingKind')}
+                </Text>
+              </View>
+            )}
 
             {characterClasses?.map((characterClass) => (
               <ClassListItem

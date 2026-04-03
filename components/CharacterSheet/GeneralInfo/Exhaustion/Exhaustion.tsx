@@ -7,9 +7,9 @@ import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos
 import { CharacterGeneralInfo } from 'types/character';
 import { useDebounce } from 'use-debounce';
 
-type ExhaustionProps = { generalInfo: CharacterGeneralInfo };
+type ExhaustionProps = { generalInfo: CharacterGeneralInfo; canEdit: boolean };
 
-export const Exhaustion = ({ generalInfo }: ExhaustionProps) => {
+export const Exhaustion = ({ generalInfo, canEdit }: ExhaustionProps) => {
   const [tempExhaustion, setTempExhaustion] = useState<number>(
     generalInfo.exhaustion,
   );
@@ -45,7 +45,7 @@ export const Exhaustion = ({ generalInfo }: ExhaustionProps) => {
   return (
     <TouchableOpacity
       onPress={handleChangeExhaustion}
-      disabled={isPending}
+      disabled={isPending || !canEdit}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >
       <Skull size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />

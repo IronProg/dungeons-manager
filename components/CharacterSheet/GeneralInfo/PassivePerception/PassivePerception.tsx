@@ -10,11 +10,13 @@ import { CharacterGeneralInfo } from 'types/character';
 type PassivePerceptionProps = {
   generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
+  canEdit: boolean;
 };
 
 export const PassivePerception = ({
   generalInfo,
   onLongPress,
+  canEdit,
 }: PassivePerceptionProps) => {
   const { getSkillBonus } = useGetSkillBonus();
   const { modifiers } = useCharacter();
@@ -31,6 +33,7 @@ export const PassivePerception = ({
 
   return (
     <TouchableOpacity
+      disabled={!canEdit}
       onLongPress={onLongPress}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >

@@ -22,7 +22,7 @@ type HitPointsFormTypes =
   | 'experience';
 
 export const MainCharacterSheetHitPoints = () => {
-  const { character } = useCharacter();
+  const { character, canEdit } = useCharacter();
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
   const { bottom } = useSafeAreaInsets();
 
@@ -45,11 +45,12 @@ export const MainCharacterSheetHitPoints = () => {
 
   const handleOpen = useCallback(
     (formName: HitPointsFormTypes) => {
+      if (!canEdit) return;
       setActiveForm(formName);
       setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
       open();
     },
-    [getFormTypeSnapPoints, bottom, open],
+    [getFormTypeSnapPoints, bottom, open, canEdit],
   );
 
   return (
@@ -62,14 +63,19 @@ export const MainCharacterSheetHitPoints = () => {
               generalInfo={generalInfo}
               onLongPress={() => handleOpen('hitPoints')}
               onPress={() => handleOpen('hitPointModifier')}
+              canEdit={canEdit}
             />
 
             <HitDices
               generalInfo={generalInfo}
               onLongPress={() => handleOpen('hitDices')}
+              canEdit={canEdit}
             />
 
-            <Experience onLongPress={() => handleOpen('experience')} />
+            <Experience
+              onLongPress={() => handleOpen('experience')}
+              canEdit={canEdit}
+            />
           </>
         ) : (
           <Text>No data found</Text>

@@ -13,9 +13,10 @@ import type { Currencies } from 'types/character';
 
 type CurrencyProps = {
   currencies: Currencies;
+  canEdit: boolean;
 };
 
-export const Currency = ({ currencies }: CurrencyProps) => {
+export const Currency = ({ currencies, canEdit }: CurrencyProps) => {
   const { characterId } = useCharacter();
   const [lastFieldUpdate, setLastFieldUpdate] = useState('');
   const { control, getValues } = useCurrencyForm({ currencies });
@@ -25,10 +26,10 @@ export const Currency = ({ currencies }: CurrencyProps) => {
   const { mutate: updateCurrencies, isPending } = useUpdateCurrenciesMutation();
 
   useEffect(() => {
-    if (debouncedFieldUpdate) {
+    if (debouncedFieldUpdate && canEdit) {
       updateCurrencies({ characterId: characterId!, ...getValues() });
     }
-  }, [characterId, debouncedFieldUpdate, getValues, updateCurrencies]);
+  }, [characterId, debouncedFieldUpdate, getValues, updateCurrencies, canEdit]);
 
   return (
     <>
@@ -61,10 +62,15 @@ export const Currency = ({ currencies }: CurrencyProps) => {
                   keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={(val) => {
-                    field.onChange(val);
-                    setLastFieldUpdate(`${field.name}-${val}`);
-                  }}
+                  onChangeText={
+                    canEdit
+                      ? (val) => {
+                          field.onChange(val);
+                          setLastFieldUpdate(`${field.name}-${val}`);
+                        }
+                      : undefined
+                  }
+                  editable={canEdit}
                 />
 
                 {error?.message && (
@@ -91,10 +97,15 @@ export const Currency = ({ currencies }: CurrencyProps) => {
                   keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={(val) => {
-                    field.onChange(val);
-                    setLastFieldUpdate(`${field.name}-${val}`);
-                  }}
+                  onChangeText={
+                    canEdit
+                      ? (val) => {
+                          field.onChange(val);
+                          setLastFieldUpdate(`${field.name}-${val}`);
+                        }
+                      : undefined
+                  }
+                  editable={canEdit}
                 />
 
                 {error?.message && (
@@ -121,10 +132,15 @@ export const Currency = ({ currencies }: CurrencyProps) => {
                   keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={(val) => {
-                    field.onChange(val);
-                    setLastFieldUpdate(`${field.name}-${val}`);
-                  }}
+                  onChangeText={
+                    canEdit
+                      ? (val) => {
+                          field.onChange(val);
+                          setLastFieldUpdate(`${field.name}-${val}`);
+                        }
+                      : undefined
+                  }
+                  editable={canEdit}
                 />
 
                 {error?.message && (
@@ -151,10 +167,15 @@ export const Currency = ({ currencies }: CurrencyProps) => {
                   keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={(val) => {
-                    field.onChange(val);
-                    setLastFieldUpdate(`${field.name}-${val}`);
-                  }}
+                  onChangeText={
+                    canEdit
+                      ? (val) => {
+                          field.onChange(val);
+                          setLastFieldUpdate(`${field.name}-${val}`);
+                        }
+                      : undefined
+                  }
+                  editable={canEdit}
                 />
 
                 {error?.message && (
@@ -181,10 +202,15 @@ export const Currency = ({ currencies }: CurrencyProps) => {
                   keyboardType="number-pad"
                   className="w-full text-center px-4 text-xl"
                   value={`${field.value}`}
-                  onChangeText={(val) => {
-                    field.onChange(val);
-                    setLastFieldUpdate(`${field.name}-${val}`);
-                  }}
+                  onChangeText={
+                    canEdit
+                      ? (val) => {
+                          field.onChange(val);
+                          setLastFieldUpdate(`${field.name}-${val}`);
+                        }
+                      : undefined
+                  }
+                  editable={canEdit}
                 />
 
                 {error?.message && (

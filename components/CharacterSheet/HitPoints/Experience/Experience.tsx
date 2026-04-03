@@ -3,13 +3,14 @@ import i18n from 'i18n';
 import { Book } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-type ExperienceProps = { onLongPress: () => void };
+type ExperienceProps = { onLongPress: () => void; canEdit: boolean };
 
-export const Experience = ({ onLongPress }: ExperienceProps) => {
+export const Experience = ({ onLongPress, canEdit }: ExperienceProps) => {
   const { character } = useCharacter();
 
   return (
     <TouchableOpacity
+      disabled={!canEdit}
       onLongPress={onLongPress}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >

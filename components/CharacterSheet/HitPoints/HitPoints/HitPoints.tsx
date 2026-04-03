@@ -7,18 +7,21 @@ type HitPointsProps = {
   generalInfo: CharacterGeneralInfo;
   onPress: () => void;
   onLongPress: () => void;
+  canEdit: boolean;
 };
 
 export const HitPoints = ({
   generalInfo,
   onPress,
   onLongPress,
+  canEdit,
 }: HitPointsProps) => {
   const hitPointsMaximum =
     generalInfo.hitPointsLimitTemporary || generalInfo.hitPointsLimit;
 
   return (
     <TouchableOpacity
+      disabled={!canEdit}
       onLongPress={onLongPress}
       onPress={onPress}
       className="relative flex flex-col items-center justify-center w-[90px]"

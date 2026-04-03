@@ -4,6 +4,7 @@ import i18n from 'i18n';
 
 import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetAllAttributes } from 'services/attributes/attributes';
+import { useCharacter } from 'contexts/CharacterContext';
 
 import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { AttributesForm } from './AttributesForm';
@@ -12,6 +13,7 @@ import { Attribute } from 'types/character';
 
 export const MainCharacterSheetAttributes = () => {
   const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
+  const { canEdit } = useCharacter();
 
   const { data: characterAttributes } = useGetAllAttributes();
 
@@ -30,6 +32,7 @@ export const MainCharacterSheetAttributes = () => {
                 (attribute) => attribute.name === 'strength',
               )!
             }
+            canEdit={canEdit}
           />
           <AttributeCard
             openModal={open}
@@ -38,6 +41,7 @@ export const MainCharacterSheetAttributes = () => {
                 (attribute) => attribute.name === 'dexterity',
               )!
             }
+            canEdit={canEdit}
           />
           <AttributeCard
             openModal={open}
@@ -46,6 +50,7 @@ export const MainCharacterSheetAttributes = () => {
                 (attribute) => attribute.name === 'constitution',
               )!
             }
+            canEdit={canEdit}
           />
           <AttributeCard
             openModal={open}
@@ -54,6 +59,7 @@ export const MainCharacterSheetAttributes = () => {
                 (attribute) => attribute.name === 'intelligence',
               )!
             }
+            canEdit={canEdit}
           />
           <AttributeCard
             openModal={open}
@@ -62,6 +68,7 @@ export const MainCharacterSheetAttributes = () => {
                 (attribute) => attribute.name === 'wisdom',
               )!
             }
+            canEdit={canEdit}
           />
           <AttributeCard
             openModal={open}
@@ -70,6 +77,7 @@ export const MainCharacterSheetAttributes = () => {
                 (attribute) => attribute.name === 'charisma',
               )!
             }
+            canEdit={canEdit}
           />
         </View>
       </View>
@@ -91,13 +99,18 @@ export const MainCharacterSheetAttributes = () => {
 type AttributeCardProps = {
   attribute: Attribute;
   openModal: () => void;
+  canEdit: boolean;
 };
 
-const AttributeCard = ({ attribute, openModal }: AttributeCardProps) => {
+const AttributeCard = ({
+  attribute,
+  openModal,
+  canEdit,
+}: AttributeCardProps) => {
   return (
     <View className="w-[33%] px-4 flex justify-center">
       <TouchableOpacity
-        onLongPress={openModal}
+        onLongPress={canEdit ? openModal : undefined}
         className="relative border-gray-900 rounded-lg flex-col flex items-stretch"
       >
         <Text className="text-gray-900 text-sm font-semibold text-center">

@@ -10,9 +10,13 @@ import { Character } from 'types/character';
 
 type CharacterDetailsProps = {
   character: Character;
+  canEdit: boolean;
 };
 
-export const CharacterDetails = ({ character }: CharacterDetailsProps) => {
+export const CharacterDetails = ({
+  character,
+  canEdit,
+}: CharacterDetailsProps) => {
   return (
     <KeyboardAwareScrollView
       className="flex-1"
@@ -22,10 +26,10 @@ export const CharacterDetails = ({ character }: CharacterDetailsProps) => {
         {character?.name}
       </Text>
 
-      <CharacterDetailsClasses character={character} />
-      <CharacterDetailsMain characterId={character.id!} />
-      <CharacterDetailsProficiencies character={character} />
-      <CharacterDetailsBackground character={character} />
+      <CharacterDetailsClasses character={character} canEdit={canEdit} />
+      <CharacterDetailsMain characterId={character.id!} canEdit={canEdit} />
+      <CharacterDetailsProficiencies character={character} canEdit={canEdit} />
+      <CharacterDetailsBackground character={character} canEdit={canEdit} />
     </KeyboardAwareScrollView>
   );
 };

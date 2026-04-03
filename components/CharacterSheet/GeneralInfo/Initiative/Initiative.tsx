@@ -11,9 +11,14 @@ import { CharacterGeneralInfo } from 'types/character';
 type InitiativeProps = {
   generalInfo: CharacterGeneralInfo;
   onLongPress: () => void;
+  canEdit: boolean;
 };
 
-export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
+export const Initiative = ({
+  generalInfo,
+  onLongPress,
+  canEdit,
+}: InitiativeProps) => {
   const { simpleRoll } = useDiceRoll();
   const { modifiers } = useCharacter();
 
@@ -34,7 +39,7 @@ export const Initiative = ({ generalInfo, onLongPress }: InitiativeProps) => {
   return (
     <TouchableOpacity
       onPress={handleRoll}
-      onLongPress={onLongPress}
+      onLongPress={canEdit ? onLongPress : undefined}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >
       <Zap size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />

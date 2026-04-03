@@ -9,7 +9,7 @@ import { useGetNote, useUpdateNoteMutation } from 'services/notes/note.api';
 import { Skeleton } from 'components/ui/Skeleton';
 
 export const Notes = () => {
-  const { characterId } = useCharacter();
+  const { characterId, canEdit } = useCharacter();
 
   const { mutate: updateNote } = useUpdateNoteMutation();
 
@@ -24,10 +24,10 @@ export const Notes = () => {
   }, [note]);
 
   useEffect(() => {
-    if (characterId && debouncedText.length > 0) {
+    if (characterId && debouncedText.length > 0 && canEdit) {
       updateNote({ characterId: characterId!, text: debouncedText });
     }
-  }, [characterId, debouncedText, updateNote]);
+  }, [characterId, debouncedText, updateNote, canEdit]);
 
   return (
     <View>
@@ -42,8 +42,9 @@ export const Notes = () => {
           className="bg-white min-h-40 rounded-lg px-2"
           textAlignVertical="top"
           value={text}
-          onChangeText={setText}
+          onChangeText={canEdit ? setText : undefined}
           multiline
+          editable={canEdit}
         />
       )}
     </View>

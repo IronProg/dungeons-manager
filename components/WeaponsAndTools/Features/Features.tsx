@@ -17,9 +17,10 @@ import { Feature } from 'types/character';
 type FeaturesProps = {
   onCreate: () => void;
   onSelect: (feature: Feature) => void;
+  canEdit: boolean;
 };
 
-export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
+export const Features = ({ onCreate, onSelect, canEdit }: FeaturesProps) => {
   const { characterId } = useCharacter();
   const { data: features, isLoading } = useGetAllFeatures();
   const { mutate: deleteFeature } = useDeleteFeatureMutation();
@@ -45,16 +46,18 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
       <View className="flex flex-row justify-between mb-2 items-center">
         <View />
 
-        <Text className="text-black text-2xl font-bold text-center">
+        <Text className="text-black text-2xl font-bold text-center flex-1 grow">
           {i18n.t('titles.features')}
         </Text>
 
-        <TouchableOpacity
-          onPress={onCreate}
-          className="rounded-full bg-green-500 p-2"
-        >
-          <Plus size={16} color={'white'} />
-        </TouchableOpacity>
+        {canEdit && (
+          <TouchableOpacity
+            onPress={onCreate}
+            className="rounded-full bg-green-500 p-2"
+          >
+            <Plus size={16} color={'white'} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {isLoading && <ActivityIndicator />}
@@ -69,7 +72,7 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
               >
                 <TouchableOpacity
                   onPress={() => setDetailedFeature(feature)}
-                  onLongPress={() => onSelect(feature)}
+                  onLongPress={canEdit ? () => onSelect(feature) : undefined}
                   className="rounded-lg gap-2 py-1 grow"
                 >
                   <View className="bg-white rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
@@ -81,12 +84,14 @@ export const Features = ({ onCreate, onSelect }: FeaturesProps) => {
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() => setFeatureToDelete(feature)}
-                  className="bg-red-500 rounded-full p-2"
-                >
-                  <Trash size={16} color="white" />
-                </TouchableOpacity>
+                {canEdit && (
+                  <TouchableOpacity
+                    onPress={() => setFeatureToDelete(feature)}
+                    className="bg-red-500 rounded-full p-2"
+                  >
+                    <Trash size={16} color="white" />
+                  </TouchableOpacity>
+                )}
               </View>
             );
           })

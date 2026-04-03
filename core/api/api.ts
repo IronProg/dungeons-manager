@@ -9,6 +9,7 @@ import {
   camelizeRequestInterceptor,
   decamelizeResponseInterceptor,
 } from './interceptors/humps.interceptors';
+import { tableRequestInterceptor } from './interceptors/table.interceptors';
 
 export const authHeader = 'Authorization';
 
@@ -32,10 +33,10 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(camelizeRequestInterceptor);
-
 api.interceptors.request.use(refreshTokenInterceptor);
-
 api.interceptors.request.use(authRequestInterceptor);
+api.interceptors.request.use(tableRequestInterceptor);
+
 api.interceptors.response.use(clockSyncInterceptor);
 api.interceptors.response.use(decamelizeResponseInterceptor);
 

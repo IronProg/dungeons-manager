@@ -16,7 +16,7 @@ import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import type { SavingThrow, Skill } from 'types/character';
 
 export const MainCharacterSheetSkills = () => {
-  const { characterId } = useCharacter();
+  const { characterId, canEdit } = useCharacter();
   const { data: savingThrows, isLoading: isLoadingSavingThrows } =
     useGetAllSavingThrows();
 
@@ -30,6 +30,8 @@ export const MainCharacterSheetSkills = () => {
 
   const handleOpen = useCallback(
     ({ savingThrow, skill }: { savingThrow?: SavingThrow; skill?: Skill }) => {
+      if (!canEdit) return;
+
       if (savingThrow) {
         setHighlightedSavingThrow(savingThrow);
       } else if (skill) {
@@ -37,7 +39,7 @@ export const MainCharacterSheetSkills = () => {
       }
       bottomSheetRef.current?.present();
     },
-    [],
+    [canEdit],
   );
 
   const handleClose = useCallback(() => {
@@ -57,6 +59,7 @@ export const MainCharacterSheetSkills = () => {
                 key={index}
                 savingThrow={savingThrow}
                 onLongPress={() => handleOpen({ savingThrow })}
+                canEdit={canEdit}
               />
             ))
           ) : (
@@ -74,6 +77,7 @@ export const MainCharacterSheetSkills = () => {
                 key={skill.id}
                 skill={skill}
                 onLongPress={() => handleOpen({ skill })}
+                canEdit={canEdit}
               />
             ))
           ) : (
@@ -110,11 +114,13 @@ export const MainCharacterSheetSkills = () => {
 type SavingThrowCardProps = {
   savingThrow: SavingThrow;
   onLongPress: () => void;
+  canEdit: boolean;
 };
 
 const SavingThrowCard = ({
   savingThrow,
   onLongPress,
+  canEdit,
 }: SavingThrowCardProps) => {
   const { simpleRoll } = useDiceRoll();
   const { modifiers, proficiencyBonus } = useCharacter();
@@ -138,7 +144,7 @@ const SavingThrowCard = ({
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
       <TouchableOpacity
         onPress={handleRoll}
-        onLongPress={onLongPress}
+        onLongPress={canEdit ? onLongPress : undefined}
         className={`flex flex-row items-center px-2 gap-2 border overflow-hidden rounded-lg w-full ${savingThrow?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 py-1">
@@ -159,9 +165,13 @@ const SavingThrowCard = ({
   );
 };
 
-type SkillCardProps = { skill: Skill; onLongPress: () => void };
+type SkillCardProps = {
+  skill: Skill;
+  onLongPress: () => void;
+  canEdit: boolean;
+};
 
-const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
+const SkillCard = ({ skill, onLongPress, canEdit }: SkillCardProps) => {
   const { simpleRoll } = useDiceRoll();
   const { getSkillBonus } = useGetSkillBonus();
 
@@ -175,7 +185,7 @@ const SkillCard = ({ skill, onLongPress }: SkillCardProps) => {
     <View className="flex items-center justify-center w-[50%] p-2 py-1.5">
       <TouchableOpacity
         onPress={handleRoll}
-        onLongPress={onLongPress}
+        onLongPress={canEdit ? onLongPress : undefined}
         className={`flex-row flex items-center gap-2 rounded-lg px-3 py-2.5 border w-full ${skill.expertise ? 'bg-orange-200' : skill?.proficiency && 'bg-green-200'}`}
       >
         <View className="min-w-0 flex-1 flex flex-row flex-wrap py-1 justify-start items-center">

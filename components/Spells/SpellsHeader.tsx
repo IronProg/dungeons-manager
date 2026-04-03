@@ -7,9 +7,10 @@ import { SpellSlotLevelType } from 'types/character';
 
 interface SpellsHeaderProps {
   level: SpellSlotLevelType;
+  canEdit: boolean;
 }
 
-export const SpellsHeader = ({ level }: SpellsHeaderProps) => {
+export const SpellsHeader = ({ level, canEdit }: SpellsHeaderProps) => {
   const router = useRouter();
 
   const handleCreateSpell = () => {
@@ -26,13 +27,16 @@ export const SpellsHeader = ({ level }: SpellsHeaderProps) => {
           ? i18n.t('spellSlots.cantrips')
           : `${i18n.t('spellSlots.level')} ${level}`}
       </Text>
-      <TouchableOpacity
-        hitSlop={20}
-        onPress={handleCreateSpell}
-        className="bg-indigo-100 p-1.5 rounded-full"
-      >
-        <FilePlus size={18} color="#4f46e5" />
-      </TouchableOpacity>
+
+      {canEdit && (
+        <TouchableOpacity
+          hitSlop={20}
+          onPress={handleCreateSpell}
+          className="bg-indigo-100 p-1.5 rounded-full"
+        >
+          <FilePlus size={18} color="#4f46e5" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

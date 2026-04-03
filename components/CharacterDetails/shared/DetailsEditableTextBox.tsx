@@ -9,6 +9,7 @@ type DetailsEditableTextBoxProps = {
   isLoading: boolean;
   isPending: boolean;
   onSave: (newText: string, callback: () => void) => void;
+  disabled?: boolean;
 };
 
 export const DetailsEditableTextBox = ({
@@ -17,6 +18,7 @@ export const DetailsEditableTextBox = ({
   label,
   isPending,
   onSave,
+  disabled,
 }: DetailsEditableTextBoxProps) => {
   const [newText, setNewText] = useState(text);
   const [editing, setEditing] = useState(false);
@@ -31,7 +33,10 @@ export const DetailsEditableTextBox = ({
 
   return (
     <>
-      <TouchableOpacity disabled={editing} onLongPress={() => setEditing(true)}>
+      <TouchableOpacity
+        disabled={editing || disabled}
+        onLongPress={() => setEditing(true)}
+      >
         <Text className="font-semibold mb-1">{label}</Text>
 
         <View className="border border-neutral-200   bg-white rounded-md px-2 py-1.5">
