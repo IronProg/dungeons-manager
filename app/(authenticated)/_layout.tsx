@@ -20,6 +20,17 @@ export default function RootLayout() {
       <Stack.Screen name="spell-form" options={{ headerShown: false }} />
 
       <Stack.Screen
+        name="spell-list"
+        options={{
+          headerTitle: i18n.t('spellList.title'),
+          headerShown: true,
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
         name="character-details"
         options={{
           presentation: 'modal',

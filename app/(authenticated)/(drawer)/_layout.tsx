@@ -3,7 +3,7 @@ import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import { DrawerActions, ParamListBase } from '@react-navigation/native';
-import { ListIndentDecrease } from 'lucide-react-native';
+import { Menu } from 'lucide-react-native';
 import i18n from 'i18n';
 
 import { useGetAllCharacters } from 'services/characters/character.api';
@@ -111,7 +111,7 @@ export function DrawerToggleButton() {
       onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
       className="w-14 flex items-center justify-center"
     >
-      <ListIndentDecrease size={24} color="white" />
+      <Menu size={24} color="white" />
     </TouchableOpacity>
   );
 }

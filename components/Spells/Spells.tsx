@@ -32,14 +32,14 @@ export const Spells = () => {
 
   return (
     <>
-      <View
-        className="flex-1 bg-slate-200"
-        style={{ paddingBottom: bottom + 16 }}
-      >
+      <View className="flex-1 bg-slate-200">
         {level > 0 && character && <SpellSlotsHeader level={level} />}
 
         <FlashList
-          contentContainerStyle={{ padding: 16, paddingBottom: bottom + 40 }}
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+            paddingBottom: bottom + 64,
+          }}
           data={spells}
           renderItem={({ item }) => (
             <SpellCard

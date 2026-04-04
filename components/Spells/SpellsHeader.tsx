@@ -30,11 +30,11 @@ export const SpellsHeader = ({ level, canEdit }: SpellsHeaderProps) => {
 
       {canEdit && (
         <TouchableOpacity
-          hitSlop={20}
+          hitSlop={10}
           onPress={handleCreateSpell}
-          className="bg-indigo-100 p-1.5 rounded-full"
+          className="bg-indigo-600 w-8 h-8 rounded-full items-center justify-center"
         >
-          <FilePlus size={18} color="#4f46e5" />
+          <FilePlus size={18} color="white" />
         </TouchableOpacity>
       )}
     </View>
