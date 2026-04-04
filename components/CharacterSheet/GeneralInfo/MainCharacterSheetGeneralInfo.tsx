@@ -28,6 +28,7 @@ import {
   DisposableBottomSheetHandle,
 } from 'components/ui/BottomSheet/DisposableBottomSheet';
 import { Portal } from 'react-native-portalize';
+import i18n from 'i18n';
 
 const GENERAL_INFO_SNAP_POINTS = [600];
 const ARMOR_CLASS_SNAP_POINTS = [625];
@@ -84,7 +85,7 @@ export const MainCharacterSheetGeneralInfo = () => {
           </View>
         </>
       ) : (
-        <Text>No Data Found</Text>
+        <Text>{i18n.t('general.noDataFound')}</Text>
       )}
 
       <Portal>

@@ -10,6 +10,7 @@ import { useGetTableCharactersResume } from 'services/tables/table.api';
 
 import { DMCharacterCard } from 'components/Characters/DMCharacterCard';
 import { TableChannelCallback, useTableChannel } from 'hooks/useTableChannel';
+import i18n from 'i18n';
 
 export default function DMDashboard() {
   const queryClient = useQueryClient();
@@ -62,7 +63,10 @@ export default function DMDashboard() {
           <Text className="text-2xl font-bold text-slate-800">
             {table?.name}
           </Text>
-          <Text className="text-slate-500 font-medium">DM Dashboard</Text>
+
+          <Text className="text-slate-500 font-medium">
+            {i18n.t('titles.dmDashboard')}
+          </Text>
         </View>
       )}
       ListEmptyComponent={() => (
@@ -75,10 +79,10 @@ export default function DMDashboard() {
                 <Text className="text-2xl">👤</Text>
               </View>
               <Text className="text-slate-500 text-center text-lg font-medium">
-                No characters found
+                {i18n.t('titles.noCharacters')}
               </Text>
               <Text className="text-slate-400 text-center mt-1">
-                There are no characters assigned to this table yet.
+                {i18n.t('titles.noCharactersSubtitle')}
               </Text>
             </>
           )}

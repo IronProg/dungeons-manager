@@ -40,10 +40,12 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
   const calculateSavingThrow = (attrName: string) => {
     const attr = getAttribute(attrName);
     const save = getSavingThrow(attrName);
+
     if (!attr || !save) return 0;
 
     let bonus = attr.modifier + (save.customBonus || 0);
     if (save.proficiency) bonus += proficiencyBonus;
+
     return bonus;
   };
 
@@ -69,7 +71,8 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
               className={`w-1.5 h-1.5 rounded-full mr-1 ${getSavingThrow(name)?.proficiency ? 'bg-emerald-500' : 'bg-slate-300'}`}
             />
             <Text className="text-[10px] text-slate-400">
-              Save: {saveBonus >= 0 ? `+${saveBonus}` : saveBonus}
+              {i18n.t('savingThrows.name')}:{' '}
+              {saveBonus >= 0 ? `+${saveBonus}` : saveBonus}
             </Text>
           </View>
         </View>
@@ -80,8 +83,11 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
   return (
     <View className="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden border border-slate-100">
       <View className="bg-indigo-600 px-4 py-3 flex-row justify-between items-center">
-        <View>
-          <Text className="text-white font-bold text-lg">{name}</Text>
+        <View className="flex-1">
+          <Text className="text-white font-bold text-lg" numberOfLines={1}>
+            {name}
+          </Text>
+
           <Text className="text-indigo-200 text-xs">
             {i18n.t('general.level')} {level}
           </Text>
@@ -129,7 +135,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
         <View className="flex-row flex-wrap justify-between mb-4 border-b border-slate-100 pb-4">
           <StatBox
             icon={<Eye size={16} color="#6366f1" />}
-            label="Pass. Perc."
+            label={i18n.t('titles.passivePerception')}
             value={
               10 +
               (getAttribute('wisdom')?.modifier || 0) +
@@ -138,17 +144,16 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
           />
           <StatBox
             icon={<Dna size={16} color="#f97316" />}
-            label="Exhaustion"
+            label={i18n.t('titles.exhaustion')}
             value={generalInfo.exhaustion || 0}
           />
           <StatBox
             icon={<Package size={16} color="#94a3b8" />}
-            label="Hit Dice"
+            label={i18n.t('titles.hitDices')}
             value={`${character.hitDiceAmount}/${character.hitDicesMaximum}`}
           />
         </View>
 
-        {/* Attributes Grid */}
         <View className="flex-row flex-wrap -m-1 mb-4">
           {renderAttribute('strength', i18n.t('attributes.strength'))}
           {renderAttribute('dexterity', i18n.t('attributes.dexterity'))}
@@ -158,9 +163,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
           {renderAttribute('charisma', i18n.t('attributes.charisma'))}
         </View>
 
-        {/* Currencies & Resources */}
         <View className="flex-row gap-4">
-          {/* Currencies */}
           <View className="flex-1 bg-amber-50 rounded-xl p-3">
             <View className="flex-row items-center mb-2">
               <Coins size={14} color="#b45309" />
@@ -169,22 +172,38 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
               </Text>
             </View>
             <View className="flex-row flex-wrap gap-x-3 gap-y-1">
-              <CurrencyItem label="GP" value={currencies.goldPoints} />
-              <CurrencyItem label="SP" value={currencies.silverPoints} />
-              <CurrencyItem label="CP" value={currencies.copperPoints} />
-              <CurrencyItem label="EP" value={currencies.electrumPoints} />
-              <CurrencyItem label="PP" value={currencies.platinumPoints} />
+              <CurrencyItem
+                label={i18n.t('currencies.gp')}
+                value={currencies.goldPoints}
+              />
+              <CurrencyItem
+                label={i18n.t('currencies.sp')}
+                value={currencies.silverPoints}
+              />
+              <CurrencyItem
+                label={i18n.t('currencies.cp')}
+                value={currencies.copperPoints}
+              />
+              <CurrencyItem
+                label={i18n.t('currencies.ep')}
+                value={currencies.electrumPoints}
+              />
+              <CurrencyItem
+                label={i18n.t('currencies.pp')}
+                value={currencies.platinumPoints}
+              />
             </View>
           </View>
 
-          {/* Resources */}
           <View className="flex-1 bg-emerald-50 rounded-xl p-3">
             <View className="flex-row items-center mb-2">
               <Package size={14} color="#047857" />
+
               <Text className="text-emerald-800 font-bold text-xs ml-1">
-                Resources
+                {i18n.t('resources.title')}
               </Text>
             </View>
+
             {resources.slice(0, 3).map((res, i) => (
               <View key={i} className="flex-row justify-between mb-0.5">
                 <Text
@@ -193,14 +212,16 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
                 >
                   {res.name}
                 </Text>
+
                 <Text className="text-[10px] font-bold text-emerald-900">
                   {res.amount}/{res.max || '-'}
                 </Text>
               </View>
             ))}
+
             {resources.length === 0 && (
               <Text className="text-[10px] text-emerald-600 italic">
-                No resources
+                {i18n.t('resources.noneFound')}
               </Text>
             )}
           </View>

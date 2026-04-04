@@ -40,11 +40,16 @@ export const en = {
     logout: 'Logout',
     welcomeBack: 'Welcome Back',
     noCharacters: 'No characters found',
+    noCharactersSubtitle: 'There are no characters assigned to this table yet.',
     confirmation: 'Are you sure?',
     confirmationSubtitle: 'This action cannot be undone.',
     characterDetails: 'Character Details',
+    dmDashboard: 'DM Area',
+    dmDashboardInternal: 'Table Dashboard',
+    modifyAttributes: 'Modify Attributes',
   },
   general: {
+    noDataFound: 'No data found',
     total: 'Total',
     none: 'None',
     save: 'Save',
@@ -96,6 +101,7 @@ export const en = {
     charisma: 'Charisma',
   },
   savingThrows: {
+    name: 'Save',
     strength: 'Strength Save',
     dexterity: 'Dexterity Save',
     constitution: 'Constitution Save',
@@ -126,6 +132,7 @@ export const en = {
     survival: 'Survival',
   },
   currencies: {
+    noneFound: 'No currencies found',
     cp: 'CP',
     sp: 'SP',
     ep: 'EP',
@@ -139,6 +146,7 @@ export const en = {
   auth: {
     welcomeBack: 'Welcome back',
     email: 'E-mail',
+    emailPlaceholder: 'example@email.com',
     password: 'Password',
     passwordConfirmation: 'Confirm password',
     signIn: 'Sign In',
@@ -183,6 +191,7 @@ export const en = {
     noneFound: 'No attacks found',
   },
   resources: {
+    title: 'Resources',
     noneFound: 'No resources found',
   },
   features: {
@@ -210,6 +219,7 @@ export const en = {
     currentAmount: 'Current Amount',
   },
   errors: {
+    couldNotLoadCharacter: 'Error while loading character',
     general: 'Error',
     auth: 'Authentication error',
     network_error: 'Network error',
@@ -231,6 +241,8 @@ export const en = {
     noTables: 'No tables found',
     selectTable: 'Enter this table?',
     unselectTable: 'Leave Current Table',
+    inviteCodeRequired: 'Invite code is required',
+    joinedTable: 'Joined the table successfully!',
   },
   spells: {
     title: 'Spells',
@@ -252,6 +264,7 @@ export const en = {
     duration: 'Duration',
     description: 'Description',
     higherLevelDescription: 'Higher Level',
+    higherLevelDamages: 'Higher level damages',
     schools: {
       abjuration: 'Abjuration',
       conjuration: 'Conjuration',

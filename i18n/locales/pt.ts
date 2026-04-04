@@ -40,11 +40,16 @@ export const pt = {
     logout: 'Sair',
     welcomeBack: 'Sair',
     noCharacters: 'Nenhum personagem cadastrado',
+    noCharactersSubtitle: 'Não há personagens cadastrados nesta mesa.',
     confirmation: 'Você tem certeza?',
     confirmationSubtitle: 'Essa ação não pode ser desfeita.',
     characterDetails: 'Detalhes do Personagem',
+    dmDashboard: 'Área do Mestre',
+    dmDashboardInternal: 'Dashboard da Mesa',
+    modifyAttributes: 'Modificar Atributos',
   },
   general: {
+    noDataFound: 'Nenhum dado encontrado',
     total: 'Total',
     none: 'Nenhum',
     save: 'Salvar',
@@ -96,6 +101,7 @@ export const pt = {
     charisma: 'Carisma',
   },
   savingThrows: {
+    name: 'Resistência',
     strength: 'Resistência de Força',
     dexterity: 'Resistência de Destreza',
     constitution: 'Resistência de Constituição',
@@ -126,6 +132,7 @@ export const pt = {
     survival: 'Sobrevivência',
   },
   currencies: {
+    noneFound: 'Nenhuma moeda encontrada',
     cp: 'PC',
     sp: 'PP',
     ep: 'PE',
@@ -139,6 +146,7 @@ export const pt = {
   auth: {
     welcomeBack: 'Bem-vindo de volta',
     email: 'E-mail',
+    emailPlaceholder: 'exemplo@email.com',
     password: 'Senha',
     passwordConfirmation: 'Confirmar senha',
     signIn: 'Fazer Login',
@@ -183,6 +191,7 @@ export const pt = {
     noneFound: 'Nenhum ataque cadastrado',
   },
   resources: {
+    title: 'Recursos',
     noneFound: 'Nenhum recurso cadastrado',
   },
   features: {
@@ -210,6 +219,7 @@ export const pt = {
     currentAmount: 'Quantidade Atual',
   },
   errors: {
+    couldNotLoadCharacter: 'Erro ao carregar personagem',
     general: 'Erro',
     auth: 'Erro de autenticação',
     network_error: 'Erro de rede',
@@ -231,6 +241,8 @@ export const pt = {
     noTables: 'Nenhuma mesa encontrada',
     selectTable: 'Entrar na mesa?',
     unselectTable: 'Sair da Mesa Atual',
+    inviteCodeRequired: 'O código de convite é obrigatório',
+    joinedTable: 'Entrou na mesa com sucesso!',
   },
   spells: {
     title: 'Magias',
@@ -252,6 +264,7 @@ export const pt = {
     duration: 'Duração',
     description: 'Descrição',
     higherLevelDescription: 'Em Níveis Superiores',
+    higherLevelDamages: 'Danos em Níveis Superiores',
     schools: {
       abjuration: 'Abjuração',
       conjuration: 'Conjuração',

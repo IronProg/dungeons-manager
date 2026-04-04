@@ -54,7 +54,7 @@ export const MainCharacterSheetSkills = () => {
               />
             ))
           ) : (
-            <Text>No data found</Text>
+            <Text>{i18n.t('general.noDataFound')}</Text>
           )}
         </View>
 
@@ -74,7 +74,7 @@ export const MainCharacterSheetSkills = () => {
               />
             ))
           ) : (
-            <Text>No data found</Text>
+            <Text>{i18n.t('general.noDataFound')}</Text>
           )}
         </View>
       </View>

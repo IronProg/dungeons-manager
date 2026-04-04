@@ -93,7 +93,7 @@ export default function DrawerLayout() {
         <Drawer.Screen
           name="dm-dashboard"
           options={{
-            title: 'DM Dashboard',
+            title: i18n.t('titles.dmDashboard'),
             drawerItemStyle: { display: 'none' },
           }}
         />

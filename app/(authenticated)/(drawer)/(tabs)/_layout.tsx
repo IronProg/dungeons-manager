@@ -41,7 +41,7 @@ export default function TabLayout() {
   if (!character && !initialLoading) {
     return (
       <View className="flex-1 justify-center items-center">
-        <Text>Error while loading character</Text>
+        <Text>{i18n.t('errors.couldNotLoadCharacter')}</Text>
       </View>
     );
   }

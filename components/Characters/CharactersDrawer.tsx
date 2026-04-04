@@ -172,7 +172,7 @@ export const CharactersDrawer: React.FC<CharactersDrawerProps> = ({
             >
               <LayoutDashboard size={20} color="#4f46e5" />
               <Text className="text-indigo-600 font-bold text-base ml-2">
-                DM Dashboard
+                {i18n.t('titles.dmDashboardInternal')}
               </Text>
             </TouchableOpacity>
           )}

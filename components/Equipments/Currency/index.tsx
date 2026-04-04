@@ -1,6 +1,9 @@
 import { useCharacter } from 'contexts/CharacterContext';
 import { ActivityIndicator, Text, View } from 'react-native';
+import i18n from 'i18n';
+
 import { useGetCharacterCurrency } from 'services/currencies/currencies';
+
 import { Currency } from './Currency';
 
 export const Currencies = () => {
@@ -14,7 +17,7 @@ export const Currencies = () => {
       {currencies ? (
         <Currency currencies={currencies!} canEdit={canEdit} />
       ) : (
-        <Text>No currencies found</Text>
+        <Text>{i18n.t('currencies.noneFound')}</Text>
       )}
     </View>
   );

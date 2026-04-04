@@ -34,7 +34,7 @@ export default function TablesScreen() {
 
   const handleJoinTable = () => {
     if (!inviteCode.trim()) {
-      Alert.alert('Error', 'Please enter an invite code.');
+      Alert.alert(i18n.t('general.error'), i18n.t('tables.inviteCodeRequired'));
       return;
     }
 
@@ -43,7 +43,7 @@ export default function TablesScreen() {
       {
         onSuccess: () => {
           setInviteCode('');
-          Alert.alert('Success', 'Successfully joined the table!');
+          Alert.alert(i18n.t('general.success'), i18n.t('tables.joinedTable'));
         },
       },
     );

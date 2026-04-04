@@ -7,6 +7,7 @@ import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
 import { Experience } from './Experience/Experience';
 import { HitDices } from './HitDices/HitDices';
 import { HitPoints } from './HitPoints/HitPoints';
+import i18n from 'i18n';
 
 export const MainCharacterSheetHitPoints = () => {
   const { canEdit } = useCharacter();
@@ -25,7 +26,7 @@ export const MainCharacterSheetHitPoints = () => {
             <Experience canEdit={canEdit} />
           </>
         ) : (
-          <Text>No data found</Text>
+          <Text>{i18n.t('general.noDataFound')}</Text>
         )}
       </View>
     </>

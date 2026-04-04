@@ -92,7 +92,7 @@ export const SpellAttackForm = ({ control, watch }: SpellAttackFormProps) => {
       <SpellDamagesForm control={control} name="damagesAttributes" />
 
       <Text className="text-center text-xl font-medium mt-4">
-        Higher Levels Damages
+        {i18n.t('spells.higherLevelDamages')}
       </Text>
 
       <SpellDamagesForm

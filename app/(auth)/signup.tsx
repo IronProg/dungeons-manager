@@ -72,7 +72,7 @@ export default function SignUpScreen() {
                   <Mail size={20} color="#9CA3AF" />
                   <TextInput
                     className="flex-1 py-4 px-3 text-gray-800"
-                    placeholder="exemplo@email.com"
+                    placeholder={i18n.t('auth.emailPlaceholder')}
                     placeholderTextColor="#9CA3AF"
                     keyboardType="email-address"
                     autoCapitalize="none"

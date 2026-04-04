@@ -62,7 +62,7 @@ export const AttributesForm = ({
   return (
     <BottomSheetScrollView contentContainerClassName="grow flex flex-col gap-4 pb-14">
       <Text className="text-gray-900 font-bold text-2xl text-center">
-        Modificar Atributos
+        {i18n.t('titles.modifyAttributes')}
       </Text>
 
       <View className="flex flex-row justify-between flex-wrap">
