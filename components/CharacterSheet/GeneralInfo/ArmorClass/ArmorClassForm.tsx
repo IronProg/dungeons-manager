@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
 import i18n from 'i18n';
@@ -10,15 +10,12 @@ import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos
 import { useCharacter } from 'contexts/CharacterContext';
 import { Button } from 'components/ui/Button';
 
-type PassivePerceptionFormProps = {
+export type ArmorClassFormProps = {
   generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
 };
 
-export const ArmorClassForm = ({
-  generalInfo,
-  onClose,
-}: PassivePerceptionFormProps) => {
+export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useArmorClassForm({ generalInfo });
 
@@ -31,12 +28,12 @@ export const ArmorClassForm = ({
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
     },
-    [characterId, onClose, updateGeneralInfo],
+    [characterId, close, updateGeneralInfo],
   );
 
   return (

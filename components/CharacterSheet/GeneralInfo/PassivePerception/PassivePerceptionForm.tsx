@@ -4,7 +4,7 @@ import {
   usePassivePerceptionForm,
 } from './usePassivePerceptionForm';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
@@ -14,15 +14,14 @@ import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos
 import { Button } from 'components/ui/Button';
 import { useGetSkillBonus } from 'hooks/useSkillBonus';
 
-type PassivePerceptionFormProps = {
+export type PassivePerceptionFormProps = {
   generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
 };
 
 export const PassivePerceptionForm = ({
   generalInfo,
-  onClose,
 }: PassivePerceptionFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { getSkillBonus } = useGetSkillBonus();
   const { control, handleSubmit } = usePassivePerceptionForm({ generalInfo });
@@ -37,12 +36,12 @@ export const PassivePerceptionForm = ({
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
     },
-    [characterId, onClose, updateCharacter],
+    [characterId, close, updateCharacter],
   );
 
   return (

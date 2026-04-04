@@ -1,21 +1,19 @@
 import React, { useCallback } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { useTable } from 'contexts/TableContext';
-import { DMCharacterCard } from 'components/Characters/DMCharacterCard';
-import { Redirect, useRouter } from 'expo-router';
-import { Container } from 'components/Container';
-import { useGetTableCharactersResume } from 'services/tables/table.api';
-import { RefreshControl } from 'react-native-gesture-handler';
 import { useQueryClient } from '@tanstack/react-query';
+import { RefreshControl } from 'react-native-gesture-handler';
+import { Redirect } from 'expo-router';
+
+import { useTable } from 'contexts/TableContext';
+import { useGetTableCharactersResume } from 'services/tables/table.api';
+
+import { DMCharacterCard } from 'components/Characters/DMCharacterCard';
 import { TableChannelCallback, useTableChannel } from 'hooks/useTableChannel';
-import { useCharacter } from 'contexts/CharacterContext';
 
 export default function DMDashboard() {
-  const { navigate } = useRouter();
   const queryClient = useQueryClient();
   const { table, tableId, isPending } = useTable();
-  const { setCharacterId } = useCharacter();
   const { data: characters, isLoading: isLoadingCharacters } =
     useGetTableCharactersResume({ id: tableId! });
   const handleRefresh = useCallback(() => {
@@ -48,57 +46,45 @@ export default function DMDashboard() {
   }
 
   return (
-    <Container>
-      <View className="flex-1">
-        <FlashList
-          refreshControl={
-            <RefreshControl
-              refreshing={isLoadingCharacters}
-              onRefresh={handleRefresh}
-            />
-          }
-          data={characters || []}
-          renderItem={({ item }) => (
-            <DMCharacterCard
-              character={item}
-              onPress={() => {
-                setCharacterId(item.id!);
-                navigate('/(authenticated)/(drawer)/(tabs)');
-              }}
-            />
-          )}
-          keyExtractor={(item) => item.id!.toString()}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => (
-            <View className="px-4 py-6">
-              <Text className="text-2xl font-bold text-slate-800">
-                {table?.name}
-              </Text>
-              <Text className="text-slate-500 font-medium">DM Dashboard</Text>
-            </View>
-          )}
-          ListEmptyComponent={() => (
-            <View className="py-20 items-center px-6">
-              {isLoadingCharacters ? (
-                <ActivityIndicator size="large" color="#4f46e5" />
-              ) : (
-                <>
-                  <View className="w-16 h-16 bg-slate-200 rounded-full items-center justify-center mb-4">
-                    <Text className="text-2xl">👤</Text>
-                  </View>
-                  <Text className="text-slate-500 text-center text-lg font-medium">
-                    No characters found
-                  </Text>
-                  <Text className="text-slate-400 text-center mt-1">
-                    There are no characters assigned to this table yet.
-                  </Text>
-                </>
-              )}
-            </View>
-          )}
-          contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+    <FlashList
+      refreshControl={
+        <RefreshControl
+          refreshing={isLoadingCharacters}
+          onRefresh={handleRefresh}
         />
-      </View>
-    </Container>
+      }
+      data={characters || []}
+      renderItem={({ item }) => <DMCharacterCard character={item} />}
+      keyExtractor={(item) => item.id!.toString()}
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={() => (
+        <View className="px-4 py-6">
+          <Text className="text-2xl font-bold text-slate-800">
+            {table?.name}
+          </Text>
+          <Text className="text-slate-500 font-medium">DM Dashboard</Text>
+        </View>
+      )}
+      ListEmptyComponent={() => (
+        <View className="py-20 items-center px-6">
+          {isLoadingCharacters ? (
+            <ActivityIndicator size="large" color="#4f46e5" />
+          ) : (
+            <>
+              <View className="w-16 h-16 bg-slate-200 rounded-full items-center justify-center mb-4">
+                <Text className="text-2xl">👤</Text>
+              </View>
+              <Text className="text-slate-500 text-center text-lg font-medium">
+                No characters found
+              </Text>
+              <Text className="text-slate-400 text-center mt-1">
+                There are no characters assigned to this table yet.
+              </Text>
+            </>
+          )}
+        </View>
+      )}
+      contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+    />
   );
 }

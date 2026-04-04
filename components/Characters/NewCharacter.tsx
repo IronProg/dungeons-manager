@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { Controller } from 'react-hook-form';
 import i18n from 'i18n';
 
@@ -47,8 +47,8 @@ export const NewCharacter = () => {
   }, [waitingForCharacter, navigation, character, reset]);
 
   return (
-    <KeyboardAwareScrollView contentContainerClassName="flex-1" enableOnAndroid>
-      <View className="grow flex-col gap-4 px-4">
+    <View className="flex-1 bg-slate-200">
+      <View className="grow flex-col gap-4 p-4">
         <View>
           <Text className="text-lg font-medium">{i18n.t('general.name')}</Text>
           <Controller
@@ -81,17 +81,19 @@ export const NewCharacter = () => {
         )}
       </View>
 
-      <View className="mt-auto px-4" style={{ paddingBottom: bottom }}>
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          disabled={isPending || waitingForCharacter}
-          className={`bg-green-600 px-4 py-2 rounded-lg ${isPending && 'opacity-75'}`}
-        >
-          <Text className="text-2xl text-center text-white font-medium">
-            {i18n.t('general.generateCharacter')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAwareScrollView>
+      <KeyboardStickyView>
+        <View className="mt-auto px-4" style={{ paddingBottom: 16 + bottom }}>
+          <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
+            disabled={isPending || waitingForCharacter}
+            className={`bg-green-600 px-4 py-2 rounded-lg ${isPending || waitingForCharacter ? 'opacity-75' : ''}`}
+          >
+            <Text className="text-2xl text-center text-white font-medium">
+              {i18n.t('general.generateCharacter')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardStickyView>
+    </View>
   );
 };

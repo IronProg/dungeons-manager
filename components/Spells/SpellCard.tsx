@@ -35,8 +35,6 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
   const { characterId, modifiers, proficiencyBonus } = useCharacter();
   const { mutate: updateSpell } = useUpdateSpellMutation();
 
-  const [expanded, setExpanded] = useState(false);
-
   const handleAttack = () => {
     if (!spell.attack) return;
 
@@ -146,9 +144,6 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
 
         {spell.level > 0 && (
           <View className="flex flex-col items-center ml-2">
-            <Text className="text-xs text-gray-500 mb-1">
-              {i18n.t('spells.prepared')}
-            </Text>
             <Switch
               value={spell.prepared}
               onValueChange={togglePrepared}
@@ -156,6 +151,10 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
               thumbColor={'#ffffff'}
               disabled={!canEdit}
             />
+
+            <Text className="text-xs text-gray-500 mb-1">
+              {i18n.t('spells.prepared')}
+            </Text>
           </View>
         )}
       </View>
@@ -193,41 +192,47 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
         )}
       </View>
 
-      {spell.description && (
-        <View className="mt-2">
-          {expanded ? (
-            <View>
-              <Text className="text-sm text-gray-800">{spell.description}</Text>
-              {spell.higherLevelDescription && (
-                <View className="mt-2">
-                  <Text className="text-xs font-bold">
-                    {i18n.t('spells.higherLevelDescription')}:
-                  </Text>
-                  <Text className="text-sm text-gray-800">
-                    {spell.higherLevelDescription}
-                  </Text>
-                </View>
-              )}
-              <TouchableOpacity
-                onPress={() => setExpanded(false)}
-                className="mt-2 flex-row justify-center"
-              >
-                <ChevronUp size={20} color="gray" />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View>
-              <Text className="text-sm text-gray-800" numberOfLines={2}>
-                {spell.description}
+      {spell.description && <SpellDescription spell={spell} />}
+    </View>
+  );
+};
+
+const SpellDescription = ({ spell }: { spell: Spell }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <View className="mt-2">
+      {expanded ? (
+        <View>
+          <Text className="text-sm text-gray-800">{spell.description}</Text>
+          {spell.higherLevelDescription && (
+            <View className="mt-2">
+              <Text className="text-xs font-bold">
+                {i18n.t('spells.higherLevelDescription')}:
               </Text>
-              <TouchableOpacity
-                onPress={() => setExpanded(true)}
-                className="mt-1 flex-row justify-center"
-              >
-                <ChevronDown size={20} color="gray" />
-              </TouchableOpacity>
+              <Text className="text-sm text-gray-800">
+                {spell.higherLevelDescription}
+              </Text>
             </View>
           )}
+          <TouchableOpacity
+            onPress={() => setExpanded(false)}
+            className="mt-2 flex-row justify-center"
+          >
+            <ChevronUp size={20} color="gray" />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View>
+          <Text className="text-sm text-gray-800" numberOfLines={2}>
+            {spell.description}
+          </Text>
+          <TouchableOpacity
+            onPress={() => setExpanded(true)}
+            className="mt-1 flex-row justify-center"
+          >
+            <ChevronDown size={20} color="gray" />
+          </TouchableOpacity>
         </View>
       )}
     </View>

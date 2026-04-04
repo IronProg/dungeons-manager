@@ -2,7 +2,7 @@ import { Controller } from 'react-hook-form';
 import { Attack } from 'types/character';
 import { AttacksFormType, useAttacksForm } from './useAttacksForm';
 import { Text, View } from 'react-native';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { Switch } from 'react-native-gesture-handler';
 import { DamagesForm } from './DamagesForm';
@@ -15,12 +15,12 @@ import {
 import { useCharacter } from 'contexts/CharacterContext';
 import { Button } from 'components/ui/Button';
 
-type AttacksFormProps = {
+export type AttacksFormProps = {
   attack?: Attack;
-  onClose: () => void;
 };
 
-export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
+export const AttacksForm = ({ attack }: AttacksFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useAttacksForm({ attack });
 
@@ -40,7 +40,7 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
       if (!attack) {
         createAttack(params, {
           onSuccess: () => {
-            onClose();
+            close();
           },
         });
       } else {
@@ -48,13 +48,13 @@ export const AttacksForm = ({ attack, onClose }: AttacksFormProps) => {
           { ...params, id: attack.id! },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
       }
     },
-    [attack, characterId, createAttack, onClose, updateAttack],
+    [attack, characterId, createAttack, close, updateAttack],
   );
 
   return (

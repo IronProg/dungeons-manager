@@ -15,9 +15,7 @@ export default function TabLayout() {
 
   useEffect(() => {
     if (character) {
-      navigation.setOptions({
-        title: character.name,
-      });
+      navigation.setOptions({ title: character.name });
     }
   }, [character, navigation]);
 
@@ -27,6 +25,7 @@ export default function TabLayout() {
         <Text className="mb-4 text-2xl font-medium">
           {i18n.t('loadings.characters')}
         </Text>
+
         <ActivityIndicator color={'olive'} size={40} />
       </View>
     );
@@ -43,9 +42,7 @@ export default function TabLayout() {
   return (
     <TopTabs
       initialRouteName="index"
-      screenOptions={{
-        swipeEnabled: true,
-      }}
+      screenOptions={{ swipeEnabled: true, lazy: true }}
     >
       <TopTabs.Screen
         name="equipments"

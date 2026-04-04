@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
@@ -15,12 +15,12 @@ import { Button } from 'components/ui/Button';
 
 import { Resource } from 'types/character';
 
-type ResourcesFormProps = {
+export type ResourcesFormProps = {
   resource?: Resource;
-  onClose: () => void;
 };
 
-export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
+export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useResourcesForm({ resource });
 
@@ -36,7 +36,7 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
           { characterId: characterId!, ...values },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
@@ -45,13 +45,13 @@ export const ResourcesForm = ({ resource, onClose }: ResourcesFormProps) => {
           { characterId: characterId!, id: resource.id!, ...values },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
       }
     },
-    [resource, characterId, createResource, onClose, updateResource],
+    [resource, characterId, createResource, close, updateResource],
   );
 
   return (

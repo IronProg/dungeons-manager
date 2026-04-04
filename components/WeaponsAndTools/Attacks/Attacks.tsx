@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
 import i18n from 'i18n';
@@ -15,16 +15,24 @@ import { BaseModal } from 'components/ui/Modals/BaseModal';
 import { Attack } from 'types/character';
 import { DiceRollButton } from 'components/ui/DiceRollButton';
 import { ComposeDiceRollButton } from 'components/ui/ComposeDiceRollButton';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
+import { AttacksForm, AttacksFormProps } from './AttacksForm';
 
 type AttacksProps = {
-  onCreate: () => void;
-  onSelect: (attack: Attack) => void;
   canEdit: boolean;
 };
 
-export const Attacks = ({ onCreate, onSelect, canEdit }: AttacksProps) => {
+const snapPoints = ['95%'];
+
+export const Attacks = ({ canEdit }: AttacksProps) => {
   const { characterId, modifiers, proficiencyBonus } = useCharacter();
   const { data: attacks, isLoading } = useGetAllAttacks();
+
+  const ref = useRef<DisposableBottomSheetHandle<AttacksFormProps>>(null);
 
   const { mutate: deleteAttack } = useDeleteAttackMutation();
 
@@ -55,7 +63,7 @@ export const Attacks = ({ onCreate, onSelect, canEdit }: AttacksProps) => {
 
         {canEdit && (
           <TouchableOpacity
-            onPress={onCreate}
+            onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
             <Plus size={16} color={'white'} />
@@ -82,7 +90,9 @@ export const Attacks = ({ onCreate, onSelect, canEdit }: AttacksProps) => {
             >
               <TouchableOpacity
                 onPress={() => setDetailedAttack(attack)}
-                onLongPress={canEdit ? () => onSelect(attack) : undefined}
+                onLongPress={
+                  canEdit ? () => ref.current?.show({ attack }) : undefined
+                }
                 key={index}
                 className="rounded-lg flex flex-row items-center gap-2 mb-2 flex-1"
               >
@@ -195,6 +205,14 @@ export const Attacks = ({ onCreate, onSelect, canEdit }: AttacksProps) => {
           )}
         </View>
       </BaseModal>
+
+      <Portal>
+        <DisposableBottomSheet
+          ref={ref}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <AttacksForm {...params} />}
+        />
+      </Portal>
     </>
   );
 };

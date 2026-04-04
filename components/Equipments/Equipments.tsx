@@ -1,29 +1,31 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Plus } from 'lucide-react-native';
 import i18n from 'i18n';
 
 import { useCharacter } from 'contexts/CharacterContext';
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useDeleteEquipmentMutation } from 'services/equipments/equipment.api';
 
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
-import { EquipmentsForm } from './Form/EquipmentsForm';
+import { EquipmentsForm, EquipmentsFormProps } from './Form/EquipmentsForm';
 import { EquipmentsList } from './EquipmentsList';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 import { BaseModal } from 'components/ui/Modals/BaseModal';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
 
 import { Equipment } from 'types/character';
 
+const snapPoints = [850];
+
 export const Equipments = () => {
-  const { bottom } = useSafeAreaInsets();
   const { characterId, canEdit } = useCharacter();
   const { mutate: deleteEquipment } = useDeleteEquipmentMutation();
 
-  const { ref, open, close } = useBottomSheetRef();
+  const ref = useRef<DisposableBottomSheetHandle<EquipmentsFormProps>>(null);
 
-  const [equipmentToEdit, setEquipmentToEdit] = useState<Equipment>();
   const [detailedEquipment, setDetailedEquipment] = useState<Equipment>();
   const [equipmentToDelete, setEquipmentToDelete] = useState<Equipment>();
 
@@ -42,16 +44,15 @@ export const Equipments = () => {
 
   const onCreate = useCallback(() => {
     if (!canEdit) return;
-    open();
-  }, [open, canEdit]);
+    ref.current?.show({});
+  }, [canEdit]);
 
   const onEdit = useCallback(
     (equipment: Equipment) => {
       if (!canEdit) return;
-      setEquipmentToEdit(equipment);
-      open();
+      ref.current?.show({ equipment });
     },
-    [open, canEdit],
+    [canEdit],
   );
 
   const onDelete = useCallback(
@@ -65,11 +66,6 @@ export const Equipments = () => {
   const onShow = useCallback((equipment: Equipment) => {
     setDetailedEquipment(equipment);
   }, []);
-
-  const handleClose = useCallback(() => {
-    setEquipmentToEdit(undefined);
-    close();
-  }, [close]);
 
   return (
     <>
@@ -121,13 +117,13 @@ export const Equipments = () => {
         </View>
       </BaseModal>
 
-      <ReusableBottomSheetModal
-        ref={ref}
-        onDismiss={handleClose}
-        snapPoints={[830 + bottom]}
-      >
-        <EquipmentsForm onClose={handleClose} equipment={equipmentToEdit} />
-      </ReusableBottomSheetModal>
+      <Portal>
+        <DisposableBottomSheet
+          ref={ref}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <EquipmentsForm {...params} />}
+        />
+      </Portal>
     </>
   );
 };

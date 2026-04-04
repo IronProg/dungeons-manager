@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { InitiativeFormType, useInitiativeForm } from './useInitiativeForm';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { CharacterGeneralInfo } from 'types/character';
 import i18n from 'i18n';
@@ -10,15 +10,12 @@ import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos
 import { useCharacter } from 'contexts/CharacterContext';
 import { Button } from 'components/ui/Button';
 
-type InitiativeFormProps = {
+export type InitiativeFormProps = {
   generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
 };
 
-export const InitiativeForm = ({
-  generalInfo,
-  onClose,
-}: InitiativeFormProps) => {
+export const InitiativeForm = ({ generalInfo }: InitiativeFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useInitiativeForm({ generalInfo });
 
@@ -30,12 +27,12 @@ export const InitiativeForm = ({
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
     },
-    [characterId, onClose, updateCharacter],
+    [characterId, close, updateCharacter],
   );
 
   return (

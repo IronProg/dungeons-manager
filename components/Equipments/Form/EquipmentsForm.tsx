@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { EquipmentsFormType, useEquipmentsForm } from './useEquipmentsForm';
@@ -15,12 +15,12 @@ import { Button } from 'components/ui/Button';
 
 import { Equipment } from 'types/character';
 
-type EquipmentsFormProps = {
+export type EquipmentsFormProps = {
   equipment?: Equipment;
-  onClose: () => void;
 };
 
-export const EquipmentsForm = ({ equipment, onClose }: EquipmentsFormProps) => {
+export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useEquipmentsForm({ equipment });
 
@@ -36,7 +36,7 @@ export const EquipmentsForm = ({ equipment, onClose }: EquipmentsFormProps) => {
           { characterId: characterId!, ...values },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
@@ -45,13 +45,13 @@ export const EquipmentsForm = ({ equipment, onClose }: EquipmentsFormProps) => {
           { characterId: characterId!, id: equipment.id!, ...values },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
       }
     },
-    [equipment, characterId, createEquipment, onClose, updateEquipment],
+    [equipment, characterId, createEquipment, close, updateEquipment],
   );
 
   return (

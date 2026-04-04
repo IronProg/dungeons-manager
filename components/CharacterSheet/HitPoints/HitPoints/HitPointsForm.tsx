@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { HitPointsFormType, useHitPointsForm } from './useHitPointsForm';
 import i18n from 'i18n';
@@ -9,12 +9,12 @@ import { useCharacter } from 'contexts/CharacterContext';
 import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
-type HitPointsFormProps = {
+export type HitPointsFormProps = {
   generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
 };
 
-export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
+export const HitPointsForm = ({ generalInfo }: HitPointsFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitPointsForm({ generalInfo });
 
@@ -26,12 +26,12 @@ export const HitPointsForm = ({ generalInfo, onClose }: HitPointsFormProps) => {
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
     },
-    [characterId, onClose, updateCharacter],
+    [characterId, close, updateCharacter],
   );
 
   return (

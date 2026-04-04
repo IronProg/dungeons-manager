@@ -1,15 +1,21 @@
+import { useEffect } from 'react';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { useNavigation, useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
-import { ActivityIndicator, View } from 'react-native';
+import { DrawerActions, ParamListBase } from '@react-navigation/native';
+import { ListIndentDecrease } from 'lucide-react-native';
 import i18n from 'i18n';
 
 import { useGetAllCharacters } from 'services/characters/character.api';
 import { useSignOutMutation } from 'services/auth/auth.api';
-import { CharactersDrawer } from 'components/Characters/CharactersDrawer';
 import { useCharacter } from 'contexts/CharacterContext';
-import { useEffect } from 'react';
-import { useRouter } from 'expo-router';
 import { useTable } from 'contexts/TableContext';
+
 import { DiceRollProvider } from 'providers/DiceRollProvider';
+import { CharactersDrawer } from 'components/Characters/CharactersDrawer';
+import { HintsModal } from 'components/CharacterSheet/HintsModal';
+import { RollToggleButton } from 'components/Roll/RollToggleButton';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 export default function DrawerLayout() {
   const router = useRouter();
@@ -28,7 +34,7 @@ export default function DrawerLayout() {
         router.replace('/(authenticated)/(drawer)/tables');
       }
     }
-  });
+  }, [characterId, characters, router, setCharacterId, table]);
 
   if (isLoading) {
     return (
@@ -52,15 +58,23 @@ export default function DrawerLayout() {
         screenOptions={{
           drawerPosition: 'right',
           headerStyle: { backgroundColor: '#4f46e5' },
-          headerTitleStyle: { color: 'white' },
-          headerTintColor: 'white',
+          headerTitleStyle: { color: 'white', paddingRight: 20 },
+          headerRight: () => <DrawerToggleButton />,
           swipeEnabled: false,
+          lazy: true,
         }}
       >
         <Drawer.Screen
           name="(tabs)"
           options={{
             title: i18n.t('titles.character'),
+            headerLeft: () => (
+              <View className="flex flex-row gap-2 ml-1">
+                <RollToggleButton />
+
+                <HintsModal />
+              </View>
+            ),
           }}
         />
 
@@ -73,9 +87,7 @@ export default function DrawerLayout() {
 
         <Drawer.Screen
           name="new-character"
-          options={{
-            title: i18n.t('titles.newCharacter'),
-          }}
+          options={{ title: i18n.t('titles.newCharacter') }}
         />
 
         <Drawer.Screen
@@ -87,5 +99,19 @@ export default function DrawerLayout() {
         />
       </Drawer>
     </DiceRollProvider>
+  );
+}
+
+export function DrawerToggleButton() {
+  const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
+
+  return (
+    <TouchableOpacity
+      hitSlop={10}
+      onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+      className="w-14 flex items-center justify-center"
+    >
+      <ListIndentDecrease size={24} color="white" />
+    </TouchableOpacity>
   );
 }

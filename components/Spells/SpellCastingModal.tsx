@@ -27,6 +27,14 @@ export const SpellCastingModal = ({
   spell,
   onClose,
 }: SpellCastingModalProps) => {
+  return (
+    <BaseModal visible={!!spell} onClose={onClose}>
+      <Content onClose={onClose} spell={spell} />
+    </BaseModal>
+  );
+};
+
+const Content = ({ spell, onClose }: SpellCastingModalProps) => {
   const { composeRoll } = useDiceRoll();
   const { damageFormat } = useDamageFormat();
   const { calculateSpellDamage } = useSpellDamage();
@@ -116,91 +124,89 @@ export const SpellCastingModal = ({
   ]);
 
   return (
-    <BaseModal visible={!!spell} onClose={onClose}>
-      <View className="flex flex-col items-center">
-        <Text className="text-2xl text-center font-medium">
-          {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
-        </Text>
+    <View className="flex flex-col items-center grow">
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
+      </Text>
 
-        <View className="flex flex-col gap-2 pb-4">
-          <View className="flex flex-row">
-            <View className="w-6/12 px-2">
-              <Text className="text-center font-medium">
-                {i18n.t('general.level')}
-              </Text>
-            </View>
-
-            <View className="w-6/12 px-2">
-              <Text className="text-center font-medium">
-                {i18n.t('general.damage')}
-              </Text>
-            </View>
+      <View className="flex flex-col gap-2 pb-4">
+        <View className="flex flex-row">
+          <View className="w-6/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('general.level')}
+            </Text>
           </View>
 
-          <View className="flex flex-row items-center">
-            <View className="w-6/12 flex flex-row gap-6 justify-center px-2 py-2">
-              <TouchableOpacity
-                hitSlop={10}
-                onPress={() =>
-                  setCurrentLevel(
-                    (prev) =>
-                      Math.max(minLevel, prev - 1) as SpellSlotLevelType,
-                  )
-                }
-                disabled={currentLevel === minLevel}
-                onLongPress={() => {}}
-                className={cn(
-                  'h-8 w-8 rounded-full bg-red-500 flex items-center justify-center shadow-sm',
-                  { 'opacity-80': currentLevel === minLevel },
-                )}
-              >
-                <Minus size={24} color="white" />
-              </TouchableOpacity>
-
-              <Text>{currentLevel}</Text>
-
-              <TouchableOpacity
-                hitSlop={10}
-                onPress={() =>
-                  setCurrentLevel(
-                    (prev) => Math.min(9, prev + 1) as SpellSlotLevelType,
-                  )
-                }
-                disabled={currentLevel === maxLevel}
-                onLongPress={() => {}}
-                className={cn(
-                  'h-8 w-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm',
-                  { 'opacity-80': currentLevel === maxLevel },
-                )}
-              >
-                <Plus size={24} color="white" />
-              </TouchableOpacity>
-            </View>
-
-            <View className="w-6/12 px-2 flex flex-col gap-1">
-              {damages.map((damage, index) => (
-                <Text key={`${damage.id}-${index}`} className="text-center">
-                  {damageFormat(damage)}
-                </Text>
-              ))}
-            </View>
+          <View className="w-6/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('general.damage')}
+            </Text>
           </View>
         </View>
 
-        {!availableSpellLevels.includes(currentLevel) && (
-          <View className="w-full py-2">
-            <Text className="text-center font-medium text-red-500">
-              {i18n.t('spells.noSpellSlotAvailable')}
-            </Text>
-          </View>
-        )}
+        <View className="flex flex-row items-center">
+          <View className="w-6/12 flex flex-row gap-6 justify-center px-2 py-2">
+            <TouchableOpacity
+              hitSlop={10}
+              onPress={() =>
+                setCurrentLevel(
+                  (prev) => Math.max(minLevel, prev - 1) as SpellSlotLevelType,
+                )
+              }
+              disabled={currentLevel === minLevel}
+              onLongPress={() => {}}
+              className={cn(
+                'h-8 w-8 rounded-full bg-red-500 flex items-center justify-center shadow-sm',
+                { 'opacity-80': currentLevel === minLevel },
+              )}
+            >
+              <Minus size={24} color="white" />
+            </TouchableOpacity>
 
-        <Button
-          onPress={handleCast}
-          disabled={isPending}
-          text={i18n.t('spells.cast')}
-        />
+            <Text>{currentLevel}</Text>
+
+            <TouchableOpacity
+              hitSlop={10}
+              onPress={() =>
+                setCurrentLevel(
+                  (prev) => Math.min(9, prev + 1) as SpellSlotLevelType,
+                )
+              }
+              disabled={currentLevel === maxLevel}
+              onLongPress={() => {}}
+              className={cn(
+                'h-8 w-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm',
+                { 'opacity-80': currentLevel === maxLevel },
+              )}
+            >
+              <Plus size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+
+          <View className="w-6/12 px-2 flex flex-col gap-1">
+            {damages.map((damage, index) => (
+              <Text key={`${damage.id}-${index}`} className="text-center">
+                {damageFormat(damage)}
+              </Text>
+            ))}
+          </View>
+        </View>
       </View>
-    </BaseModal>
+
+      {!availableSpellLevels.includes(currentLevel) && (
+        <View className="w-full py-2">
+          <Text className="text-center font-medium text-red-500">
+            {i18n.t('spells.noSpellSlotAvailable')}
+          </Text>
+        </View>
+      )}
+
+      <Button
+        onPress={handleCast}
+        disabled={isPending}
+        className="mt-auto"
+        text={i18n.t('spells.cast')}
+      />
+    </View>
   );
 };

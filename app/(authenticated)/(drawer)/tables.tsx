@@ -8,7 +8,6 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Users, Hash } from 'lucide-react-native';
 import i18n from 'i18n';
 
@@ -92,10 +91,7 @@ export default function TablesScreen() {
 
   return (
     <>
-      <SafeAreaView
-        className="flex-1 bg-slate-50"
-        edges={['bottom', 'left', 'right']}
-      >
+      <View className="flex-1 bg-slate-200">
         <View className="px-5 pt-6 pb-4">
           <Text className="text-2xl font-bold text-gray-800 mb-2">
             {i18n.t('tables.joinTable') || 'Join Table'}
@@ -151,7 +147,7 @@ export default function TablesScreen() {
             />
           )}
         </View>
-      </SafeAreaView>
+      </View>
 
       <ConfirmationModal
         isVisible={!!tableToSelect}

@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import i18n from 'i18n';
 
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetAllAttributes } from 'services/attributes/attributes';
 import { useCharacter } from 'contexts/CharacterContext';
 
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
-import { AttributesForm } from './AttributesForm';
+import { AttributesForm, AttributesFormProps } from './AttributesForm';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
 
 import { Attribute } from 'types/character';
 
+const snapPoints = [550, 875];
+
 export const MainCharacterSheetAttributes = () => {
-  const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
+  const ref = useRef<DisposableBottomSheetHandle<AttributesFormProps>>(null);
   const { canEdit } = useCharacter();
 
   const { data: characterAttributes } = useGetAllAttributes();
@@ -26,7 +31,9 @@ export const MainCharacterSheetAttributes = () => {
       <View className="flex rounded-lg">
         <View className="flex flex-row flex-wrap justify-between p-2 gap-y-2">
           <AttributeCard
-            openModal={open}
+            onLongPress={() =>
+              ref.current?.show({ characterAttributes: characterAttributes! })
+            }
             attribute={
               characterAttributes.find(
                 (attribute) => attribute.name === 'strength',
@@ -35,7 +42,9 @@ export const MainCharacterSheetAttributes = () => {
             canEdit={canEdit}
           />
           <AttributeCard
-            openModal={open}
+            onLongPress={() =>
+              ref.current?.show({ characterAttributes: characterAttributes! })
+            }
             attribute={
               characterAttributes.find(
                 (attribute) => attribute.name === 'dexterity',
@@ -44,7 +53,9 @@ export const MainCharacterSheetAttributes = () => {
             canEdit={canEdit}
           />
           <AttributeCard
-            openModal={open}
+            onLongPress={() =>
+              ref.current?.show({ characterAttributes: characterAttributes! })
+            }
             attribute={
               characterAttributes.find(
                 (attribute) => attribute.name === 'constitution',
@@ -53,7 +64,9 @@ export const MainCharacterSheetAttributes = () => {
             canEdit={canEdit}
           />
           <AttributeCard
-            openModal={open}
+            onLongPress={() =>
+              ref.current?.show({ characterAttributes: characterAttributes! })
+            }
             attribute={
               characterAttributes.find(
                 (attribute) => attribute.name === 'intelligence',
@@ -62,7 +75,9 @@ export const MainCharacterSheetAttributes = () => {
             canEdit={canEdit}
           />
           <AttributeCard
-            openModal={open}
+            onLongPress={() =>
+              ref.current?.show({ characterAttributes: characterAttributes! })
+            }
             attribute={
               characterAttributes.find(
                 (attribute) => attribute.name === 'wisdom',
@@ -71,7 +86,9 @@ export const MainCharacterSheetAttributes = () => {
             canEdit={canEdit}
           />
           <AttributeCard
-            openModal={open}
+            onLongPress={() =>
+              ref.current?.show({ characterAttributes: characterAttributes! })
+            }
             attribute={
               characterAttributes.find(
                 (attribute) => attribute.name === 'charisma',
@@ -82,35 +99,32 @@ export const MainCharacterSheetAttributes = () => {
         </View>
       </View>
 
-      <ReusableBottomSheetModal
-        onDismiss={close}
-        ref={bottomSheetRef}
-        snapPoints={[550, 875]}
-      >
-        <AttributesForm
-          characterAttributes={characterAttributes}
-          onClose={close}
+      <Portal>
+        <DisposableBottomSheet
+          ref={ref}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <AttributesForm {...params} />}
         />
-      </ReusableBottomSheetModal>
+      </Portal>
     </>
   );
 };
 
 type AttributeCardProps = {
   attribute: Attribute;
-  openModal: () => void;
+  onLongPress: () => void;
   canEdit: boolean;
 };
 
 const AttributeCard = ({
   attribute,
-  openModal,
+  onLongPress,
   canEdit,
 }: AttributeCardProps) => {
   return (
     <View className="w-[33%] px-4 flex justify-center">
       <TouchableOpacity
-        onLongPress={canEdit ? openModal : undefined}
+        onLongPress={canEdit ? onLongPress : undefined}
         className="relative border-gray-900 rounded-lg flex-col flex items-stretch"
       >
         <Text className="text-gray-900 text-sm font-semibold text-center">

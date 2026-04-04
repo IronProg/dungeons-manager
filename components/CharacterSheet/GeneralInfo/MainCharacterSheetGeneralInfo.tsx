@@ -1,60 +1,48 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useRef } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
 import { useCharacter } from 'contexts/CharacterContext';
 
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
 import { PassivePerception } from './PassivePerception/PassivePerception';
 import { ArmorClass } from './ArmorClass/ArmorClass';
 import { Initiative } from './Initiative/Initiative';
 import { Speed } from './Speed/Speed';
 import { Proficiency } from './Proficiency/Proficiency';
 import { Exhaustion } from './Exhaustion/Exhaustion';
-import { PassivePerceptionForm } from './PassivePerception/PassivePerceptionForm';
-import { InitiativeForm } from './Initiative/InitiativeForm';
-import { ArmorClassForm } from './ArmorClass/ArmorClassForm';
-import { SpeedForm } from './Speed/SpeedForm';
+import {
+  PassivePerceptionForm,
+  PassivePerceptionFormProps,
+} from './PassivePerception/PassivePerceptionForm';
+import {
+  InitiativeForm,
+  InitiativeFormProps,
+} from './Initiative/InitiativeForm';
+import {
+  ArmorClassForm,
+  ArmorClassFormProps,
+} from './ArmorClass/ArmorClassForm';
+import { SpeedForm, SpeedFormProps } from './Speed/SpeedForm';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
 
-type GeneralInfoFormTypes =
-  | 'passivePerception'
-  | 'speed'
-  | 'initiative'
-  | 'armorClass';
+const GENERAL_INFO_SNAP_POINTS = [600];
+const ARMOR_CLASS_SNAP_POINTS = [625];
 
 export const MainCharacterSheetGeneralInfo = () => {
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
-  const { bottom } = useSafeAreaInsets();
   const { canEdit } = useCharacter();
 
-  const [activeForm, setActiveForm] = useState<null | GeneralInfoFormTypes>(
-    null,
-  );
-  const [snapPoints, setSnapPoints] = useState<(number | string)[]>([]);
-
-  const { ref, open, close } = useBottomSheetRef();
-
-  const getFormTypeSnapPoints = useMemo(
-    () => ({
-      passivePerception: [510 + bottom],
-      speed: [510 + bottom],
-      initiative: [510 + bottom],
-      armorClass: [525 + bottom],
-    }),
-    [bottom],
-  );
-
-  const handleOpen = useCallback(
-    (formName: GeneralInfoFormTypes) => {
-      if (!canEdit) return;
-      setActiveForm(formName);
-      setSnapPoints(getFormTypeSnapPoints[formName] || [510 + bottom]);
-      open();
-    },
-    [getFormTypeSnapPoints, bottom, open, canEdit],
-  );
+  const armorClassRef =
+    useRef<DisposableBottomSheetHandle<ArmorClassFormProps>>(null);
+  const initiativeRef =
+    useRef<DisposableBottomSheetHandle<InitiativeFormProps>>(null);
+  const speedRef = useRef<DisposableBottomSheetHandle<SpeedFormProps>>(null);
+  const passivePerceptionRef =
+    useRef<DisposableBottomSheetHandle<PassivePerceptionFormProps>>(null);
 
   return (
     <View className="py-4 flex flex-col gap-2">
@@ -64,19 +52,19 @@ export const MainCharacterSheetGeneralInfo = () => {
           <View className="flex flex-row justify-between flex-wrap px-2 gap-4">
             <ArmorClass
               generalInfo={generalInfo}
-              onLongPress={() => handleOpen('armorClass')}
+              onLongPress={() => armorClassRef.current?.show({ generalInfo })}
               canEdit={canEdit}
             />
 
             <Initiative
               generalInfo={generalInfo}
-              onLongPress={() => handleOpen('initiative')}
+              onLongPress={() => initiativeRef.current?.show({ generalInfo })}
               canEdit={canEdit}
             />
 
             <Speed
               generalInfo={generalInfo}
-              onLongPress={() => handleOpen('speed')}
+              onLongPress={() => speedRef.current?.show({ generalInfo })}
               canEdit={canEdit}
             />
           </View>
@@ -89,7 +77,7 @@ export const MainCharacterSheetGeneralInfo = () => {
             <PassivePerception
               generalInfo={generalInfo}
               onLongPress={() => {
-                handleOpen('passivePerception');
+                passivePerceptionRef.current?.show({ generalInfo });
               }}
               canEdit={canEdit}
             />
@@ -99,31 +87,31 @@ export const MainCharacterSheetGeneralInfo = () => {
         <Text>No Data Found</Text>
       )}
 
-      <ReusableBottomSheetModal
-        ref={ref}
-        snapPoints={snapPoints}
-        onDismiss={() => setActiveForm(null)}
-      >
-        {generalInfo && (
-          <>
-            {activeForm === 'armorClass' && (
-              <ArmorClassForm generalInfo={generalInfo} onClose={close} />
-            )}
-            {activeForm === 'initiative' && (
-              <InitiativeForm generalInfo={generalInfo} onClose={close} />
-            )}
-            {activeForm === 'speed' && (
-              <SpeedForm generalInfo={generalInfo} onClose={close} />
-            )}
-            {activeForm === 'passivePerception' && (
-              <PassivePerceptionForm
-                generalInfo={generalInfo}
-                onClose={close}
-              />
-            )}
-          </>
-        )}
-      </ReusableBottomSheetModal>
+      <Portal>
+        <DisposableBottomSheet
+          ref={armorClassRef}
+          snapPoints={ARMOR_CLASS_SNAP_POINTS}
+          renderContent={({ params }) => <ArmorClassForm {...params} />}
+        />
+
+        <DisposableBottomSheet
+          ref={initiativeRef}
+          snapPoints={GENERAL_INFO_SNAP_POINTS}
+          renderContent={({ params }) => <InitiativeForm {...params} />}
+        />
+
+        <DisposableBottomSheet
+          ref={speedRef}
+          snapPoints={GENERAL_INFO_SNAP_POINTS}
+          renderContent={({ params }) => <SpeedForm {...params} />}
+        />
+
+        <DisposableBottomSheet
+          ref={passivePerceptionRef}
+          snapPoints={GENERAL_INFO_SNAP_POINTS}
+          renderContent={({ params }) => <PassivePerceptionForm {...params} />}
+        />
+      </Portal>
     </View>
   );
 };

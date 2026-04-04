@@ -1,6 +1,5 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { useGetAllSkills } from 'services/skills/skill';
@@ -9,11 +8,20 @@ import { useCharacter } from 'contexts/CharacterContext';
 import { useDiceRoll } from 'contexts/DiceRollContext';
 import { useGetSkillBonus } from 'hooks/useSkillBonus';
 
-import { SavingThrowForm } from './SavingThrow/SavingThrowForm';
-import { SkillForm } from './Skill/SkillForm';
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
+import {
+  SavingThrowForm,
+  SavingThrowFormProps,
+} from './SavingThrow/SavingThrowForm';
+import { SkillForm, SkillFormProps } from './Skill/SkillForm';
 
 import type { SavingThrow, Skill } from 'types/character';
+
+const snapPoints = [300, 600];
 
 export const MainCharacterSheetSkills = () => {
   const { characterId, canEdit } = useCharacter();
@@ -22,31 +30,9 @@ export const MainCharacterSheetSkills = () => {
 
   const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills();
 
-  const [highlightedSavingThrow, setHighlightedSavingThrow] =
-    useState<SavingThrow | null>(null);
-  const [highlightedSkill, setHighlightedSkill] = useState<Skill | null>(null);
-
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-
-  const handleOpen = useCallback(
-    ({ savingThrow, skill }: { savingThrow?: SavingThrow; skill?: Skill }) => {
-      if (!canEdit) return;
-
-      if (savingThrow) {
-        setHighlightedSavingThrow(savingThrow);
-      } else if (skill) {
-        setHighlightedSkill(skill);
-      }
-      bottomSheetRef.current?.present();
-    },
-    [canEdit],
-  );
-
-  const handleClose = useCallback(() => {
-    setHighlightedSavingThrow(null);
-    setHighlightedSkill(null);
-    bottomSheetRef.current?.dismiss();
-  }, []);
+  const savingThrowRef =
+    useRef<DisposableBottomSheetHandle<SavingThrowFormProps>>(null);
+  const skillRef = useRef<DisposableBottomSheetHandle<SkillFormProps>>(null);
 
   return (
     <>
@@ -58,7 +44,12 @@ export const MainCharacterSheetSkills = () => {
               <SavingThrowCard
                 key={index}
                 savingThrow={savingThrow}
-                onLongPress={() => handleOpen({ savingThrow })}
+                onLongPress={() =>
+                  savingThrowRef.current?.show({
+                    characterId: characterId!,
+                    savingThrow,
+                  })
+                }
                 canEdit={canEdit}
               />
             ))
@@ -76,7 +67,9 @@ export const MainCharacterSheetSkills = () => {
               <SkillCard
                 key={skill.id}
                 skill={skill}
-                onLongPress={() => handleOpen({ skill })}
+                onLongPress={() =>
+                  skillRef.current?.show({ characterId: characterId!, skill })
+                }
                 canEdit={canEdit}
               />
             ))
@@ -86,27 +79,19 @@ export const MainCharacterSheetSkills = () => {
         </View>
       </View>
 
-      <ReusableBottomSheetModal
-        ref={bottomSheetRef}
-        onDismiss={handleClose}
-        snapPoints={[300, 600]}
-      >
-        {highlightedSavingThrow && (
-          <SavingThrowForm
-            characterId={characterId!}
-            savingThrow={highlightedSavingThrow}
-            onClose={handleClose}
-          />
-        )}
+      <Portal>
+        <DisposableBottomSheet
+          ref={savingThrowRef}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <SavingThrowForm {...params} />}
+        />
 
-        {highlightedSkill && (
-          <SkillForm
-            characterId={characterId!}
-            skill={highlightedSkill}
-            onClose={handleClose}
-          />
-        )}
-      </ReusableBottomSheetModal>
+        <DisposableBottomSheet
+          ref={skillRef}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <SkillForm {...params} />}
+        />
+      </Portal>
     </>
   );
 };

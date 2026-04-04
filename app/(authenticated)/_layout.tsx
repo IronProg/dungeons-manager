@@ -17,6 +17,8 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+      <Stack.Screen name="spell-form" options={{ headerShown: false }} />
+
       <Stack.Screen
         name="character-details"
         options={{
@@ -25,12 +27,6 @@ export default function RootLayout() {
           headerStyle: { backgroundColor: colors.indigo['600'] },
           headerTitleStyle: { color: 'white' },
           headerTintColor: 'white',
-        }}
-      />
-      <Stack.Screen
-        name="spell-form"
-        options={{
-          headerShown: false,
         }}
       />
     </Stack>

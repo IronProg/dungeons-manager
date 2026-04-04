@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import {
   HitPointsModifierFormType,
@@ -12,15 +12,12 @@ import { useCharacter } from 'contexts/CharacterContext';
 import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
-type HitPointsModifierFormProps = {
-  generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
-};
+export type HitPointsModifierFormProps = { generalInfo: CharacterGeneralInfo };
 
 export const HitPointsModifierForm = ({
   generalInfo,
-  onClose,
 }: HitPointsModifierFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useHitPointsModifierForm();
 
@@ -65,26 +62,26 @@ export const HitPointsModifierForm = ({
         { characterId: characterId!, hitPoints, temporaryHitPoints },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
 
-      onClose();
+      close();
     },
     [
       characterId,
       generalInfo.hitPoints,
       generalInfo.hitPointsLimit,
       generalInfo?.temporaryHitPoints,
-      onClose,
+      close,
       updateGeneralInfo,
     ],
   );
 
   return (
     <View className="flex flex-col items-center">
-      <Text className="text-2xl text-center font-medium">
+      <Text className="text-2xl text-center font-medium mb-4">
         {i18n.t('titles.hitPoints')}
       </Text>
 

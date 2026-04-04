@@ -26,6 +26,14 @@ interface HitDicesRollFormProps {
 }
 
 export const HitDicesRollForm = ({ open, onClose }: HitDicesRollFormProps) => {
+  return (
+    <BaseModal visible={open} onClose={onClose}>
+      <Content onClose={onClose} />
+    </BaseModal>
+  );
+};
+
+const Content = ({ onClose }: { onClose: () => void }) => {
   const { composeRoll } = useDiceRoll();
   const { characterId, modifiers } = useCharacter();
 
@@ -133,77 +141,72 @@ export const HitDicesRollForm = ({ open, onClose }: HitDicesRollFormProps) => {
   );
 
   return (
-    <BaseModal visible={open} onClose={onClose}>
-      <View className="flex flex-col items-center">
-        <Text className="text-2xl text-center font-medium">
-          {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
-        </Text>
+    <View className="flex flex-col items-center">
+      <Text className="text-2xl text-center font-medium">
+        {i18n.t('titles.hitDices')} / {i18n.t('general.maximum')}
+      </Text>
 
-        <View className="flex flex-col gap-2 pb-4">
-          <View className="flex flex-row">
-            <View className="w-8/12 px-2">
-              <Text className="text-center font-medium">
-                {i18n.t('hitDices.currentAmount')}
-              </Text>
-            </View>
-
-            <View className="w-2/12 px-2">
-              <Text className="text-center font-medium">
-                {i18n.t('classes.hitDice')}
-              </Text>
-            </View>
-
-            <View className="w-2/12 px-2">
-              <Text className="text-center font-medium">
-                {i18n.t('general.total')}
-              </Text>
-            </View>
+      <View className="flex flex-col gap-2 pb-4">
+        <View className="flex flex-row">
+          <View className="w-8/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('hitDices.currentAmount')}
+            </Text>
           </View>
 
-          {characterClasses?.map((characterClass) => (
-            <View
-              key={characterClass.id}
-              className="flex flex-row items-center"
-            >
-              <View className="w-8/12 flex flex-row gap-6 justify-center px-2 py-2">
-                <TouchableOpacity
-                  hitSlop={10}
-                  onPress={() => handleDecrease({ characterClass })}
-                  onLongPress={() =>
-                    handleDecrease({ characterClass, full: true })
-                  }
-                  className="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center shadow-sm"
-                >
-                  <Minus size={24} color="white" />
-                </TouchableOpacity>
+          <View className="w-2/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('classes.hitDice')}
+            </Text>
+          </View>
 
-                <Text className="font-bold text-lg">
-                  {characterClass.hitDiceAmount}
-                </Text>
-
-                <TouchableOpacity
-                  hitSlop={10}
-                  onPress={() => handleAdd({ characterClass })}
-                  onLongPress={() => handleAdd({ characterClass, full: true })}
-                  className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm"
-                >
-                  <Plus size={24} color="white" />
-                </TouchableOpacity>
-              </View>
-
-              <View className="w-2/12 px-2">
-                <Text className="text-center">{characterClass.hitDice}</Text>
-              </View>
-
-              <View className="w-2/12 px-2">
-                <Text className="text-center">{characterClass.level}</Text>
-              </View>
-            </View>
-          ))}
+          <View className="w-2/12 px-2">
+            <Text className="text-center font-medium">
+              {i18n.t('general.total')}
+            </Text>
+          </View>
         </View>
 
-        <Button onPress={onSubmit} disabled={isPending} />
+        {characterClasses?.map((characterClass) => (
+          <View key={characterClass.id} className="flex flex-row items-center">
+            <View className="w-8/12 flex flex-row gap-6 justify-center px-2 py-2">
+              <TouchableOpacity
+                hitSlop={10}
+                onPress={() => handleDecrease({ characterClass })}
+                onLongPress={() =>
+                  handleDecrease({ characterClass, full: true })
+                }
+                className="h-8 w-8 rounded-full bg-red-500 flex items-center justify-center shadow-sm"
+              >
+                <Minus size={24} color="white" />
+              </TouchableOpacity>
+
+              <Text className="font-bold text-lg">
+                {characterClass.hitDiceAmount}
+              </Text>
+
+              <TouchableOpacity
+                hitSlop={10}
+                onPress={() => handleAdd({ characterClass })}
+                onLongPress={() => handleAdd({ characterClass, full: true })}
+                className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm"
+              >
+                <Plus size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+
+            <View className="w-2/12 px-2">
+              <Text className="text-center">{characterClass.hitDice}</Text>
+            </View>
+
+            <View className="w-2/12 px-2">
+              <Text className="text-center">{characterClass.level}</Text>
+            </View>
+          </View>
+        ))}
       </View>
-    </BaseModal>
+
+      <Button onPress={onSubmit} disabled={isPending} />
+    </View>
   );
 };

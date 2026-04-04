@@ -11,19 +11,16 @@ import {
 
 import { Button } from 'components/ui/Button';
 
-import { CharacterClass, CharacterGeneralInfo } from 'types/character';
+import { CharacterClass } from 'types/character';
+import { useBottomSheet } from '@gorhom/bottom-sheet';
 
 type handleAddFunction = {
   characterClass: CharacterClass;
   full?: boolean;
 };
 
-type HitDicesFormProps = {
-  generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
-};
-
-export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
+export const HitDicesForm = () => {
+  const { close } = useBottomSheet();
   const { data: fetchedCharacterClasses } = useGetAllClasses();
 
   const [characterClasses, setCharacterClasses] = useState<CharacterClass[]>(
@@ -48,11 +45,11 @@ export const HitDicesForm = ({ onClose }: HitDicesFormProps) => {
       { characterId: characterId!, classes: characterClasses },
       {
         onSuccess: () => {
-          onClose();
+          close();
         },
       },
     );
-  }, [characterClasses, characterId, onClose, updateAllCharacters]);
+  }, [characterClasses, characterId, close, updateAllCharacters]);
 
   const handleAdd = useCallback(
     ({ characterClass, full = false }: handleAddFunction) => {

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
 import i18n from 'i18n';
@@ -13,17 +13,25 @@ import {
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 
 import { Resource } from 'types/character';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
+import { ResourcesForm, ResourcesFormProps } from './ResourcesForm';
 
 type ResourcesProps = {
-  onCreate: () => void;
-  onSelect: (resource: Resource) => void;
   canEdit: boolean;
 };
 
-export const Resources = ({ onCreate, onSelect, canEdit }: ResourcesProps) => {
+const snapPoints = [600];
+
+export const Resources = ({ canEdit }: ResourcesProps) => {
   const { characterId } = useCharacter();
   const { data: resources, isLoading } = useGetAllResources();
   const { mutate: updateResource, isPending } = useUpdateResourceMutation();
+
+  const ref = useRef<DisposableBottomSheetHandle<ResourcesFormProps>>(null);
 
   const { mutate: deleteResource } = useDeleteResourceMutation();
 
@@ -66,7 +74,7 @@ export const Resources = ({ onCreate, onSelect, canEdit }: ResourcesProps) => {
 
         {canEdit && (
           <TouchableOpacity
-            onPress={onCreate}
+            onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
             <Plus size={16} color={'white'} />
@@ -83,7 +91,9 @@ export const Resources = ({ onCreate, onSelect, canEdit }: ResourcesProps) => {
               <TouchableOpacity
                 disabled={isPending}
                 onPress={() => handleQuickUpdate(resource)}
-                onLongPress={canEdit ? () => onSelect(resource) : undefined}
+                onLongPress={
+                  canEdit ? () => ref.current?.show({ resource }) : undefined
+                }
                 key={index}
                 className="rounded-lg flex flex-row items-center gap-2 border-b border-gray-300 pb-2 mb-2 flex-1"
               >
@@ -117,6 +127,14 @@ export const Resources = ({ onCreate, onSelect, canEdit }: ResourcesProps) => {
         onClose={() => setResourceToDelete(undefined)}
         onConfirm={handleDelete}
       />
+
+      <Portal>
+        <DisposableBottomSheet
+          ref={ref}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <ResourcesForm {...params} />}
+        />
+      </Portal>
     </>
   );
 };

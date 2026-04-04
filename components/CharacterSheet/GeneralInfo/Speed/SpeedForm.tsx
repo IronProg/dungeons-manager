@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
 import { SpeedFormType, useSpeedForm } from './useSpeedForm';
 import i18n from 'i18n';
@@ -9,12 +9,12 @@ import { useCharacter } from 'contexts/CharacterContext';
 import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
 import { Button } from 'components/ui/Button';
 
-type SpeedFormProps = {
+export type SpeedFormProps = {
   generalInfo: CharacterGeneralInfo;
-  onClose: () => void;
 };
 
-export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
+export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useSpeedForm({ generalInfo });
 
@@ -26,12 +26,12 @@ export const SpeedForm = ({ generalInfo, onClose }: SpeedFormProps) => {
         { characterId: characterId!, ...values },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
     },
-    [characterId, onClose, updateCharacter],
+    [characterId, close, updateCharacter],
   );
 
   return (

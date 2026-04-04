@@ -7,26 +7,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
-import i18n from 'i18n';
-import { Container } from 'components/Container';
+import { useDebounce } from 'use-debounce';
 import { Search } from 'lucide-react-native';
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+import { FlashList } from '@shopify/flash-list';
+import i18n from 'i18n';
 
+import {
+  getCurrentExternalSpellsUrl,
+  getLastExternalSpellsUrl,
+  setLastExternalSpellsUrl,
+} from 'services/spellLists/spellList.store';
+import { colors } from 'core/utils/colors';
 import {
   initExternalSpellsDb,
   getExternalSpellsCount,
   insertExternalSpells,
   searchExternalSpells,
 } from 'services/spellLists/spellList.service';
-import { FlashList } from '@shopify/flash-list';
-import { colors } from 'core/utils/colors';
-import { useDebounce } from 'use-debounce';
+
+import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
+
 import { Spell } from 'types/character';
-import {
-  getCurrentExternalSpellsUrl,
-  getLastExternalSpellsUrl,
-  setLastExternalSpellsUrl,
-} from 'services/spellLists/spellList.store';
 
 export default function SpellListScreen() {
   const router = useRouter();
@@ -119,7 +120,7 @@ export default function SpellListScreen() {
   );
 
   return (
-    <Container>
+    <>
       <Stack.Screen
         options={{
           headerTitle: i18n.t('spellList.title'),
@@ -142,7 +143,7 @@ export default function SpellListScreen() {
           </Text>
         </View>
       ) : (
-        <View className="flex-1 pb-4 px-2">
+        <View className="flex-1 pb-4 px-2 mt-4">
           <View className="flex-row px-3 py-2 mb-4 items-center rounded-full bg-white">
             <Search size={20} color={colors.gray[500]} />
 
@@ -182,6 +183,6 @@ export default function SpellListScreen() {
         subTitle={i18n.t('spellList.downloadSubTitle')}
         buttonClassName="bg-indigo-600"
       />
-    </Container>
+    </>
   );
 }

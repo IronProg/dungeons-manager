@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Controller, useFieldArray } from 'react-hook-form';
 import { Trash2 } from 'lucide-react-native';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { useUpdateAllClassesMutation } from 'services/classes/class';
@@ -14,22 +14,17 @@ import { HitDicePicker } from 'components/ui/inputs/HitDicePicker';
 import { ClassesFormType, useClassesForm } from './useClassesForm';
 import { Character, CharacterClass } from 'types/character';
 
-type ClassesFormProps = {
+export type ClassesFormProps = {
   character: Character;
   characterClasses: CharacterClass[];
-  onClose: () => void;
 };
 
 export const ClassesForm = ({
   character,
   characterClasses,
-  onClose,
 }: ClassesFormProps) => {
-  const {
-    mutate: updateAllClasses,
-    reset,
-    isPending,
-  } = useUpdateAllClassesMutation();
+  const { close } = useBottomSheet();
+  const { mutate: updateAllClasses, isPending } = useUpdateAllClassesMutation();
 
   const { control, handleSubmit, getValues } = useClassesForm({
     characterClasses,
@@ -66,13 +61,12 @@ export const ClassesForm = ({
         { characterId: character.id!, classes: data.classes },
         {
           onSuccess: () => {
-            reset();
-            onClose();
+            close();
           },
         },
       );
     },
-    [character?.id, onClose, reset, updateAllClasses],
+    [character.id, close, updateAllClasses],
   );
 
   return (

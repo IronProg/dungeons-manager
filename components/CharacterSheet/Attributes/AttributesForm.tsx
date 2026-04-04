@@ -7,6 +7,7 @@ import { getModifier } from 'core/helpers/getModifier';
 import {
   BottomSheetScrollView,
   BottomSheetTextInput,
+  useBottomSheet,
 } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { useUpdateAllAttributesMutation } from 'services/attributes/attributes';
@@ -14,15 +15,14 @@ import { useCallback } from 'react';
 import { Button } from 'components/ui/Button';
 import { useCharacter } from 'contexts/CharacterContext';
 
-type AttributesFormProps = {
+export type AttributesFormProps = {
   characterAttributes: Attribute[];
-  onClose: () => void;
 };
 
 export const AttributesForm = ({
   characterAttributes,
-  onClose,
 }: AttributesFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useAttributesForm({ characterAttributes });
 
@@ -51,12 +51,12 @@ export const AttributesForm = ({
         { characterId: characterId!, attributes: newAttributes },
         {
           onSuccess: () => {
-            onClose();
+            close();
           },
         },
       );
     },
-    [characterId, onClose, updateAllAttributes],
+    [characterId, close, updateAllAttributes],
   );
 
   return (

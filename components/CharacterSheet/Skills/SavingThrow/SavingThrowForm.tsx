@@ -2,23 +2,22 @@ import { Controller } from 'react-hook-form';
 import { Switch, Text, View } from 'react-native';
 import { SavingThrowFormType, useSavingThrowForm } from './useSavingThrowForm';
 import { SavingThrow } from 'types/character';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 import { useUpdateSavingThrowMutation } from 'services/savingThrows/savingThrow';
 import { Button } from 'components/ui/Button';
 
-type AttributesFormProps = {
+export type SavingThrowFormProps = {
   characterId: number;
   savingThrow: SavingThrow;
-  onClose: () => void;
 };
 
 export const SavingThrowForm = ({
   characterId,
   savingThrow,
-  onClose,
-}: AttributesFormProps) => {
+}: SavingThrowFormProps) => {
+  const { close } = useBottomSheet();
   const { control, handleSubmit } = useSavingThrowForm({ savingThrow });
 
   const { mutate: updateSavingThrow, isPending } =
@@ -29,7 +28,7 @@ export const SavingThrowForm = ({
       { characterId, id: savingThrow.id!, ...values },
       {
         onSuccess: () => {
-          onClose();
+          close();
         },
       },
     );

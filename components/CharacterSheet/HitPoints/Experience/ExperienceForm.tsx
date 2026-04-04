@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { useUpdateCharacterMutation } from 'services/characters/character.api';
@@ -12,12 +12,10 @@ import { Button } from 'components/ui/Button';
 
 import type { Character } from 'types/character';
 
-type ExperienceFormProps = {
-  character: Character;
-  onClose: () => void;
-};
+export type ExperienceFormProps = { character: Character };
 
-export const ExperienceForm = ({ character, onClose }: ExperienceFormProps) => {
+export const ExperienceForm = ({ character }: ExperienceFormProps) => {
+  const { close } = useBottomSheet();
   const queryClient = useQueryClient();
   const { control, handleSubmit } = useExperienceForm({
     experience: character.experience || 0,
@@ -35,12 +33,12 @@ export const ExperienceForm = ({ character, onClose }: ExperienceFormProps) => {
               queryKey: ['characters', character.id!],
             });
 
-            onClose();
+            close();
           },
         },
       );
     },
-    [character.id, onClose, queryClient, updateCharacter],
+    [character.id, close, queryClient, updateCharacter],
   );
 
   return (

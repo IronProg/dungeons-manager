@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import i18n from 'i18n';
 
@@ -15,6 +16,7 @@ import { SpellCastingModal } from './SpellCastingModal';
 import { Spell, SpellSlotLevelType } from 'types/character';
 
 export const Spells = () => {
+  const { bottom } = useSafeAreaInsets();
   const { character, canEdit } = useCharacter();
 
   const [level, setLevel] = useState<SpellSlotLevelType>(0);
@@ -29,37 +31,42 @@ export const Spells = () => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
-      {level > 0 && character && <SpellSlotsHeader level={level} />}
+    <>
+      <View
+        className="flex-1 bg-slate-200"
+        style={{ paddingBottom: bottom + 16 }}
+      >
+        {level > 0 && character && <SpellSlotsHeader level={level} />}
 
-      <FlashList
-        contentContainerStyle={{ padding: 16, paddingBottom: 96 }}
-        data={spells}
-        renderItem={({ item }) => (
-          <SpellCard
-            onCast={() => setSpellToCast(item)}
-            spell={item}
-            canEdit={canEdit}
-          />
-        )}
-        ListHeaderComponent={spellHeader}
-        ListEmptyComponent={
-          isLoadingSpells ? (
-            <ActivityIndicator className="mt-4" />
-          ) : (
-            <Text className="text-center text-gray-500 mt-4">
-              {i18n.t('spells.noneFound')}
-            </Text>
-          )
-        }
-      />
+        <FlashList
+          contentContainerStyle={{ padding: 16, paddingBottom: bottom + 40 }}
+          data={spells}
+          renderItem={({ item }) => (
+            <SpellCard
+              onCast={() => setSpellToCast(item)}
+              spell={item}
+              canEdit={canEdit}
+            />
+          )}
+          ListHeaderComponent={spellHeader}
+          ListEmptyComponent={
+            isLoadingSpells ? (
+              <ActivityIndicator className="mt-4" />
+            ) : (
+              <Text className="text-center text-gray-500 mt-4">
+                {i18n.t('spells.noneFound')}
+              </Text>
+            )
+          }
+        />
 
-      <SpellLevelNavigator setLevel={setLevel} level={level} />
+        <SpellLevelNavigator setLevel={setLevel} level={level} />
+      </View>
 
       <SpellCastingModal
         spell={spellToCast}
         onClose={() => setSpellToCast(undefined)}
       />
-    </View>
+    </>
   );
 };

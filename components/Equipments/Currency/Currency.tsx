@@ -34,7 +34,7 @@ export const Currency = ({ currencies, canEdit }: CurrencyProps) => {
   return (
     <>
       <View className="w-full relative">
-        <Text className="text-2xl font-bold text-center mb-2">
+        <Text className="text-xl font-bold text-center">
           {i18n.t('titles.currencies')}
         </Text>
 

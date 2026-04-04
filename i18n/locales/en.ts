@@ -8,7 +8,7 @@ export const en = {
     equipments: 'Equip.',
   },
   titles: {
-    characterSheet: 'Character Sheet',
+    characterSheet: 'Sheet',
     general: 'General',
     attributes: 'Attributes',
     savingThrowsAndSkills: 'Saving Throws and Skills',
@@ -279,7 +279,7 @@ export const en = {
     cantrips: 'Cantrips',
     level: 'Level',
     resetDescription: 'This action will restore all your spell slots.',
-    noSlotsSetup: 'No spell slots at this level.',
+    noSlotsSetup: 'None',
   },
   roll: {
     criticalRoll: '✦ Natural 20 ✦',

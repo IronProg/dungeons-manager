@@ -1,5 +1,5 @@
-import { View } from 'react-native';
 import { Redirect, Stack } from 'expo-router';
+
 import { useGetCurrentUser } from 'services/auth/auth.api';
 
 export type AuthRoutesStack = {
@@ -15,7 +15,7 @@ export default function AuthNavigator() {
   }
 
   return (
-    <Stack screenOptions={{ header: () => <View /> }}>
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="login" />
       <Stack.Screen name="signup" />
     </Stack>

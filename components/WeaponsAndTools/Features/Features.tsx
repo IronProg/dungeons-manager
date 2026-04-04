@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
 import i18n from 'i18n';
@@ -13,16 +13,23 @@ import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 import { BaseModal } from 'components/ui/Modals/BaseModal';
 
 import { Feature } from 'types/character';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
+import { FeaturesForm, FeaturesFormProps } from './FeaturesForm';
 
 type FeaturesProps = {
-  onCreate: () => void;
-  onSelect: (feature: Feature) => void;
   canEdit: boolean;
 };
 
-export const Features = ({ onCreate, onSelect, canEdit }: FeaturesProps) => {
+const snapPoints = ['95%'];
+
+export const Features = ({ canEdit }: FeaturesProps) => {
   const { characterId } = useCharacter();
   const { data: features, isLoading } = useGetAllFeatures();
+  const ref = useRef<DisposableBottomSheetHandle<FeaturesFormProps>>(null);
   const { mutate: deleteFeature } = useDeleteFeatureMutation();
 
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
@@ -52,7 +59,7 @@ export const Features = ({ onCreate, onSelect, canEdit }: FeaturesProps) => {
 
         {canEdit && (
           <TouchableOpacity
-            onPress={onCreate}
+            onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
             <Plus size={16} color={'white'} />
@@ -72,7 +79,9 @@ export const Features = ({ onCreate, onSelect, canEdit }: FeaturesProps) => {
               >
                 <TouchableOpacity
                   onPress={() => setDetailedFeature(feature)}
-                  onLongPress={canEdit ? () => onSelect(feature) : undefined}
+                  onLongPress={
+                    canEdit ? () => ref.current?.show({ feature }) : undefined
+                  }
                   className="rounded-lg gap-2 py-1 grow"
                 >
                   <View className="bg-white rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
@@ -132,6 +141,14 @@ export const Features = ({ onCreate, onSelect, canEdit }: FeaturesProps) => {
           </View>
         </View>
       </BaseModal>
+
+      <Portal>
+        <DisposableBottomSheet
+          ref={ref}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <FeaturesForm {...params} />}
+        />
+      </Portal>
     </>
   );
 };

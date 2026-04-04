@@ -32,17 +32,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ironprog.dungeonsmanager",
-      "jsEngine": "hermes"
+      "bundleIdentifier": "com.ironprog.dungeonsmanager"
     },
     "android": {
-      "softwareKeyboardLayoutMode": "adjustPan",
+      "softwareKeyboardLayoutMode": "adjustResize",
       "package": "com.ironprog.dungeonsmanager",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "jsEngine": "hermes"
+      }
     },
     "scheme": "dungeons-manager-scheme",
     "extra": {

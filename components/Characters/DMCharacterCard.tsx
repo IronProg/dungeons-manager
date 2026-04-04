@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import i18n from 'i18n';
 import {
   Heart,
@@ -15,12 +15,10 @@ import { TableCharacter } from 'types/table_character';
 
 interface DMCharacterCardProps {
   character: TableCharacter;
-  onPress: () => void;
 }
 
 export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
   character,
-  onPress,
 }) => {
   const {
     generalInfo,
@@ -81,10 +79,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
 
   return (
     <View className="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden border border-slate-100">
-      <TouchableOpacity
-        onPress={onPress}
-        className="bg-indigo-600 px-4 py-3 flex-row justify-between items-center"
-      >
+      <View className="bg-indigo-600 px-4 py-3 flex-row justify-between items-center">
         <View>
           <Text className="text-white font-bold text-lg">{name}</Text>
           <Text className="text-indigo-200 text-xs">
@@ -97,7 +92,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
             Prof: +{proficiencyBonus}
           </Text>
         </View>
-      </TouchableOpacity>
+      </View>
 
       <View className="p-4">
         <View className="flex-row flex-wrap justify-between mb-4 border-b border-slate-100 pb-4">

@@ -1,15 +1,20 @@
-import { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Edit } from 'lucide-react-native';
 import i18n from 'i18n';
 
-import { useBottomSheetRef } from 'hooks/useBottomSheetRef';
 import { useGetAllClasses } from 'services/classes/class';
 
-import { ReusableBottomSheetModal } from 'components/ui/ReusableBottomSheet';
-import { ClassesForm } from './Forms/ClassesForm';
+import { ClassesForm, ClassesFormProps } from './Forms/ClassesForm';
+import {
+  DisposableBottomSheet,
+  DisposableBottomSheetHandle,
+} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { Portal } from 'react-native-portalize';
 
 import { Character, CharacterClass } from 'types/character';
+
+const snapPoints = ['100%'];
 
 type CharacterDetailsProps = {
   character: Character;
@@ -20,7 +25,7 @@ export const CharacterDetailsClasses = ({
   character,
   canEdit,
 }: CharacterDetailsProps) => {
-  const { ref: bottomSheetRef, open, close } = useBottomSheetRef();
+  const ref = useRef<DisposableBottomSheetHandle<ClassesFormProps>>(null);
 
   const { data: characterClasses, isPending } = useGetAllClasses();
 
@@ -46,7 +51,12 @@ export const CharacterDetailsClasses = ({
 
           {canEdit && (
             <TouchableOpacity
-              onPress={open}
+              onPress={() =>
+                ref.current?.show({
+                  character,
+                  characterClasses: characterClasses!,
+                })
+              }
               hitSlop={15}
               className="rounded-full h-10 w-10 bg-purple-500 flex items-center justify-center"
             >
@@ -88,17 +98,13 @@ export const CharacterDetailsClasses = ({
         )}
       </View>
 
-      <ReusableBottomSheetModal
-        onDismiss={close}
-        ref={bottomSheetRef}
-        snapPoints={['100%']}
-      >
-        <ClassesForm
-          onClose={close}
-          character={character}
-          characterClasses={characterClasses!}
+      <Portal>
+        <DisposableBottomSheet
+          ref={ref}
+          snapPoints={snapPoints}
+          renderContent={({ params }) => <ClassesForm {...params} />}
         />
-      </ReusableBottomSheetModal>
+      </Portal>
     </>
   );
 };

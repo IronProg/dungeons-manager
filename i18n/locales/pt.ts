@@ -8,7 +8,7 @@ export const pt = {
     equipments: 'Equip.',
   },
   titles: {
-    characterSheet: 'Ficha do Personagem',
+    characterSheet: 'Ficha',
     general: 'Geral',
     attributes: 'Atributos',
     savingThrowsAndSkills: 'Resistências e Habilidades',
@@ -279,7 +279,7 @@ export const pt = {
     cantrips: 'Truques',
     level: 'Nível',
     resetDescription: 'Essa ação vai restaurar todos os seus espaços de magia.',
-    noSlotsSetup: 'Nenhum espaço de magia nesse nível.',
+    noSlotsSetup: 'Nenhum',
   },
   roll: {
     criticalRoll: '✦ 20 Natural ✦',

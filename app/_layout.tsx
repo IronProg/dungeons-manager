@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { QueryClientProvider } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
+import { Host } from 'react-native-portalize';
 
 import { queryClient } from 'core/queryClient/queryClient';
 
@@ -35,17 +36,19 @@ export default function RootLayout() {
             <CharacterProvider>
               <TableProvider>
                 <BottomSheetModalProvider>
-                  <Stack
-                    screenOptions={{
-                      headerShown: false,
-                      contentStyle: { backgroundColor: '#fff' },
-                    }}
-                  >
-                    <Stack.Screen
-                      name="(authenticated)"
-                      options={{ headerShown: false }}
-                    />
-                  </Stack>
+                  <Host>
+                    <Stack
+                      screenOptions={{
+                        headerShown: false,
+                        contentStyle: { backgroundColor: '#fff' },
+                      }}
+                    >
+                      <Stack.Screen
+                        name="(authenticated)"
+                        options={{ headerShown: false }}
+                      />
+                    </Stack>
+                  </Host>
                 </BottomSheetModalProvider>
               </TableProvider>
             </CharacterProvider>

@@ -5,23 +5,19 @@ import i18n from 'i18n';
 import { useUpdateSkillMutation } from 'services/skills/skill';
 import { SkillFormType, useSkillForm } from './useSkillForm';
 
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { AttributePicker } from 'components/ui/inputs/AttributePicker';
 import { Button } from 'components/ui/Button';
 
 import { Skill } from 'types/character';
 
-type AttributesFormProps = {
+export type SkillFormProps = {
   characterId: number;
   skill: Skill;
-  onClose: () => void;
 };
 
-export const SkillForm = ({
-  characterId,
-  skill,
-  onClose,
-}: AttributesFormProps) => {
+export const SkillForm = ({ characterId, skill }: SkillFormProps) => {
+  const { close } = useBottomSheet();
   const { control, handleSubmit, watch } = useSkillForm({ skill });
 
   const proficiency = watch('proficiency');
@@ -33,7 +29,7 @@ export const SkillForm = ({
       { characterId, id: skill.id!, ...values },
       {
         onSuccess: () => {
-          onClose();
+          close();
         },
       },
     );

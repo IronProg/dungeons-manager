@@ -37,7 +37,7 @@ type DamageParams = {
   diceAmount?: number;
   diceSize?: number;
   mainAttribute?: AttributesType | null;
-  kind?: string;
-  customBonus?: number;
+  kind?: string | null;
+  customBonus?: number | null;
   _destroy?: boolean | null;
 };

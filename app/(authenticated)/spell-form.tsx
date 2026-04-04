@@ -9,7 +9,6 @@ import {
   initExternalSpellsDb,
 } from 'services/spellLists/spellList.service';
 
-import { Container } from 'components/Container';
 import { SpellForm } from 'components/Spells/SpellForm/SpellForm';
 
 import { SpellSlotLevelType } from 'types/character';
@@ -53,7 +52,7 @@ export default function SpellFormScreen() {
   const initialData = spellId ? spell : importedSpell;
 
   return (
-    <Container>
+    <>
       <Stack.Screen
         options={{
           headerTitle: spellId ? i18n.t('spells.edit') : i18n.t('spells.new'),
@@ -75,6 +74,6 @@ export default function SpellFormScreen() {
           onSuccess={onSuccess}
         />
       )}
-    </Container>
+    </>
   );
 }

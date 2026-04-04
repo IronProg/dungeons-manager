@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { Controller } from 'react-hook-form';
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import i18n from 'i18n';
 
 import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
@@ -15,12 +15,12 @@ import { Button } from 'components/ui/Button';
 
 import { Feature } from 'types/character';
 
-type FeaturesFormProps = {
+export type FeaturesFormProps = {
   feature?: Feature;
-  onClose: () => void;
 };
 
-export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
+export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
+  const { close } = useBottomSheet();
   const { characterId } = useCharacter();
   const { control, handleSubmit } = useFeaturesForm({ feature });
 
@@ -36,7 +36,7 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
           { characterId: characterId!, ...values },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
@@ -45,13 +45,13 @@ export const FeaturesForm = ({ feature, onClose }: FeaturesFormProps) => {
           { characterId: characterId!, id: feature.id!, ...values },
           {
             onSuccess: () => {
-              onClose();
+              close();
             },
           },
         );
       }
     },
-    [feature, characterId, createFeature, onClose, updateFeature],
+    [feature, characterId, createFeature, close, updateFeature],
   );
 
   return (
