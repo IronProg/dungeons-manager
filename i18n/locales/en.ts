@@ -240,7 +240,7 @@ export const en = {
     joined: 'Joined the table successfully!',
     noTables: 'No tables found',
     selectTable: 'Enter this table?',
-    unselectTable: 'Leave Current Table',
+    unselectTable: 'Leave Table?',
     inviteCodeRequired: 'Invite code is required',
     joinedTable: 'Joined the table successfully!',
   },

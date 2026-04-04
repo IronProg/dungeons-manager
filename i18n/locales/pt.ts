@@ -240,7 +240,7 @@ export const pt = {
     joined: 'Entrou na mesa com sucesso!',
     noTables: 'Nenhuma mesa encontrada',
     selectTable: 'Entrar na mesa?',
-    unselectTable: 'Sair da Mesa Atual',
+    unselectTable: 'Sair da Mesa?',
     inviteCodeRequired: 'O código de convite é obrigatório',
     joinedTable: 'Entrou na mesa com sucesso!',
   },
