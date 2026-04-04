@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withLayoutContext, useNavigation } from 'expo-router';
 import i18n from 'i18n';
 
 import { useCharacter } from 'contexts/CharacterContext';
+import { CharactersTopBarIndicator } from 'components/ui/Layouts/CharactersTopBarIndicator';
 
 const TopTabs = withLayoutContext(createMaterialTopTabNavigator().Navigator);
 
 export default function TabLayout() {
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
 
   const { character, isLoading, initialLoading } = useCharacter();
@@ -42,7 +49,16 @@ export default function TabLayout() {
   return (
     <TopTabs
       initialRouteName="index"
-      screenOptions={{ swipeEnabled: true, lazy: true }}
+      initialLayout={{ width }}
+      screenOptions={{
+        sceneStyle: { overflow: 'hidden' },
+        swipeEnabled: true,
+        lazy: true,
+        animationEnabled: true,
+        tabBarIndicator: (props) => (
+          <CharactersTopBarIndicator {...props} navigationState={props.state} />
+        ),
+      }}
     >
       <TopTabs.Screen
         name="equipments"
