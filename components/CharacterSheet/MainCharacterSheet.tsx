@@ -37,7 +37,7 @@ export const MainCharacterSheet = () => {
         </View>
       </View>
 
-      <View className="bg-white rounded-lg flex-col items-stretch shadow-sm">
+      <View className="bg-white rounded-lg flex-col items-stretch shadow-md shadow-blue-600 border border-slate-300">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.general')}
         </Text>
@@ -49,7 +49,7 @@ export const MainCharacterSheet = () => {
         <MainCharacterSheetGeneralInfo />
       </View>
 
-      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
+      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-md shadow-blue-600 border border-slate-300">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.attributes')}
         </Text>
@@ -57,7 +57,7 @@ export const MainCharacterSheet = () => {
         <MainCharacterSheetAttributes />
       </View>
 
-      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-sm">
+      <View className="bg-white rounded-lg flex-col items-stretch mt-4 shadow-md shadow-blue-600 border border-slate-300">
         <Text className="text-gray-900 text-lg font-semibold text-center">
           {i18n.t('titles.savingThrowsAndSkills')}
         </Text>

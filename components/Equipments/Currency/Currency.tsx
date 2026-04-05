@@ -191,7 +191,7 @@ export const Currency = ({ currencies, canEdit }: CurrencyProps) => {
         </View>
 
         <View className="border border-gray-400 py-2 rounded-lg flex-1 relative">
-          <View className="w-4 h-4 rounded-full bg-slate-200 absolute top-1.5 right-1.5" />
+          <View className="w-4 h-4 bg-blue-700 rounded-full absolute top-1.5 right-1.5" />
 
           <Controller
             name="platinumPoints"

@@ -122,12 +122,12 @@ const AttributeCard = ({
   canEdit,
 }: AttributeCardProps) => {
   return (
-    <View className="w-[33%] px-4 flex justify-center">
+    <View className="w-[33%] px-4 flex justify-center py-1">
       <TouchableOpacity
         onLongPress={canEdit ? onLongPress : undefined}
         className="relative border-gray-900 rounded-lg flex-col flex items-stretch"
       >
-        <Text className="text-gray-900 text-sm font-semibold text-center">
+        <Text className="text-gray-900 text-xs font-semibold text-center">
           {i18n.t(`attributes.${attribute.name}`)}
         </Text>
         <Text className="text-2xl font-bold text-center">
