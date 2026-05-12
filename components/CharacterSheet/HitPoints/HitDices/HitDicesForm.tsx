@@ -20,6 +20,7 @@ type handleAddFunction = {
 };
 
 export const HitDicesForm = () => {
+  console.log('HitDicesForm');
   const { close } = useBottomSheet();
   const { data: fetchedCharacterClasses } = useGetAllClasses();
 

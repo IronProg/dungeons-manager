@@ -24,7 +24,7 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
 
   const [open, setOpen] = useState(false);
 
-  const ref = useRef<DisposableBottomSheetHandle<undefined>>(null);
+  const ref = useRef<DisposableBottomSheetHandle<boolean>>(null);
 
   const { hitDicesMaximum, hitDiceAmount } = useMemo(
     () => ({
@@ -42,7 +42,7 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
       <TouchableOpacity
         disabled={!canEdit}
         onPress={() => setOpen(true)}
-        onLongPress={() => ref.current?.show(undefined)}
+        onLongPress={() => ref.current?.show(true)}
         className="relative flex flex-col items-center justify-center w-[90px]"
       >
         <Tent size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />

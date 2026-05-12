@@ -28,7 +28,7 @@ export const PassivePerceptionForm = ({
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  const percetionBonus = getSkillBonus('perception');
+  const perceptionBonus = getSkillBonus('perception');
 
   const onSubmit = useCallback(
     (values: PassivePerceptionFormType) => {
@@ -60,7 +60,7 @@ export const PassivePerceptionForm = ({
           <Text className="font-medium mb-3">
             {i18n.t('titles.perception')}
           </Text>
-          <Text className="text-center text-xl">{percetionBonus}</Text>
+          <Text className="text-center text-xl">{perceptionBonus}</Text>
         </View>
 
         <View className="min-w-0 flex-1">
@@ -88,7 +88,7 @@ export const PassivePerceptionForm = ({
             {i18n.t('general.extraAttribute')}
           </Text>
 
-          <View className="-mt-4">
+          <View>
             <Controller
               control={control}
               name="passivePerceptionExtraAttribute"

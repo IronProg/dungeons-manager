@@ -30,8 +30,10 @@ import {
 import { Portal } from 'react-native-portalize';
 import i18n from 'i18n';
 
-const GENERAL_INFO_SNAP_POINTS = [600];
-const ARMOR_CLASS_SNAP_POINTS = [625];
+const PASSIVE_PERCEPTION_SNAP_POINTS = [300];
+const INITIATIVE_SNAP_POINTS = [300];
+const SPEED_SNAP_POINTS = [300];
+const ARMOR_CLASS_SNAP_POINTS = [300];
 
 export const MainCharacterSheetGeneralInfo = () => {
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
@@ -97,19 +99,19 @@ export const MainCharacterSheetGeneralInfo = () => {
 
         <DisposableBottomSheet
           ref={initiativeRef}
-          snapPoints={GENERAL_INFO_SNAP_POINTS}
+          snapPoints={INITIATIVE_SNAP_POINTS}
           renderContent={({ params }) => <InitiativeForm {...params} />}
         />
 
         <DisposableBottomSheet
           ref={speedRef}
-          snapPoints={GENERAL_INFO_SNAP_POINTS}
+          snapPoints={SPEED_SNAP_POINTS}
           renderContent={({ params }) => <SpeedForm {...params} />}
         />
 
         <DisposableBottomSheet
           ref={passivePerceptionRef}
-          snapPoints={GENERAL_INFO_SNAP_POINTS}
+          snapPoints={PASSIVE_PERCEPTION_SNAP_POINTS}
           renderContent={({ params }) => <PassivePerceptionForm {...params} />}
         />
       </Portal>

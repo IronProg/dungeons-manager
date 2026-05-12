@@ -21,8 +21,8 @@ type HitPointsProps = {
   canEdit: boolean;
 };
 
-const hitPointsSnapPoints = [585];
-const modifierSnapPoints = [510];
+const hitPointsSnapPoints = [350];
+const modifierSnapPoints = [290];
 
 export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
   const hitPointsRef =

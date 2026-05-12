@@ -12,7 +12,7 @@ import { ExperienceForm, ExperienceFormProps } from './ExperienceForm';
 
 type ExperienceProps = { canEdit: boolean };
 
-const snapPoints = [585];
+const snapPoints = [260];
 
 export const Experience = ({ canEdit }: ExperienceProps) => {
   const { character } = useCharacter();

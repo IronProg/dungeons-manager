@@ -52,7 +52,7 @@ function DisposableBottomSheetInner<T>(
     };
   }, []);
 
-  if (!params) return null;
+  if (params === null) return null;
 
   return (
     <BottomSheet
@@ -63,7 +63,7 @@ function DisposableBottomSheetInner<T>(
       enablePanDownToClose
       topInset={bottom}
       enableDynamicSizing={false}
-      keyboardBehavior="extend"
+      keyboardBehavior="fillParent"
       {...props}
       onClose={() => {
         Keyboard.dismiss();
@@ -71,7 +71,7 @@ function DisposableBottomSheetInner<T>(
       }}
     >
       <BottomSheetScrollView
-        contentContainerStyle={{ padding: 24 }}
+        contentContainerStyle={{ padding: 24, paddingBottom: 24 + bottom }}
         keyboardShouldPersistTaps="handled"
       >
         {renderContent({

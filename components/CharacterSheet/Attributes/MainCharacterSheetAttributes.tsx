@@ -14,7 +14,7 @@ import { Portal } from 'react-native-portalize';
 
 import { Attribute } from 'types/character';
 
-const snapPoints = [550, 875];
+const SNAP_POINTS = [600];
 
 export const MainCharacterSheetAttributes = () => {
   const ref = useRef<DisposableBottomSheetHandle<AttributesFormProps>>(null);
@@ -102,7 +102,7 @@ export const MainCharacterSheetAttributes = () => {
       <Portal>
         <DisposableBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
+          snapPoints={SNAP_POINTS}
           renderContent={({ params }) => <AttributesForm {...params} />}
         />
       </Portal>
