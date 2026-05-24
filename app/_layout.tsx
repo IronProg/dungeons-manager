@@ -43,10 +43,7 @@ export default function RootLayout() {
                         contentStyle: { backgroundColor: '#fff' },
                       }}
                     >
-                      <Stack.Screen
-                        name="(authenticated)"
-                        options={{ headerShown: false }}
-                      />
+                      <Stack.Screen name="(authenticated)" />
                     </Stack>
                   </Host>
                 </BottomSheetModalProvider>

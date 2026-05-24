@@ -20,6 +20,7 @@ export default function SpellFormScreen() {
     level: string;
     importedSpellId?: string;
   }>();
+
   const spellId = id ? parseInt(id, 10) : undefined;
   const spellLevel = parseInt(level, 10) as SpellSlotLevelType;
   const parsedImportedSpellId = importedSpellId
@@ -55,12 +56,7 @@ export default function SpellFormScreen() {
     <>
       <Stack.Screen
         options={{
-          headerTitle: spellId ? i18n.t('spells.edit') : i18n.t('spells.new'),
-          headerShown: true,
-          headerLeft: () => null,
-          headerStyle: { backgroundColor: '#4f46e5' },
-          headerTitleStyle: { color: 'white' },
-          headerTintColor: 'white',
+          title: spellId ? i18n.t('spells.edit') : i18n.t('spells.new'),
         }}
       />
       {isLoading ? (
