@@ -84,7 +84,7 @@ export const PassivePerceptionForm = ({
         </View>
 
         <View className="min-w-0 flex-1">
-          <Text className="font-medium">
+          <Text className="font-medium" numberOfLines={1}>
             {i18n.t('general.extraAttribute')}
           </Text>
 

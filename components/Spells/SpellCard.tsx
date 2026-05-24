@@ -9,6 +9,7 @@ import {
   WandSparkles,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { Markdown } from 'react-native-remark';
 import i18n from 'i18n';
 
 import { colors } from 'core/utils/colors';
@@ -204,15 +205,21 @@ const SpellDescription = ({ spell }: { spell: Spell }) => {
     <View className="mt-2">
       {expanded ? (
         <View>
-          <Text className="text-sm text-gray-800">{spell.description}</Text>
+          <Markdown
+            customStyles={{ text: { fontSize: 12, lineHeight: 14 } }}
+            markdown={spell.description}
+          />
+
           {spell.higherLevelDescription && (
             <View className="mt-2">
               <Text className="text-xs font-bold">
                 {i18n.t('spells.higherLevelDescription')}:
               </Text>
-              <Text className="text-sm text-gray-800">
-                {spell.higherLevelDescription}
-              </Text>
+
+              <Markdown
+                customStyles={{ text: { fontSize: 12, lineHeight: 14 } }}
+                markdown={spell.higherLevelDescription}
+              />
             </View>
           )}
           <TouchableOpacity
@@ -224,9 +231,14 @@ const SpellDescription = ({ spell }: { spell: Spell }) => {
         </View>
       ) : (
         <View>
-          <Text className="text-sm text-gray-800" numberOfLines={2}>
-            {spell.description}
-          </Text>
+          <Markdown
+            customStyles={{
+              container: { maxHeight: 80, overflow: 'hidden' },
+              text: { fontSize: 12, lineHeight: 14 },
+            }}
+            markdown={spell.description}
+          />
+
           <TouchableOpacity
             onPress={() => setExpanded(true)}
             className="mt-1 flex-row justify-center"

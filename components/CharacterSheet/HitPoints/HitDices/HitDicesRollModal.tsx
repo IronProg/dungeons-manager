@@ -34,13 +34,12 @@ export const HitDicesRollForm = ({ open, onClose }: HitDicesRollFormProps) => {
 };
 
 const Content = ({ onClose }: { onClose: () => void }) => {
-  const { composeRoll } = useDiceRoll();
+  const { enabled, composeRoll } = useDiceRoll();
   const { characterId, modifiers } = useCharacter();
 
   const constitutionModifier = modifiers?.constitution ?? 0;
 
-  const { mutate: updateAllCharacters, isPending } =
-    useUpdateAllClassesMutation();
+  const { mutate: updateAllClasses, isPending } = useUpdateAllClassesMutation();
 
   const { data: fetchedCharacterClasses } = useGetAllClasses();
 
@@ -63,7 +62,6 @@ const Content = ({ onClose }: { onClose: () => void }) => {
   }, [fetchedCharacterClasses]);
 
   const onSubmit = useCallback(() => {
-    onClose();
     const updatedClasses = fetchedCharacterClasses?.map((cls) => {
       const characterClass = characterClasses?.find((c) => c.id === cls.id);
 
@@ -73,22 +71,24 @@ const Content = ({ onClose }: { onClose: () => void }) => {
       };
     });
 
-    updateAllCharacters(
+    updateAllClasses(
       { characterId: characterId!, classes: updatedClasses! },
       {
         onSuccess: () => {
-          const rolls = characterClasses
-            ?.filter((cls) => cls.hitDiceAmount > 0)
-            .map((cls) => {
-              return {
-                label: cls.name,
-                amount: cls.hitDiceAmount,
-                diceSize: +cls.hitDice.replace('d', ''),
-                bonuses: Array(cls.hitDiceAmount).fill(constitutionModifier),
-              };
-            });
+          if (enabled) {
+            const rolls = characterClasses
+              ?.filter((cls) => cls.hitDiceAmount > 0)
+              .map((cls) => {
+                return {
+                  label: cls.name,
+                  amount: cls.hitDiceAmount,
+                  diceSize: +cls.hitDice.replace('d', ''),
+                  bonuses: Array(cls.hitDiceAmount).fill(constitutionModifier),
+                };
+              });
 
-          composeRoll(rolls);
+            composeRoll(rolls);
+          }
 
           requestAnimationFrame(() => {
             onClose();
@@ -101,9 +101,10 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     characterId,
     composeRoll,
     constitutionModifier,
+    enabled,
     fetchedCharacterClasses,
     onClose,
-    updateAllCharacters,
+    updateAllClasses,
   ]);
 
   const handleAdd = useCallback(
@@ -148,19 +149,19 @@ const Content = ({ onClose }: { onClose: () => void }) => {
 
       <View className="flex flex-col gap-2 pb-4">
         <View className="flex flex-row">
-          <View className="w-8/12 px-2">
+          <View className="w-8/12 px-0.5">
             <Text className="text-center font-medium">
               {i18n.t('hitDices.currentAmount')}
             </Text>
           </View>
 
-          <View className="w-2/12 px-2">
+          <View className="w-2/12 px-0.5">
             <Text className="text-center font-medium">
               {i18n.t('classes.hitDice')}
             </Text>
           </View>
 
-          <View className="w-2/12 px-2">
+          <View className="w-2/12 px-0.5">
             <Text className="text-center font-medium">
               {i18n.t('general.total')}
             </Text>
@@ -169,7 +170,7 @@ const Content = ({ onClose }: { onClose: () => void }) => {
 
         {characterClasses?.map((characterClass) => (
           <View key={characterClass.id} className="flex flex-row items-center">
-            <View className="w-8/12 flex flex-row gap-6 justify-center px-2 py-2">
+            <View className="w-8/12 flex flex-row gap-6 justify-center px-0.5 py-2">
               <TouchableOpacity
                 hitSlop={10}
                 onPress={() => handleDecrease({ characterClass })}
@@ -195,11 +196,11 @@ const Content = ({ onClose }: { onClose: () => void }) => {
               </TouchableOpacity>
             </View>
 
-            <View className="w-2/12 px-2">
+            <View className="w-2/12 px-0.5">
               <Text className="text-center">{characterClass.hitDice}</Text>
             </View>
 
-            <View className="w-2/12 px-2">
+            <View className="w-2/12 px-0.5">
               <Text className="text-center">{characterClass.level}</Text>
             </View>
           </View>

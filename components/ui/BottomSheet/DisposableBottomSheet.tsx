@@ -71,6 +71,7 @@ function DisposableBottomSheetInner<T>(
       }}
     >
       <BottomSheetScrollView
+        style={{ flex: 1 }}
         contentContainerStyle={{ padding: 24, paddingBottom: 24 + bottom }}
         keyboardShouldPersistTaps="handled"
       >

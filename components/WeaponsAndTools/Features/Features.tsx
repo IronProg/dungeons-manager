@@ -75,21 +75,26 @@ export const Features = ({ canEdit }: FeaturesProps) => {
             return (
               <View
                 key={index}
-                className="flex flex-row gap-2 items-start border-b border-gray-300"
+                className="flex flex-row gap-2 border-b border-gray-300 items-center"
               >
                 <TouchableOpacity
                   onPress={() => setDetailedFeature(feature)}
                   onLongPress={
                     canEdit ? () => ref.current?.show({ feature }) : undefined
                   }
-                  className="rounded-lg gap-2 py-1 grow"
+                  className="rounded-lg gap-2 py-1 grow flex-1"
                 >
-                  <View className="bg-white rounded-lg px-2 py-1 flex flex-row gap-1 items-center flex-wrap">
-                    <Text>{feature.title}</Text>
+                  <View className="bg-white rounded-lg px-2 py-1">
+                    <Text>
+                      {feature.title}
 
-                    {feature.origin && (
-                      <Text className="text-gray-700">({feature.origin})</Text>
-                    )}
+                      {feature.origin && (
+                        <Text className="text-gray-700">
+                          {' '}
+                          ({feature.origin})
+                        </Text>
+                      )}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 

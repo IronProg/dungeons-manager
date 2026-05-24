@@ -49,18 +49,17 @@ export const AttributesForm = ({
 
       updateAllAttributes(
         { characterId: characterId!, attributes: newAttributes },
-        {
-          onSuccess: () => {
-            close();
-          },
-        },
+        { onSuccess: () => close() },
       );
     },
     [characterId, close, updateAllAttributes],
   );
 
   return (
-    <BottomSheetScrollView contentContainerClassName="grow flex flex-col gap-4">
+    <BottomSheetScrollView
+      contentContainerClassName="grow flex flex-col gap-4"
+      keyboardShouldPersistTaps="handled"
+    >
       <Text className="text-gray-900 font-bold text-2xl text-center">
         {i18n.t('titles.modifyAttributes')}
       </Text>
@@ -103,6 +102,7 @@ const AttributeFormItem = ({
           <Text className="text-gray-900 text-sm text-center">
             {i18n.t(`general.base`)}
           </Text>
+
           <Controller
             control={control}
             name={`characterAttributesAttributes.${index}.value`}
@@ -111,6 +111,7 @@ const AttributeFormItem = ({
                 <BottomSheetTextInput
                   className="text-4xl font-bold text-center"
                   keyboardType="number-pad"
+                  multiline={false}
                   {...field}
                   onChangeText={field.onChange}
                   maxLength={3}

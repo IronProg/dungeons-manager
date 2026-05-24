@@ -18,7 +18,7 @@ import { Portal } from 'react-native-portalize';
 
 import { Equipment } from 'types/character';
 
-const snapPoints = [850];
+const snapPoints = [400];
 
 export const Equipments = () => {
   const { characterId, canEdit } = useCharacter();
