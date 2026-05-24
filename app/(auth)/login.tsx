@@ -2,8 +2,9 @@ import { useCallback } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Controller } from 'react-hook-form';
-import { BookOpen, Mail } from 'lucide-react-native';
+import { Mail } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { Image } from 'expo-image';
 import i18n from 'i18n';
 
 import { LoginFormType, useLoginForm } from 'components/Auth/useLoginForm';
@@ -11,6 +12,8 @@ import { useSignInMutation } from 'services/auth/auth.api';
 
 import { PasswordInput } from 'components/Auth/shared/PasswordInput';
 import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
+
+import TransparentLogo from 'assets/transparent-icon.png';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -37,8 +40,8 @@ export default function LoginScreen() {
     <AppKeyboardAvoidingView contentContainerClassName="pt-0">
       <View className="bg-indigo-600 pt-12 pb-16 px-6 rounded-b-[40px]">
         <View className="items-center">
-          <View className="w-20 h-20 bg-white/20 rounded-full items-center justify-center mb-4">
-            <BookOpen size={40} color="white" />
+          <View className="w-20 h-20 bg-white/20 rounded-full items-center justify-center mb-4 overflow-hidden">
+            <Image source={TransparentLogo} style={{ width: 80, height: 80 }} />
           </View>
 
           <Text className="text-white text-3xl font-bold">
