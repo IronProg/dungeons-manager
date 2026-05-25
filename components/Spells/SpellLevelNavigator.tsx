@@ -20,7 +20,7 @@ export const SpellLevelNavigator = ({
 
   return (
     <View
-      className="absolute bottom-4 left-4 right-4 bg-indigo-500 rounded-full flex flex-row items-center justify-around py-2 shadow-lg"
+      className="absolute bottom-4 left-4 right-4 bg-indigo-500 rounded-full flex flex-row items-center justify-around py-2 shadow-lg overflow-hidden"
       style={{ marginBottom: bottom }}
     >
       <ScrollView
