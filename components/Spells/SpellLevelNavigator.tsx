@@ -1,8 +1,9 @@
-import { SPELL_SLOT_LEVELS } from 'core/enums/spellSlotLevel';
-import i18n from 'i18n';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import i18n from 'i18n';
+
+import { SPELL_SLOT_LEVELS } from 'core/enums/spellSlotLevel';
 
 import { SpellSlotLevelType } from 'types/character';
 
@@ -19,13 +20,13 @@ export const SpellLevelNavigator = ({
 
   return (
     <View
-      className="absolute bottom-4 left-4 right-4 bg-indigo-500 rounded-full flex flex-row items-center justify-around px-2 py-2 shadow-lg"
+      className="absolute bottom-4 left-4 right-4 bg-indigo-500 rounded-full flex flex-row items-center justify-around py-2 shadow-lg"
       style={{ marginBottom: bottom }}
     >
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerClassName="flex flex-row items-center gap-0"
+        contentContainerClassName="flex flex-row items-center gap-0 justify-center px-2"
       >
         {SPELL_SLOT_LEVELS.map((lvlLine) => (
           <TouchableOpacity
