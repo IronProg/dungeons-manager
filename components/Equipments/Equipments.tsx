@@ -17,10 +17,13 @@ import {
 import { Portal } from 'react-native-portalize';
 
 import { Equipment } from 'types/character';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useModalTextHeight } from 'hooks/useModalTextHeight';
 
 const snapPoints = [400];
 
 export const Equipments = () => {
+  const { modalTextHeight } = useModalTextHeight();
   const { characterId, canEdit } = useCharacter();
   const { mutate: deleteEquipment } = useDeleteEquipmentMutation();
 
@@ -112,7 +115,9 @@ export const Equipments = () => {
               {i18n.t('general.description')}:
             </Text>
 
-            <Text>{detailedEquipment?.description}</Text>
+            <ScrollView style={{ maxHeight: modalTextHeight }}>
+              <Text>{detailedEquipment?.description}</Text>
+            </ScrollView>
           </View>
         </View>
       </BaseModal>

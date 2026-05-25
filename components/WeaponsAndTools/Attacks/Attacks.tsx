@@ -21,14 +21,15 @@ import {
 } from 'components/ui/BottomSheet/DisposableBottomSheet';
 import { Portal } from 'react-native-portalize';
 import { AttacksForm, AttacksFormProps } from './AttacksForm';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useModalTextHeight } from 'hooks/useModalTextHeight';
 
-type AttacksProps = {
-  canEdit: boolean;
-};
+type AttacksProps = { canEdit: boolean };
 
 const snapPoints = ['95%'];
 
 export const Attacks = ({ canEdit }: AttacksProps) => {
+  const { modalTextHeight } = useModalTextHeight();
   const { characterId, modifiers, proficiencyBonus } = useCharacter();
   const { data: attacks, isLoading } = useGetAllAttacks();
 
@@ -200,7 +201,9 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
                 {i18n.t('general.description')}:
               </Text>
 
-              <Text>{detailedAttack.description}</Text>
+              <ScrollView style={{ maxHeight: modalTextHeight }}>
+                <Text>{detailedAttack.description}</Text>
+              </ScrollView>
             </View>
           )}
         </View>

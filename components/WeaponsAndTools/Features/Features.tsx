@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
+import { Portal } from 'react-native-portalize';
+import { ScrollView } from 'react-native-gesture-handler';
 import i18n from 'i18n';
 
 import { useCharacter } from 'contexts/CharacterContext';
@@ -9,6 +11,7 @@ import {
   useDeleteFeatureMutation,
   useGetAllFeatures,
 } from 'services/features/feature';
+import { useModalTextHeight } from 'hooks/useModalTextHeight';
 import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 import { BaseModal } from 'components/ui/Modals/BaseModal';
 
@@ -17,16 +20,14 @@ import {
   DisposableBottomSheet,
   DisposableBottomSheetHandle,
 } from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { Portal } from 'react-native-portalize';
 import { FeaturesForm, FeaturesFormProps } from './FeaturesForm';
 
-type FeaturesProps = {
-  canEdit: boolean;
-};
+type FeaturesProps = { canEdit: boolean };
 
 const snapPoints = ['95%'];
 
 export const Features = ({ canEdit }: FeaturesProps) => {
+  const { modalTextHeight } = useModalTextHeight();
   const { characterId } = useCharacter();
   const { data: features, isLoading } = useGetAllFeatures();
   const ref = useRef<DisposableBottomSheetHandle<FeaturesFormProps>>(null);
@@ -36,16 +37,12 @@ export const Features = ({ canEdit }: FeaturesProps) => {
   const [featureToDelete, setFeatureToDelete] = useState<Feature>();
 
   const handleDelete = useCallback(() => {
-    if (featureToDelete) {
-      deleteFeature(
-        { characterId: characterId!, id: featureToDelete.id! },
-        {
-          onSuccess: () => {
-            setFeatureToDelete(undefined);
-          },
-        },
-      );
-    }
+    if (!featureToDelete) return;
+
+    deleteFeature(
+      { characterId: characterId!, id: featureToDelete.id! },
+      { onSuccess: () => setFeatureToDelete(undefined) },
+    );
   }, [characterId, deleteFeature, featureToDelete]);
 
   return (
@@ -142,7 +139,12 @@ export const Features = ({ canEdit }: FeaturesProps) => {
               {i18n.t('general.description')}:
             </Text>
 
-            <Text>{detailedFeature?.description}</Text>
+            <ScrollView
+              style={{ maxHeight: modalTextHeight }}
+              contentContainerClassName="flex flex-col gap-2"
+            >
+              <Text>{detailedFeature?.description}</Text>
+            </ScrollView>
           </View>
         </View>
       </BaseModal>
