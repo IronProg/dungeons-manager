@@ -47,6 +47,8 @@ export const pt = {
     dmDashboard: 'Área do Mestre',
     dmDashboardInternal: 'Dashboard da Mesa',
     modifyAttributes: 'Modificar Atributos',
+    newTable: 'Nova mesa',
+    editTable: 'Editar Mesa',
   },
   general: {
     noDataFound: 'Nenhum dado encontrado',
@@ -243,6 +245,14 @@ export const pt = {
     unselectTable: 'Sair da Mesa?',
     inviteCodeRequired: 'O código de convite é obrigatório',
     joinedTable: 'Entrou na mesa com sucesso!',
+    createTable: 'Criar mesa',
+    created: 'Mesa criada com sucesso!',
+    saveName: 'Salvar Nome',
+    players: 'Jogadores',
+    kickPlayer: 'Remover Jogador',
+    kickPlayerConfirm: 'Tem certeza que deseja remover este jogador da mesa?',
+    playerKicker: 'Jogador expulso com sucesso!',
+    nameUpdated: 'Nome atualizado com sucesso!',
   },
   spells: {
     title: 'Magias',

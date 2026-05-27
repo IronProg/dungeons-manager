@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
 import { RefreshControl } from 'react-native-gesture-handler';
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
+import { Edit } from 'lucide-react-native';
 
 import { useTable } from 'contexts/TableContext';
 import { useGetTableCharactersResume } from 'services/tables/table.api';
@@ -15,8 +16,10 @@ import i18n from 'i18n';
 export default function DMDashboard() {
   const queryClient = useQueryClient();
   const { table, tableId, isPending } = useTable();
+  const router = useRouter();
   const { data: characters, isLoading: isLoadingCharacters } =
     useGetTableCharactersResume({ id: tableId! });
+
   const handleRefresh = useCallback(() => {
     queryClient.invalidateQueries({
       queryKey: ['tables', tableId, 'characters'],
@@ -59,14 +62,24 @@ export default function DMDashboard() {
       keyExtractor={(item) => item.id!.toString()}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={() => (
-        <View className="px-4 py-6">
-          <Text className="text-2xl font-bold text-slate-800">
-            {table?.name}
-          </Text>
+        <View className="px-4 py-6 flex-row justify-between">
+          <View className="flex-1">
+            <Text className="text-2xl font-bold text-slate-800">
+              {table?.name}
+            </Text>
 
-          <Text className="text-slate-500 font-medium">
-            {i18n.t('titles.dmDashboard')}
-          </Text>
+            <Text className="text-slate-500 font-medium">
+              {i18n.t('titles.dmDashboard')}
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={() => router.push('/(authenticated)/edit-table')}
+            className="h-10 w-10 items-center justify-center rounded-full bg-indigo-500"
+            hitSlop={10}
+          >
+            <Edit size={16} color="white" />
+          </TouchableOpacity>
         </View>
       )}
       ListEmptyComponent={() => (

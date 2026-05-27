@@ -142,9 +142,6 @@ Create a `.env` file in the root directory with the following variables:
 EXPO_PUBLIC_API_URL=https://dungeons-manager.online
 EXPO_PUBLIC_WEBSOCKET_URL=wss://dungeons-manager.online/cable
 
-# Optional: a default table join code for quick testing
-EXPO_PUBLIC_TABLE_CODE=your-table-code-here
-
 # External JSON data sources (spell lists)
 EXPO_PUBLIC_JSON_EN_URL=https://gist.githubusercontent.com/.../spells_en.json
 EXPO_PUBLIC_JSON_PT_URL=https://gist.githubusercontent.com/.../spells_pt.json

@@ -34,6 +34,8 @@ export default function RootLayout() {
         }}
       />
 
+      <Stack.Screen name="edit-table" options={{ headerTintColor: 'white' }} />
+
       <Stack.Screen
         name="character-details"
         options={{

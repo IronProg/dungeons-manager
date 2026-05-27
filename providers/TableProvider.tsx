@@ -9,6 +9,7 @@ import {
   setTableId as setTableIdStorage,
   removeTableId,
 } from 'core/utils/table';
+import { useCharacter } from 'contexts/CharacterContext';
 
 export type TableProviderProps = {
   tableId?: number;
@@ -23,6 +24,7 @@ export type TableProviderProps = {
 export const TableProvider = ({ children }: { children: ReactNode }) => {
   const { data: currentUser } = useGetCurrentUser();
   const [tableId, setTableIdState] = useState<number>();
+  const { setCharacterId } = useCharacter();
 
   const {
     data: table,
@@ -41,7 +43,8 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     queryClient.resetQueries({ queryKey: ['characters'] });
-  }, [tableId]);
+    setCharacterId(undefined);
+  }, [setCharacterId, tableId]);
 
   useEffect(() => {
     if (!currentUser) {

@@ -91,6 +91,11 @@ export default function DrawerLayout() {
         />
 
         <Drawer.Screen
+          name="new-table"
+          options={{ title: i18n.t('titles.newTable') }}
+        />
+
+        <Drawer.Screen
           name="dm-dashboard"
           options={{
             title: i18n.t('titles.dmDashboard'),

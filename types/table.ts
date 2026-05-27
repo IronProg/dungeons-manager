@@ -1,5 +1,11 @@
 import { Character } from './character';
 
+export type TableUser = {
+  id: number;
+  email: string;
+  joinedAt: string;
+};
+
 export type Table = {
   id?: number;
   name: string;
@@ -8,4 +14,5 @@ export type Table = {
   charactersCount: number;
   isCreator?: boolean;
   characters: Character[];
+  tablesUsers: TableUser[];
 };

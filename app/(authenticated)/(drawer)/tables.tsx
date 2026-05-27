@@ -6,11 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 import { Users, Hash } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import i18n from 'i18n';
 
+import { showMessage } from 'core/utils/messages';
 import { useTable } from 'contexts/TableContext';
 import {
   useGetAllTables,
@@ -23,18 +25,18 @@ import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
 import type { Table } from 'types/table';
 
 export default function TablesScreen() {
-  const [inviteCode, setInviteCode] = useState<string>(
-    process.env.EXPO_PUBLIC_TABLE_CODE || '',
-  );
+  const { bottom } = useSafeAreaInsets();
+  const [inviteCode, setInviteCode] = useState<string>('');
   const [tableToSelect, setTableToSelect] = useState<Table | null>(null);
 
   const { data: tables, isLoading: isLoadingTables } = useGetAllTables();
   const { mutate: joinTable, isPending: isJoining } = useJoinTableMutation();
   const { setTableId } = useTable();
+  const { navigate } = useRouter();
 
   const handleJoinTable = () => {
     if (!inviteCode.trim()) {
-      Alert.alert(i18n.t('general.error'), i18n.t('tables.inviteCodeRequired'));
+      showMessage(i18n.t('tables.inviteCodeRequired'), 'error');
       return;
     }
 
@@ -43,7 +45,7 @@ export default function TablesScreen() {
       {
         onSuccess: () => {
           setInviteCode('');
-          Alert.alert(i18n.t('general.success'), i18n.t('tables.joinedTable'));
+          showMessage(i18n.t('tables.joinedTable'));
         },
       },
     );
@@ -146,6 +148,13 @@ export default function TablesScreen() {
               contentContainerStyle={{ paddingBottom: 20 }}
             />
           )}
+
+          <View className="mt-auto py-4" style={{ marginBottom: bottom }}>
+            <Button
+              onPress={() => navigate('/(authenticated)/(drawer)/new-table')}
+              text={i18n.t('tables.createTable') || 'Create Table'}
+            />
+          </View>
         </View>
       </View>
 

@@ -47,6 +47,8 @@ export const en = {
     dmDashboard: 'DM Area',
     dmDashboardInternal: 'Table Dashboard',
     modifyAttributes: 'Modify Attributes',
+    newTable: 'New table',
+    editTable: 'Edit Table',
   },
   general: {
     noDataFound: 'No data found',
@@ -243,6 +245,15 @@ export const en = {
     unselectTable: 'Leave Table?',
     inviteCodeRequired: 'Invite code is required',
     joinedTable: 'Joined the table successfully!',
+    createTable: 'Create table',
+    created: 'Table created successfully',
+    saveName: 'Save Name',
+    players: 'Players',
+    kickPlayer: 'Kick Player',
+    kickPlayerConfirm:
+      'Are you sure you want to remove this player from the table?',
+    playerKicked: 'Player kicked successfully!',
+    nameUpdated: 'Name updated successfully!',
   },
   spells: {
     title: 'Spells',

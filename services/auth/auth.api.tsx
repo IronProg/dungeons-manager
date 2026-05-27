@@ -42,7 +42,6 @@ export const useSignInMutation = () => {
 };
 
 export const useSignOutMutation = () => {
-  const { invalidateQueriesAsync } = useAuthInvalidationAsync();
   const queryClient = useQueryClient();
 
   return useMutation<null, AxiosError<ApiErrorResponse>>({
@@ -50,8 +49,8 @@ export const useSignOutMutation = () => {
     onSuccess: async () => {
       await removeAccessToken();
       await removeRefreshToken();
-      await invalidateQueriesAsync();
-      queryClient.setQueryData(authKey, null);
+      await queryClient.resetQueries();
+      await queryClient.setQueryData(authKey, null);
     },
     onError: ({ response }) => {
       handleErrorMessage(response?.data);
