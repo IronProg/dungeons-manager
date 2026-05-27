@@ -251,7 +251,7 @@ export const pt = {
     players: 'Jogadores',
     kickPlayer: 'Remover Jogador',
     kickPlayerConfirm: 'Tem certeza que deseja remover este jogador da mesa?',
-    playerKicker: 'Jogador expulso com sucesso!',
+    playerKicked: 'Jogador expulso com sucesso!',
     nameUpdated: 'Nome atualizado com sucesso!',
   },
   spells: {
