@@ -49,9 +49,9 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!currentUser) {
-      clearTableId();
+      setTableIdState(undefined);
     }
-  }, [clearTableId, currentUser]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (tableId) {

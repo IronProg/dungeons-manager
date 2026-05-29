@@ -25,27 +25,27 @@ export default function SpellListScreen() {
 
   const currentUrl = getCurrentExternalSpellsUrl();
 
-  const checkDb = async () => {
-    initExternalSpellsDb();
-
-    const lastUrl = await getLastExternalSpellsUrl();
-
-    if (lastUrl !== currentUrl) {
-      setDownloadPromptVisible(true);
-    }
-
-    const count = getExternalSpellsCount();
-
-    if (count === 0) {
-      setDownloadPromptVisible(true);
-    }
-
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    checkDb();
-  }, [checkDb]);
+    const initDb = async () => {
+      initExternalSpellsDb();
+
+      const lastUrl = await getLastExternalSpellsUrl();
+
+      if (lastUrl !== currentUrl) {
+        setDownloadPromptVisible(true);
+      }
+
+      const count = getExternalSpellsCount();
+
+      if (count === 0) {
+        setDownloadPromptVisible(true);
+      }
+
+      setIsLoading(false);
+    };
+
+    initDb();
+  }, [currentUrl]);
 
   const handleDownloadSpells = async () => {
     setDownloadPromptVisible(false);

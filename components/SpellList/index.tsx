@@ -28,14 +28,11 @@ export const SpellList = () => {
     });
   };
 
-  const performSearch = (query: string) => {
-    const list = searchExternalSpells(query);
-    setResults(list);
-  };
-
   useEffect(() => {
-    performSearch(debouncedText);
-  }, [debouncedText, performSearch]);
+    const list = searchExternalSpells(debouncedText);
+
+    setResults(list);
+  }, [debouncedText]);
 
   return (
     <View className="flex-1 pb-4 px-2 mt-4">
