@@ -18,7 +18,7 @@ import { EditTableName } from './EditTableName';
 import type { TableUser } from 'types/table';
 import { useGetCurrentUser } from 'services/auth/auth.api';
 import colors from 'tailwindcss/colors';
-import { useDeleteTablesUserMutation } from 'services/tables_users/table.api';
+import { useDeleteTablesUserMutation } from 'services/tablesUsers/tablesUser.api';
 import { showMessage } from 'core/utils/messages';
 
 export const EditTable = () => {
@@ -31,9 +31,9 @@ export const EditTable = () => {
   const [deleting, setDeleting] = useState(false);
 
   const { data: tableData } = useGetTable({ id: tableId! });
-  const { mutate: destroyTable } = useDestroyTableMutation();
+  const { mutateAsync: destroyTable } = useDestroyTableMutation();
 
-  const { mutate: deleteTablesUser } = useDeleteTablesUserMutation();
+  const { mutateAsync: deleteTablesUser } = useDeleteTablesUserMutation();
 
   const [userToKick, setUserToKick] = useState<TableUser | null>(null);
 
@@ -48,34 +48,24 @@ export const EditTable = () => {
     });
   }, [navigation, table?.name]);
 
-  const handleDeleteConfirm = useCallback(() => {
+  const handleDeleteConfirm = async () => {
     if (!tableId) return;
 
-    destroyTable(
-      { id: tableId },
-      {
-        onSuccess: () => {
-          setDeleting(false);
-          clearTableId();
-          router.navigate('/(authenticated)/(drawer)/tables');
-        },
-      },
-    );
-  }, [tableId, destroyTable, clearTableId, router]);
+    await destroyTable({ id: tableId });
 
-  const handleKickConfirm = useCallback(() => {
+    setDeleting(false);
+    clearTableId();
+    router.navigate('/(authenticated)/(drawer)/tables');
+  };
+
+  const handleKickConfirm = async () => {
     if (!userToKick || !tableId) return;
 
-    deleteTablesUser(
-      { id: userToKick.id },
-      {
-        onSuccess: () => {
-          showMessage(i18n.t('tables.playerKicked'));
-          setUserToKick(null);
-        },
-      },
-    );
-  }, [userToKick, tableId, deleteTablesUser]);
+    await deleteTablesUser({ id: userToKick.id });
+
+    showMessage(i18n.t('tables.playerKicked'));
+    setUserToKick(null);
+  };
 
   const renderPlayerItem = useCallback(
     ({ item }: { item: TableUser }) => (

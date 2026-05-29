@@ -15,9 +15,13 @@ import { NewCharacterFormType, useNewCharacter } from './useNewCharacter';
 import { useCreateCharacterMutation } from 'services/characters/character.api';
 import { useRouter } from 'expo-router';
 import { useCharacter } from 'contexts/CharacterContext';
+import { useTable } from 'contexts/TableContext';
+
+import { Button } from 'components/ui/Button';
 
 export const NewCharacter = () => {
   const { character, setCharacterId } = useCharacter();
+  const { table } = useTable();
   const { control, handleSubmit, reset } = useNewCharacter();
   const navigation = useRouter();
   const { bottom } = useSafeAreaInsets();
@@ -69,6 +73,24 @@ export const NewCharacter = () => {
             )}
           />
         </View>
+
+        {!!table && (
+          <View className="pt-20 px-10 gap-4">
+            <Text className="font-medium text-center">
+              {i18n.t('characters.importActionText')}
+            </Text>
+
+            <Button
+              onPress={() =>
+                navigation.navigate(
+                  '/(authenticated)/(drawer)/import-character',
+                )
+              }
+              className="bg-slate-600"
+              text={i18n.t('characters.importActionButton')}
+            />
+          </View>
+        )}
 
         {waitingForCharacter && (
           <View className="flex flex-col w-full items-center pt-20 gap-2">

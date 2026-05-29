@@ -19,4 +19,6 @@ export const tableService = {
     api.delete<null>(`/tables/${params.id}`).then((res) => res.data),
   join: ({ ...params }: JoinTableParams) =>
     api.post<null>(`/tables/join`, params).then((res) => res.data),
+  leave: ({ id }: GetTableParams) =>
+    api.post<null>(`/tables/${id}/leave`).then((res) => res.data),
 };

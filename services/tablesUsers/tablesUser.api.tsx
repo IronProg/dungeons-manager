@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { tablesUserService } from './tables_user.service';
+import { tablesUserService } from './tablesUser.service';
 
 import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
 

@@ -33,6 +33,7 @@ export const pt = {
     character: 'Personagem',
     characters: 'Personagens',
     newCharacter: 'Novo Personagem',
+    importCharacter: 'Importar Personagem',
     newResource: 'Novo Recurso',
     editResource: 'Editar Recurso',
     newFeature: 'Nova Característica',
@@ -174,6 +175,9 @@ export const pt = {
   },
   character: {
     generatingCharacter: 'Gerando seu personagem',
+    importActionText:
+      'Ou você pode import um de seus personagens para essa mesa:',
+    importActionButton: 'Selecionar personagem',
   },
   classes: {
     title: 'Classes',
@@ -253,6 +257,10 @@ export const pt = {
     kickPlayerConfirm: 'Tem certeza que deseja remover este jogador da mesa?',
     playerKicked: 'Jogador expulso com sucesso!',
     nameUpdated: 'Nome atualizado com sucesso!',
+    leaveTitle: 'Sair de %{table}?',
+    leaveText:
+      'Seus personagens serão removidos da mesa e atribuidos a você automaticamente',
+    tableLeft: 'Saiu da mesa com sucesso!',
   },
   spells: {
     title: 'Magias',

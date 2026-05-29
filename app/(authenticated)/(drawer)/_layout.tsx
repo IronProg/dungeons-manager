@@ -91,6 +91,11 @@ export default function DrawerLayout() {
         />
 
         <Drawer.Screen
+          name="import-character"
+          options={{ title: i18n.t('titles.importCharacter') }}
+        />
+
+        <Drawer.Screen
           name="new-table"
           options={{ title: i18n.t('titles.newTable') }}
         />

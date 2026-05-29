@@ -93,3 +93,17 @@ export const useJoinTableMutation = () => {
     },
   });
 };
+
+export const useLeaveTableMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<null, AxiosError<ApiErrorResponse>, GetTableParams>({
+    mutationFn: (params) => tableService.leave(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tables'] });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
+  });
+};

@@ -33,6 +33,7 @@ export const en = {
     character: 'Character',
     characters: 'Characters',
     newCharacter: 'New Character',
+    importCharacter: 'Import Character',
     newResource: 'New Resource',
     editResource: 'Edit Resource',
     newFeature: 'New Feature',
@@ -174,6 +175,9 @@ export const en = {
   },
   character: {
     generatingCharacter: 'Generating your character',
+    importActionText:
+      'Or you can import one of your other characters into the table:',
+    importActionButton: 'Select character',
   },
   classes: {
     title: 'Classes',
@@ -254,6 +258,10 @@ export const en = {
       'Are you sure you want to remove this player from the table?',
     playerKicked: 'Player kicked successfully!',
     nameUpdated: 'Name updated successfully!',
+    leaveTitle: 'Leave %{table}?',
+    leaveText:
+      'Your characters will be removed from the table and attached to you automatically',
+    tableLeft: 'Table left succesfully',
   },
   spells: {
     title: 'Spells',

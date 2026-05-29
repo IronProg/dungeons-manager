@@ -7,12 +7,20 @@ import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
 import { AxiosError } from 'axios';
 import { useTable } from 'contexts/TableContext';
 
-export const useGetAllCharacters = () => {
+interface useGetAllCharacterProps {
+  useTableId?: boolean;
+}
+
+export const useGetAllCharacters = ({
+  useTableId = true,
+}: useGetAllCharacterProps = {}) => {
   const { tableId } = useTable();
 
+  const params = useTableId ? { tableId } : undefined;
+
   return useQuery({
-    queryKey: ['characters'],
-    queryFn: () => characterService.fetchAll({ params: { tableId } }),
+    queryKey: ['characters', params],
+    queryFn: () => characterService.fetchAll({ params }),
     staleTime: 10 * 60_000,
   });
 };
@@ -80,5 +88,21 @@ export const useDestroyCharacterMutation = () => {
     onError: ({ response }) => {
       handleErrorMessage(response?.data);
     },
+  });
+};
+
+export const useCloneCharacterMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    Character,
+    AxiosError<ApiErrorResponse>,
+    CloneCharacterParams
+  >({
+    mutationFn: (params: CloneCharacterParams) =>
+      characterService.clone(params),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['characters'] }),
+    onError: ({ response }) => handleErrorMessage(response?.data),
   });
 };

@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import i18n from 'i18n';
 
 import { cn } from 'core/helpers/cn';
@@ -13,6 +13,7 @@ type ConfirmationModalProps = {
   buttonClassName?: string;
   title?: string;
   subTitle?: string;
+  isPending?: boolean;
 };
 
 export const ConfirmationModal = ({
@@ -22,6 +23,7 @@ export const ConfirmationModal = ({
   buttonClassName,
   title,
   subTitle,
+  isPending = false,
 }: ConfirmationModalProps) => {
   return (
     <BaseModal visible={isVisible} onClose={onClose}>
@@ -32,6 +34,12 @@ export const ConfirmationModal = ({
       <Text className="font-medium text-center">
         {subTitle || i18n.t('titles.confirmationSubtitle')}
       </Text>
+
+      {isPending && (
+        <View className="flex-row w-full justify-center">
+          <ActivityIndicator />
+        </View>
+      )}
 
       <View className="flex flex-row gap-4">
         <View className="grow">
@@ -45,6 +53,7 @@ export const ConfirmationModal = ({
           <Button
             className={cn('bg-red-500', buttonClassName)}
             text={i18n.t('general.confirm')}
+            disabled={isPending}
             onPress={onConfirm}
           />
         </View>
