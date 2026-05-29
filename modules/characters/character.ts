@@ -1,6 +1,6 @@
-import api from 'core/api/api';
-import { WithId } from 'modules/modules';
-import { Character } from 'types/character';
+import api from '@/core/api/api';
+import type { WithId } from '@/modules/modules';
+import type { Character } from '@/types/character';
 
 type CharacterParams = {
   data: {

@@ -1,18 +1,15 @@
 import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import i18n from 'i18n';
-
-import { useGetAllAttributes } from 'services/attributes/attributes';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { AttributesForm, AttributesFormProps } from './AttributesForm';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
 import { Portal } from 'react-native-portalize';
 
-import { Attribute } from 'types/character';
+import type { AttributesFormProps } from '@/components/CharacterSheet/Attributes/AttributesForm';
+import { AttributesForm } from '@/components/CharacterSheet/Attributes/AttributesForm';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useGetAllAttributes } from '@/services/attributes/attributes';
+import type { Attribute } from '@/types/character';
 
 const SNAP_POINTS = [600];
 
@@ -32,7 +29,7 @@ export const MainCharacterSheetAttributes = () => {
         <View className="flex flex-row flex-wrap justify-between p-2 gap-y-2">
           <AttributeCard
             onLongPress={() =>
-              ref.current?.show({ characterAttributes: characterAttributes! })
+              ref.current?.show({ characterAttributes: characterAttributes })
             }
             attribute={
               characterAttributes.find(
@@ -43,7 +40,7 @@ export const MainCharacterSheetAttributes = () => {
           />
           <AttributeCard
             onLongPress={() =>
-              ref.current?.show({ characterAttributes: characterAttributes! })
+              ref.current?.show({ characterAttributes: characterAttributes })
             }
             attribute={
               characterAttributes.find(
@@ -54,7 +51,7 @@ export const MainCharacterSheetAttributes = () => {
           />
           <AttributeCard
             onLongPress={() =>
-              ref.current?.show({ characterAttributes: characterAttributes! })
+              ref.current?.show({ characterAttributes: characterAttributes })
             }
             attribute={
               characterAttributes.find(
@@ -65,7 +62,7 @@ export const MainCharacterSheetAttributes = () => {
           />
           <AttributeCard
             onLongPress={() =>
-              ref.current?.show({ characterAttributes: characterAttributes! })
+              ref.current?.show({ characterAttributes: characterAttributes })
             }
             attribute={
               characterAttributes.find(
@@ -76,7 +73,7 @@ export const MainCharacterSheetAttributes = () => {
           />
           <AttributeCard
             onLongPress={() =>
-              ref.current?.show({ characterAttributes: characterAttributes! })
+              ref.current?.show({ characterAttributes: characterAttributes })
             }
             attribute={
               characterAttributes.find(
@@ -87,7 +84,7 @@ export const MainCharacterSheetAttributes = () => {
           />
           <AttributeCard
             onLongPress={() =>
-              ref.current?.show({ characterAttributes: characterAttributes! })
+              ref.current?.show({ characterAttributes: characterAttributes })
             }
             attribute={
               characterAttributes.find(
@@ -135,7 +132,7 @@ const AttributeCard = ({
         </Text>
         <View className="absolute rounded-full bg-gray-200 p-1 bottom-0 min-w-7">
           <Text className="text-gray-900 text-sm font-semibold text-center">
-            {attribute?.tempValue || attribute.value}
+            {attribute?.tempValue ?? attribute.value}
           </Text>
         </View>
       </TouchableOpacity>

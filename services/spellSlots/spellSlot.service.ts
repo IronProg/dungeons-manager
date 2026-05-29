@@ -1,6 +1,5 @@
-import api from 'core/api/api';
-
-import { SpellSlot } from 'types/character';
+import api from '@/core/api/api';
+import type { SpellSlot } from '@/types/character';
 
 export const spellSlotService = {
   fetchAll: (characterId: number, level?: number) =>

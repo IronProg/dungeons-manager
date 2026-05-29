@@ -1,9 +1,9 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import { FilePlus } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
-import i18n from 'i18n';
+import { FilePlus } from 'lucide-react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { SpellSlotLevelType } from 'types/character';
+import i18n from '@/i18n';
+import type { SpellSlotLevelType } from '@/types/character';
 
 interface SpellsHeaderProps {
   level: SpellSlotLevelType;

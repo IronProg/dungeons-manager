@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { CharacterGeneralInfo } from 'types/character';
 import * as z from 'zod';
+
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export const schema = z.object({
   hitPoints: z.coerce.number<number>().int(),

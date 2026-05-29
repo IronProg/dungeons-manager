@@ -1,14 +1,13 @@
-import { Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Control, Controller, UseFormWatch } from 'react-hook-form';
 import { Trash } from 'lucide-react-native';
-import i18n from 'i18n';
+import { Controller } from 'react-hook-form';
+import type { Control, UseFormWatch } from 'react-hook-form';
+import { Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import { SpellFormValues } from './useSpellForm';
-
-import { SpellLevelPicker } from 'components/ui/inputs/SpellLevelPicker';
-import { SpellSchoolPicker } from 'components/ui/inputs/SpellSchoolPicker';
-
-import { Spell, SpellSlotLevelType } from 'types/character';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
+import { SpellLevelPicker } from '@/components/ui/inputs/SpellLevelPicker';
+import { SpellSchoolPicker } from '@/components/ui/inputs/SpellSchoolPicker';
+import i18n from '@/i18n';
+import type { Spell } from '@/types/character';
 
 interface SpellFormInputsProps {
   spell?: Spell;
@@ -43,7 +42,7 @@ export const SpellFormInputs = ({
                 onChangeText={onChange}
                 value={value}
                 placeholder={i18n.t('spells.name')}
-                placeholderTextColor={'#9ca3af'}
+                placeholderTextColor="#9ca3af"
               />
             )}
           />
@@ -52,9 +51,9 @@ export const SpellFormInputs = ({
         {isEditing && (
           <TouchableOpacity
             onPress={() => setDeleting(true)}
-            className={`bg-red-500 p-2 rounded-xl mt-8 items-center`}
+            className="bg-red-500 p-2 rounded-xl mt-8 items-center"
           >
-            <Trash size={24} color={'white'} />
+            <Trash size={24} color="white" />
           </TouchableOpacity>
         )}
       </View>
@@ -68,10 +67,7 @@ export const SpellFormInputs = ({
             control={control}
             name="level"
             render={({ field: { onChange, value } }) => (
-              <SpellLevelPicker
-                value={value as SpellSlotLevelType}
-                onChange={onChange}
-              />
+              <SpellLevelPicker value={value} onChange={onChange} />
             )}
           />
         </View>

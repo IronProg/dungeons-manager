@@ -1,4 +1,13 @@
 import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import type {
+  BottomSheetBackdropProps,
+  BottomSheetModal as BottomSheetModalType,
+} from '@gorhom/bottom-sheet';
+import {
   forwardRef,
   useCallback,
   useEffect,
@@ -6,12 +15,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Text, View } from 'react-native';
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -19,11 +23,8 @@ import Animated, {
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
-import type {
-  BottomSheetBackdropProps,
-  BottomSheetModal as BottomSheetModalType,
-} from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+
+import i18n from '@/i18n';
 
 const ROLL_DURATION_MS = 1500;
 
@@ -50,6 +51,7 @@ export const DiceRollSheet = forwardRef<
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
 
+  // eslint-disable-next-line no-restricted-syntax
   const clearRolling = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -60,36 +62,36 @@ export const DiceRollSheet = forwardRef<
     return () => clearRolling();
   }, [clearRolling]);
 
-  const startRoll = useCallback(
-    (currentBonuses: number[], { diceSize }: { diceSize: number }) => {
-      clearRolling();
-      const result = Math.floor(Math.random() * diceSize) + 1;
-      setIsRolling(true);
-      setFinalRoll(null);
-      setDisplayNumber(null);
-      setBonuses(currentBonuses);
-      scale.value = 0;
-      opacity.value = 0;
+  const startRoll = (
+    currentBonuses: number[],
+    { diceSize }: { diceSize: number },
+  ) => {
+    clearRolling();
+    const result = Math.floor(Math.random() * diceSize) + 1;
+    setIsRolling(true);
+    setFinalRoll(null);
+    setDisplayNumber(null);
+    setBonuses(currentBonuses);
+    scale.value = 0;
+    opacity.value = 0;
 
-      intervalRef.current = setInterval(() => {
-        setDisplayNumber(Math.floor(Math.random() * diceSize) + 1);
-      }, 80);
+    intervalRef.current = setInterval(() => {
+      setDisplayNumber(Math.floor(Math.random() * diceSize) + 1);
+    }, 80);
 
-      timeoutRef.current = setTimeout(() => {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        setIsRolling(false);
-        setDisplayNumber(result);
-        setFinalRoll(result);
+    timeoutRef.current = setTimeout(() => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setIsRolling(false);
+      setDisplayNumber(result);
+      setFinalRoll(result);
 
-        scale.value = withSequence(
-          withSpring(1.3, { duration: 200 }),
-          withSpring(1, { duration: 150 }),
-        );
-        opacity.value = withTiming(1, { duration: 200 });
-      }, ROLL_DURATION_MS);
-    },
-    [clearRolling, opacity, scale],
-  );
+      scale.value = withSequence(
+        withSpring(1.3, { duration: 200 }),
+        withSpring(1, { duration: 150 }),
+      );
+      opacity.value = withTiming(1, { duration: 200 });
+    }, ROLL_DURATION_MS);
+  };
 
   useImperativeHandle(ref, () => ({
     roll: (newBonuses: number[], { diceSize }: { diceSize: number }) => {
@@ -113,25 +115,18 @@ export const DiceRollSheet = forwardRef<
     return 'text-white';
   };
 
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
-    [],
+  const renderBackdrop = (props: BottomSheetBackdropProps) => (
+    <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
   );
 
-  const handleDismiss = useCallback(() => {
+  const handleDismiss = () => {
     clearRolling();
     setIsRolling(false);
     setFinalRoll(null);
     setDisplayNumber(null);
     scale.value = 0;
     opacity.value = 0;
-  }, [clearRolling, opacity, scale]);
+  };
 
   return (
     <BottomSheetModal
@@ -139,8 +134,8 @@ export const DiceRollSheet = forwardRef<
       enablePanDownToClose
       enableDynamicSizing
       backdropComponent={renderBackdrop}
-      backgroundStyle={{ backgroundColor: 'white' }}
-      handleIndicatorStyle={{ backgroundColor: '#6366f1' }}
+      backgroundStyle={styles.background}
+      handleIndicatorStyle={styles.handleIndicator}
       onDismiss={handleDismiss}
     >
       <BottomSheetView>
@@ -157,11 +152,7 @@ export const DiceRollSheet = forwardRef<
             <View className="absolute inset-2 border border-indigo-500/20 rounded-[40px]" />
             <Text
               className={`text-8xl font-black ${isRolling ? 'text-indigo-400/50' : resultColor()}`}
-              style={{
-                textShadowColor: 'rgba(99, 102, 241, 0.3)',
-                textShadowOffset: { width: 0, height: 4 },
-                textShadowRadius: 12,
-              }}
+              style={styles.displayText}
             >
               {displayNumber ?? '?'}
             </Text>
@@ -192,11 +183,7 @@ export const DiceRollSheet = forwardRef<
                 <Text className="text-indigo-500 font-black text-xl">=</Text>
                 <Text
                   className={`text-6xl font-black ${resultColor()}`}
-                  style={{
-                    textShadowColor: 'rgba(0, 0, 0, 0.4)',
-                    textShadowOffset: { width: 0, height: 4 },
-                    textShadowRadius: 8,
-                  }}
+                  style={styles.resultText}
                 >
                   {finalRoll + bonuses.reduce((acc, curr) => acc + curr, 0)}
                 </Text>
@@ -224,4 +211,19 @@ export const DiceRollSheet = forwardRef<
       </BottomSheetView>
     </BottomSheetModal>
   );
+});
+
+const styles = StyleSheet.create({
+  background: { backgroundColor: 'white' },
+  handleIndicator: { backgroundColor: '#6366f1' },
+  displayText: {
+    textShadowColor: 'rgba(99, 102, 241, 0.3)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 12,
+  },
+  resultText: {
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 8,
+  },
 });

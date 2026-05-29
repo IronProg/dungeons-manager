@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Currencies } from 'types/character';
-import { currenciesService } from './currencies.service';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
+
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { currenciesService } from '@/services/currencies/currencies.service';
+import type { Currencies } from '@/types/character';
 
 export const getCharacterCurrencyKey = ({
   characterId,

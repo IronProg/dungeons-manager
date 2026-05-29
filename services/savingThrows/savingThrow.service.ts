@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { SavingThrow } from 'types/character';
+import api from '@/core/api/api';
+import type { SavingThrow } from '@/types/character';
 
 export const savingThrowService = {
   fetchAll: ({ characterId }: GetAllSavingThrowsParams) =>

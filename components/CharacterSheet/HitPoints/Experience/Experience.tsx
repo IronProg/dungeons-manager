@@ -1,14 +1,14 @@
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { useCharacter } from 'contexts/CharacterContext';
-import i18n from 'i18n';
 import { Book } from 'lucide-react-native';
-import { Text, TouchableOpacity, View } from 'react-native';
 import { useRef } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
-import { ExperienceForm, ExperienceFormProps } from './ExperienceForm';
+
+import type { ExperienceFormProps } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm';
+import { ExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 
 type ExperienceProps = { canEdit: boolean };
 
@@ -26,7 +26,7 @@ export const Experience = ({ canEdit }: ExperienceProps) => {
         onLongPress={() => ref.current?.show({ character: character! })}
         className="relative flex flex-col items-center justify-center w-[90px]"
       >
-        <Book size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
+        <Book size={90} color="#cbd5e1" fill="#e2e8f0" />
 
         <View className="absolute flex flex-col items-center justify-center h-full w-full">
           <Text className="text-gray-900 text-sm font-semibold text-center">

@@ -1,17 +1,17 @@
-import React, { useCallback } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
-import { RefreshControl } from 'react-native-gesture-handler';
 import { Redirect, useRouter } from 'expo-router';
 import { Edit } from 'lucide-react-native';
+import React from 'react';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { RefreshControl } from 'react-native-gesture-handler';
 
-import { useTable } from 'contexts/TableContext';
-import { useGetTableCharactersResume } from 'services/tables/table.api';
-
-import { DMCharacterCard } from 'components/Characters/DMCharacterCard';
-import { TableChannelCallback, useTableChannel } from 'hooks/useTableChannel';
-import i18n from 'i18n';
+import { DMCharacterCard } from '@/components/Characters/DMCharacterCard';
+import { useTable } from '@/contexts/TableContext';
+import type { TableChannelCallback } from '@/hooks/useTableChannel';
+import { useTableChannel } from '@/hooks/useTableChannel';
+import i18n from '@/i18n';
+import { useGetTableCharactersResume } from '@/services/tables/table.api';
 
 export default function DMDashboard() {
   const queryClient = useQueryClient();
@@ -20,20 +20,17 @@ export default function DMDashboard() {
   const { data: characters, isLoading: isLoadingCharacters } =
     useGetTableCharactersResume({ id: tableId! });
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = () => {
     queryClient.invalidateQueries({
       queryKey: ['tables', tableId, 'characters'],
     });
-  }, [queryClient, tableId]);
+  };
 
-  const callback = useCallback(
-    (data: TableChannelCallback) => {
-      if (data.invalidate === 'table') {
-        handleRefresh();
-      }
-    },
-    [handleRefresh],
-  );
+  const callback = (data: TableChannelCallback) => {
+    if (data.invalidate === 'table') {
+      handleRefresh();
+    }
+  };
 
   useTableChannel({ tableId: table?.id, callback });
 
@@ -57,9 +54,9 @@ export default function DMDashboard() {
           onRefresh={handleRefresh}
         />
       }
-      data={characters || []}
+      data={characters ?? []}
       renderItem={({ item }) => <DMCharacterCard character={item} />}
-      keyExtractor={(item) => item.id!.toString()}
+      keyExtractor={(item) => item.id.toString()}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={() => (
         <View className="px-4 py-6 flex-row justify-between">
@@ -101,7 +98,7 @@ export default function DMDashboard() {
           )}
         </View>
       )}
-      contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+      contentContainerClassName="px-4 pb-8"
     />
   );
 }

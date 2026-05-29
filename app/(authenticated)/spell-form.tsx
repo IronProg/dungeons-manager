@@ -1,17 +1,15 @@
-import React, { useMemo, useEffect } from 'react';
-import { ActivityIndicator, View } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import i18n from 'i18n';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
-import { useGetCharacterSpells } from 'services/spells/spell.api';
+import { SpellForm } from '@/components/Spells/SpellForm/SpellForm';
+import i18n from '@/i18n';
 import {
   getExternalSpellById,
   initExternalSpellsDb,
-} from 'services/spellLists/spellList.service';
-
-import { SpellForm } from 'components/Spells/SpellForm/SpellForm';
-
-import { SpellSlotLevelType } from 'types/character';
+} from '@/services/spellLists/spellList.service';
+import { useGetCharacterSpells } from '@/services/spells/spell.api';
+import type { SpellSlotLevelType } from '@/types/character';
 
 export default function SpellFormScreen() {
   const router = useRouter();
@@ -35,7 +33,7 @@ export default function SpellFormScreen() {
 
   const onSuccess = () => router.back();
 
-  const importedSpell = useMemo(() => {
+  const importedSpell = (() => {
     if (!parsedImportedSpellId) return undefined;
 
     const data = getExternalSpellById(parsedImportedSpellId);
@@ -43,12 +41,9 @@ export default function SpellFormScreen() {
     if (data) return { ...data, id: undefined };
 
     return undefined;
-  }, [parsedImportedSpellId]);
+  })();
 
-  const spell = useMemo(
-    () => spells?.find((s) => s.id === spellId),
-    [spells, spellId],
-  );
+  const spell = spells?.find((s) => s.id === spellId);
 
   const initialData = spellId ? spell : importedSpell;
 

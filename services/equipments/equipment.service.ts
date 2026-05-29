@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Equipment } from 'types/character';
+import api from '@/core/api/api';
+import type { Equipment } from '@/types/character';
 
 export const equipmentService = {
   fetchAll: ({ characterId }: GetAllEquipmentsParams) =>

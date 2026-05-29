@@ -1,4 +1,4 @@
-import { Character } from './character';
+import type { Character } from '@/types/character';
 
 export type TableUser = {
   id: number;

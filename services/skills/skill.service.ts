@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Skill } from 'types/character';
+import api from '@/core/api/api';
+import type { Skill } from '@/types/character';
 
 export const skillsService = {
   fetchAll: ({ characterId }: GetAllSkillsParams) =>

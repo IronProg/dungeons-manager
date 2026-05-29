@@ -1,18 +1,16 @@
-import { Text, View } from 'react-native';
-import {
-  PassivePerceptionFormType,
-  usePassivePerceptionForm,
-} from './usePassivePerceptionForm';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { CharacterGeneralInfo } from 'types/character';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { Button } from 'components/ui/Button';
-import { useGetSkillBonus } from 'hooks/useSkillBonus';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import { usePassivePerceptionForm } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/usePassivePerceptionForm';
+import type { PassivePerceptionFormType } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/usePassivePerceptionForm';
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useGetSkillBonus } from '@/hooks/useSkillBonus';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type PassivePerceptionFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -30,19 +28,16 @@ export const PassivePerceptionForm = ({
 
   const perceptionBonus = getSkillBonus('perception');
 
-  const onSubmit = useCallback(
-    (values: PassivePerceptionFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+  const onSubmit = (values: PassivePerceptionFormType) => {
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter],
-  );
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">
@@ -73,7 +68,7 @@ export const PassivePerceptionForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

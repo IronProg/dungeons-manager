@@ -1,6 +1,6 @@
-import { InternalAxiosRequestConfig } from 'axios';
+import type { InternalAxiosRequestConfig } from 'axios';
 
-import { getTableIdAsync } from 'core/utils/table';
+import { getTableIdAsync } from '@/core/utils/table';
 
 export const tableRequestInterceptor = async (
   config: InternalAxiosRequestConfig,

@@ -1,11 +1,10 @@
-import { Text, TouchableOpacity, View } from 'react-native';
 import { Eye, Trash2 } from 'lucide-react-native';
-import i18n from 'i18n';
-
-import { useTable } from 'contexts/TableContext';
+import { Text, TouchableOpacity, View } from 'react-native';
 import colors from 'tailwindcss/colors';
 
-import type { Character } from 'types/character';
+import { useTable } from '@/contexts/TableContext';
+import i18n from '@/i18n';
+import type { Character } from '@/types/character';
 
 interface CharactersDrawerItemProps {
   item: Character;

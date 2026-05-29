@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
 
-import { Notes } from 'components/Notes/Notes';
-import { Equipments } from 'components/Equipments/Equipments';
-import { Currencies } from 'components/Equipments/Currency';
+import { Currencies } from '@/components/Equipments/Currency';
+import { Equipments } from '@/components/Equipments/Equipments';
+import { Notes } from '@/components/Notes/Notes';
+import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
 
 export default function CharacterSheetScreen() {
   return (

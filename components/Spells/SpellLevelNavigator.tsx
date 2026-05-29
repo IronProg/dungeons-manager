@@ -1,11 +1,10 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import i18n from 'i18n';
 
-import { SPELL_SLOT_LEVELS } from 'core/enums/spellSlotLevel';
-
-import { SpellSlotLevelType } from 'types/character';
+import { SPELL_SLOT_LEVELS } from '@/core/enums/spellSlotLevel';
+import i18n from '@/i18n';
+import type { SpellSlotLevelType } from '@/types/character';
 
 interface SpellLevelNavigatorProps {
   setLevel: (level: SpellSlotLevelType) => void;

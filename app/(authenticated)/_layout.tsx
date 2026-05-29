@@ -1,9 +1,9 @@
-import { Redirect, Stack } from 'expo-router';
 import { useKeepAwake } from 'expo-keep-awake';
-import i18n from 'i18n';
+import { Redirect, Stack } from 'expo-router';
 
-import { useGetCurrentUser } from 'services/auth/auth.api';
-import { CustomHeader } from 'components/ui/CustomHeader';
+import { CustomHeader } from '@/components/ui/CustomHeader';
+import i18n from '@/i18n';
+import { useGetCurrentUser } from '@/services/auth/auth.api';
 
 export default function RootLayout() {
   const { data: user, isFetching } = useGetCurrentUser();

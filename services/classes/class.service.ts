@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { CharacterClass } from 'types/character';
+import api from '@/core/api/api';
+import type { CharacterClass } from '@/types/character';
 
 export const classService = {
   fetchAll: ({ characterId }: GetAllClassesParams) =>

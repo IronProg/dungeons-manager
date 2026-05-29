@@ -1,11 +1,11 @@
-import { AxiosError } from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { savingThrowService } from './savingThrow.service';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-
-import { SavingThrow } from 'types/character';
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { savingThrowService } from '@/services/savingThrows/savingThrow.service';
+import type { SavingThrow } from '@/types/character';
 
 export const getAllSavingThrowsKey = ({
   characterId,

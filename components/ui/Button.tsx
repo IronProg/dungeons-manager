@@ -1,6 +1,7 @@
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
-import i18n from 'i18n';
-import { cn } from 'core/helpers/cn';
+
+import { cn } from '@/core/helpers/cn';
+import i18n from '@/i18n';
 
 type ButtonProps = {
   className?: string;
@@ -42,7 +43,7 @@ export const Button = ({
           textClassName,
         )}
       >
-        {text ? text : i18n.t('general.save')}
+        {text ?? i18n.t('general.save')}
       </Text>
     )}
   </TouchableOpacity>

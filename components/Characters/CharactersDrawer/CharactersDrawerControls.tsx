@@ -1,12 +1,12 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { LayoutDashboard, LogOut, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
-import { DrawerNavigationHelpers } from 'node_modules/@react-navigation/drawer/lib/typescript/src/types';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useTable } from 'contexts/TableContext';
+import { useTable } from '@/contexts/TableContext';
+import i18n from '@/i18n';
 
 interface CharactersDrawerControlsProps {
-  navigation: DrawerNavigationHelpers;
+  navigation: DrawerContentComponentProps['navigation'];
   onLogout: () => void;
   onNewCharacter: () => void;
 }

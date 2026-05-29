@@ -1,25 +1,20 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import i18n from 'i18n';
-
-import { useGetAllSkills } from 'services/skills/skill';
-import { useGetAllSavingThrows } from 'services/savingThrows/savingThrow';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-import { useGetSkillBonus } from 'hooks/useSkillBonus';
-
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
 import { Portal } from 'react-native-portalize';
-import {
-  SavingThrowForm,
-  SavingThrowFormProps,
-} from './SavingThrow/SavingThrowForm';
-import { SkillForm, SkillFormProps } from './Skill/SkillForm';
 
-import type { SavingThrow, Skill } from 'types/character';
+import type { SavingThrowFormProps } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm';
+import { SavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm';
+import type { SkillFormProps } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
+import { SkillForm } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { useGetSkillBonus } from '@/hooks/useSkillBonus';
+import i18n from '@/i18n';
+import { useGetAllSavingThrows } from '@/services/savingThrows/savingThrow';
+import { useGetAllSkills } from '@/services/skills/skill';
+import type { SavingThrow, Skill } from '@/types/character';
 
 const snapPoints = [300, 600];
 
@@ -111,8 +106,8 @@ const SavingThrowCard = ({
   const { simpleRoll } = useDiceRoll();
   const { modifiers, proficiencyBonus } = useCharacter();
   let modifier =
-    (modifiers?.[savingThrow.mainAttribute] || 0) +
-    (savingThrow.customBonus || 0);
+    (modifiers?.[savingThrow.mainAttribute] ?? 0) +
+    (savingThrow.customBonus ?? 0);
 
   if (modifiers && savingThrow.extraAttribute) {
     modifier += modifiers[savingThrow.extraAttribute];
@@ -122,9 +117,9 @@ const SavingThrowCard = ({
     modifier += proficiencyBonus;
   }
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     simpleRoll([modifier]);
-  }, [modifier, simpleRoll]);
+  };
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
@@ -164,9 +159,9 @@ const SkillCard = ({ skill, onLongPress, canEdit, isLeft }: SkillCardProps) => {
 
   const modifier = getSkillBonus(skill.name);
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     simpleRoll([modifier]);
-  }, [modifier, simpleRoll]);
+  };
 
   return (
     <View

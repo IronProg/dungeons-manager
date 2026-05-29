@@ -1,8 +1,9 @@
-import i18n from 'i18n';
 import { Bird, Footprints, Mountain } from 'lucide-react-native';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { CharacterGeneralInfo } from 'types/character';
+
+import i18n from '@/i18n';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type SpeedHighlight = {
   type: 'normal' | 'climbing' | 'flying';
@@ -18,7 +19,7 @@ type SpeedProps = {
 export const Speed = ({ generalInfo, onLongPress, canEdit }: SpeedProps) => {
   const [speedIndex, setSpeedIndex] = useState<number>(0);
 
-  const activeSpeeds = useMemo(() => {
+  const activeSpeeds = (() => {
     const speeds: SpeedHighlight[] = [];
 
     if (generalInfo?.speed) {
@@ -34,19 +35,15 @@ export const Speed = ({ generalInfo, onLongPress, canEdit }: SpeedProps) => {
     }
 
     return speeds;
-  }, [
-    generalInfo?.speed,
-    generalInfo?.speedClimbing,
-    generalInfo?.speedFlying,
-  ]);
+  })();
 
-  const handleChangeSpeedType = useCallback(() => {
+  const handleChangeSpeedType = () => {
     if (activeSpeeds.length !== 0 && speedIndex < activeSpeeds.length - 1) {
       setSpeedIndex((prev) => prev + 1);
     } else {
       setSpeedIndex(0);
     }
-  }, [activeSpeeds.length, speedIndex]);
+  };
 
   const activeSpeed = activeSpeeds[speedIndex];
 
@@ -57,15 +54,15 @@ export const Speed = ({ generalInfo, onLongPress, canEdit }: SpeedProps) => {
       className="relative flex flex-col items-center justify-center w-[90px]"
     >
       {activeSpeed?.type === 'normal' && (
-        <Footprints size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
+        <Footprints size={90} color="#cbd5e1" fill="#e2e8f0" />
       )}
 
       {activeSpeed?.type === 'climbing' && (
-        <Mountain size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
+        <Mountain size={90} color="#cbd5e1" fill="#e2e8f0" />
       )}
 
       {activeSpeed?.type === 'flying' && (
-        <Bird size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
+        <Bird size={90} color="#cbd5e1" fill="#e2e8f0" />
       )}
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">

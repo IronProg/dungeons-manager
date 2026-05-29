@@ -1,16 +1,14 @@
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
-import {
-  HitPointsModifierFormType,
-  useHitPointsModifierForm,
-} from './useHitPointsModifierForm';
-import i18n from 'i18n';
-import { CharacterGeneralInfo } from 'types/character';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { HitPointsModifierFormType } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsModifierForm';
+import { useHitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsModifierForm';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type HitPointsModifierFormProps = { generalInfo: CharacterGeneralInfo };
 
@@ -24,60 +22,46 @@ export const HitPointsModifierForm = ({
   const { mutate: updateGeneralInfo, isPending } =
     useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: HitPointsModifierFormType) => {
-      let hitPoints = generalInfo.hitPoints;
-      let temporaryHitPoints: number | null =
-        generalInfo?.temporaryHitPoints || 0;
+  const onSubmit = (values: HitPointsModifierFormType) => {
+    let hitPoints = generalInfo.hitPoints;
+    let temporaryHitPoints: number | null =
+      generalInfo?.temporaryHitPoints ?? 0;
 
-      if (values.damage) {
-        temporaryHitPoints -= values.damage;
+    if (values.damage) {
+      temporaryHitPoints -= values.damage;
 
-        if (temporaryHitPoints < 0) {
-          hitPoints -= Math.abs(temporaryHitPoints);
-        }
+      if (temporaryHitPoints < 0) {
+        hitPoints -= Math.abs(temporaryHitPoints);
       }
+    }
 
-      if (values.healing) {
-        const healedHitPoints = hitPoints + values.healing;
+    if (values.healing) {
+      const healedHitPoints = hitPoints + values.healing;
 
-        if (healedHitPoints > generalInfo.hitPointsLimit) {
-          hitPoints = generalInfo.hitPointsLimit;
-        } else {
-          hitPoints = healedHitPoints;
-        }
-      }
+      hitPoints =
+        healedHitPoints > generalInfo.hitPointsLimit
+          ? generalInfo.hitPointsLimit
+          : healedHitPoints;
+    }
 
-      if (temporaryHitPoints < 0) temporaryHitPoints = null;
-      if (hitPoints < 0) hitPoints = 0;
+    if (temporaryHitPoints < 0) temporaryHitPoints = null;
+    if (hitPoints < 0) hitPoints = 0;
 
-      if (values.temporary) {
-        temporaryHitPoints = Math.max(
-          values.temporary,
-          temporaryHitPoints || 0,
-        );
-      }
+    if (values.temporary) {
+      temporaryHitPoints = Math.max(values.temporary, temporaryHitPoints ?? 0);
+    }
 
-      updateGeneralInfo(
-        { characterId: characterId!, hitPoints, temporaryHitPoints },
-        {
-          onSuccess: () => {
-            close();
-          },
+    updateGeneralInfo(
+      { characterId: characterId!, hitPoints, temporaryHitPoints },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
+      },
+    );
 
-      close();
-    },
-    [
-      characterId,
-      generalInfo.hitPoints,
-      generalInfo.hitPointsLimit,
-      generalInfo?.temporaryHitPoints,
-      close,
-      updateGeneralInfo,
-    ],
-  );
+    close();
+  };
 
   return (
     <View className="flex flex-col items-center">
@@ -99,7 +83,7 @@ export const HitPointsModifierForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -122,7 +106,7 @@ export const HitPointsModifierForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -145,7 +129,7 @@ export const HitPointsModifierForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

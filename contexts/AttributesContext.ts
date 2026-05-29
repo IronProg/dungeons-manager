@@ -1,5 +1,6 @@
-import { AttributesProviderProps } from 'providers/AttributesProvider';
 import { createContext, useContext } from 'react';
+
+import type { AttributesProviderProps } from '@/providers/AttributesProvider';
 
 export const AttributesContext = createContext<
   AttributesProviderProps | undefined

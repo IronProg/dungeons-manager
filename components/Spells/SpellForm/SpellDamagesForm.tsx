@@ -1,13 +1,12 @@
-import { useCallback } from 'react';
-import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import { Control, Controller, useFieldArray } from 'react-hook-form';
 import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
+import type { Control } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
+import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 
-import { SpellFormValues } from './useSpellForm';
-
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { DamageDicePicker } from 'components/ui/inputs/DamageDicePicker';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { DamageDicePicker } from '@/components/ui/inputs/DamageDicePicker';
+import i18n from '@/i18n';
 
 type DamagesFormProps = {
   control: Control<SpellFormValues>;
@@ -21,7 +20,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
     name,
   });
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = () => {
     if (!fields.length) return;
 
     const lastVisible = [...fields]
@@ -38,7 +37,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
     } else {
       remove(index);
     }
-  }, [fields, remove, update]);
+  };
 
   return (
     <View className="flex flex-col items-stretch gap-8">
@@ -82,7 +81,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
                           className="rounded-lg bg-gray-100 h-15 text-base grow"
                           onChangeText={field.onChange}
                           keyboardType="numeric"
-                          value={`${field.value || ''}`}
+                          value={`${field.value ?? ''}`}
                         />
 
                         <Text className="text-red-400 text-sm">
@@ -125,7 +124,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
                       <TextInput
                         className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        value={`${field.value || ''}`}
+                        value={`${field.value ?? ''}`}
                         keyboardType="numeric"
                       />
 
@@ -162,7 +161,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
                       <TextInput
                         className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        value={`${field.value || ''}`}
+                        value={`${field.value ?? ''}`}
                       />
 
                       <Text className="text-red-400 text-sm">

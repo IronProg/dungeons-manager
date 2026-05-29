@@ -1,19 +1,20 @@
-import { Controller } from 'react-hook-form';
-import { Attack } from 'types/character';
-import { AttacksFormType, useAttacksForm } from './useAttacksForm';
-import { Text, View } from 'react-native';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
-import { DamagesForm } from './DamagesForm';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { DamagesForm } from '@/components/WeaponsAndTools/Attacks/DamagesForm';
+import { useAttacksForm } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
+import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateAttackMutation,
   useUpdateAttackMutation,
-} from 'services/attacks/attack';
-import { useCharacter } from 'contexts/CharacterContext';
-import { Button } from 'components/ui/Button';
+} from '@/services/attacks/attack';
+import type { Attack } from '@/types/character';
 
 export type AttacksFormProps = {
   attack?: Attack;
@@ -29,33 +30,30 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
   const { mutate: updateAttack, isPending: updatePending } =
     useUpdateAttackMutation();
 
-  const onSubmit = useCallback(
-    (values: AttacksFormType) => {
-      const params: CreateAttackParams = {
-        characterId: characterId!,
-        ...values,
-        mainAttribute: values.mainAttribute,
-      };
+  const onSubmit = (values: AttacksFormType) => {
+    const params: CreateAttackParams = {
+      characterId: characterId!,
+      ...values,
+      mainAttribute: values.mainAttribute,
+    };
 
-      if (!attack) {
-        createAttack(params, {
+    if (attack) {
+      updateAttack(
+        { ...params, id: attack.id! },
+        {
           onSuccess: () => {
             close();
           },
-        });
-      } else {
-        updateAttack(
-          { ...params, id: attack.id! },
-          {
-            onSuccess: () => {
-              close();
-            },
-          },
-        );
-      }
-    },
-    [attack, characterId, createAttack, close, updateAttack],
-  );
+        },
+      );
+    } else {
+      createAttack(params, {
+        onSuccess: () => {
+          close();
+        },
+      });
+    }
+  };
 
   return (
     <View className="flex flex-col">
@@ -107,7 +105,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -150,7 +148,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -170,7 +168,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -194,7 +192,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   numberOfLines={3}
                   multiline
                 />

@@ -1,27 +1,24 @@
-import {
-  forwardRef,
-  memo,
-  ReactNode,
-  Ref,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
-import BottomSheet, {
-  BottomSheetBackdrop,
+import type {
   BottomSheetBackdropProps,
   BottomSheetProps,
+} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
+import type { ReactNode, Ref } from 'react';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { Keyboard, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Keyboard } from 'react-native';
 
 export type DisposableBottomSheetHandle<T> = {
   show: (params: T) => void;
 };
 
-type DisposableBottomSheetProps<T> = Omit<BottomSheetProps, 'children'> & {
+export type DisposableBottomSheetProps<T> = Omit<
+  BottomSheetProps,
+  'children'
+> & {
   renderContent: (props: { params: T; onClose: () => void }) => ReactNode;
 };
 
@@ -33,15 +30,8 @@ function DisposableBottomSheetInner<T>(
   const innerRef = useRef<BottomSheet>(null);
   const [params, setParams] = useState<T | null>(null);
 
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
-    [],
+  const renderBackdrop = (props: BottomSheetBackdropProps) => (
+    <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
   );
 
   useImperativeHandle(ref, () => {
@@ -54,9 +44,10 @@ function DisposableBottomSheetInner<T>(
 
   if (params === null) return null;
 
+  const styles = buildStyles(bottom);
+
   return (
     <BottomSheet
-      key={params ? 'active' : 'inactive'}
       ref={innerRef}
       backdropComponent={renderBackdrop}
       index={0}
@@ -71,8 +62,8 @@ function DisposableBottomSheetInner<T>(
       }}
     >
       <BottomSheetScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ padding: 24, paddingBottom: 24 + bottom }}
+        style={styles.flex}
+        contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
       >
         {renderContent({
@@ -84,10 +75,16 @@ function DisposableBottomSheetInner<T>(
   );
 }
 
-export const DisposableBottomSheet = memo(
-  forwardRef(DisposableBottomSheetInner),
-) as <T>(
+export const DisposableBottomSheet = forwardRef(DisposableBottomSheetInner) as <
+  T,
+>(
   props: DisposableBottomSheetProps<T> & {
     ref?: Ref<DisposableBottomSheetHandle<T>>;
   },
 ) => ReactNode;
+
+const buildStyles = (bottom: number) =>
+  StyleSheet.create({
+    flex: { flex: 1 },
+    contentContainer: { padding: 24, paddingBottom: 24 + bottom },
+  });

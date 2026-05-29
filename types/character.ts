@@ -1,4 +1,4 @@
-import { Table } from './table';
+import type { Table } from '@/types/table';
 
 export type HitDicesType = 'd6' | 'd8' | 'd10' | 'd12';
 export type SpellSlotKindType = 'normal' | 'pact';

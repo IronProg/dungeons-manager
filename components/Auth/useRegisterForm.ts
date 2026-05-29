@@ -1,7 +1,8 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import i18n from 'i18n';
+import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+
+import i18n from '@/i18n';
 
 export const schema = z
   .object({

@@ -1,6 +1,5 @@
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { Damage } from 'types/character';
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { Damage } from '@/types/character';
 
 export const useDamageFormat = () => {
   const { modifiers } = useCharacter();
@@ -22,7 +21,7 @@ export const useDamageFormat = () => {
       }
     }
 
-    return `${baseDamage} ${damage.kind || ''}`;
+    return `${baseDamage} ${damage.kind ?? ''}`;
   };
 
   return { damageFormat };

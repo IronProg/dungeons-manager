@@ -1,10 +1,9 @@
+import { Users, LogOut } from 'lucide-react-native';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Users, LogOut } from 'lucide-react-native';
 
-import { cn } from 'core/helpers/cn';
-
-import type { Table } from 'types/table';
+import { cn } from '@/core/helpers/cn';
+import type { Table } from '@/types/table';
 
 interface TablesItemProps {
   item: Table;
@@ -39,7 +38,7 @@ export const TablesItem = ({ item, onSelect, onDelete }: TablesItemProps) => (
             'rounded-lg bg-red-500 h-10 w-10 items-center justify-center',
           )}
         >
-          <LogOut size={20} color={'white'} />
+          <LogOut size={20} color="white" />
         </TouchableOpacity>
       )}
     </View>

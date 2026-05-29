@@ -1,24 +1,21 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
 import { Plus } from 'lucide-react-native';
-import i18n from 'i18n';
-
-import { useCharacter } from 'contexts/CharacterContext';
-import { useDeleteEquipmentMutation } from 'services/equipments/equipment.api';
-
-import { EquipmentsForm, EquipmentsFormProps } from './Form/EquipmentsForm';
-import { EquipmentsList } from './EquipmentsList';
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import React, { useRef, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Portal } from 'react-native-portalize';
 
-import { Equipment } from 'types/character';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useModalTextHeight } from 'hooks/useModalTextHeight';
+import { EquipmentsList } from '@/components/Equipments/EquipmentsList';
+import type { EquipmentsFormProps } from '@/components/Equipments/Form/EquipmentsForm';
+import { EquipmentsForm } from '@/components/Equipments/Form/EquipmentsForm';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useModalTextHeight } from '@/hooks/useModalTextHeight';
+import i18n from '@/i18n';
+import { useDeleteEquipmentMutation } from '@/services/equipments/equipment.api';
+import type { Equipment } from '@/types/character';
 
 const snapPoints = [400];
 
@@ -32,7 +29,7 @@ export const Equipments = () => {
   const [detailedEquipment, setDetailedEquipment] = useState<Equipment>();
   const [equipmentToDelete, setEquipmentToDelete] = useState<Equipment>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (equipmentToDelete) {
       deleteEquipment(
         { characterId: characterId!, id: equipmentToDelete.id! },
@@ -43,32 +40,28 @@ export const Equipments = () => {
         },
       );
     }
-  }, [characterId, deleteEquipment, equipmentToDelete]);
+  };
 
-  const onCreate = useCallback(() => {
+  const onCreate = () => {
     if (!canEdit) return;
     ref.current?.show({});
-  }, [canEdit]);
+  };
 
-  const onEdit = useCallback(
-    (equipment: Equipment) => {
-      if (!canEdit) return;
-      ref.current?.show({ equipment });
-    },
-    [canEdit],
-  );
+  const onEdit = (equipment: Equipment) => {
+    if (!canEdit) return;
 
-  const onDelete = useCallback(
-    (equipment: Equipment) => {
-      if (!canEdit) return;
-      setEquipmentToDelete(equipment);
-    },
-    [canEdit],
-  );
+    ref.current?.show({ equipment });
+  };
 
-  const onShow = useCallback((equipment: Equipment) => {
+  const onDelete = (equipment: Equipment) => {
+    if (!canEdit) return;
+
+    setEquipmentToDelete(equipment);
+  };
+
+  const onShow = (equipment: Equipment) => {
     setDetailedEquipment(equipment);
-  }, []);
+  };
 
   return (
     <>
@@ -83,7 +76,7 @@ export const Equipments = () => {
             className="rounded-full bg-green-500 p-2 absolute top-0 right-0"
             hitSlop={15}
           >
-            <Plus size={16} color={'white'} />
+            <Plus size={16} color="white" />
           </TouchableOpacity>
         )}
 

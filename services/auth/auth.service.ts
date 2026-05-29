@@ -1,7 +1,6 @@
-import api from 'core/api/api';
-import { getRefreshToken } from 'core/utils/tokens';
-
-import { TokenResponse, User } from 'types/user';
+import api from '@/core/api/api';
+import { getRefreshToken } from '@/core/utils/tokens';
+import type { TokenResponse, User } from '@/types/user';
 
 export const authService = {
   validateToken: () => api.get<User>('/sessions').then((res) => res.data),

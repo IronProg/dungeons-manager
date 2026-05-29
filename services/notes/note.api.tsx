@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Note } from 'types/character';
-import { noteService } from './note.service';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
+
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { noteService } from '@/services/notes/note.service';
+import type { Note } from '@/types/character';
 
 export const getNoteKey = ({
   characterId,

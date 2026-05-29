@@ -1,19 +1,17 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
+import { Button } from '@/components/ui/Button';
+import type { ResourcesFormType } from '@/components/WeaponsAndTools/Resources/useResourcesForm';
+import { useResourcesForm } from '@/components/WeaponsAndTools/Resources/useResourcesForm';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateResourceMutation,
   useUpdateResourceMutation,
-} from 'services/resources/resource';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { Button } from 'components/ui/Button';
-
-import { Resource } from 'types/character';
+} from '@/services/resources/resource';
+import type { Resource } from '@/types/character';
 
 export type ResourcesFormProps = {
   resource?: Resource;
@@ -29,30 +27,27 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
   const { mutate: updateResource, isPending: updatePending } =
     useUpdateResourceMutation();
 
-  const onSubmit = useCallback(
-    (values: ResourcesFormType) => {
-      if (!resource) {
-        createResource(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+  const onSubmit = (values: ResourcesFormType) => {
+    if (resource) {
+      updateResource(
+        { characterId: characterId!, id: resource.id!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      } else {
-        updateResource(
-          { characterId: characterId!, id: resource.id!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+        },
+      );
+    } else {
+      createResource(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      }
-    },
-    [resource, characterId, createResource, close, updateResource],
-  );
+        },
+      );
+    }
+  };
 
   return (
     <View className="flex flex-col">
@@ -116,7 +111,7 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
                   <BottomSheetTextInput
                     className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                     onChangeText={field.onChange}
-                    value={`${field.value || ''}`}
+                    value={`${field.value ?? ''}`}
                     keyboardType="numeric"
                   />
 

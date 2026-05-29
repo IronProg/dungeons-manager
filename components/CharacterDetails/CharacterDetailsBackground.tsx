@@ -1,11 +1,10 @@
+import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox';
+import i18n from '@/i18n';
 import {
   useGetBackground,
   useUpdateBackgroundMutation,
-} from 'services/backgrounds/background.api';
-import { Character } from 'types/character';
-import { DetailsEditableTextBox } from './shared/DetailsEditableTextBox';
-import { useCallback } from 'react';
-import i18n from 'i18n';
+} from '@/services/backgrounds/background.api';
+import type { Character } from '@/types/character';
 
 type UpdateBackgroundFormData = Omit<UpdateBackgroundParams, 'characterId'>;
 
@@ -22,15 +21,15 @@ export const CharacterDetailsBackground = ({
 
   const { mutate: updateBackground, isPending } = useUpdateBackgroundMutation();
 
-  const handleSaveBackground = useCallback(
-    (params: UpdateBackgroundFormData, callback: () => void) => {
-      updateBackground(
-        { characterId: character.id!, ...params },
-        { onSuccess: () => callback() },
-      );
-    },
-    [character.id, updateBackground],
-  );
+  const handleSaveBackground = (
+    params: UpdateBackgroundFormData,
+    callback: () => void,
+  ) => {
+    updateBackground(
+      { characterId: character.id!, ...params },
+      { onSuccess: () => callback() },
+    );
+  };
 
   return (
     <>

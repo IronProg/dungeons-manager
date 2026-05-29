@@ -1,16 +1,14 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { useQueryClient } from '@tanstack/react-query';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { useUpdateCharacterMutation } from 'services/characters/character.api';
-import { ExperienceFormType, useExperienceForm } from './useExperienceForm';
-
-import { Button } from 'components/ui/Button';
-
-import type { Character } from 'types/character';
+import type { ExperienceFormType } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm';
+import { useExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm';
+import { Button } from '@/components/ui/Button';
+import i18n from '@/i18n';
+import { useUpdateCharacterMutation } from '@/services/characters/character.api';
+import type { Character } from '@/types/character';
 
 export type ExperienceFormProps = { character: Character };
 
@@ -23,23 +21,20 @@ export const ExperienceForm = ({ character }: ExperienceFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateCharacterMutation();
 
-  const onSubmit = useCallback(
-    (values: ExperienceFormType) => {
-      updateCharacter(
-        { id: character.id!, experience: values.experience },
-        {
-          onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: ['characters', character.id!],
-            });
+  const onSubmit = (values: ExperienceFormType) => {
+    updateCharacter(
+      { id: character.id!, experience: values.experience },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['characters', character.id!],
+          });
 
-            close();
-          },
+          close();
         },
-      );
-    },
-    [character.id, close, queryClient, updateCharacter],
-  );
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">

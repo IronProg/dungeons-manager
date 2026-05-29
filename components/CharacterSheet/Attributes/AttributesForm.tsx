@@ -1,19 +1,21 @@
-import { Control, Controller } from 'react-hook-form';
-import { Text, View } from 'react-native';
-import { AttributesFormType, useAttributesForm } from './useAttributesForm';
-import { Attribute } from 'types/character';
-import { ATTRIBUTES } from 'core/enums/attributes';
-import { getModifier } from 'core/helpers/getModifier';
 import {
   BottomSheetScrollView,
   BottomSheetTextInput,
   useBottomSheet,
 } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
-import { useUpdateAllAttributesMutation } from 'services/attributes/attributes';
-import { useCallback } from 'react';
-import { Button } from 'components/ui/Button';
-import { useCharacter } from 'contexts/CharacterContext';
+import type { Control } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { AttributesFormType } from '@/components/CharacterSheet/Attributes/useAttributesForm';
+import { useAttributesForm } from '@/components/CharacterSheet/Attributes/useAttributesForm';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import { getModifier } from '@/core/helpers/getModifier';
+import i18n from '@/i18n';
+import { useUpdateAllAttributesMutation } from '@/services/attributes/attributes';
+import type { Attribute } from '@/types/character';
 
 export type AttributesFormProps = {
   characterAttributes: Attribute[];
@@ -29,31 +31,29 @@ export const AttributesForm = ({
   const { mutate: updateAllAttributes, isPending } =
     useUpdateAllAttributesMutation();
 
-  const onSubmit = useCallback(
-    (values: AttributesFormType) => {
-      const newAttributes: Attribute[] =
-        values.characterAttributesAttributes.map((attrVal) => {
-          const hasTempValue =
-            attrVal.tempValue !== null && attrVal.tempValue !== undefined;
+  const onSubmit = (values: AttributesFormType) => {
+    const newAttributes: Attribute[] = values.characterAttributesAttributes.map(
+      (attrVal) => {
+        const hasTempValue =
+          attrVal.tempValue !== null && attrVal.tempValue !== undefined;
 
-          return {
-            id: attrVal.id,
-            name: attrVal.name as AttributesType,
-            value: attrVal.value,
-            tempValue: attrVal.tempValue,
-            modifier: hasTempValue
-              ? getModifier(attrVal.tempValue as number)
-              : getModifier(attrVal.value),
-          };
-        });
+        return {
+          id: attrVal.id,
+          name: attrVal.name as AttributesType,
+          value: attrVal.value,
+          tempValue: attrVal.tempValue,
+          modifier: hasTempValue
+            ? getModifier(attrVal.tempValue as number)
+            : getModifier(attrVal.value),
+        };
+      },
+    );
 
-      updateAllAttributes(
-        { characterId: characterId!, attributes: newAttributes },
-        { onSuccess: () => close() },
-      );
-    },
-    [characterId, close, updateAllAttributes],
-  );
+    updateAllAttributes(
+      { characterId: characterId!, attributes: newAttributes },
+      { onSuccess: () => close() },
+    );
+  };
 
   return (
     <BottomSheetScrollView

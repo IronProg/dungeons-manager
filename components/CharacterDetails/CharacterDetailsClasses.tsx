@@ -1,18 +1,15 @@
-import React, { useMemo, useRef } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Edit } from 'lucide-react-native';
-import i18n from 'i18n';
-
-import { useGetAllClasses } from 'services/classes/class';
-
-import { ClassesForm, ClassesFormProps } from './Forms/ClassesForm';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import React, { useRef } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import { Character, CharacterClass } from 'types/character';
+import type { ClassesFormProps } from '@/components/CharacterDetails/Forms/ClassesForm';
+import { ClassesForm } from '@/components/CharacterDetails/Forms/ClassesForm';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import i18n from '@/i18n';
+import { useGetAllClasses } from '@/services/classes/class';
+import type { Character, CharacterClass } from '@/types/character';
 
 const snapPoints = ['100%'];
 
@@ -29,13 +26,13 @@ export const CharacterDetailsClasses = ({
 
   const { data: characterClasses, isPending } = useGetAllClasses();
 
-  const totalLevels = useMemo(() => {
+  const totalLevels = (() => {
     if (!characterClasses || characterClasses.length === 0) return 0;
 
     const levels = characterClasses.map((cls) => cls.level || 0);
 
     return levels.reduce((acc, item) => acc + item, 0);
-  }, [characterClasses]);
+  })();
 
   return (
     <>
@@ -60,7 +57,7 @@ export const CharacterDetailsClasses = ({
               hitSlop={15}
               className="rounded-full h-10 w-10 bg-purple-500 flex items-center justify-center"
             >
-              <Edit size={16} color={'white'} />
+              <Edit size={16} color="white" />
             </TouchableOpacity>
           )}
         </View>

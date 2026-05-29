@@ -1,4 +1,4 @@
-import { NewTable } from 'components/NewTable/NewTable';
+import { NewTable } from '@/components/NewTable/NewTable';
 
 export default function NewTableScreen() {
   return <NewTable />;

@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Background } from 'types/character';
-import { backgroundService } from './background.service';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
+
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { backgroundService } from '@/services/backgrounds/background.service';
+import type { Background } from '@/types/character';
 
 export const getBackgroundKey = ({
   characterId,

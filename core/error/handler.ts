@@ -1,6 +1,7 @@
-import Toast from 'react-native-toast-message';
 import humps from 'humps';
-import i18n from 'i18n';
+import Toast from 'react-native-toast-message';
+
+import i18n from '@/i18n';
 
 export interface ApiErrorDetail {
   type: string;
@@ -79,7 +80,7 @@ const unknownError = (type: string, params: Record<string, unknown>) => {
 };
 
 const recordInvalidError = (details: ApiErrorDetail[]) => {
-  details.forEach((err) => {
+  for (const err of details) {
     const cleanParams = humps.camelizeKeys(err.params) as Record<
       string,
       unknown
@@ -100,7 +101,7 @@ const recordInvalidError = (details: ApiErrorDetail[]) => {
         }),
       }),
     });
-  });
+  }
 };
 
 const notAuthorizedError = (params: Record<string, unknown>) => {

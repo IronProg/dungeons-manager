@@ -1,6 +1,4 @@
-import React, { useMemo, useState } from 'react';
-import { View, Text, TouchableOpacity, Switch } from 'react-native';
-import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import {
   ChevronDown,
   ChevronUp,
@@ -8,20 +6,18 @@ import {
   Edit,
   WandSparkles,
 } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import { Markdown } from 'react-native-remark';
-import i18n from 'i18n';
 
-import { colors } from 'core/utils/colors';
-import { useSpellDamage } from 'hooks/useSpellDamage';
-import { useUpdateSpellMutation } from 'services/spells/spell.api';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-
-import { Spell } from 'types/character';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const headIcon = require('assets/icons/head.svg') as string;
+import HeadIcon from '@/assets/icons/head.svg';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { colors } from '@/core/utils/colors';
+import { useSpellDamage } from '@/hooks/useSpellDamage';
+import i18n from '@/i18n';
+import { useUpdateSpellMutation } from '@/services/spells/spell.api';
+import type { Spell } from '@/types/character';
 
 type SpellCardProps = {
   spell: Spell;
@@ -65,7 +61,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
     });
   };
 
-  const componentsString = useMemo(() => {
+  const componentsString = (() => {
     const comps = [];
     if (spell.verbal) comps.push('V');
     if (spell.somatic) comps.push('S');
@@ -76,7 +72,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
       str += ` (${spell.components})`;
     }
     return str;
-  }, [spell.components, spell.material, spell.somatic, spell.verbal]);
+  })();
 
   const handleCast = () => {
     if (spell.level !== 0) {
@@ -101,9 +97,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
                   {i18n.t(`spells.schools.${spell.school}`)}
                 </Text>
 
-                {spell.concentration && (
-                  <Image source={headIcon} style={{ width: 20, height: 20 }} />
-                )}
+                {spell.concentration && <HeadIcon className="w-5 h-5" />}
 
                 {spell.ritual && (
                   <Text className="text-xs font-bold">
@@ -149,7 +143,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
               value={spell.prepared}
               onValueChange={togglePrepared}
               trackColor={{ false: '#d1d5db', true: '#10b981' }}
-              thumbColor={'#ffffff'}
+              thumbColor="#ffffff"
               disabled={!canEdit}
             />
 

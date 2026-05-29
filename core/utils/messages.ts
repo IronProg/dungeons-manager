@@ -1,4 +1,5 @@
-import Toast, { ToastType } from 'react-native-toast-message';
+import type { ToastType } from 'react-native-toast-message';
+import Toast from 'react-native-toast-message';
 
 export const showMessage = (message: string, type: ToastType = 'success') => {
   Toast.show({

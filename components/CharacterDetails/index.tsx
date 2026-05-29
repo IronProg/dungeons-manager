@@ -1,10 +1,9 @@
-import { CharacterDetailsBackground } from './CharacterDetailsBackground';
-import { CharacterDetailsProficiencies } from './CharacterDetailsProficiencies';
-import { CharacterDetailsMain } from './CharacterDetailsMain';
-import { CharacterDetailsClasses } from './CharacterDetailsClasses';
-
-import { Character } from 'types/character';
-import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
+import { CharacterDetailsBackground } from '@/components/CharacterDetails/CharacterDetailsBackground';
+import { CharacterDetailsClasses } from '@/components/CharacterDetails/CharacterDetailsClasses';
+import { CharacterDetailsMain } from '@/components/CharacterDetails/CharacterDetailsMain';
+import { CharacterDetailsProficiencies } from '@/components/CharacterDetails/CharacterDetailsProficiencies';
+import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
+import type { Character } from '@/types/character';
 
 type CharacterDetailsProps = {
   character: Character;

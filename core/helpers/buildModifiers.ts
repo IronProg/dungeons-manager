@@ -1,4 +1,4 @@
-import { Attribute, Modifiers } from 'types/character';
+import type { Attribute, Modifiers } from '@/types/character';
 
 export const buildModifiers = (attributes: Attribute[]): Modifiers => {
   return {

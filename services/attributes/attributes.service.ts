@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Attribute } from 'types/character';
+import api from '@/core/api/api';
+import type { Attribute } from '@/types/character';
 
 export const attributesService = {
   fetchAll: ({ characterId }: GetAllAttributesParams) =>

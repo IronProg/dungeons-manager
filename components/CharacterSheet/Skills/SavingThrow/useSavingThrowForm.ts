@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ATTRIBUTES } from 'core/enums/attributes';
 import { useForm } from 'react-hook-form';
-import { SavingThrow } from 'types/character';
 import * as z from 'zod';
+
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import type { SavingThrow } from '@/types/character';
 
 export const schema = z.object({
   mainAttribute: z.enum(ATTRIBUTES),

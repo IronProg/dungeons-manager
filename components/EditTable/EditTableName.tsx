@@ -1,35 +1,33 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useUpdateTableMutation } from 'services/tables/table.api';
-import { EditTableFormType, useEditTable } from './useEditTable';
-import { useTable } from 'contexts/TableContext';
-import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
-import { showMessage } from 'core/utils/messages';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+import type { EditTableFormType } from '@/components/EditTable/useEditTable';
+import { useEditTable } from '@/components/EditTable/useEditTable';
+import { useTable } from '@/contexts/TableContext';
+import { showMessage } from '@/core/utils/messages';
+import i18n from '@/i18n';
+import { useUpdateTableMutation } from '@/services/tables/table.api';
 
 export const EditTableName = () => {
   const { table, tableId } = useTable();
-  const { control, handleSubmit, reset } = useEditTable(table?.name || '');
+  const { control, handleSubmit, reset } = useEditTable(table?.name ?? '');
 
   const { mutate: updateTable, isPending: isUpdating } =
     useUpdateTableMutation();
 
-  const onSubmit = useCallback(
-    (values: EditTableFormType) => {
-      if (!tableId) return;
+  const onSubmit = (values: EditTableFormType) => {
+    if (!tableId) return;
 
-      updateTable(
-        { id: tableId, name: values.name },
-        {
-          onSuccess: () => {
-            reset({ name: values.name });
-            showMessage(i18n.t('tables.nameUpdated'));
-          },
+    updateTable(
+      { id: tableId, name: values.name },
+      {
+        onSuccess: () => {
+          reset({ name: values.name });
+          showMessage(i18n.t('tables.nameUpdated'));
         },
-      );
-    },
-    [updateTable, tableId, reset],
-  );
+      },
+    );
+  };
 
   return (
     <View className="gap-4 mb-6">

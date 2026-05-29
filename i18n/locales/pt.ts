@@ -1,4 +1,4 @@
-import { api } from './api/pt';
+import { api } from '@/i18n/locales/api/pt';
 
 export const pt = {
   tabs: {

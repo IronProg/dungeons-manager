@@ -1,19 +1,27 @@
-import { useCallback, useState } from 'react';
+import type { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { TableIcon, Users, XCircle } from 'lucide-react-native';
+import { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { TableIcon, Users, XCircle } from 'lucide-react-native';
-import i18n from 'i18n';
 
-import { useTable } from 'contexts/TableContext';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useDestroyCharacterMutation } from 'services/characters/character.api';
+import { CharactersDrawerControls } from '@/components/Characters/CharactersDrawer/CharactersDrawerControls';
+import { CharactersDrawerItem } from '@/components/Characters/CharactersDrawer/CharactersDrawerItem';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useTable } from '@/contexts/TableContext';
+import i18n from '@/i18n';
+import { useDestroyCharacterMutation } from '@/services/characters/character.api';
+import type { Character } from '@/types/character';
 
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { CharactersDrawerControls } from './CharactersDrawerControls';
+const CharactersDrawerListEmpty = () => (
+  <View className="items-center py-12">
+    <Users size={48} color="#CBD5E1" />
 
-import type { Character } from 'types/character';
-import { CharactersDrawerItem } from './CharactersDrawerItem';
+    <Text className="text-gray-400 mt-4 text-center">
+      {i18n.t('titles.noCharacters')}
+    </Text>
+  </View>
+);
 
 interface CharactersDrawerProps extends DrawerContentComponentProps {
   characters: Character[];
@@ -43,23 +51,10 @@ export const CharactersDrawer = ({
     );
   };
 
-  const handleSelectCharacter = useCallback(
-    (item: Character) => {
-      setCharacterId(item.id!);
-      navigation.navigate('(tabs)');
-    },
-    [navigation, setCharacterId],
-  );
-
-  const ListEmptyComponent = () => (
-    <View className="items-center py-12">
-      <Users size={48} color="#CBD5E1" />
-
-      <Text className="text-gray-400 mt-4 text-center">
-        {i18n.t('titles.noCharacters')}
-      </Text>
-    </View>
-  );
+  const handleSelectCharacter = (item: Character) => {
+    setCharacterId(item.id);
+    navigation.navigate('(tabs)');
+  };
 
   return (
     <>
@@ -117,9 +112,9 @@ export const CharactersDrawer = ({
               />
             )}
             keyExtractor={(item: Character) => item.id!.toString()}
-            ListEmptyComponent={ListEmptyComponent}
+            ListEmptyComponent={CharactersDrawerListEmpty}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerClassName="pb-5"
           />
         </View>
 
