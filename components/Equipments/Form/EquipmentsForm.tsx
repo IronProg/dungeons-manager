@@ -109,7 +109,7 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
                   className="px-4 rounded-lg bg-gray-100"
                   style={{ textAlignVertical: 'top' }}
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   multiline
                   scrollEnabled={false}
                 />

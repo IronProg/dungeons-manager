@@ -50,7 +50,7 @@ export default function DrawerLayout() {
         drawerContent={(props) => (
           <CharactersDrawer
             {...props}
-            characters={characters || []}
+            characters={characters ?? []}
             onLogout={signOut}
             onNewCharacter={() => props.navigation.navigate('new-character')}
           />

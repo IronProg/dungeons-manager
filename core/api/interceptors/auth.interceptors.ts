@@ -1,7 +1,7 @@
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-import refreshApi from '@/core/api/refresh-api.ts';
+import refreshApi from '@/core/api/refresh-api';
 import { queryClient } from '@/core/queryClient/queryClient';
 import {
   getAccessToken,
@@ -66,9 +66,7 @@ export const refreshTokenInterceptor = async (
 
     if (refreshToken) {
       try {
-        if (!refreshPromise) {
-          refreshPromise = regenerateRefreshToken({ refreshToken });
-        }
+        refreshPromise ??= regenerateRefreshToken({ refreshToken });
 
         const { accessToken, refreshToken: newRefresh } = await refreshPromise;
 

@@ -10,7 +10,7 @@ import { useUpdateTableMutation } from '@/services/tables/table.api';
 
 export const EditTableName = () => {
   const { table, tableId } = useTable();
-  const { control, handleSubmit, reset } = useEditTable(table?.name || '');
+  const { control, handleSubmit, reset } = useEditTable(table?.name ?? '');
 
   const { mutate: updateTable, isPending: isUpdating } =
     useUpdateTableMutation();

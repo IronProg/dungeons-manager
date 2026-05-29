@@ -99,7 +99,7 @@ export const HitPointsForm = ({ generalInfo }: HitPointsFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base w-full px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

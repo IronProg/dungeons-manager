@@ -87,7 +87,7 @@ export const EditTable = () => {
     ),
     [currentUser];
 
-  const players = tableData?.tablesUsers || [];
+  const players = tableData?.tablesUsers ?? [];
 
   return (
     <View className="flex-1 bg-slate-200">

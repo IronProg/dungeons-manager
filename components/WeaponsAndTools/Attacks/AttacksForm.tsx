@@ -106,7 +106,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -149,7 +149,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -169,7 +169,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -193,7 +193,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   numberOfLines={3}
                   multiline
                 />

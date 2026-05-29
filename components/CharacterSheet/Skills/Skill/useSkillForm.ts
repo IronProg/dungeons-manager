@@ -28,8 +28,8 @@ export const useSkillForm = ({ skill }: useSkillFormProps) => {
       defaultValues: {
         name: skill.name,
         mainAttribute: skill.mainAttribute,
-        proficiency: skill.proficiency || false,
-        expertise: skill.expertise || false,
+        proficiency: skill.proficiency ?? false,
+        expertise: skill.expertise ?? false,
         customBonus: skill.customBonus,
         extraAttribute: skill.extraAttribute,
       },

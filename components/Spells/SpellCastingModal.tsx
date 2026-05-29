@@ -39,11 +39,11 @@ const Content = ({ spell, onClose }: SpellCastingModalProps) => {
   const { characterId } = useCharacter();
 
   const { mutate: updateSpellSlot, isPending } = useUpdateSpellSlotMutation();
-  const initialDamages: Damage[] = spell?.damages || [];
-  const higherLevelsDamage: Damage[] = spell?.higherLevelsDamages || [];
+  const initialDamages: Damage[] = spell?.damages ?? [];
+  const higherLevelsDamage: Damage[] = spell?.higherLevelsDamages ?? [];
 
   const [currentLevel, setCurrentLevel] = useState<SpellSlotLevelType>(
-    spell?.level || 1,
+    spell?.level ?? 1,
   );
 
   const { data: spellSlots } = useGetAllCharacterSpellSlots();
@@ -52,11 +52,11 @@ const Content = ({ spell, onClose }: SpellCastingModalProps) => {
     spellSlots
       ?.filter((slot) => slot.amount !== 0)
       ?.map((slot) => slot.level)
-      ?.sort() || [];
+      ?.sort() ?? [];
 
-  const maxLevel = Math.max(...(spellSlots?.map((slot) => slot.level) || [0]));
+  const maxLevel = Math.max(...(spellSlots?.map((slot) => slot.level) ?? [0]));
 
-  const minLevel = spell?.level || 1;
+  const minLevel = spell?.level ?? 1;
 
   const damages: Damage[] = (() => {
     const damagesArray: Damage[] = [];
@@ -77,7 +77,7 @@ const Content = ({ spell, onClose }: SpellCastingModalProps) => {
   })();
 
   useEffect(() => {
-    setCurrentLevel(spell?.level || 1);
+    setCurrentLevel(spell?.level ?? 1);
   }, [spell?.level]);
 
   const handleCast = () => {

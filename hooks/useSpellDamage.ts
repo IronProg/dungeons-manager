@@ -40,7 +40,7 @@ export const useSpellDamage = () => {
       return {
         diceSize: damage.diceSize ?? 6,
         label: damage.kind ?? '',
-        amount: damage.diceAmount || 1,
+        amount: damage.diceAmount ?? 1,
         bonuses: attrBonus,
       };
     });

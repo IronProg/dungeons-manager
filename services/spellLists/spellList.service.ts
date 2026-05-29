@@ -62,7 +62,7 @@ export const getExternalSpellsCount = (): number => {
     `SELECT COUNT(*) as count FROM external_spells`,
   );
 
-  return result?.count || 0;
+  return result?.count ?? 0;
 };
 
 export const insertExternalSpells = (spells: Spell[]) => {
@@ -97,20 +97,20 @@ export const insertExternalSpells = (spells: Spell[]) => {
       statement.executeSync({
         $name: spell.name,
         $level: spell.level,
-        $school: spell.school || '',
-        $castingTime: spell.castingTime || '',
-        $components: spell.components || '',
+        $school: spell.school ?? '',
+        $castingTime: spell.castingTime ?? '',
+        $components: spell.components ?? '',
         $concentration: spell.concentration ? 1 : 0,
-        $description: spell.description || '',
-        $duration: spell.duration || '',
-        $higherLevelDescription: spell.higherLevelDescription || null,
-        $innateTotal: spell.innateTotal || 0,
+        $description: spell.description ?? '',
+        $duration: spell.duration ?? '',
+        $higherLevelDescription: spell.higherLevelDescription ?? null,
+        $innateTotal: spell.innateTotal ?? 0,
         $material: spell.material ? 1 : 0,
-        $materialDescription: spell.materialDescription || null,
+        $materialDescription: spell.materialDescription ?? null,
         $prepared: spell.prepared ? 1 : 0,
-        $range: spell.range || '',
+        $range: spell.range ?? '',
         $somatic: spell.somatic ? 1 : 0,
-        $target: spell.target || '',
+        $target: spell.target ?? '',
         $verbal: spell.verbal ? 1 : 0,
         $attack: attackStr,
         $damages: damagesStr,

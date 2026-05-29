@@ -82,7 +82,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                           className="rounded-lg bg-gray-100 h-15 text-base grow"
                           onChangeText={field.onChange}
                           keyboardType="numeric"
-                          value={`${field.value || ''}`}
+                          value={`${field.value ?? ''}`}
                         />
 
                         <Text className="text-red-400 text-sm">
@@ -125,7 +125,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                       <BottomSheetTextInput
                         className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        value={`${field.value || ''}`}
+                        value={`${field.value ?? ''}`}
                         keyboardType="numeric"
                       />
 
@@ -162,7 +162,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                       <BottomSheetTextInput
                         className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        value={`${field.value || ''}`}
+                        value={`${field.value ?? ''}`}
                       />
 
                       <Text className="text-red-400 text-sm">

@@ -27,7 +27,7 @@ export function useTableChannel({
     if (!accessToken || !tableId) return;
 
     const consumer = ActionCable.createConsumer(
-      `${process.env.EXPO_PUBLIC_WEBSOCKET_URL || ''}?access_token=${accessToken}`,
+      `${process.env.EXPO_PUBLIC_WEBSOCKET_URL ?? ''}?access_token=${accessToken}`,
     );
     const cable = new Cable({});
 

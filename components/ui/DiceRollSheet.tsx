@@ -9,6 +9,7 @@ import type {
 } from '@gorhom/bottom-sheet';
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -50,11 +51,12 @@ export const DiceRollSheet = forwardRef<
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
 
-  const clearRolling = () => {
+  // eslint-disable-next-line no-restricted-syntax
+  const clearRolling = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (autoCloseTimeoutRef.current) clearTimeout(autoCloseTimeoutRef.current);
-  };
+  }, []);
 
   useEffect(() => {
     return () => clearRolling();

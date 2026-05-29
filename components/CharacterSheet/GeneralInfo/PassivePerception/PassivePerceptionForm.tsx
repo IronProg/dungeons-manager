@@ -69,7 +69,7 @@ export const PassivePerceptionForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

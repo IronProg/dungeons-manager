@@ -20,14 +20,14 @@ export const Initiative = ({
   const { simpleRoll } = useDiceRoll();
   const { modifiers } = useCharacter();
 
-  let modifier = modifiers?.['dexterity'] || 0;
+  let modifier = modifiers?.['dexterity'] ?? 0;
 
   if (generalInfo.initiativeCustomBonus) {
     modifier += generalInfo.initiativeCustomBonus;
   }
 
   if (generalInfo.initiativeExtraAttribute) {
-    modifier += modifiers?.[generalInfo.initiativeExtraAttribute] || 0;
+    modifier += modifiers?.[generalInfo.initiativeExtraAttribute] ?? 0;
   }
 
   const handleRoll = () => {

@@ -43,7 +43,7 @@ export const Button = ({
           textClassName,
         )}
       >
-        {text ? text : i18n.t('general.save')}
+        {text ?? i18n.t('general.save')}
       </Text>
     )}
   </TouchableOpacity>

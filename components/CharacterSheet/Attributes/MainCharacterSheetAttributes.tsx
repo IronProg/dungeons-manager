@@ -120,7 +120,7 @@ const AttributeCard = ({
         </Text>
         <View className="absolute rounded-full bg-gray-200 p-1 bottom-0 min-w-7">
           <Text className="text-gray-900 text-sm font-semibold text-center">
-            {attribute?.tempValue || attribute.value}
+            {attribute?.tempValue ?? attribute.value}
           </Text>
         </View>
       </TouchableOpacity>

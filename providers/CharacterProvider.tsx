@@ -55,7 +55,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     initialLoading,
     character,
     characterId,
-    proficiencyBonus: character?.proficiencyBonus || 2,
+    proficiencyBonus: character?.proficiencyBonus ?? 2,
     isLoading,
     isFetching,
     setCharacterId,

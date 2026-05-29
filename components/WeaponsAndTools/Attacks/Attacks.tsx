@@ -73,7 +73,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
 
       {attacks && attacks.length > 0 ? (
         attacks?.map((attack, index) => {
-          let attackModifier = attack.customBonus || 0;
+          let attackModifier = attack.customBonus ?? 0;
 
           if (modifiers && attack.mainAttribute) {
             attackModifier += modifiers[attack.mainAttribute];
@@ -118,9 +118,9 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
 
                     return {
                       label: damage.kind,
-                      amount: damage.diceAmount || 0,
-                      diceSize: damage.diceSize || 20,
-                      bonuses: [attributeBonus, damage.customBonus || 0],
+                      amount: damage.diceAmount ?? 0,
+                      diceSize: damage.diceSize ?? 20,
+                      bonuses: [attributeBonus, damage.customBonus ?? 0],
                     };
                   })}
                 />

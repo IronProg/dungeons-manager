@@ -27,11 +27,11 @@ export const ConfirmationModal = ({
   return (
     <BaseModal visible={isVisible} onClose={onClose}>
       <Text className="text-2xl font-medium text-center">
-        {title || i18n.t('titles.confirmation')}
+        {title ?? i18n.t('titles.confirmation')}
       </Text>
 
       <Text className="font-medium text-center">
-        {subTitle || i18n.t('titles.confirmationSubtitle')}
+        {subTitle ?? i18n.t('titles.confirmationSubtitle')}
       </Text>
 
       {isPending && (

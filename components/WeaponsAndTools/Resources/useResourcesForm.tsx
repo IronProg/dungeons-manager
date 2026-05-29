@@ -21,7 +21,7 @@ export const useResourcesForm = ({ resource }: useResourcesFormProps) => {
     useForm<ResourcesFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
-        name: resource?.name || '',
+        name: resource?.name ?? '',
         amount: resource?.amount,
         max: resource?.max,
       },

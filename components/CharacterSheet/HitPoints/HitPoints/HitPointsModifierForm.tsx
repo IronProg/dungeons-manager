@@ -25,7 +25,7 @@ export const HitPointsModifierForm = ({
   const onSubmit = (values: HitPointsModifierFormType) => {
     let hitPoints = generalInfo.hitPoints;
     let temporaryHitPoints: number | null =
-      generalInfo?.temporaryHitPoints || 0;
+      generalInfo?.temporaryHitPoints ?? 0;
 
     if (values.damage) {
       temporaryHitPoints -= values.damage;
@@ -48,7 +48,7 @@ export const HitPointsModifierForm = ({
     if (hitPoints < 0) hitPoints = 0;
 
     if (values.temporary) {
-      temporaryHitPoints = Math.max(values.temporary, temporaryHitPoints || 0);
+      temporaryHitPoints = Math.max(values.temporary, temporaryHitPoints ?? 0);
     }
 
     updateGeneralInfo(
@@ -83,7 +83,7 @@ export const HitPointsModifierForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -106,7 +106,7 @@ export const HitPointsModifierForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -129,7 +129,7 @@ export const HitPointsModifierForm = ({
                 <BottomSheetTextInput
                   className="text-center text-xl px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

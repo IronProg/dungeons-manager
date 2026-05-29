@@ -55,7 +55,7 @@ export default function DMDashboard() {
           onRefresh={handleRefresh}
         />
       }
-      data={characters || []}
+      data={characters ?? []}
       renderItem={({ item }) => <DMCharacterCard character={item} />}
       keyExtractor={(item) => item.id.toString()}
       showsVerticalScrollIndicator={false}

@@ -50,7 +50,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -70,7 +70,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -90,7 +90,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

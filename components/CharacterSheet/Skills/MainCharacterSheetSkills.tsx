@@ -106,8 +106,8 @@ const SavingThrowCard = ({
   const { simpleRoll } = useDiceRoll();
   const { modifiers, proficiencyBonus } = useCharacter();
   let modifier =
-    (modifiers?.[savingThrow.mainAttribute] || 0) +
-    (savingThrow.customBonus || 0);
+    (modifiers?.[savingThrow.mainAttribute] ?? 0) +
+    (savingThrow.customBonus ?? 0);
 
   if (modifiers && savingThrow.extraAttribute) {
     modifier += modifiers[savingThrow.extraAttribute];

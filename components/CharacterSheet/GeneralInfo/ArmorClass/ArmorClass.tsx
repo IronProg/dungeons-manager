@@ -21,11 +21,11 @@ export const ArmorClass = ({
   let modifier = generalInfo.armorClassBase;
 
   if (generalInfo.armorClassFirstAttribute) {
-    modifier += modifiers?.[generalInfo.armorClassFirstAttribute] || 0;
+    modifier += modifiers?.[generalInfo.armorClassFirstAttribute] ?? 0;
   }
 
   if (generalInfo.armorClassSecondAttribute) {
-    modifier += modifiers?.[generalInfo.armorClassSecondAttribute] || 0;
+    modifier += modifiers?.[generalInfo.armorClassSecondAttribute] ?? 0;
   }
 
   return (

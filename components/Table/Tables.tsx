@@ -29,7 +29,7 @@ const TablesListEmpty = () => (
       <Users size={32} color="#9ca3af" />
     </View>
     <Text className="text-gray-500 text-center text-lg">
-      {i18n.t('tables.noTables') || "You don't belong to any tables yet."}
+      {i18n.t('tables.noTables') ?? "You don't belong to any tables yet."}
     </Text>
   </View>
 );
@@ -90,7 +90,7 @@ export const Tables = () => {
       <View className="flex-1 bg-slate-200">
         <View className="px-5 pt-6 pb-4">
           <Text className="text-2xl font-bold text-gray-800 mb-2">
-            {i18n.t('tables.joinTable') || 'Join Table'}
+            {i18n.t('tables.joinTable') ?? 'Join Table'}
           </Text>
 
           <View className="flex-row items-center gap-3">
@@ -110,7 +110,7 @@ export const Tables = () => {
 
             <View>
               <Button
-                text={i18n.t('tables.join') || 'Join'}
+                text={i18n.t('tables.join') ?? 'Join'}
                 onPress={handleJoinTable}
                 disabled={isJoining || !inviteCode}
                 className="px-2"
@@ -123,7 +123,7 @@ export const Tables = () => {
 
         <View className="flex-1 px-5 mt-2">
           <Text className="text-xl font-bold text-gray-800 mb-4">
-            {i18n.t('tables.myTables') || 'My Tables'}
+            {i18n.t('tables.myTables') ?? 'My Tables'}
           </Text>
 
           {isLoadingTables ? (
@@ -135,7 +135,7 @@ export const Tables = () => {
               data={tables}
               renderItem={renderTableItem}
               keyExtractor={(item, index) =>
-                item.id?.toString() || index.toString()
+                item.id?.toString() ?? index.toString()
               }
               ListEmptyComponent={TablesListEmpty}
               showsVerticalScrollIndicator={false}
@@ -146,7 +146,7 @@ export const Tables = () => {
           <View className="mt-auto py-4" style={{ marginBottom: bottom }}>
             <Button
               onPress={() => navigate('/(authenticated)/(drawer)/new-table')}
-              text={i18n.t('tables.createTable') || 'Create Table'}
+              text={i18n.t('tables.createTable') ?? 'Create Table'}
             />
           </View>
         </View>

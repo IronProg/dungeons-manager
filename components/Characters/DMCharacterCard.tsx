@@ -44,7 +44,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
 
     if (!attr || !save) return 0;
 
-    let bonus = attr.modifier + (save.customBonus || 0);
+    let bonus = attr.modifier + (save.customBonus ?? 0);
     if (save.proficiency) bonus += proficiencyBonus;
 
     return bonus;
@@ -123,7 +123,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
           <StatBox
             icon={<Zap size={16} color="#eab308" />}
             label={i18n.t('titles.initiative')}
-            value={generalInfo.initiativeCustomBonus || 0}
+            value={generalInfo.initiativeCustomBonus ?? 0}
           />
 
           <StatBox
@@ -139,14 +139,14 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
             label={i18n.t('titles.passivePerception')}
             value={
               10 +
-              (getAttribute('wisdom')?.modifier || 0) +
+              (getAttribute('wisdom')?.modifier ?? 0) +
               (getSavingThrow('perception')?.proficiency ? proficiencyBonus : 0)
             }
           />
           <StatBox
             icon={<Dna size={16} color="#f97316" />}
             label={i18n.t('titles.exhaustion')}
-            value={generalInfo.exhaustion || 0}
+            value={generalInfo.exhaustion ?? 0}
           />
           <StatBox
             icon={<Package size={16} color="#94a3b8" />}
@@ -215,7 +215,7 @@ export const DMCharacterCard: React.FC<DMCharacterCardProps> = ({
                 </Text>
 
                 <Text className="text-[10px] font-bold text-emerald-900">
-                  {res.amount}/{res.max || '-'}
+                  {res.amount}/{res.max ?? '-'}
                 </Text>
               </View>
             ))}

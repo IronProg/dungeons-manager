@@ -21,7 +21,7 @@ export const useDamageFormat = () => {
       }
     }
 
-    return `${baseDamage} ${damage.kind || ''}`;
+    return `${baseDamage} ${damage.kind ?? ''}`;
   };
 
   return { damageFormat };

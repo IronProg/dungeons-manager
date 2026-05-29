@@ -112,7 +112,7 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
                   <BottomSheetTextInput
                     className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                     onChangeText={field.onChange}
-                    value={`${field.value || ''}`}
+                    value={`${field.value ?? ''}`}
                     keyboardType="numeric"
                   />
 

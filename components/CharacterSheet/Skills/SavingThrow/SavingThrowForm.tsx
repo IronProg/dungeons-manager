@@ -73,7 +73,7 @@ export const SavingThrowForm = ({
                   className="w-full text-base bg-gray-200 rounded-xl h-15"
                   keyboardType="number-pad"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 {error?.message && (

@@ -21,9 +21,9 @@ export const useFeaturesForm = ({ feature }: useFeaturesFormProps) => {
     useForm<FeaturesFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
-        title: feature?.title || '',
-        description: feature?.description || '',
-        origin: feature?.origin || '',
+        title: feature?.title ?? '',
+        description: feature?.description ?? '',
+        origin: feature?.origin ?? '',
       },
     });
 

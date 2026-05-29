@@ -50,9 +50,9 @@ export const useSpellForm = (
     resolver: zodResolver(schema) as Resolver<SpellFormValues>,
     defaultValues: {
       id: spell?.id,
-      name: spell?.name || '',
-      level: spell?.level || 0,
-      school: spell?.school || SPELL_SCHOOLS[0],
+      name: spell?.name ?? '',
+      level: spell?.level ?? 0,
+      school: spell?.school ?? SPELL_SCHOOLS[0],
       castingTime: spell?.castingTime ?? '',
       range: spell?.range ?? '',
       duration: spell?.duration ?? '',
@@ -73,8 +73,8 @@ export const useSpellForm = (
         customBonus: spell?.attack?.customBonus,
         applyProficiency: spell?.attack?.applyProficiency ?? false,
       },
-      damagesAttributes: spell?.damages || [],
-      higherLevelsDamagesAttributes: spell?.higherLevelsDamages || [],
+      damagesAttributes: spell?.damages ?? [],
+      higherLevelsDamagesAttributes: spell?.higherLevelsDamages ?? [],
     },
   });
 };

@@ -24,7 +24,7 @@ export const SpellList = () => {
 
     router.replace({
       pathname: '/(authenticated)/spell-form',
-      params: { importedSpellId: String(spellId), level: level || '0' },
+      params: { importedSpellId: String(spellId), level: level ?? '0' },
     });
   };
 
