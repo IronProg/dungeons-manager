@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import { Markdown } from 'react-native-remark';
 
+import headIcon from '@/assets/icons/head.svg';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { colors } from '@/core/utils/colors';
@@ -18,9 +19,6 @@ import { useSpellDamage } from '@/hooks/useSpellDamage';
 import i18n from '@/i18n';
 import { useUpdateSpellMutation } from '@/services/spells/spell.api';
 import type { Spell } from '@/types/character';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const headIcon = require('assets/icons/head.svg') as string;
 
 type SpellCardProps = {
   spell: Spell;

@@ -5,10 +5,10 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { MainCharacterSheetAttributes } from '@/components/CharacterSheet/Attributes/MainCharacterSheetAttributes.tsx';
-import { MainCharacterSheetGeneralInfo } from '@/components/CharacterSheet/GeneralInfo/MainCharacterSheetGeneralInfo.tsx';
-import { MainCharacterSheetHitPoints } from '@/components/CharacterSheet/HitPoints/MainCharacterSheetHitPoints.tsx';
-import { MainCharacterSheetSkills } from '@/components/CharacterSheet/Skills/MainCharacterSheetSkills.tsx';
+import { MainCharacterSheetAttributes } from '@/components/CharacterSheet/Attributes/MainCharacterSheetAttributes';
+import { MainCharacterSheetGeneralInfo } from '@/components/CharacterSheet/GeneralInfo/MainCharacterSheetGeneralInfo';
+import { MainCharacterSheetHitPoints } from '@/components/CharacterSheet/HitPoints/MainCharacterSheetHitPoints';
+import { MainCharacterSheetSkills } from '@/components/CharacterSheet/Skills/MainCharacterSheetSkills';
 import i18n from '@/i18n';
 
 export const MainCharacterSheet = () => {

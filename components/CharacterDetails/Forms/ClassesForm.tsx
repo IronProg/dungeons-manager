@@ -3,8 +3,8 @@ import { Trash2 } from 'lucide-react-native';
 import { Controller, useFieldArray } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useClassesForm } from '@/components/CharacterDetails/Forms/useClassesForm.tsx';
-import type { ClassesFormType } from '@/components/CharacterDetails/Forms/useClassesForm.tsx';
+import { useClassesForm } from '@/components/CharacterDetails/Forms/useClassesForm';
+import type { ClassesFormType } from '@/components/CharacterDetails/Forms/useClassesForm';
 import { Button } from '@/components/ui/Button';
 import { CastingKindPicker } from '@/components/ui/inputs/CastingKindPicker';
 import { HitDicePicker } from '@/components/ui/inputs/HitDicePicker';

@@ -1,4 +1,4 @@
-import { character } from '@/modules/characters/character.ts';
+import { character } from '@/modules/characters/character';
 
 export type WithId = {
   id: string;

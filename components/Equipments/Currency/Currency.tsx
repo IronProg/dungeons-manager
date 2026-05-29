@@ -4,7 +4,7 @@ import { ActivityIndicator, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDebounce } from 'use-debounce';
 
-import { useCurrencyForm } from '@/components/Equipments/Currency/useCurrencyForm.tsx';
+import { useCurrencyForm } from '@/components/Equipments/Currency/useCurrencyForm';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import { useUpdateCurrenciesMutation } from '@/services/currencies/currencies';

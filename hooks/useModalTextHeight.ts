@@ -6,8 +6,7 @@ const windowHeight = Dimensions.get('window').height;
 export const useModalTextHeight = () => {
   const { top, bottom } = useSafeAreaInsets();
 
-  const modalTextHeight = windowHeight - (top + bottom + 250),
-    [bottom, top];
+  const modalTextHeight = windowHeight - (top + bottom + 250)
 
   return { modalTextHeight };
 };

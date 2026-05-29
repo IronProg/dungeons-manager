@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import type { Control, UseFormWatch } from 'react-hook-form';
 import { Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
 import { SpellLevelPicker } from '@/components/ui/inputs/SpellLevelPicker';
 import { SpellSchoolPicker } from '@/components/ui/inputs/SpellSchoolPicker';
 import i18n from '@/i18n';

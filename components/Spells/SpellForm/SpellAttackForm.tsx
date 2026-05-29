@@ -3,8 +3,8 @@ import { Controller } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Switch, TextInput } from 'react-native-gesture-handler';
 
-import { SpellDamagesForm } from '@/components/Spells/SpellForm/SpellDamagesForm.tsx';
-import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import { SpellDamagesForm } from '@/components/Spells/SpellForm/SpellDamagesForm';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import i18n from '@/i18n';
 

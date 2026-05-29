@@ -6,23 +6,22 @@ export const useGetSkillBonus = () => {
   const { data: skills } = useGetAllSkills();
 
   const getSkillBonus = (name: string): number => {
-      const skill = skills?.find((skill) => skill.name === name);
+    const skill = skills?.find((skill) => skill.name === name);
 
-      if (!skill || !modifiers) return 0;
+    if (!skill || !modifiers) return 0;
 
-      let bonus = modifiers[skill.mainAttribute];
+    let bonus = modifiers[skill.mainAttribute];
 
-      if (skill.extraAttribute) bonus += modifiers[skill.extraAttribute];
+    if (skill.extraAttribute) bonus += modifiers[skill.extraAttribute];
 
-      if (skill.customBonus) bonus += skill.customBonus;
+    if (skill.customBonus) bonus += skill.customBonus;
 
-      if (skill.proficiency) bonus += proficiencyBonus;
+    if (skill.proficiency) bonus += proficiencyBonus;
 
-      if (skill.expertise) bonus += proficiencyBonus;
+    if (skill.expertise) bonus += proficiencyBonus;
 
-      return bonus;
-    },
-    [modifiers, proficiencyBonus, skills];
+    return bonus;
+  };
 
   return { getSkillBonus };
 };

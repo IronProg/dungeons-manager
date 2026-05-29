@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { EquipmentsFormType } from '@/components/Equipments/Form/useEquipmentsForm.tsx';
-import { useEquipmentsForm } from '@/components/Equipments/Form/useEquipmentsForm.tsx';
+import type { EquipmentsFormType } from '@/components/Equipments/Form/useEquipmentsForm';
+import { useEquipmentsForm } from '@/components/Equipments/Form/useEquipmentsForm';
 import { Button } from '@/components/ui/Button';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
@@ -28,27 +28,26 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
     useUpdateEquipmentMutation();
 
   const onSubmit = (values: EquipmentsFormType) => {
-      if (equipment) {
-        updateEquipment(
-          { characterId: characterId!, id: equipment.id!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+    if (equipment) {
+      updateEquipment(
+        { characterId: characterId!, id: equipment.id!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      } else {
-        createEquipment(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+        },
+      );
+    } else {
+      createEquipment(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      }
-    },
-    [equipment, characterId, createEquipment, close, updateEquipment];
+        },
+      );
+    }
+  };
 
   return (
     <View className="flex flex-col">

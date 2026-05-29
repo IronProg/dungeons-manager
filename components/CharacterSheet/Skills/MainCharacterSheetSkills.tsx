@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import type { SavingThrowFormProps } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm.tsx';
-import { SavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm.tsx';
-import type { SkillFormProps } from '@/components/CharacterSheet/Skills/Skill/SkillForm.tsx';
-import { SkillForm } from '@/components/CharacterSheet/Skills/Skill/SkillForm.tsx';
+import type { SavingThrowFormProps } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm';
+import { SavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm';
+import type { SkillFormProps } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
+import { SkillForm } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';

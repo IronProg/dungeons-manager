@@ -22,18 +22,16 @@ export const DiceRollProvider = ({
   const [enabled, setEnabled] = useState(true);
 
   const simpleRoll = (bonuses: number[]) => {
-      if (!enabled) return;
+    if (!enabled) return;
 
-      sheetRef.current?.roll(bonuses, { diceSize: 20 });
-    },
-    [enabled];
+    sheetRef.current?.roll(bonuses, { diceSize: 20 });
+  };
 
   const composeRoll = (params: ComposeRollParams) => {
-      if (!enabled) return;
+    if (!enabled) return;
 
-      composeSheetRef.current?.roll(params);
-    },
-    [enabled];
+    composeSheetRef.current?.roll(params);
+  };
 
   return (
     <DiceRollContext.Provider

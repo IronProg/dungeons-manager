@@ -2,10 +2,10 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-import { SpellAttackForm } from '@/components/Spells/SpellForm/SpellAttackForm.tsx';
-import { SpellFormInputs } from '@/components/Spells/SpellForm/SpellFormInputs.tsx';
-import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
-import { useSpellForm } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import { SpellAttackForm } from '@/components/Spells/SpellForm/SpellAttackForm';
+import { SpellFormInputs } from '@/components/Spells/SpellForm/SpellFormInputs';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
+import { useSpellForm } from '@/components/Spells/SpellForm/useSpellForm';
 import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { useCharacter } from '@/contexts/CharacterContext';

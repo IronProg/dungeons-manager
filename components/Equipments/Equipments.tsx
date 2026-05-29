@@ -4,9 +4,9 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Portal } from 'react-native-portalize';
 
-import { EquipmentsList } from '@/components/Equipments/EquipmentsList.tsx';
-import type { EquipmentsFormProps } from '@/components/Equipments/Form/EquipmentsForm.tsx';
-import { EquipmentsForm } from '@/components/Equipments/Form/EquipmentsForm.tsx';
+import { EquipmentsList } from '@/components/Equipments/EquipmentsList';
+import type { EquipmentsFormProps } from '@/components/Equipments/Form/EquipmentsForm';
+import { EquipmentsForm } from '@/components/Equipments/Form/EquipmentsForm';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
@@ -48,16 +48,16 @@ export const Equipments = () => {
   };
 
   const onEdit = (equipment: Equipment) => {
-      if (!canEdit) return;
-      ref.current?.show({ equipment });
-    },
-    [canEdit];
+    if (!canEdit) return;
+
+    ref.current?.show({ equipment });
+  };
 
   const onDelete = (equipment: Equipment) => {
-      if (!canEdit) return;
-      setEquipmentToDelete(equipment);
-    },
-    [canEdit];
+    if (!canEdit) return;
+
+    setEquipmentToDelete(equipment);
+  };
 
   const onShow = (equipment: Equipment) => {
     setDetailedEquipment(equipment);

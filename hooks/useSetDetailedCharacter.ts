@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import { getAllAttacksKey } from '@/services/attacks/attack';
 import { getAllAttributesKey } from '@/services/attributes/attributes';
@@ -23,7 +24,9 @@ export const useDetailedCharacter = ({
 }: useDetailedCharacterProps): useDetailedCharacterResult => {
   const queryClient = useQueryClient();
 
-  const setDetailedCharacterData = (character: Character) => {
+  // eslint-disable-next-line no-restricted-syntax
+  const setDetailedCharacterData = useCallback(
+    (character: Character) => {
       setInitialLoading(true);
 
       queryClient.setQueryData(
@@ -68,7 +71,8 @@ export const useDetailedCharacter = ({
 
       setInitialLoading(false);
     },
-    [queryClient, setInitialLoading];
+    [queryClient, setInitialLoading],
+  );
 
   return { setDetailedCharacterData };
 };

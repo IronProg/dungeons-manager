@@ -5,9 +5,9 @@ import { Switch } from 'react-native-gesture-handler';
 
 import { Button } from '@/components/ui/Button';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
-import { DamagesForm } from '@/components/WeaponsAndTools/Attacks/DamagesForm.tsx';
-import { useAttacksForm } from '@/components/WeaponsAndTools/Attacks/useAttacksForm.ts';
-import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm.ts';
+import { DamagesForm } from '@/components/WeaponsAndTools/Attacks/DamagesForm';
+import { useAttacksForm } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
+import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import {
@@ -31,30 +31,29 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
     useUpdateAttackMutation();
 
   const onSubmit = (values: AttacksFormType) => {
-      const params: CreateAttackParams = {
-        characterId: characterId!,
-        ...values,
-        mainAttribute: values.mainAttribute,
-      };
+    const params: CreateAttackParams = {
+      characterId: characterId!,
+      ...values,
+      mainAttribute: values.mainAttribute,
+    };
 
-      if (attack) {
-        updateAttack(
-          { ...params, id: attack.id! },
-          {
-            onSuccess: () => {
-              close();
-            },
-          },
-        );
-      } else {
-        createAttack(params, {
+    if (attack) {
+      updateAttack(
+        { ...params, id: attack.id! },
+        {
           onSuccess: () => {
             close();
           },
-        });
-      }
-    },
-    [attack, characterId, createAttack, close, updateAttack];
+        },
+      );
+    } else {
+      createAttack(params, {
+        onSuccess: () => {
+          close();
+        },
+      });
+    }
+  };
 
   return (
     <View className="flex flex-col">

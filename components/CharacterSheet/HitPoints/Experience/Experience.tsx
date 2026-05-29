@@ -3,8 +3,8 @@ import { useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import type { ExperienceFormProps } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm.tsx';
-import { ExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm.tsx';
+import type { ExperienceFormProps } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm';
+import { ExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';

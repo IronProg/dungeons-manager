@@ -6,8 +6,8 @@ import { Portal } from 'react-native-portalize';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
-import type { ResourcesFormProps } from '@/components/WeaponsAndTools/Resources/ResourcesForm.tsx';
-import { ResourcesForm } from '@/components/WeaponsAndTools/Resources/ResourcesForm.tsx';
+import type { ResourcesFormProps } from '@/components/WeaponsAndTools/Resources/ResourcesForm';
+import { ResourcesForm } from '@/components/WeaponsAndTools/Resources/ResourcesForm';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import {
@@ -48,15 +48,14 @@ export const Resources = ({ canEdit }: ResourcesProps) => {
   };
 
   const handleQuickUpdate = (resource: Resource) => {
-      if (!canEdit || resource.amount <= 0) return;
+    if (!canEdit || resource.amount <= 0) return;
 
-      updateResource({
-        characterId: characterId!,
-        id: resource.id!,
-        amount: resource.amount - 1,
-      });
-    },
-    [characterId, updateResource, canEdit];
+    updateResource({
+      characterId: characterId!,
+      id: resource.id!,
+      amount: resource.amount - 1,
+    });
+  };
 
   return (
     <>

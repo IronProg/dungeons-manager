@@ -7,8 +7,8 @@ import type { Control } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { AttributesFormType } from '@/components/CharacterSheet/Attributes/useAttributesForm.ts';
-import { useAttributesForm } from '@/components/CharacterSheet/Attributes/useAttributesForm.ts';
+import type { AttributesFormType } from '@/components/CharacterSheet/Attributes/useAttributesForm';
+import { useAttributesForm } from '@/components/CharacterSheet/Attributes/useAttributesForm';
 import { Button } from '@/components/ui/Button';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { ATTRIBUTES } from '@/core/enums/attributes';
@@ -32,28 +32,28 @@ export const AttributesForm = ({
     useUpdateAllAttributesMutation();
 
   const onSubmit = (values: AttributesFormType) => {
-      const newAttributes: Attribute[] =
-        values.characterAttributesAttributes.map((attrVal) => {
-          const hasTempValue =
-            attrVal.tempValue !== null && attrVal.tempValue !== undefined;
+    const newAttributes: Attribute[] = values.characterAttributesAttributes.map(
+      (attrVal) => {
+        const hasTempValue =
+          attrVal.tempValue !== null && attrVal.tempValue !== undefined;
 
-          return {
-            id: attrVal.id,
-            name: attrVal.name as AttributesType,
-            value: attrVal.value,
-            tempValue: attrVal.tempValue,
-            modifier: hasTempValue
-              ? getModifier(attrVal.tempValue as number)
-              : getModifier(attrVal.value),
-          };
-        });
+        return {
+          id: attrVal.id,
+          name: attrVal.name as AttributesType,
+          value: attrVal.value,
+          tempValue: attrVal.tempValue,
+          modifier: hasTempValue
+            ? getModifier(attrVal.tempValue as number)
+            : getModifier(attrVal.value),
+        };
+      },
+    );
 
-      updateAllAttributes(
-        { characterId: characterId!, attributes: newAttributes },
-        { onSuccess: () => close() },
-      );
-    },
-    [characterId, close, updateAllAttributes];
+    updateAllAttributes(
+      { characterId: characterId!, attributes: newAttributes },
+      { onSuccess: () => close() },
+    );
+  };
 
   return (
     <BottomSheetScrollView

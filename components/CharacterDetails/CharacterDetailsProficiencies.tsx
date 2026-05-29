@@ -1,4 +1,4 @@
-import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
+import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox';
 import i18n from '@/i18n';
 import {
   useGetProficiency,

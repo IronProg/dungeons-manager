@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { ArmorClassFormType } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/useArmorClassForm.ts';
-import { useArmorClassForm } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/useArmorClassForm.ts';
+import type { ArmorClassFormType } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/useArmorClassForm';
+import { useArmorClassForm } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/useArmorClassForm';
 import { Button } from '@/components/ui/Button';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import { useCharacter } from '@/contexts/CharacterContext';
@@ -24,16 +24,15 @@ export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
     useUpdateGeneralInfoMutation();
 
   const onSubmit = (values: ArmorClassFormType) => {
-      updateGeneralInfo(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+    updateGeneralInfo(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateGeneralInfo];
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">

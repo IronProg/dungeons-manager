@@ -6,7 +6,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import { DamageDicePicker } from '@/components/ui/inputs/DamageDicePicker';
-import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm.ts';
+import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
 import i18n from '@/i18n';
 
 type DamagesFormProps = { control: Control<AttacksFormType> };

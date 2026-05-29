@@ -3,7 +3,7 @@ import type { Control } from 'react-hook-form';
 import { Controller, useFieldArray } from 'react-hook-form';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 
-import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import { DamageDicePicker } from '@/components/ui/inputs/DamageDicePicker';
 import i18n from '@/i18n';

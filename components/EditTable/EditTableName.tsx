@@ -1,8 +1,8 @@
 import { Controller } from 'react-hook-form';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import type { EditTableFormType } from '@/components/EditTable/useEditTable.tsx';
-import { useEditTable } from '@/components/EditTable/useEditTable.tsx';
+import type { EditTableFormType } from '@/components/EditTable/useEditTable';
+import { useEditTable } from '@/components/EditTable/useEditTable';
 import { useTable } from '@/contexts/TableContext';
 import { showMessage } from '@/core/utils/messages';
 import i18n from '@/i18n';
@@ -16,19 +16,18 @@ export const EditTableName = () => {
     useUpdateTableMutation();
 
   const onSubmit = (values: EditTableFormType) => {
-      if (!tableId) return;
+    if (!tableId) return;
 
-      updateTable(
-        { id: tableId, name: values.name },
-        {
-          onSuccess: () => {
-            reset({ name: values.name });
-            showMessage(i18n.t('tables.nameUpdated'));
-          },
+    updateTable(
+      { id: tableId, name: values.name },
+      {
+        onSuccess: () => {
+          reset({ name: values.name });
+          showMessage(i18n.t('tables.nameUpdated'));
         },
-      );
-    },
-    [updateTable, tableId, reset];
+      },
+    );
+  };
 
   return (
     <View className="gap-4 mb-6">

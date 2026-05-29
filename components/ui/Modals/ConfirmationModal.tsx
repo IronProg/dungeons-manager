@@ -1,7 +1,7 @@
 import { ActivityIndicator, Text, View } from 'react-native';
 
-import { Button } from '@/components/ui/Button.tsx';
-import { BaseModal } from '@/components/ui/Modals/BaseModal.tsx';
+import { Button } from '@/components/ui/Button';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { cn } from '@/core/helpers/cn';
 import i18n from '@/i18n';
 

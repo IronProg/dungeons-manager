@@ -27,11 +27,10 @@ export default function DMDashboard() {
   };
 
   const callback = (data: TableChannelCallback) => {
-      if (data.invalidate === 'table') {
-        handleRefresh();
-      }
-    },
-    [handleRefresh];
+    if (data.invalidate === 'table') {
+      handleRefresh();
+    }
+  };
 
   useTableChannel({ tableId: table?.id, callback });
 

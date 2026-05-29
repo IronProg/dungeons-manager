@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { TablesItem } from '@/components/Table/TablesItem.tsx';
+import { TablesItem } from '@/components/Table/TablesItem';
 import { Button } from '@/components/ui/Button';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { useTable } from '@/contexts/TableContext';

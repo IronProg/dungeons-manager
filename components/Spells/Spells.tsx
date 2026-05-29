@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { SpellCard } from '@/components/Spells/SpellCard.tsx';
-import { SpellCastingModal } from '@/components/Spells/SpellCastingModal.tsx';
-import { SpellLevelNavigator } from '@/components/Spells/SpellLevelNavigator.tsx';
-import { SpellsHeader } from '@/components/Spells/SpellsHeader.tsx';
-import { SpellSlotsHeader } from '@/components/Spells/SpellSlotsHeader.tsx';
+import { SpellCard } from '@/components/Spells/SpellCard';
+import { SpellCastingModal } from '@/components/Spells/SpellCastingModal';
+import { SpellLevelNavigator } from '@/components/Spells/SpellLevelNavigator';
+import { SpellsHeader } from '@/components/Spells/SpellsHeader';
+import { SpellSlotsHeader } from '@/components/Spells/SpellSlotsHeader';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import { useGetCharacterSpells } from '@/services/spells/spell.api';
@@ -23,8 +23,7 @@ export const Spells = () => {
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
 
-  const spellHeader = <SpellsHeader level={level} canEdit={canEdit} />,
-    [level, canEdit];
+  const spellHeader = <SpellsHeader level={level} canEdit={canEdit} />;
 
   return (
     <>

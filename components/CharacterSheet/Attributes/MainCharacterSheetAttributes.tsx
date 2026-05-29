@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import type { AttributesFormProps } from '@/components/CharacterSheet/Attributes/AttributesForm.tsx';
-import { AttributesForm } from '@/components/CharacterSheet/Attributes/AttributesForm.tsx';
+import type { AttributesFormProps } from '@/components/CharacterSheet/Attributes/AttributesForm';
+import { AttributesForm } from '@/components/CharacterSheet/Attributes/AttributesForm';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';

@@ -3,8 +3,8 @@ import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
-import type { ResourcesFormType } from '@/components/WeaponsAndTools/Resources/useResourcesForm.tsx';
-import { useResourcesForm } from '@/components/WeaponsAndTools/Resources/useResourcesForm.tsx';
+import type { ResourcesFormType } from '@/components/WeaponsAndTools/Resources/useResourcesForm';
+import { useResourcesForm } from '@/components/WeaponsAndTools/Resources/useResourcesForm';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import {
@@ -28,27 +28,26 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
     useUpdateResourceMutation();
 
   const onSubmit = (values: ResourcesFormType) => {
-      if (resource) {
-        updateResource(
-          { characterId: characterId!, id: resource.id!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+    if (resource) {
+      updateResource(
+        { characterId: characterId!, id: resource.id!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      } else {
-        createResource(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+        },
+      );
+    } else {
+      createResource(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      }
-    },
-    [resource, characterId, createResource, close, updateResource];
+        },
+      );
+    }
+  };
 
   return (
     <View className="flex flex-col">

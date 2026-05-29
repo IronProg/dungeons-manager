@@ -1,7 +1,7 @@
-import { CharacterDetailsBackground } from '@/components/CharacterDetails/CharacterDetailsBackground.tsx';
-import { CharacterDetailsClasses } from '@/components/CharacterDetails/CharacterDetailsClasses.tsx';
-import { CharacterDetailsMain } from '@/components/CharacterDetails/CharacterDetailsMain.tsx';
-import { CharacterDetailsProficiencies } from '@/components/CharacterDetails/CharacterDetailsProficiencies.tsx';
+import { CharacterDetailsBackground } from '@/components/CharacterDetails/CharacterDetailsBackground';
+import { CharacterDetailsClasses } from '@/components/CharacterDetails/CharacterDetailsClasses';
+import { CharacterDetailsMain } from '@/components/CharacterDetails/CharacterDetailsMain';
+import { CharacterDetailsProficiencies } from '@/components/CharacterDetails/CharacterDetailsProficiencies';
 import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
 import type { Character } from '@/types/character';
 

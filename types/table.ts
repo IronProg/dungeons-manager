@@ -1,4 +1,4 @@
-import type { Character } from '@/types/character.ts';
+import type { Character } from '@/types/character';
 
 export type TableUser = {
   id: number;

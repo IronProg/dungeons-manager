@@ -15,7 +15,10 @@ export type DisposableBottomSheetHandle<T> = {
   show: (params: T) => void;
 };
 
-type DisposableBottomSheetProps<T> = Omit<BottomSheetProps, 'children'> & {
+export type DisposableBottomSheetProps<T> = Omit<
+  BottomSheetProps,
+  'children'
+> & {
   renderContent: (props: { params: T; onClose: () => void }) => ReactNode;
 };
 
@@ -43,7 +46,6 @@ function DisposableBottomSheetInner<T>(
 
   return (
     <BottomSheet
-      key={params ? 'active' : 'inactive'}
       ref={innerRef}
       backdropComponent={renderBackdrop}
       index={0}

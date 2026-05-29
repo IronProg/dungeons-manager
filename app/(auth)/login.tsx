@@ -21,16 +21,15 @@ export default function LoginScreen() {
   const { mutate: signIn, isPending } = useSignInMutation();
 
   const onSubmit = (values: LoginFormType) => {
-      signIn(
-        { user: values },
-        {
-          onSuccess: () => {
-            router.navigate('/(authenticated)/(drawer)/(tabs)');
-          },
+    signIn(
+      { user: values },
+      {
+        onSuccess: () => {
+          router.navigate('/(authenticated)/(drawer)/(tabs)');
         },
-      );
-    },
-    [router, signIn];
+      },
+    );
+  };
 
   return (
     <AppKeyboardAvoidingView contentContainerClassName="pt-0">

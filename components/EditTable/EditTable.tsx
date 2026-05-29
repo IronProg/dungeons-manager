@@ -6,7 +6,7 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from 'tailwindcss/colors';
 
-import { EditTableName } from '@/components/EditTable/EditTableName.tsx';
+import { EditTableName } from '@/components/EditTable/EditTableName';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { useTable } from '@/contexts/TableContext';
 import { showMessage } from '@/core/utils/messages';
@@ -66,26 +66,25 @@ export const EditTable = () => {
   };
 
   const renderPlayerItem = ({ item }: { item: TableUser }) => (
-      <View className="flex-row items-center justify-between bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100">
-        <View className="flex-1">
-          <Text className="font-medium text-gray-800">{item.email}</Text>
-          <Text className="text-gray-500 text-sm mt-1">
-            {new Date(item.joinedAt).toLocaleDateString()}
-          </Text>
-        </View>
-
-        {currentUser && currentUser.email !== item.email && (
-          <TouchableOpacity
-            onPress={() => setUserToKick(item)}
-            className="w-10 h-10 rounded-full bg-red-100 items-center justify-center"
-            hitSlop={10}
-          >
-            <UserX size={20} color="#ef4444" />
-          </TouchableOpacity>
-        )}
+    <View className="flex-row items-center justify-between bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100">
+      <View className="flex-1">
+        <Text className="font-medium text-gray-800">{item.email}</Text>
+        <Text className="text-gray-500 text-sm mt-1">
+          {new Date(item.joinedAt).toLocaleDateString()}
+        </Text>
       </View>
-    ),
-    [currentUser];
+
+      {currentUser && currentUser.email !== item.email && (
+        <TouchableOpacity
+          onPress={() => setUserToKick(item)}
+          className="w-10 h-10 rounded-full bg-red-100 items-center justify-center"
+          hitSlop={10}
+        >
+          <UserX size={20} color="#ef4444" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 
   const players = tableData?.tablesUsers ?? [];
 

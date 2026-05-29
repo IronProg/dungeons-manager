@@ -11,8 +11,8 @@ import {
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { NewCharacterFormType } from '@/components/Characters/useNewCharacter.tsx';
-import { useNewCharacter } from '@/components/Characters/useNewCharacter.tsx';
+import type { NewCharacterFormType } from '@/components/Characters/useNewCharacter';
+import { useNewCharacter } from '@/components/Characters/useNewCharacter';
 import { Button } from '@/components/ui/Button';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useTable } from '@/contexts/TableContext';
@@ -31,14 +31,13 @@ export const NewCharacter = () => {
   const { mutate: createCharacter, isPending } = useCreateCharacterMutation();
 
   const onSubmit = (values: NewCharacterFormType) => {
-      createCharacter(values, {
-        onSuccess: (data) => {
-          setCharacterId(data.id);
-          setWaitingForCharacter(true);
-        },
-      });
-    },
-    [createCharacter, setCharacterId];
+    createCharacter(values, {
+      onSuccess: (data) => {
+        setCharacterId(data.id);
+        setWaitingForCharacter(true);
+      },
+    });
+  };
 
   useEffect(() => {
     if (waitingForCharacter && character) {

@@ -3,10 +3,10 @@ import { useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import type { HitPointsFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm.tsx';
-import { HitPointsForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm.tsx';
-import type { HitPointsModifierFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm.tsx';
-import { HitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm.tsx';
+import type { HitPointsFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm';
+import { HitPointsForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm';
+import type { HitPointsModifierFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm';
+import { HitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import i18n from '@/i18n';

@@ -41,7 +41,7 @@ export const useGetCharacterSpellSlots = (level: number) => {
     ['characters', number, 'spellSlots', number | undefined]
   >({
     queryKey: getCharacterSpellSlotsKey({ characterId: characterId!, level }),
-    queryFn: () => spellSlotService.fetchAll(characterId, level),
+    queryFn: () => spellSlotService.fetchAll(characterId!, level),
     staleTime: 10 * 60_000,
     enabled: !!character,
   });
@@ -57,7 +57,7 @@ export const useGetAllCharacterSpellSlots = () => {
     ['characters', number, 'spellSlots', 'all']
   >({
     queryKey: getAllCharacterSpellSlotsKey({ characterId: characterId! }),
-    queryFn: () => spellSlotService.fetchAll(characterId),
+    queryFn: () => spellSlotService.fetchAll(characterId!),
     staleTime: 10 * 60_000,
     enabled: !!character,
   });
@@ -73,7 +73,7 @@ export const useUpdateSpellSlotMutation = () => {
     UpdateSpellSlotParams
   >({
     mutationFn: (params: UpdateSpellSlotParams) =>
-      spellSlotService.update(characterId, params),
+      spellSlotService.update(characterId!, params),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['characters', characterId, 'spellSlots'],
@@ -90,7 +90,7 @@ export const useResetAllSpellSlotsMutation = () => {
   const { characterId } = useCharacter();
 
   return useMutation<SpellSlot, AxiosError<ApiErrorResponse>, null>({
-    mutationFn: () => spellSlotService.resetAll(characterId),
+    mutationFn: () => spellSlotService.resetAll(characterId!),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['characters', characterId, 'spellSlots'],

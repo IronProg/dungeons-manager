@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
+import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox';
 import i18n from '@/i18n';
 import {
   useGetBackground,
@@ -32,26 +32,24 @@ export const CharacterDetailsMain = ({
     useUpdateCharacterMutation();
 
   const handleSaveBackground = (
-      params: UpdateBackgroundFormData,
-      callback: () => void,
-    ) => {
-      updateBackground(
-        { characterId, ...params },
-        { onSuccess: () => callback() },
-      );
-    },
-    [characterId, updateBackground];
+    params: UpdateBackgroundFormData,
+    callback: () => void,
+  ) => {
+    updateBackground(
+      { characterId, ...params },
+      { onSuccess: () => callback() },
+    );
+  };
 
   const handleSaveCharacter = (
-      params: UpdateCharacterParams,
-      callback: () => void,
-    ) => {
-      updateCharacter(
-        { id: params.id, name: params.name },
-        { onSuccess: () => callback() },
-      );
-    },
-    [updateCharacter];
+    params: UpdateCharacterParams,
+    callback: () => void,
+  ) => {
+    updateCharacter(
+      { id: params.id, name: params.name },
+      { onSuccess: () => callback() },
+    );
+  };
 
   if (!character) return;
 

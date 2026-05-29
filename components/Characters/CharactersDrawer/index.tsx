@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { CharactersDrawerControls } from '@/components/Characters/CharactersDrawer/CharactersDrawerControls.tsx';
-import { CharactersDrawerItem } from '@/components/Characters/CharactersDrawer/CharactersDrawerItem.tsx';
+import { CharactersDrawerControls } from '@/components/Characters/CharactersDrawer/CharactersDrawerControls';
+import { CharactersDrawerItem } from '@/components/Characters/CharactersDrawer/CharactersDrawerItem';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useTable } from '@/contexts/TableContext';
@@ -52,10 +52,9 @@ export const CharactersDrawer = ({
   };
 
   const handleSelectCharacter = (item: Character) => {
-      setCharacterId(item.id);
-      navigation.navigate('(tabs)');
-    },
-    [navigation, setCharacterId];
+    setCharacterId(item.id);
+    navigation.navigate('(tabs)');
+  };
 
   return (
     <>

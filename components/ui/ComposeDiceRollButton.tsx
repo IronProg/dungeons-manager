@@ -2,12 +2,10 @@ import type { ImageStyle } from 'expo-image';
 import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 
+import d20 from '@/assets/icons/d20.svg';
 import { useDiceRoll } from '@/contexts/DiceRollContext';
 import type { ComposeRollParams } from '@/contexts/DiceRollContext';
 import { cn } from '@/core/helpers/cn';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const d20 = require('assets/icons/d20.svg');
 
 export const ComposeDiceRollButton = ({
   rolls,

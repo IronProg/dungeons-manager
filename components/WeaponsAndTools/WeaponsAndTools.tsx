@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Attacks } from '@/components/WeaponsAndTools/Attacks/Attacks.tsx';
-import { Features } from '@/components/WeaponsAndTools/Features/Features.tsx';
-import { Resources } from '@/components/WeaponsAndTools/Resources/Resources.tsx';
+import { Attacks } from '@/components/WeaponsAndTools/Attacks/Attacks';
+import { Features } from '@/components/WeaponsAndTools/Features/Features';
+import { Resources } from '@/components/WeaponsAndTools/Resources/Resources';
 import { useCharacter } from '@/contexts/CharacterContext';
 
 export const WeaponsAndTools = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 
-import { Experience } from '@/components/CharacterSheet/HitPoints/Experience/Experience.tsx';
-import { HitDices } from '@/components/CharacterSheet/HitPoints/HitDices/HitDices.tsx';
-import { HitPoints } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPoints.tsx';
+import { Experience } from '@/components/CharacterSheet/HitPoints/Experience/Experience';
+import { HitDices } from '@/components/CharacterSheet/HitPoints/HitDices/HitDices';
+import { HitPoints } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPoints';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import { useGetCharacterGeneralInfo } from '@/services/generalInfos/generalInfos';

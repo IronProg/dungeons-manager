@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Switch, Text, View } from 'react-native';
 
-import type { SavingThrowFormType } from '@/components/CharacterSheet/Skills/SavingThrow/useSavingThrowForm.ts';
-import { useSavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/useSavingThrowForm.ts';
+import type { SavingThrowFormType } from '@/components/CharacterSheet/Skills/SavingThrow/useSavingThrowForm';
+import { useSavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/useSavingThrowForm';
 import { Button } from '@/components/ui/Button';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import i18n from '@/i18n';

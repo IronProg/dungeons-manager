@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Switch, Text, View } from 'react-native';
 
-import type { SkillFormType } from '@/components/CharacterSheet/Skills/Skill/useSkillForm.ts';
-import { useSkillForm } from '@/components/CharacterSheet/Skills/Skill/useSkillForm.ts';
+import type { SkillFormType } from '@/components/CharacterSheet/Skills/Skill/useSkillForm';
+import { useSkillForm } from '@/components/CharacterSheet/Skills/Skill/useSkillForm';
 import { Button } from '@/components/ui/Button';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import i18n from '@/i18n';

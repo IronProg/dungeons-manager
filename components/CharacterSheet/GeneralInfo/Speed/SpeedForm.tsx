@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { SpeedFormType } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm.tsx';
-import { useSpeedForm } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm.tsx';
+import type { SpeedFormType } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm';
+import { useSpeedForm } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm';
 import { Button } from '@/components/ui/Button';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
@@ -22,16 +22,15 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = (values: SpeedFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter];
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">

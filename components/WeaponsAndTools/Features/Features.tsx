@@ -8,8 +8,8 @@ import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/Di
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
-import type { FeaturesFormProps } from '@/components/WeaponsAndTools/Features/FeaturesForm.tsx';
-import { FeaturesForm } from '@/components/WeaponsAndTools/Features/FeaturesForm.tsx';
+import type { FeaturesFormProps } from '@/components/WeaponsAndTools/Features/FeaturesForm';
+import { FeaturesForm } from '@/components/WeaponsAndTools/Features/FeaturesForm';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useModalTextHeight } from '@/hooks/useModalTextHeight';
 import i18n from '@/i18n';

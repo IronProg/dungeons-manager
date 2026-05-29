@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import { usePassivePerceptionForm } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/usePassivePerceptionForm.ts';
-import type { PassivePerceptionFormType } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/usePassivePerceptionForm.ts';
+import { usePassivePerceptionForm } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/usePassivePerceptionForm';
+import type { PassivePerceptionFormType } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/usePassivePerceptionForm';
 import { Button } from '@/components/ui/Button';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import { useCharacter } from '@/contexts/CharacterContext';
@@ -29,16 +29,15 @@ export const PassivePerceptionForm = ({
   const perceptionBonus = getSkillBonus('perception');
 
   const onSubmit = (values: PassivePerceptionFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter];
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">

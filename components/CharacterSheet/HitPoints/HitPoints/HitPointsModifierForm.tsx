@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { HitPointsModifierFormType } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsModifierForm.tsx';
-import { useHitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsModifierForm.tsx';
+import type { HitPointsModifierFormType } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsModifierForm';
+import { useHitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsModifierForm';
 import { Button } from '@/components/ui/Button';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';

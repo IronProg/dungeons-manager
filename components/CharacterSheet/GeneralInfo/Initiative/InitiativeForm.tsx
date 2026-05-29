@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { InitiativeFormType } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm.ts';
-import { useInitiativeForm } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm.ts';
+import type { InitiativeFormType } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm';
+import { useInitiativeForm } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm';
 import { Button } from '@/components/ui/Button';
 import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
 import { useCharacter } from '@/contexts/CharacterContext';
@@ -23,16 +23,15 @@ export const InitiativeForm = ({ generalInfo }: InitiativeFormProps) => {
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = (values: InitiativeFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter];
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">

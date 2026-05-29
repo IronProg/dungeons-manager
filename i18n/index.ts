@@ -1,8 +1,8 @@
 import * as Localization from 'expo-localization';
 import { I18n } from 'i18n-js';
 
-import { en } from '@/i18n/locales/en.ts';
-import { pt } from '@/i18n/locales/pt.ts';
+import { en } from '@/i18n/locales/en';
+import { pt } from '@/i18n/locales/pt';
 
 const i18n = new I18n({ en, pt });
 

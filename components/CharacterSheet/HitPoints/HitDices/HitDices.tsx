@@ -3,8 +3,8 @@ import { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import { HitDicesForm } from '@/components/CharacterSheet/HitPoints/HitDices/HitDicesForm.tsx';
-import { HitDicesRollForm } from '@/components/CharacterSheet/HitPoints/HitDices/HitDicesRollModal.tsx';
+import { HitDicesForm } from '@/components/CharacterSheet/HitPoints/HitDices/HitDicesForm';
+import { HitDicesRollForm } from '@/components/CharacterSheet/HitPoints/HitDices/HitDicesRollModal';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import i18n from '@/i18n';
@@ -24,13 +24,11 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
   const ref = useRef<DisposableBottomSheetHandle<boolean>>(null);
 
   const { hitDicesMaximum, hitDiceAmount } = {
-      hitDicesMaximum:
-        characterClasses?.reduce((acc, item) => acc + item.level, 0) ?? 0,
-      hitDiceAmount:
-        characterClasses?.reduce((acc, item) => acc + item.hitDiceAmount, 0) ??
-        0,
-    },
-    [characterClasses];
+    hitDicesMaximum:
+      characterClasses?.reduce((acc, item) => acc + item.level, 0) ?? 0,
+    hitDiceAmount:
+      characterClasses?.reduce((acc, item) => acc + item.hitDiceAmount, 0) ?? 0,
+  };
 
   return (
     <>

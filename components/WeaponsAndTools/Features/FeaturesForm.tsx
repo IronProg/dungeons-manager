@@ -3,8 +3,8 @@ import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
-import type { FeaturesFormType } from '@/components/WeaponsAndTools/Features/useFeaturesForm.tsx';
-import { useFeaturesForm } from '@/components/WeaponsAndTools/Features/useFeaturesForm.tsx';
+import type { FeaturesFormType } from '@/components/WeaponsAndTools/Features/useFeaturesForm';
+import { useFeaturesForm } from '@/components/WeaponsAndTools/Features/useFeaturesForm';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import {
@@ -28,27 +28,26 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
     useUpdateFeatureMutation();
 
   const onSubmit = (values: FeaturesFormType) => {
-      if (feature) {
-        updateFeature(
-          { characterId: characterId!, id: feature.id!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+    if (feature) {
+      updateFeature(
+        { characterId: characterId!, id: feature.id!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      } else {
-        createFeature(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+        },
+      );
+    } else {
+      createFeature(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      }
-    },
-    [feature, characterId, createFeature, close, updateFeature];
+        },
+      );
+    }
+  };
 
   return (
     <View className="flex flex-col">

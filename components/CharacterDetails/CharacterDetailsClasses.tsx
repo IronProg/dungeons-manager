@@ -3,8 +3,8 @@ import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import type { ClassesFormProps } from '@/components/CharacterDetails/Forms/ClassesForm.tsx';
-import { ClassesForm } from '@/components/CharacterDetails/Forms/ClassesForm.tsx';
+import type { ClassesFormProps } from '@/components/CharacterDetails/Forms/ClassesForm';
+import { ClassesForm } from '@/components/CharacterDetails/Forms/ClassesForm';
 import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
 import i18n from '@/i18n';

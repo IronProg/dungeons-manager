@@ -1,6 +1,6 @@
 import { ActivityIndicator, Text, View } from 'react-native';
 
-import { Currency } from '@/components/Equipments/Currency/Currency.tsx';
+import { Currency } from '@/components/Equipments/Currency/Currency';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import { useGetCharacterCurrency } from '@/services/currencies/currencies';

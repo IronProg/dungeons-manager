@@ -19,16 +19,15 @@ export default function SignUpScreen() {
   const { mutate: signUp, isPending } = useSignUpMutation();
 
   const onSubmit = (values: RegisterFormType) => {
-      signUp(
-        { user: values },
-        {
-          onSuccess: () => {
-            router.navigate('/(authenticated)/(drawer)/(tabs)');
-          },
+    signUp(
+      { user: values },
+      {
+        onSuccess: () => {
+          router.navigate('/(authenticated)/(drawer)/(tabs)');
         },
-      );
-    },
-    [router, signUp];
+      },
+    );
+  };
 
   return (
     <AppKeyboardAvoidingView contentContainerClassName="pt-0">

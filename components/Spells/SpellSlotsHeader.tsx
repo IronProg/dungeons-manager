@@ -25,13 +25,11 @@ export const SpellSlotsHeader = ({ level }: SpellSlotsHeaderProps) => {
   const { mutate: updateSlot } = useUpdateSpellSlotMutation();
   const { mutate: resetAllSpellSlots } = useResetAllSpellSlotsMutation();
 
-  const pactSlot = slots?.find((slot) => slot.kind === 'pact'),
-    [slots];
+  const pactSlot = slots?.find((slot) => slot.kind === 'pact');
 
   const currentSlot = slots?.find(
-      (slot) => slot.kind === 'normal' && slot.level === level,
-    ),
-    [slots, level];
+    (slot) => slot.kind === 'normal' && slot.level === level,
+  );
 
   const handleDecreaseSlot = (slot: SpellSlot) => {
     if (slot && slot.amount > 0) {

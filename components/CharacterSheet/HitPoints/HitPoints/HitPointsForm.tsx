@@ -2,8 +2,8 @@ import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { HitPointsFormType } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsForm.tsx';
-import { useHitPointsForm } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsForm.tsx';
+import type { HitPointsFormType } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsForm';
+import { useHitPointsForm } from '@/components/CharacterSheet/HitPoints/HitPoints/useHitPointsForm';
 import { Button } from '@/components/ui/Button';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
@@ -22,16 +22,15 @@ export const HitPointsForm = ({ generalInfo }: HitPointsFormProps) => {
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
   const onSubmit = (values: HitPointsFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter];
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col items-center">

@@ -3,8 +3,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import type { ExperienceFormType } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm.tsx';
-import { useExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm.tsx';
+import type { ExperienceFormType } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm';
+import { useExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm';
 import { Button } from '@/components/ui/Button';
 import i18n from '@/i18n';
 import { useUpdateCharacterMutation } from '@/services/characters/character.api';
