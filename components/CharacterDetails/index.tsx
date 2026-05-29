@@ -17,7 +17,7 @@ export const CharacterDetails = ({
   return (
     <AppKeyboardAvoidingView>
       <CharacterDetailsClasses character={character} canEdit={canEdit} />
-      <CharacterDetailsMain characterId={character.id} canEdit={canEdit} />
+      <CharacterDetailsMain characterId={character.id!} canEdit={canEdit} />
       <CharacterDetailsProficiencies character={character} canEdit={canEdit} />
       <CharacterDetailsBackground character={character} canEdit={canEdit} />
     </AppKeyboardAvoidingView>

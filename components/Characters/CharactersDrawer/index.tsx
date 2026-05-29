@@ -128,7 +128,7 @@ export const CharactersDrawer = ({
       <ConfirmationModal
         isVisible={!!characterToDelete}
         onClose={() => setCharacterToDelete(null)}
-        onConfirm={() => handleDelete(characterToDelete)}
+        onConfirm={() => handleDelete(characterToDelete!)}
       />
     </>
   );
