@@ -1,4 +1,4 @@
-import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import humps from 'humps';
 
 export const camelizeRequestInterceptor = (

@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Attack } from 'types/character';
+import api from '@/core/api/api';
+import type { Attack } from '@/types/character';
 
 export const attacksService = {
   fetchAll: ({ characterId }: GetAllAttacksParams) =>

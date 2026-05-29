@@ -1,0 +1,3 @@
+type DeleteTablesUserParams = {
+  id: number;
+};

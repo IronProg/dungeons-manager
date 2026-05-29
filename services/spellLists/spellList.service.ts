@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
-import { Spell } from 'types/character';
+
+import type { Spell } from '@/types/character';
 
 let db: SQLite.SQLiteDatabase | null = null;
 
@@ -61,7 +62,7 @@ export const getExternalSpellsCount = (): number => {
     `SELECT COUNT(*) as count FROM external_spells`,
   );
 
-  return result?.count || 0;
+  return result?.count ?? 0;
 };
 
 export const insertExternalSpells = (spells: Spell[]) => {
@@ -96,20 +97,20 @@ export const insertExternalSpells = (spells: Spell[]) => {
       statement.executeSync({
         $name: spell.name,
         $level: spell.level,
-        $school: spell.school || '',
-        $castingTime: spell.castingTime || '',
-        $components: spell.components || '',
+        $school: spell.school ?? '',
+        $castingTime: spell.castingTime ?? '',
+        $components: spell.components ?? '',
         $concentration: spell.concentration ? 1 : 0,
-        $description: spell.description || '',
-        $duration: spell.duration || '',
-        $higherLevelDescription: spell.higherLevelDescription || null,
-        $innateTotal: spell.innateTotal || 0,
+        $description: spell.description ?? '',
+        $duration: spell.duration ?? '',
+        $higherLevelDescription: spell.higherLevelDescription ?? null,
+        $innateTotal: spell.innateTotal ?? 0,
         $material: spell.material ? 1 : 0,
-        $materialDescription: spell.materialDescription || null,
+        $materialDescription: spell.materialDescription ?? null,
         $prepared: spell.prepared ? 1 : 0,
-        $range: spell.range || '',
+        $range: spell.range ?? '',
         $somatic: spell.somatic ? 1 : 0,
-        $target: spell.target || '',
+        $target: spell.target ?? '',
         $verbal: spell.verbal ? 1 : 0,
         $attack: attackStr,
         $damages: damagesStr,
@@ -131,18 +132,15 @@ export const searchExternalSpells = (query: string): Spell[] => {
   if (!db) return [];
 
   const q = `%${query}%`;
-  let results: { id: number; data: string }[];
 
-  if (!query) {
-    results = db.getAllSync<{ id: number; data: string }>(
-      `SELECT id, data FROM external_spells ORDER BY level ASC, name ASC`,
-    );
-  } else {
-    results = db.getAllSync<{ id: number; data: string }>(
-      `SELECT id, data FROM external_spells WHERE name LIKE ? ORDER BY level ASC, name ASC`,
-      [q],
-    );
-  }
+  const results: { id: number; data: string }[] = query
+    ? db.getAllSync<{ id: number; data: string }>(
+        `SELECT id, data FROM external_spells WHERE name LIKE ? ORDER BY level ASC, name ASC`,
+        [q],
+      )
+    : db.getAllSync<{ id: number; data: string }>(
+        `SELECT id, data FROM external_spells ORDER BY level ASC, name ASC`,
+      );
 
   return results.map((row) => ({
     ...(JSON.parse(row.data) as Spell),

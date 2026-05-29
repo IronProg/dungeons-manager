@@ -1,15 +1,11 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextProps,
-} from 'react-native';
-import { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { cn } from 'core/helpers/cn';
+import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { ChevronLeft } from 'lucide-react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import type { TextProps } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from 'tailwindcss/colors';
+
+import { cn } from '@/core/helpers/cn';
 
 const HEADER_HEIGHT = 56;
 
@@ -88,7 +84,7 @@ export const CustomHeader = ({
       ]}
     >
       <View
-        className="shadow-sm py-1 flex-row items-center"
+        className="shadow-sm py-1 flex-row items-center justify-between"
         style={{ height: HEADER_HEIGHT }}
       >
         <View className="w-20 justify-center items-start z-[1]">
@@ -115,7 +111,7 @@ export const CustomHeader = ({
         </View>
 
         <View
-          className="shadow-sm py-1 flex-row items-center flex-end"
+          className="shadow-sm w-20 flex-row items-center flex-end justify-center"
           style={{ height: HEADER_HEIGHT }}
         >
           {rightElement}

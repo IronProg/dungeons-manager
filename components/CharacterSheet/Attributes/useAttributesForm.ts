@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ATTRIBUTES } from 'core/enums/attributes';
 import { useForm } from 'react-hook-form';
-import { Attribute } from 'types/character';
 import * as z from 'zod';
+
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import type { Attribute } from '@/types/character';
 
 export const attributeSchema = z.object({
   id: z.coerce.number<number>(),

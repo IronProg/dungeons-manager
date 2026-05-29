@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Proficiency } from 'types/character';
+import api from '@/core/api/api';
+import type { Proficiency } from '@/types/character';
 
 export const proficiencyService = {
   fetch: ({ characterId }: GetProficiencyParams) =>

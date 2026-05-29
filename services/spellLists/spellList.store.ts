@@ -1,5 +1,6 @@
 import { getItemAsync, setItemAsync } from 'expo-secure-store';
-import i18n from 'i18n';
+
+import i18n from '@/i18n';
 
 const SPELL_LIST_URL_KEY = 'spell_list_url';
 

@@ -1,9 +1,6 @@
-import { useCallback, useMemo } from 'react';
-
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { ComposeRollParams } from 'contexts/DiceRollContext';
-import { Damage, Spell, SpellSlotLevelType } from 'types/character';
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ComposeRollParams } from '@/contexts/DiceRollContext';
+import type { Damage, Spell, SpellSlotLevelType } from '@/types/character';
 
 type SpellDamageParams = { spell: Spell; levelCast: SpellSlotLevelType };
 type CantripDamageParams = { spell: Spell };
@@ -11,101 +8,91 @@ type CantripDamageParams = { spell: Spell };
 export const useSpellDamage = () => {
   const { character, modifiers } = useCharacter();
 
-  const cantripHigherLevels = useMemo(
-    () => Math.floor(((character?.level ?? 1) - 1) / 4),
-    [character?.level],
-  );
+  const cantripHigherLevels = Math.floor(((character?.level ?? 1) - 1) / 4);
 
-  const mountDamagesArray = useCallback(
-    (
-      damages: Damage[],
-      higherLevelsDamages: Damage[],
-      higherLevels: number,
-    ) => {
-      const damagesArray = [];
+  const mountDamagesArray = (
+    damages: Damage[],
+    higherLevelsDamages: Damage[],
+    higherLevels: number,
+  ) => {
+    const damagesArray = [];
 
-      if (damages) {
-        damagesArray.push(...damages);
-      }
+    if (damages) {
+      damagesArray.push(...damages);
+    }
 
-      if (higherLevels > 0 && higherLevelsDamages.length > 0) {
-        Array.from({ length: higherLevels }).map(() => {
-          damagesArray.push(...higherLevelsDamages);
-        });
-      }
-
-      return damagesArray;
-    },
-    [],
-  );
-
-  const transformDamagesToDices = useCallback(
-    (damagesArray: Damage[]) => {
-      const allDices = damagesArray.map((damage) => {
-        const attrBonus = damage.mainAttribute
-          ? [modifiers![damage.mainAttribute]!]
-          : [];
-        if (damage.customBonus) attrBonus.push(damage.customBonus);
-
-        return {
-          diceSize: damage.diceSize ?? 6,
-          label: damage.kind ?? '',
-          amount: damage.diceAmount || 1,
-          bonuses: attrBonus,
-        };
+    if (higherLevels > 0 && higherLevelsDamages.length > 0) {
+      Array.from({ length: higherLevels }).map(() => {
+        damagesArray.push(...higherLevelsDamages);
       });
+    }
 
-      return allDices.reduce((acc: ComposeRollParams, dice) => {
-        const damageType = dice.label;
-        const damageAmount = dice.amount;
+    return damagesArray;
+  };
 
-        const foundDice = acc.find((dmg) => dmg.label === damageType);
+  const transformDamagesToDices = (damagesArray: Damage[]) => {
+    const allDices = damagesArray.map((damage) => {
+      const attrBonus = damage.mainAttribute
+        ? [modifiers![damage.mainAttribute]]
+        : [];
+      if (damage.customBonus) attrBonus.push(damage.customBonus);
 
-        if (!foundDice) {
-          acc.push(dice);
-        } else {
-          foundDice.amount = (foundDice.amount || 0) + (damageAmount || 0);
-        }
+      return {
+        diceSize: damage.diceSize ?? 6,
+        label: damage.kind ?? '',
+        amount: damage.diceAmount ?? 1,
+        bonuses: attrBonus,
+      };
+    });
 
-        return acc;
-      }, [] as ComposeRollParams);
-    },
-    [modifiers],
-  );
+    return allDices.reduce((acc: ComposeRollParams, dice) => {
+      const damageType = dice.label;
+      const damageAmount = dice.amount;
 
-  const calculateCantripDamage = useCallback(
-    ({ spell }: CantripDamageParams): ComposeRollParams => {
-      const damages = spell.damages;
-      const higherLevelsDamages = spell.higherLevelsDamages;
+      const foundDice = acc.find((dmg) => dmg.label === damageType);
 
-      const damagesArray = mountDamagesArray(
-        damages,
-        higherLevelsDamages,
-        cantripHigherLevels,
-      );
+      if (foundDice) {
+        foundDice.amount = (foundDice.amount || 0) + (damageAmount || 0);
+      } else {
+        acc.push(dice);
+      }
 
-      return transformDamagesToDices(damagesArray);
-    },
-    [cantripHigherLevels, mountDamagesArray, transformDamagesToDices],
-  );
+      return acc;
+    }, [] as ComposeRollParams);
+  };
 
-  const calculateSpellDamage = useCallback(
-    ({ spell, levelCast }: SpellDamageParams): ComposeRollParams => {
-      const damages = spell.damages;
-      const higherLevelsDamages = spell.higherLevelsDamages;
+  const calculateCantripDamage = ({
+    spell,
+  }: CantripDamageParams): ComposeRollParams => {
+    const damages = spell.damages;
+    const higherLevelsDamages = spell.higherLevelsDamages;
 
-      const higherLevels = (levelCast ?? 1) - spell.level;
+    const damagesArray = mountDamagesArray(
+      damages,
+      higherLevelsDamages,
+      cantripHigherLevels,
+    );
 
-      const damagesArray = mountDamagesArray(
-        damages,
-        higherLevelsDamages,
-        higherLevels,
-      );
+    return transformDamagesToDices(damagesArray);
+  };
 
-      return transformDamagesToDices(damagesArray);
-    },
-    [mountDamagesArray, transformDamagesToDices],
-  );
+  const calculateSpellDamage = ({
+    spell,
+    levelCast,
+  }: SpellDamageParams): ComposeRollParams => {
+    const damages = spell.damages;
+    const higherLevelsDamages = spell.higherLevelsDamages;
+
+    const higherLevels = (levelCast ?? 1) - spell.level;
+
+    const damagesArray = mountDamagesArray(
+      damages,
+      higherLevelsDamages,
+      higherLevels,
+    );
+
+    return transformDamagesToDices(damagesArray);
+  };
 
   return { calculateCantripDamage, calculateSpellDamage };
 };

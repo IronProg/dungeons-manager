@@ -1,14 +1,15 @@
-import { Text, View } from 'react-native';
-import { InitiativeFormType, useInitiativeForm } from './useInitiativeForm';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
-import { CharacterGeneralInfo } from 'types/character';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { useCharacter } from 'contexts/CharacterContext';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { InitiativeFormType } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm';
+import { useInitiativeForm } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm';
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type InitiativeFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -21,19 +22,16 @@ export const InitiativeForm = ({ generalInfo }: InitiativeFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: InitiativeFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+  const onSubmit = (values: InitiativeFormType) => {
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter],
-  );
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">
@@ -57,7 +55,7 @@ export const InitiativeForm = ({ generalInfo }: InitiativeFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-xl rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

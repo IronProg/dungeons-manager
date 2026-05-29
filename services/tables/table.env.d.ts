@@ -18,3 +18,8 @@ type DestroyTableParams = {
 type JoinTableParams = {
   inviteCode: string;
 };
+
+type RemoveUserParams = {
+  tableId: number;
+  userId: number;
+};

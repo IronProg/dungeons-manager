@@ -1,14 +1,15 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useState } from 'react';
 
-import {
-  DiceRollSheet,
-  type DiceRollSheetHandle,
-} from 'components/ui/DiceRollSheet';
 import {
   ComposeRollSheet,
   type ComposeRollSheetHandle,
-} from 'components/ui/ComposeRollSheet';
-import { DiceRollContext, ComposeRollParams } from 'contexts/DiceRollContext';
+} from '@/components/ui/ComposeRollSheet';
+import {
+  DiceRollSheet,
+  type DiceRollSheetHandle,
+} from '@/components/ui/DiceRollSheet';
+import type { ComposeRollParams } from '@/contexts/DiceRollContext';
+import { DiceRollContext } from '@/contexts/DiceRollContext';
 
 export const DiceRollProvider = ({
   children,
@@ -20,23 +21,17 @@ export const DiceRollProvider = ({
 
   const [enabled, setEnabled] = useState(true);
 
-  const simpleRoll = useCallback(
-    (bonuses: number[]) => {
-      if (!enabled) return;
+  const simpleRoll = (bonuses: number[]) => {
+    if (!enabled) return;
 
-      sheetRef.current?.roll(bonuses, { diceSize: 20 });
-    },
-    [enabled],
-  );
+    sheetRef.current?.roll(bonuses, { diceSize: 20 });
+  };
 
-  const composeRoll = useCallback(
-    (params: ComposeRollParams) => {
-      if (!enabled) return;
+  const composeRoll = (params: ComposeRollParams) => {
+    if (!enabled) return;
 
-      composeSheetRef.current?.roll(params);
-    },
-    [enabled],
-  );
+    composeSheetRef.current?.roll(params);
+  };
 
   return (
     <DiceRollContext.Provider

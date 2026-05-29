@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Resolver, useForm } from 'react-hook-form';
+import type { Resolver } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { SPELL_SCHOOLS } from 'core/enums/spellSchool';
-import { ATTRIBUTES } from 'core/enums/attributes';
-import { damageSchema } from 'components/WeaponsAndTools/Attacks/useAttacksForm';
-
-import { Spell, SpellSlotLevelType } from 'types/character';
+import { damageSchema } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import { SPELL_SCHOOLS } from '@/core/enums/spellSchool';
+import type { Spell, SpellSlotLevelType } from '@/types/character';
 
 const spellAttackSchema = z.object({
   id: z.coerce.number<number>().optional(),
@@ -50,9 +50,9 @@ export const useSpellForm = (
     resolver: zodResolver(schema) as Resolver<SpellFormValues>,
     defaultValues: {
       id: spell?.id,
-      name: spell?.name || '',
-      level: spell?.level || 0,
-      school: spell?.school || SPELL_SCHOOLS[0],
+      name: spell?.name ?? '',
+      level: spell?.level ?? 0,
+      school: spell?.school ?? SPELL_SCHOOLS[0],
       castingTime: spell?.castingTime ?? '',
       range: spell?.range ?? '',
       duration: spell?.duration ?? '',
@@ -73,8 +73,8 @@ export const useSpellForm = (
         customBonus: spell?.attack?.customBonus,
         applyProficiency: spell?.attack?.applyProficiency ?? false,
       },
-      damagesAttributes: spell?.damages || [],
-      higherLevelsDamagesAttributes: spell?.higherLevelsDamages || [],
+      damagesAttributes: spell?.damages ?? [],
+      higherLevelsDamagesAttributes: spell?.higherLevelsDamages ?? [],
     },
   });
 };

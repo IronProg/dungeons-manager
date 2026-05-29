@@ -1,6 +1,7 @@
-import { Text, TouchableOpacity } from 'react-native';
-import i18n from 'i18n';
-import { cn } from 'core/helpers/cn';
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+
+import { cn } from '@/core/helpers/cn';
+import i18n from '@/i18n';
 
 type ButtonProps = {
   className?: string;
@@ -9,6 +10,7 @@ type ButtonProps = {
   hitSlop?: number;
   onPress?: () => void;
   disabled?: boolean;
+  loading?: boolean;
 };
 
 export const Button = ({
@@ -18,6 +20,7 @@ export const Button = ({
   onPress,
   hitSlop,
   disabled = false,
+  loading = false,
 }: ButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
@@ -31,10 +34,17 @@ export const Button = ({
     disabled={disabled}
     hitSlop={hitSlop}
   >
-    <Text
-      className={cn('text-white font-bold text-2xl text-center', textClassName)}
-    >
-      {text ? text : i18n.t('general.save')}
-    </Text>
+    {loading ? (
+      <ActivityIndicator />
+    ) : (
+      <Text
+        className={cn(
+          'text-white font-bold text-2xl text-center',
+          textClassName,
+        )}
+      >
+        {text ?? i18n.t('general.save')}
+      </Text>
+    )}
   </TouchableOpacity>
 );

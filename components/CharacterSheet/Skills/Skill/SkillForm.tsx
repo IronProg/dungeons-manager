@@ -1,15 +1,14 @@
-import { Switch, Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
-
-import { useUpdateSkillMutation } from 'services/skills/skill';
-import { SkillFormType, useSkillForm } from './useSkillForm';
-
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Switch, Text, View } from 'react-native';
 
-import { Skill } from 'types/character';
+import type { SkillFormType } from '@/components/CharacterSheet/Skills/Skill/useSkillForm';
+import { useSkillForm } from '@/components/CharacterSheet/Skills/Skill/useSkillForm';
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import i18n from '@/i18n';
+import { useUpdateSkillMutation } from '@/services/skills/skill';
+import type { Skill } from '@/types/character';
 
 export type SkillFormProps = {
   characterId: number;
@@ -49,7 +48,7 @@ export const SkillForm = ({ characterId, skill }: SkillFormProps) => {
       <View className="flex flex-row gap-4 flex-wrap">
         <Controller
           control={control}
-          name={'proficiency'}
+          name="proficiency"
           render={({ field, fieldState: { error } }) => (
             <View className="flex flex-col items-start">
               <Text>{i18n.t('general.proficiency')}</Text>
@@ -67,7 +66,7 @@ export const SkillForm = ({ characterId, skill }: SkillFormProps) => {
         {proficiency && (
           <Controller
             control={control}
-            name={'expertise'}
+            name="expertise"
             render={({ field, fieldState: { error } }) => (
               <View className="flex flex-col items-start">
                 <Text>{i18n.t('general.expertise')}</Text>
@@ -86,7 +85,7 @@ export const SkillForm = ({ characterId, skill }: SkillFormProps) => {
         <View className="min-w-0 flex-1">
           <Controller
             control={control}
-            name={'customBonus'}
+            name="customBonus"
             render={({ field, fieldState: { error } }) => (
               <View className="flex flex-col items-start">
                 <Text>{i18n.t('general.modifier')}</Text>
@@ -94,7 +93,7 @@ export const SkillForm = ({ characterId, skill }: SkillFormProps) => {
                   className="w-full text-base bg-gray-200 rounded-xl h-15"
                   keyboardType="number-pad"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 {error?.message && (
@@ -110,7 +109,7 @@ export const SkillForm = ({ characterId, skill }: SkillFormProps) => {
         <View className="min-w-0 flex-1">
           <Controller
             control={control}
-            name={'extraAttribute'}
+            name="extraAttribute"
             render={({ field, fieldState: { error } }) => (
               <>
                 <Text>{i18n.t('general.extraAttribute')}</Text>

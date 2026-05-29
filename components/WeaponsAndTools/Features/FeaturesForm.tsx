@@ -1,19 +1,17 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { Controller } from 'react-hook-form';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
-import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from '@/components/ui/Button';
+import type { FeaturesFormType } from '@/components/WeaponsAndTools/Features/useFeaturesForm';
+import { useFeaturesForm } from '@/components/WeaponsAndTools/Features/useFeaturesForm';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateFeatureMutation,
   useUpdateFeatureMutation,
-} from 'services/features/feature';
-
-import { Button } from 'components/ui/Button';
-
-import { Feature } from 'types/character';
+} from '@/services/features/feature';
+import type { Feature } from '@/types/character';
 
 export type FeaturesFormProps = {
   feature?: Feature;
@@ -29,30 +27,27 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
   const { mutate: updateFeature, isPending: updatePending } =
     useUpdateFeatureMutation();
 
-  const onSubmit = useCallback(
-    (values: FeaturesFormType) => {
-      if (!feature) {
-        createFeature(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+  const onSubmit = (values: FeaturesFormType) => {
+    if (feature) {
+      updateFeature(
+        { characterId: characterId!, id: feature.id!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      } else {
-        updateFeature(
-          { characterId: characterId!, id: feature.id!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+        },
+      );
+    } else {
+      createFeature(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      }
-    },
-    [feature, characterId, createFeature, close, updateFeature],
-  );
+        },
+      );
+    }
+  };
 
   return (
     <View className="flex flex-col">
@@ -92,7 +87,7 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                 />
 
                 <Text className="text-red-400 text-sm">{error?.message}</Text>
@@ -111,9 +106,7 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
               <>
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100"
-                  style={{
-                    textAlignVertical: 'top',
-                  }}
+                  style={styles.textTop}
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   multiline
@@ -134,3 +127,5 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({ textTop: { textAlignVertical: 'top' } });

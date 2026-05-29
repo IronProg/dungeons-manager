@@ -1,8 +1,9 @@
-import { useCharacter } from 'contexts/CharacterContext';
-import i18n from 'i18n';
 import { Shield } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { CharacterGeneralInfo } from 'types/character';
+
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 type ArmorClassProps = {
   generalInfo: CharacterGeneralInfo;
@@ -20,11 +21,11 @@ export const ArmorClass = ({
   let modifier = generalInfo.armorClassBase;
 
   if (generalInfo.armorClassFirstAttribute) {
-    modifier += modifiers?.[generalInfo.armorClassFirstAttribute] || 0;
+    modifier += modifiers?.[generalInfo.armorClassFirstAttribute] ?? 0;
   }
 
   if (generalInfo.armorClassSecondAttribute) {
-    modifier += modifiers?.[generalInfo.armorClassSecondAttribute] || 0;
+    modifier += modifiers?.[generalInfo.armorClassSecondAttribute] ?? 0;
   }
 
   return (
@@ -33,7 +34,7 @@ export const ArmorClass = ({
       onLongPress={onLongPress}
       className="relative flex flex-col items-center justify-center w-[90px]"
     >
-      <Shield size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
+      <Shield size={90} color="#cbd5e1" fill="#e2e8f0" />
       <View className="absolute flex flex-col items-center justify-start h-full w-full pt-2">
         <Text className="text-gray-900 text-sm font-semibold text-center">
           {i18n.t('titles.ac')}

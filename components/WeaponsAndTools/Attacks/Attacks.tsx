@@ -1,28 +1,25 @@
-import { useCallback, useRef, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
-import i18n from 'i18n';
+import { useRef, useState } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Portal } from 'react-native-portalize';
 
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { ComposeDiceRollButton } from '@/components/ui/ComposeDiceRollButton';
+import { DiceRollButton } from '@/components/ui/DiceRollButton';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import type { AttacksFormProps } from '@/components/WeaponsAndTools/Attacks/AttacksForm';
+import { AttacksForm } from '@/components/WeaponsAndTools/Attacks/AttacksForm';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useModalTextHeight } from '@/hooks/useModalTextHeight';
+import i18n from '@/i18n';
 import {
   useDeleteAttackMutation,
   useGetAllAttacks,
-} from 'services/attacks/attack';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-
-import { Attack } from 'types/character';
-import { DiceRollButton } from 'components/ui/DiceRollButton';
-import { ComposeDiceRollButton } from 'components/ui/ComposeDiceRollButton';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { Portal } from 'react-native-portalize';
-import { AttacksForm, AttacksFormProps } from './AttacksForm';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useModalTextHeight } from 'hooks/useModalTextHeight';
+} from '@/services/attacks/attack';
+import type { Attack } from '@/types/character';
 
 type AttacksProps = { canEdit: boolean };
 
@@ -40,7 +37,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
   const [detailedAttack, setDetailedAttack] = useState<Attack>();
   const [attackToDelete, setAttackToDelete] = useState<Attack>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (attackToDelete) {
       deleteAttack(
         { characterId: characterId!, id: attackToDelete.id! },
@@ -51,7 +48,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
         },
       );
     }
-  }, [attackToDelete, characterId, deleteAttack]);
+  };
 
   return (
     <>
@@ -67,7 +64,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
             onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
-            <Plus size={16} color={'white'} />
+            <Plus size={16} color="white" />
           </TouchableOpacity>
         )}
       </View>
@@ -76,7 +73,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
 
       {attacks && attacks.length > 0 ? (
         attacks?.map((attack, index) => {
-          let attackModifier = attack.customBonus || 0;
+          let attackModifier = attack.customBonus ?? 0;
 
           if (modifiers && attack.mainAttribute) {
             attackModifier += modifiers[attack.mainAttribute];
@@ -112,7 +109,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
                 </Text>
 
                 <ComposeDiceRollButton
-                  style={{ width: 14, height: 14 }}
+                  className="w-[14px] h-[14px]"
                   containerClassName="p-1.5"
                   rolls={attack.damages.map((damage) => {
                     const attributeBonus = damage.mainAttribute
@@ -121,9 +118,9 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
 
                     return {
                       label: damage.kind,
-                      amount: damage.diceAmount || 0,
-                      diceSize: damage.diceSize || 20,
-                      bonuses: [attributeBonus, damage.customBonus || 0],
+                      amount: damage.diceAmount ?? 0,
+                      diceSize: damage.diceSize ?? 20,
+                      bonuses: [attributeBonus, damage.customBonus ?? 0],
                     };
                   })}
                 />

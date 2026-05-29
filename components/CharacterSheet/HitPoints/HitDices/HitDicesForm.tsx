@@ -1,18 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
+import { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useGetAllClasses,
   useUpdateAllClassesMutation,
-} from 'services/classes/class';
-
-import { Button } from 'components/ui/Button';
-
-import { CharacterClass } from 'types/character';
-import { useBottomSheet } from '@gorhom/bottom-sheet';
+} from '@/services/classes/class';
+import type { CharacterClass } from '@/types/character';
 
 type handleAddFunction = {
   characterClass: CharacterClass;
@@ -40,7 +38,7 @@ export const HitDicesForm = () => {
     }
   }, [fetchedCharacterClasses]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     updateAllCharacters(
       { characterId: characterId!, classes: characterClasses },
       {
@@ -49,41 +47,38 @@ export const HitDicesForm = () => {
         },
       },
     );
-  }, [characterClasses, characterId, close, updateAllCharacters]);
+  };
 
-  const handleAdd = useCallback(
-    ({ characterClass, full = false }: handleAddFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleAdd = ({ characterClass, full = false }: handleAddFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full
-              ? cls.level
-              : Math.min(cls.level, cls.hitDiceAmount + 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full
+            ? cls.level
+            : Math.min(cls.level, cls.hitDiceAmount + 1),
+        };
+      }),
+    );
+  };
 
-  const handleDecrease = useCallback(
-    ({ characterClass, full = false }: handleAddFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleDecrease = ({
+    characterClass,
+    full = false,
+  }: handleAddFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
+        };
+      }),
+    );
+  };
 
   return (
     <View className="flex flex-col items-center">

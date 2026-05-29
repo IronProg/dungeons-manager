@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HIT_DICES } from 'core/enums/hitDices';
 import { useForm } from 'react-hook-form';
-import { CharacterGeneralInfo } from 'types/character';
 import * as z from 'zod';
+
+import { HIT_DICES } from '@/core/enums/hitDices';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export const schema = z.object({
   hitDices: z.coerce.number<number>().int(),

@@ -1,11 +1,11 @@
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 
-import { CharacterContext } from 'contexts/CharacterContext';
-import { buildModifiers } from 'core/helpers/buildModifiers';
-import { useDetailedCharacter } from 'hooks/useSetDetailedCharacter';
-import { useGetCharacter } from 'services/characters/character.api';
-
-import type { Character, Modifiers } from 'types/character';
+import { CharacterContext } from '@/contexts/CharacterContext';
+import { buildModifiers } from '@/core/helpers/buildModifiers';
+import { useDetailedCharacter } from '@/hooks/useSetDetailedCharacter';
+import { useGetCharacter } from '@/services/characters/character.api';
+import type { Character, Modifiers } from '@/types/character';
 
 export type CharacterProviderProps = {
   initialLoading: boolean;
@@ -35,7 +35,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     isFetching,
   } = useGetCharacter({ id: characterId });
 
-  const canEdit = useMemo(() => character?.isOwner ?? false, [character]);
+  const canEdit = character?.isOwner ?? false;
 
   useEffect(() => {
     if (!character) {
@@ -48,14 +48,14 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
 
     const modifiers = buildModifiers(character.characterAttributes);
 
-    setModifiers(modifiers!);
+    setModifiers(modifiers);
   }, [character, setDetailedCharacterData]);
 
   const value: CharacterProviderProps = {
     initialLoading,
     character,
     characterId,
-    proficiencyBonus: character?.proficiencyBonus || 2,
+    proficiencyBonus: character?.proficiencyBonus ?? 2,
     isLoading,
     isFetching,
     setCharacterId,

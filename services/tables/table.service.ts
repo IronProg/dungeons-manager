@@ -1,7 +1,6 @@
-import api from 'core/api/api';
-
-import type { Table } from 'types/table';
-import type { TableCharacter } from 'types/table_character';
+import api from '@/core/api/api';
+import type { Table } from '@/types/table';
+import type { TableCharacter } from '@/types/table_character';
 
 export const tableService = {
   fetchAll: () => api.get<Table[]>('/tables').then((res) => res.data),
@@ -19,4 +18,6 @@ export const tableService = {
     api.delete<null>(`/tables/${params.id}`).then((res) => res.data),
   join: ({ ...params }: JoinTableParams) =>
     api.post<null>(`/tables/join`, params).then((res) => res.data),
+  leave: ({ id }: GetTableParams) =>
+    api.post<null>(`/tables/${id}/leave`).then((res) => res.data),
 };

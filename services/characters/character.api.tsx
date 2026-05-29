@@ -1,18 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { characterService } from './character.service';
+import { useTable } from '@/contexts/TableContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { characterService } from '@/services/characters/character.service';
+import type { Character } from '@/types/character';
 
-import type { Character } from 'types/character';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
-import { useTable } from 'contexts/TableContext';
+interface useGetAllCharacterProps {
+  useTableId?: boolean;
+}
 
-export const useGetAllCharacters = () => {
+export const useGetAllCharacters = ({
+  useTableId = true,
+}: useGetAllCharacterProps = {}) => {
   const { tableId } = useTable();
 
+  const params = useTableId ? { tableId } : undefined;
+
   return useQuery({
-    queryKey: ['characters'],
-    queryFn: () => characterService.fetchAll({ params: { tableId } }),
+    queryKey: ['characters', params],
+    queryFn: () => characterService.fetchAll({ params }),
     staleTime: 10 * 60_000,
   });
 };
@@ -80,5 +88,21 @@ export const useDestroyCharacterMutation = () => {
     onError: ({ response }) => {
       handleErrorMessage(response?.data);
     },
+  });
+};
+
+export const useCloneCharacterMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    Character,
+    AxiosError<ApiErrorResponse>,
+    CloneCharacterParams
+  >({
+    mutationFn: (params: CloneCharacterParams) =>
+      characterService.clone(params),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['characters'] }),
+    onError: ({ response }) => handleErrorMessage(response?.data),
   });
 };

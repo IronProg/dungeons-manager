@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import i18n from 'i18n';
+import React, { useEffect, useState } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
 
-import {
-  getCurrentExternalSpellsUrl,
-  getLastExternalSpellsUrl,
-  setLastExternalSpellsUrl,
-} from 'services/spellLists/spellList.store';
+import { SpellList } from '@/components/SpellList';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import i18n from '@/i18n';
 import {
   initExternalSpellsDb,
   getExternalSpellsCount,
   insertExternalSpells,
-} from 'services/spellLists/spellList.service';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-
-import { SpellList } from 'components/SpellList';
+} from '@/services/spellLists/spellList.service';
+import {
+  getCurrentExternalSpellsUrl,
+  getLastExternalSpellsUrl,
+  setLastExternalSpellsUrl,
+} from '@/services/spellLists/spellList.store';
 
 export default function SpellListScreen() {
   const router = useRouter();
@@ -25,29 +23,29 @@ export default function SpellListScreen() {
   const [downloadPromptVisible, setDownloadPromptVisible] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const currentUrl = useMemo(() => getCurrentExternalSpellsUrl(), []);
-
-  const checkDb = useCallback(async () => {
-    initExternalSpellsDb();
-
-    const lastUrl = await getLastExternalSpellsUrl();
-
-    if (lastUrl !== currentUrl) {
-      setDownloadPromptVisible(true);
-    }
-
-    const count = getExternalSpellsCount();
-
-    if (count === 0) {
-      setDownloadPromptVisible(true);
-    }
-
-    setIsLoading(false);
-  }, [currentUrl]);
+  const currentUrl = getCurrentExternalSpellsUrl();
 
   useEffect(() => {
-    checkDb();
-  }, [checkDb]);
+    const initDb = async () => {
+      initExternalSpellsDb();
+
+      const lastUrl = await getLastExternalSpellsUrl();
+
+      if (lastUrl !== currentUrl) {
+        setDownloadPromptVisible(true);
+      }
+
+      const count = getExternalSpellsCount();
+
+      if (count === 0) {
+        setDownloadPromptVisible(true);
+      }
+
+      setIsLoading(false);
+    };
+
+    initDb();
+  }, [currentUrl]);
 
   const handleDownloadSpells = async () => {
     setDownloadPromptVisible(false);

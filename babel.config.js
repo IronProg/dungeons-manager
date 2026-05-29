@@ -4,6 +4,7 @@ module.exports = function (api) {
   let plugins = [];
 
   plugins.push('react-native-worklets/plugin');
+  plugins.push('babel-plugin-react-compiler');
 
   return {
     presets: [

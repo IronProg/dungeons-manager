@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Currencies } from 'types/character';
 import * as z from 'zod';
+
+import type { Currencies } from '@/types/character';
 
 const schema = z.object({
   copperPoints: z.coerce.number<number>().optional(),

@@ -1,5 +1,7 @@
-import { cn } from 'core/helpers/cn';
-import { View, ViewProps } from 'react-native';
+import type { ViewProps } from 'react-native';
+import { View } from 'react-native';
+
+import { cn } from '@/core/helpers/cn';
 
 interface SkeletonProps extends ViewProps {
   className?: string;

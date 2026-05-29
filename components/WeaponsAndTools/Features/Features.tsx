@@ -1,26 +1,23 @@
-import { useCallback, useRef, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Plus, Trash } from 'lucide-react-native';
-import { Portal } from 'react-native-portalize';
+import { useRef, useState } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import i18n from 'i18n';
+import { Portal } from 'react-native-portalize';
 
-import { useCharacter } from 'contexts/CharacterContext';
-
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import type { FeaturesFormProps } from '@/components/WeaponsAndTools/Features/FeaturesForm';
+import { FeaturesForm } from '@/components/WeaponsAndTools/Features/FeaturesForm';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useModalTextHeight } from '@/hooks/useModalTextHeight';
+import i18n from '@/i18n';
 import {
   useDeleteFeatureMutation,
   useGetAllFeatures,
-} from 'services/features/feature';
-import { useModalTextHeight } from 'hooks/useModalTextHeight';
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-
-import { Feature } from 'types/character';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { FeaturesForm, FeaturesFormProps } from './FeaturesForm';
+} from '@/services/features/feature';
+import type { Feature } from '@/types/character';
 
 type FeaturesProps = { canEdit: boolean };
 
@@ -36,14 +33,14 @@ export const Features = ({ canEdit }: FeaturesProps) => {
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
   const [featureToDelete, setFeatureToDelete] = useState<Feature>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (!featureToDelete) return;
 
     deleteFeature(
       { characterId: characterId!, id: featureToDelete.id! },
       { onSuccess: () => setFeatureToDelete(undefined) },
     );
-  }, [characterId, deleteFeature, featureToDelete]);
+  };
 
   return (
     <>
@@ -59,7 +56,7 @@ export const Features = ({ canEdit }: FeaturesProps) => {
             onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
-            <Plus size={16} color={'white'} />
+            <Plus size={16} color="white" />
           </TouchableOpacity>
         )}
       </View>

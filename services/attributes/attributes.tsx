@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { attributesService } from './attributes.service';
-import { Attribute } from 'types/character';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
+
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { attributesService } from '@/services/attributes/attributes.service';
+import type { Attribute } from '@/types/character';
 
 export const getAllAttributesKey = ({
   characterId,

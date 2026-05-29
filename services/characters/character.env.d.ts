@@ -15,6 +15,11 @@ type UpdateCharacterParams = {
   proficiencyBonus?: number;
 };
 
+type CloneCharacterParams = {
+  id: number;
+  tableId: number;
+};
+
 type DestroyCharacterParams = {
   id?: number;
 };

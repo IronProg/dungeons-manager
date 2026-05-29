@@ -1,4 +1,10 @@
-import { Character } from './character';
+import type { Character } from '@/types/character';
+
+export type TableUser = {
+  id: number;
+  email: string;
+  joinedAt: string;
+};
 
 export type Table = {
   id?: number;
@@ -8,4 +14,5 @@ export type Table = {
   charactersCount: number;
   isCreator?: boolean;
   characters: Character[];
+  tablesUsers: TableUser[];
 };

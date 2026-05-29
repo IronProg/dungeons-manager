@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { useDebounce } from 'use-debounce';
-import i18n from 'i18n';
 
-import { useCharacter } from 'contexts/CharacterContext';
-import { useGetNote, useUpdateNoteMutation } from 'services/notes/note.api';
-
-import { Skeleton } from 'components/ui/Skeleton';
+import { Skeleton } from '@/components/ui/Skeleton';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useGetNote, useUpdateNoteMutation } from '@/services/notes/note.api';
 
 export const Notes = () => {
   const { characterId, canEdit } = useCharacter();
@@ -25,7 +24,7 @@ export const Notes = () => {
 
   useEffect(() => {
     if (characterId && debouncedText.length > 0 && canEdit) {
-      updateNote({ characterId: characterId!, text: debouncedText });
+      updateNote({ characterId: characterId, text: debouncedText });
     }
   }, [characterId, debouncedText, updateNote, canEdit]);
 

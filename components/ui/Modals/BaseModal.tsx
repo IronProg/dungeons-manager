@@ -23,8 +23,7 @@ export const BaseModal = ({ visible, onClose, children }: BaseModalProps) => {
       <Animated.View
         entering={FadeIn.duration(200)}
         exiting={FadeOut.duration(200)}
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+        className="flex-1 justify-center items-center bg-black/50"
       >
         <Pressable className="absolute inset-0" onPress={onClose} />
 

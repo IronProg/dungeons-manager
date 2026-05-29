@@ -1,19 +1,17 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { EquipmentsFormType, useEquipmentsForm } from './useEquipmentsForm';
-import { useCharacter } from 'contexts/CharacterContext';
+import type { EquipmentsFormType } from '@/components/Equipments/Form/useEquipmentsForm';
+import { useEquipmentsForm } from '@/components/Equipments/Form/useEquipmentsForm';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateEquipmentMutation,
   useUpdateEquipmentMutation,
-} from 'services/equipments/equipment.api';
-
-import { Button } from 'components/ui/Button';
-
-import { Equipment } from 'types/character';
+} from '@/services/equipments/equipment.api';
+import type { Equipment } from '@/types/character';
 
 export type EquipmentsFormProps = {
   equipment?: Equipment;
@@ -29,30 +27,27 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
   const { mutate: updateEquipment, isPending: updatePending } =
     useUpdateEquipmentMutation();
 
-  const onSubmit = useCallback(
-    (values: EquipmentsFormType) => {
-      if (!equipment) {
-        createEquipment(
-          { characterId: characterId!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+  const onSubmit = (values: EquipmentsFormType) => {
+    if (equipment) {
+      updateEquipment(
+        { characterId: characterId!, id: equipment.id!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      } else {
-        updateEquipment(
-          { characterId: characterId!, id: equipment.id!, ...values },
-          {
-            onSuccess: () => {
-              close();
-            },
+        },
+      );
+    } else {
+      createEquipment(
+        { characterId: characterId!, ...values },
+        {
+          onSuccess: () => {
+            close();
           },
-        );
-      }
-    },
-    [equipment, characterId, createEquipment, close, updateEquipment],
-  );
+        },
+      );
+    }
+  };
 
   return (
     <View className="flex flex-col">
@@ -110,10 +105,9 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="px-4 rounded-lg bg-gray-100"
-                  style={{ textAlignVertical: 'top' }}
+                  className="px-4 rounded-lg bg-gray-100 align-text-top"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   multiline
                   scrollEnabled={false}
                 />

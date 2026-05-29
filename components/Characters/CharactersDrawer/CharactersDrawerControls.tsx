@@ -1,12 +1,12 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { LayoutDashboard, LogOut, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
-import { DrawerNavigationHelpers } from 'node_modules/@react-navigation/drawer/lib/typescript/src/types';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useTable } from 'contexts/TableContext';
+import { useTable } from '@/contexts/TableContext';
+import i18n from '@/i18n';
 
 interface CharactersDrawerControlsProps {
-  navigation: DrawerNavigationHelpers;
+  navigation: DrawerContentComponentProps['navigation'];
   onLogout: () => void;
   onNewCharacter: () => void;
 }
@@ -35,21 +35,19 @@ export const CharactersDrawerControls = ({
       )}
 
       <View className="flex flex-row items-stretch">
-        {table && (
-          <View className="w-1/2 pr-2">
-            <TouchableOpacity
-              onPress={onNewCharacter}
-              className="bg-emerald-500 rounded-xl py-4 flex-row items-center justify-center shadow-md"
-              activeOpacity={0.8}
-            >
-              <Plus size={20} color="white" />
+        <View className="w-1/2 pr-2">
+          <TouchableOpacity
+            onPress={onNewCharacter}
+            className="bg-emerald-500 rounded-xl py-4 flex-row items-center justify-center shadow-md"
+            activeOpacity={0.8}
+          >
+            <Plus size={20} color="white" />
 
-              <Text className="text-white font-bold text-base ml-2">
-                {i18n.t('titles.character')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+            <Text className="text-white font-bold text-base ml-2">
+              {i18n.t('titles.character')}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           onPress={onLogout}

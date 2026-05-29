@@ -1,4 +1,4 @@
-import { api } from './api/pt';
+import { api } from '@/i18n/locales/api/pt';
 
 export const pt = {
   tabs: {
@@ -33,6 +33,7 @@ export const pt = {
     character: 'Personagem',
     characters: 'Personagens',
     newCharacter: 'Novo Personagem',
+    importCharacter: 'Importar Personagem',
     newResource: 'Novo Recurso',
     editResource: 'Editar Recurso',
     newFeature: 'Nova Característica',
@@ -47,6 +48,8 @@ export const pt = {
     dmDashboard: 'Área do Mestre',
     dmDashboardInternal: 'Dashboard da Mesa',
     modifyAttributes: 'Modificar Atributos',
+    newTable: 'Nova mesa',
+    editTable: 'Editar Mesa',
   },
   general: {
     noDataFound: 'Nenhum dado encontrado',
@@ -172,6 +175,9 @@ export const pt = {
   },
   character: {
     generatingCharacter: 'Gerando seu personagem',
+    importActionText:
+      'Ou você pode import um de seus personagens para essa mesa:',
+    importActionButton: 'Selecionar personagem',
   },
   classes: {
     title: 'Classes',
@@ -243,6 +249,18 @@ export const pt = {
     unselectTable: 'Sair da Mesa?',
     inviteCodeRequired: 'O código de convite é obrigatório',
     joinedTable: 'Entrou na mesa com sucesso!',
+    createTable: 'Criar mesa',
+    created: 'Mesa criada com sucesso!',
+    saveName: 'Salvar Nome',
+    players: 'Jogadores',
+    kickPlayer: 'Remover Jogador',
+    kickPlayerConfirm: 'Tem certeza que deseja remover este jogador da mesa?',
+    playerKicked: 'Jogador expulso com sucesso!',
+    nameUpdated: 'Nome atualizado com sucesso!',
+    leaveTitle: 'Sair de %{table}?',
+    leaveText:
+      'Seus personagens serão removidos da mesa e atribuidos a você automaticamente',
+    tableLeft: 'Saiu da mesa com sucesso!',
   },
   spells: {
     title: 'Magias',

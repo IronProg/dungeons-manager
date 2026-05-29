@@ -1,5 +1,6 @@
-import { CharacterProviderProps } from 'providers/CharacterProvider';
 import { createContext, useContext } from 'react';
+
+import type { CharacterProviderProps } from '@/providers/CharacterProvider';
 
 export const CharacterContext = createContext<
   CharacterProviderProps | undefined

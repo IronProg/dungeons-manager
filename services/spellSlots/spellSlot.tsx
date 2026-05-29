@@ -1,12 +1,11 @@
-import { AxiosError } from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { spellSlotService } from './spellSlot.service';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-
-import { SpellSlot } from 'types/character';
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { spellSlotService } from '@/services/spellSlots/spellSlot.service';
+import type { SpellSlot } from '@/types/character';
 
 export const getCharacterSpellSlotsKey = ({
   characterId,

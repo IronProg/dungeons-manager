@@ -1,19 +1,17 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
 import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
+import { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from '@/components/ui/Button';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import i18n from '@/i18n';
 import {
   useGetAllClasses,
   useUpdateAllClassesMutation,
-} from 'services/classes/class';
-
-import { Button } from 'components/ui/Button';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-
-import { CharacterClass } from 'types/character';
+} from '@/services/classes/class';
+import type { CharacterClass } from '@/types/character';
 
 type handleAlterFunction = {
   characterClass: CharacterClass;
@@ -61,7 +59,7 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     }
   }, [fetchedCharacterClasses]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     const updatedClasses = fetchedCharacterClasses?.map((cls) => {
       const characterClass = characterClasses?.find((c) => c.id === cls.id);
 
@@ -96,50 +94,38 @@ const Content = ({ onClose }: { onClose: () => void }) => {
         },
       },
     );
-  }, [
-    characterClasses,
-    characterId,
-    composeRoll,
-    constitutionModifier,
-    enabled,
-    fetchedCharacterClasses,
-    onClose,
-    updateAllClasses,
-  ]);
+  };
 
-  const handleAdd = useCallback(
-    ({ characterClass, full = false }: handleAlterFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleAdd = ({ characterClass, full = false }: handleAlterFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full
-              ? cls.level
-              : Math.min(cls.level, cls.hitDiceAmount + 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full
+            ? cls.level
+            : Math.min(cls.level, cls.hitDiceAmount + 1),
+        };
+      }),
+    );
+  };
 
-  const handleDecrease = useCallback(
-    ({ characterClass, full = false }: handleAlterFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleDecrease = ({
+    characterClass,
+    full = false,
+  }: handleAlterFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
+        };
+      }),
+    );
+  };
 
   return (
     <View className="flex flex-col items-center">

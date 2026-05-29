@@ -1,4 +1,4 @@
-import { api } from './api/en';
+import { api } from '@/i18n/locales/api/en';
 
 export const en = {
   tabs: {
@@ -33,6 +33,7 @@ export const en = {
     character: 'Character',
     characters: 'Characters',
     newCharacter: 'New Character',
+    importCharacter: 'Import Character',
     newResource: 'New Resource',
     editResource: 'Edit Resource',
     newFeature: 'New Feature',
@@ -47,6 +48,8 @@ export const en = {
     dmDashboard: 'DM Area',
     dmDashboardInternal: 'Table Dashboard',
     modifyAttributes: 'Modify Attributes',
+    newTable: 'New table',
+    editTable: 'Edit Table',
   },
   general: {
     noDataFound: 'No data found',
@@ -172,6 +175,9 @@ export const en = {
   },
   character: {
     generatingCharacter: 'Generating your character',
+    importActionText:
+      'Or you can import one of your other characters into the table:',
+    importActionButton: 'Select character',
   },
   classes: {
     title: 'Classes',
@@ -243,6 +249,19 @@ export const en = {
     unselectTable: 'Leave Table?',
     inviteCodeRequired: 'Invite code is required',
     joinedTable: 'Joined the table successfully!',
+    createTable: 'Create table',
+    created: 'Table created successfully',
+    saveName: 'Save Name',
+    players: 'Players',
+    kickPlayer: 'Kick Player',
+    kickPlayerConfirm:
+      'Are you sure you want to remove this player from the table?',
+    playerKicked: 'Player kicked successfully!',
+    nameUpdated: 'Name updated successfully!',
+    leaveTitle: 'Leave %{table}?',
+    leaveText:
+      'Your characters will be removed from the table and attached to you automatically',
+    tableLeft: 'Table left succesfully',
   },
   spells: {
     title: 'Spells',

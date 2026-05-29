@@ -4,12 +4,12 @@ import {
   authRequestInterceptor,
   clockSyncInterceptor,
   refreshTokenInterceptor,
-} from './interceptors/auth.interceptors';
+} from '@/core/api/interceptors/auth.interceptors';
 import {
   camelizeRequestInterceptor,
   decamelizeResponseInterceptor,
-} from './interceptors/humps.interceptors';
-import { tableRequestInterceptor } from './interceptors/table.interceptors';
+} from '@/core/api/interceptors/humps.interceptors';
+import { tableRequestInterceptor } from '@/core/api/interceptors/table.interceptors';
 
 export const authHeader = 'Authorization';
 

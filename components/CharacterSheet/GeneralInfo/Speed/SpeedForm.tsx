@@ -1,13 +1,14 @@
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
-import { SpeedFormType, useSpeedForm } from './useSpeedForm';
-import i18n from 'i18n';
-import { CharacterGeneralInfo } from 'types/character';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { SpeedFormType } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm';
+import { useSpeedForm } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type SpeedFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -20,19 +21,16 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: SpeedFormType) => {
-      updateCharacter(
-        { characterId: characterId!, ...values },
-        {
-          onSuccess: () => {
-            close();
-          },
+  const onSubmit = (values: SpeedFormType) => {
+    updateCharacter(
+      { characterId: characterId!, ...values },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [characterId, close, updateCharacter],
-  );
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">
@@ -51,7 +49,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -71,7 +69,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 
@@ -91,7 +89,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
                 <BottomSheetTextInput
                   className="text-center text-base rounded-lg bg-gray-100 overflow-hidden h-15"
                   onChangeText={field.onChange}
-                  value={`${field.value || ''}`}
+                  value={`${field.value ?? ''}`}
                   keyboardType="numeric"
                 />
 

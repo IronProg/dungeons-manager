@@ -1,34 +1,26 @@
 import React, { useRef } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-
-import { useGetCharacterGeneralInfo } from 'services/generalInfos/generalInfos';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { PassivePerception } from './PassivePerception/PassivePerception';
-import { ArmorClass } from './ArmorClass/ArmorClass';
-import { Initiative } from './Initiative/Initiative';
-import { Speed } from './Speed/Speed';
-import { Proficiency } from './Proficiency/Proficiency';
-import { Exhaustion } from './Exhaustion/Exhaustion';
-import {
-  PassivePerceptionForm,
-  PassivePerceptionFormProps,
-} from './PassivePerception/PassivePerceptionForm';
-import {
-  InitiativeForm,
-  InitiativeFormProps,
-} from './Initiative/InitiativeForm';
-import {
-  ArmorClassForm,
-  ArmorClassFormProps,
-} from './ArmorClass/ArmorClassForm';
-import { SpeedForm, SpeedFormProps } from './Speed/SpeedForm';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
 import { Portal } from 'react-native-portalize';
-import i18n from 'i18n';
+
+import { ArmorClass } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/ArmorClass';
+import type { ArmorClassFormProps } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/ArmorClassForm';
+import { ArmorClassForm } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/ArmorClassForm';
+import { Exhaustion } from '@/components/CharacterSheet/GeneralInfo/Exhaustion/Exhaustion';
+import { Initiative } from '@/components/CharacterSheet/GeneralInfo/Initiative/Initiative';
+import type { InitiativeFormProps } from '@/components/CharacterSheet/GeneralInfo/Initiative/InitiativeForm';
+import { InitiativeForm } from '@/components/CharacterSheet/GeneralInfo/Initiative/InitiativeForm';
+import { PassivePerception } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/PassivePerception';
+import type { PassivePerceptionFormProps } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/PassivePerceptionForm';
+import { PassivePerceptionForm } from '@/components/CharacterSheet/GeneralInfo/PassivePerception/PassivePerceptionForm';
+import { Proficiency } from '@/components/CharacterSheet/GeneralInfo/Proficiency/Proficiency';
+import { Speed } from '@/components/CharacterSheet/GeneralInfo/Speed/Speed';
+import type { SpeedFormProps } from '@/components/CharacterSheet/GeneralInfo/Speed/SpeedForm';
+import { SpeedForm } from '@/components/CharacterSheet/GeneralInfo/Speed/SpeedForm';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useGetCharacterGeneralInfo } from '@/services/generalInfos/generalInfos';
 
 const PASSIVE_PERCEPTION_SNAP_POINTS = [300];
 const INITIATIVE_SNAP_POINTS = [300];

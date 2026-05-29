@@ -1,22 +1,20 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
 import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
+import { useEffect, useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 
+import { Button } from '@/components/ui/Button';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { cn } from '@/core/helpers/cn';
+import { useDamageFormat } from '@/hooks/useDamageString';
+import { useSpellDamage } from '@/hooks/useSpellDamage';
+import i18n from '@/i18n';
 import {
   useGetAllCharacterSpellSlots,
   useUpdateSpellSlotMutation,
-} from 'services/spellSlots/spellSlot';
-import { cn } from 'core/helpers/cn';
-import { useDamageFormat } from 'hooks/useDamageString';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useSpellDamage } from 'hooks/useSpellDamage';
-
-import { Button } from 'components/ui/Button';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-
-import { Damage, Spell, SpellSlotLevelType } from 'types/character';
+} from '@/services/spellSlots/spellSlot';
+import type { Damage, Spell, SpellSlotLevelType } from '@/types/character';
 
 interface SpellCastingModalProps {
   spell?: Spell;
@@ -41,35 +39,26 @@ const Content = ({ spell, onClose }: SpellCastingModalProps) => {
   const { characterId } = useCharacter();
 
   const { mutate: updateSpellSlot, isPending } = useUpdateSpellSlotMutation();
-  const initialDamages: Damage[] = useMemo(() => spell?.damages || [], [spell]);
-  const higherLevelsDamage: Damage[] = useMemo(
-    () => spell?.higherLevelsDamages || [],
-    [spell],
-  );
+  const initialDamages: Damage[] = spell?.damages ?? [];
+  const higherLevelsDamage: Damage[] = spell?.higherLevelsDamages ?? [];
 
   const [currentLevel, setCurrentLevel] = useState<SpellSlotLevelType>(
-    spell?.level || 1,
+    spell?.level ?? 1,
   );
 
   const { data: spellSlots } = useGetAllCharacterSpellSlots();
 
-  const availableSpellLevels = useMemo(
-    () =>
-      spellSlots
-        ?.filter((slot) => slot.amount !== 0)
-        ?.map((slot) => slot.level)
-        ?.sort() || [],
-    [spellSlots],
-  );
+  const availableSpellLevels =
+    spellSlots
+      ?.filter((slot) => slot.amount !== 0)
+      ?.map((slot) => slot.level)
+      ?.sort() ?? [];
 
-  const maxLevel = useMemo(
-    () => Math.max(...(spellSlots?.map((slot) => slot.level) || [0])),
-    [spellSlots],
-  );
+  const maxLevel = Math.max(...(spellSlots?.map((slot) => slot.level) ?? [0]));
 
-  const minLevel = useMemo(() => spell?.level || 1, [spell?.level]);
+  const minLevel = spell?.level ?? 1;
 
-  const damages: Damage[] = useMemo(() => {
+  const damages: Damage[] = (() => {
     const damagesArray: Damage[] = [];
 
     if (initialDamages) {
@@ -85,13 +74,13 @@ const Content = ({ spell, onClose }: SpellCastingModalProps) => {
     }
 
     return damagesArray;
-  }, [initialDamages, currentLevel, minLevel, higherLevelsDamage]);
+  })();
 
   useEffect(() => {
-    setCurrentLevel(spell?.level || 1);
+    setCurrentLevel(spell?.level ?? 1);
   }, [spell?.level]);
 
-  const handleCast = useCallback(() => {
+  const handleCast = () => {
     const spellSlot = spellSlots?.find((slot) => slot.level === currentLevel);
 
     if (!spellSlot) return;
@@ -112,16 +101,7 @@ const Content = ({ spell, onClose }: SpellCastingModalProps) => {
         onSettled: onClose,
       },
     );
-  }, [
-    calculateSpellDamage,
-    characterId,
-    composeRoll,
-    currentLevel,
-    onClose,
-    spell,
-    spellSlots,
-    updateSpellSlot,
-  ]);
+  };
 
   return (
     <View className="flex flex-col items-center grow">

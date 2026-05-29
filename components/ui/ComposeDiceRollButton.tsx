@@ -1,27 +1,24 @@
-import { useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Image, ImageStyle } from 'expo-image';
 
-import { useDiceRoll, ComposeRollParams } from 'contexts/DiceRollContext';
-import { cn } from 'core/helpers/cn';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const d20 = require('assets/icons/d20.svg');
+import D20 from '@/assets/icons/d20.svg';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import type { ComposeRollParams } from '@/contexts/DiceRollContext';
+import { cn } from '@/core/helpers/cn';
 
 export const ComposeDiceRollButton = ({
   rolls,
   containerClassName = '',
-  style = {},
+  className = '',
 }: {
   rolls: ComposeRollParams;
   containerClassName?: string;
-  style?: ImageStyle;
+  className?: string;
 }) => {
   const { composeRoll } = useDiceRoll();
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     composeRoll(rolls);
-  }, [rolls, composeRoll]);
+  };
 
   return (
     <TouchableOpacity
@@ -29,7 +26,7 @@ export const ComposeDiceRollButton = ({
       hitSlop={10}
       className={cn('bg-indigo-200 p-2 rounded-full', containerClassName)}
     >
-      <Image source={d20} style={{ width: 20, height: 20, ...style }} />
+      <D20 className={cn('w-5 h-5', className)} />
     </TouchableOpacity>
   );
 };

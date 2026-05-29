@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { tableService } from './table.service';
-
-import type { Table } from 'types/table';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
-import { TableCharacter } from 'types/table_character';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { tableService } from '@/services/tables/table.service';
+import type { Table } from '@/types/table';
+import type { TableCharacter } from '@/types/table_character';
 
 export const useGetAllTables = () => {
   return useQuery({
@@ -85,6 +85,20 @@ export const useJoinTableMutation = () => {
 
   return useMutation<null, AxiosError<ApiErrorResponse>, JoinTableParams>({
     mutationFn: (params) => tableService.join(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tables'] });
+    },
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
+  });
+};
+
+export const useLeaveTableMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<null, AxiosError<ApiErrorResponse>, GetTableParams>({
+    mutationFn: (params) => tableService.leave(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tables'] });
     },

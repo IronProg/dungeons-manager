@@ -1,6 +1,5 @@
-import api from 'core/api/api';
-
-import { Spell } from 'types/character';
+import api from '@/core/api/api';
+import type { Spell } from '@/types/character';
 
 export const spellService = {
   fetchAll: (characterId: number, level: number) =>

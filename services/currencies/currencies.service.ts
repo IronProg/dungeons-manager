@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Currencies } from 'types/character';
+import api from '@/core/api/api';
+import type { Currencies } from '@/types/character';
 
 export const currenciesService = {
   fetch: ({ characterId }: GetCharacterCurrencyParams) =>

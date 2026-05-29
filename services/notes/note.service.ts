@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Note } from 'types/character';
+import api from '@/core/api/api';
+import type { Note } from '@/types/character';
 
 export const noteService = {
   fetch: ({ characterId }: GetGeneralInfoParams) =>

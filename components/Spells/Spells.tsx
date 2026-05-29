@@ -1,19 +1,17 @@
-import React, { useMemo, useState } from 'react';
+import { FlashList } from '@shopify/flash-list';
+import React, { useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlashList } from '@shopify/flash-list';
-import i18n from 'i18n';
 
-import { useCharacter } from 'contexts/CharacterContext';
-import { useGetCharacterSpells } from 'services/spells/spell.api';
-
-import { SpellCard } from './SpellCard';
-import { SpellLevelNavigator } from './SpellLevelNavigator';
-import { SpellSlotsHeader } from './SpellSlotsHeader';
-import { SpellsHeader } from './SpellsHeader';
-import { SpellCastingModal } from './SpellCastingModal';
-
-import { Spell, SpellSlotLevelType } from 'types/character';
+import { SpellCard } from '@/components/Spells/SpellCard';
+import { SpellCastingModal } from '@/components/Spells/SpellCastingModal';
+import { SpellLevelNavigator } from '@/components/Spells/SpellLevelNavigator';
+import { SpellsHeader } from '@/components/Spells/SpellsHeader';
+import { SpellSlotsHeader } from '@/components/Spells/SpellSlotsHeader';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useGetCharacterSpells } from '@/services/spells/spell.api';
+import type { Spell, SpellSlotLevelType } from '@/types/character';
 
 export const Spells = () => {
   const { bottom } = useSafeAreaInsets();
@@ -25,10 +23,7 @@ export const Spells = () => {
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
 
-  const spellHeader = useMemo(
-    () => <SpellsHeader level={level} canEdit={canEdit} />,
-    [level, canEdit],
-  );
+  const spellHeader = <SpellsHeader level={level} canEdit={canEdit} />;
 
   return (
     <>
@@ -36,10 +31,8 @@ export const Spells = () => {
         {level > 0 && character && <SpellSlotsHeader level={level} />}
 
         <FlashList
-          contentContainerStyle={{
-            paddingHorizontal: 16,
-            paddingBottom: bottom + 64,
-          }}
+          contentContainerClassName="px-4 "
+          contentContainerStyle={{ paddingBottom: bottom + 64 }}
           data={spells}
           renderItem={({ item }) => (
             <SpellCard

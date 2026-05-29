@@ -1,5 +1,6 @@
-import { TableProviderProps } from 'providers/TableProvider';
 import { createContext, useContext } from 'react';
+
+import type { TableProviderProps } from '@/providers/TableProvider';
 
 export const TableContext = createContext<TableProviderProps | undefined>(
   undefined,

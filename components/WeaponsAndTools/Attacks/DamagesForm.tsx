@@ -1,12 +1,13 @@
-import { Control, Controller, useFieldArray } from 'react-hook-form';
-import { AttacksFormType } from './useAttacksForm';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Minus, Plus } from 'lucide-react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { useCallback } from 'react';
-import { DamageDicePicker } from 'components/ui/inputs/DamageDicePicker';
+import { Minus, Plus } from 'lucide-react-native';
+import type { Control } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { DamageDicePicker } from '@/components/ui/inputs/DamageDicePicker';
+import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
+import i18n from '@/i18n';
 
 type DamagesFormProps = { control: Control<AttacksFormType> };
 
@@ -17,7 +18,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
     name: 'damagesAttributes',
   });
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = () => {
     if (!fields.length) return;
 
     const lastVisible = [...fields]
@@ -37,7 +38,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
     } else {
       remove(index);
     }
-  }, [fields, remove, update]);
+  };
 
   return (
     <View className="flex flex-col items-stretch gap-8">
@@ -81,7 +82,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                           className="rounded-lg bg-gray-100 h-15 text-base grow"
                           onChangeText={field.onChange}
                           keyboardType="numeric"
-                          value={`${field.value || ''}`}
+                          value={`${field.value ?? ''}`}
                         />
 
                         <Text className="text-red-400 text-sm">
@@ -124,7 +125,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                       <BottomSheetTextInput
                         className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        value={`${field.value || ''}`}
+                        value={`${field.value ?? ''}`}
                         keyboardType="numeric"
                       />
 
@@ -161,7 +162,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                       <BottomSheetTextInput
                         className="text-base px-4 rounded-lg bg-gray-100 overflow-hidden h-15"
                         onChangeText={field.onChange}
-                        value={`${field.value || ''}`}
+                        value={`${field.value ?? ''}`}
                       />
 
                       <Text className="text-red-400 text-sm">

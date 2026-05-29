@@ -1,14 +1,16 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 
-import { TableContext } from 'contexts/TableContext';
-import { queryClient } from 'core/queryClient/queryClient';
-import { useGetTable } from 'services/tables/table.api';
-import { Table } from 'types/table';
-import { useGetCurrentUser } from 'services/auth/auth.api';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { TableContext } from '@/contexts/TableContext';
+import { queryClient } from '@/core/queryClient/queryClient';
 import {
   setTableId as setTableIdStorage,
   removeTableId,
-} from 'core/utils/table';
+} from '@/core/utils/table';
+import { useGetCurrentUser } from '@/services/auth/auth.api';
+import { useGetTable } from '@/services/tables/table.api';
+import type { Table } from '@/types/table';
 
 export type TableProviderProps = {
   tableId?: number;
@@ -23,6 +25,7 @@ export type TableProviderProps = {
 export const TableProvider = ({ children }: { children: ReactNode }) => {
   const { data: currentUser } = useGetCurrentUser();
   const [tableId, setTableIdState] = useState<number>();
+  const { setCharacterId } = useCharacter();
 
   const {
     data: table,
@@ -31,23 +34,24 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
     isError,
   } = useGetTable({ id: tableId });
 
-  const setTableId = useCallback((id: number) => {
+  const setTableId = (id: number) => {
     setTableIdState(id);
-  }, []);
+  };
 
-  const clearTableId = useCallback(() => {
+  const clearTableId = () => {
     setTableIdState(undefined);
-  }, []);
+  };
 
   useEffect(() => {
     queryClient.resetQueries({ queryKey: ['characters'] });
-  }, [tableId]);
+    setCharacterId(undefined);
+  }, [setCharacterId, tableId]);
 
   useEffect(() => {
     if (!currentUser) {
-      clearTableId();
+      setTableIdState(undefined);
     }
-  }, [clearTableId, currentUser]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (tableId) {

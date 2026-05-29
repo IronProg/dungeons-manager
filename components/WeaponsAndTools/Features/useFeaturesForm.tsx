@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Feature } from 'types/character';
 import * as z from 'zod';
+
+import type { Feature } from '@/types/character';
 
 const schema = z.object({
   title: z.string(),
@@ -20,9 +21,9 @@ export const useFeaturesForm = ({ feature }: useFeaturesFormProps) => {
     useForm<FeaturesFormType>({
       resolver: zodResolver(schema),
       defaultValues: {
-        title: feature?.title || '',
-        description: feature?.description || '',
-        origin: feature?.origin || '',
+        title: feature?.title ?? '',
+        description: feature?.description ?? '',
+        origin: feature?.origin ?? '',
       },
     });
 

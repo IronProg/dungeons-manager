@@ -1,7 +1,6 @@
+import { Eye, EyeOff, Lock } from 'lucide-react-native';
 import { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Eye, EyeOff, Lock } from 'lucide-react-native';
-
 import { TextInput } from 'react-native-gesture-handler';
 
 type PasswordInputProps = {

@@ -2,9 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { ATTRIBUTES } from 'core/enums/attributes';
-
-import { Attack } from 'types/character';
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import type { Attack } from '@/types/character';
 
 export const damageSchema = z.object({
   id: z.coerce.number<number>().optional(),

@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ATTRIBUTES } from 'core/enums/attributes';
 import { useForm } from 'react-hook-form';
-import { CharacterGeneralInfo } from 'types/character';
 import * as z from 'zod';
+
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export const schema = z.object({
   initiativeCustomBonus: z.coerce.number<number>().int().optional(),

@@ -1,8 +1,8 @@
-import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { Text, View } from 'react-native';
 
-import { HIT_DICES } from 'core/enums/hitDices';
-import { colors } from 'core/utils/colors';
+import { HIT_DICES } from '@/core/enums/hitDices';
+import { colors } from '@/core/utils/colors';
 
 type HitDicePickerProps = {
   value?: string | null;
@@ -17,12 +17,9 @@ export const HitDicePicker = ({
 }: HitDicePickerProps) => {
   return (
     <>
-      <View
-        className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-12"
-        style={{ width: 100 }}
-      >
+      <View className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-12 w-full">
         <Picker
-          style={{ width: '100%', height: 50, color: colors.gray[900] }}
+          className="w-full h-[50px] color-gray-900"
           dropdownIconColor={colors.gray[900]}
           selectedValue={value}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}

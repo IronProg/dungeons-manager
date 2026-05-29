@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Background } from 'types/character';
+import api from '@/core/api/api';
+import type { Background } from '@/types/character';
 
 export const backgroundService = {
   fetch: ({ characterId }: GetBackgroundParams) =>
