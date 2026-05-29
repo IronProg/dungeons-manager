@@ -33,14 +33,14 @@ export const Features = ({ canEdit }: FeaturesProps) => {
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
   const [featureToDelete, setFeatureToDelete] = useState<Feature>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (!featureToDelete) return;
 
     deleteFeature(
       { characterId: characterId!, id: featureToDelete.id! },
       { onSuccess: () => setFeatureToDelete(undefined) },
     );
-  }, [characterId, deleteFeature, featureToDelete]);
+  };
 
   return (
     <>

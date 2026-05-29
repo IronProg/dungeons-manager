@@ -21,9 +21,9 @@ export const ComposeDiceRollButton = ({
 }) => {
   const { composeRoll } = useDiceRoll();
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     composeRoll(rolls);
-  }, [rolls, composeRoll]);
+  };
 
   return (
     <TouchableOpacity

@@ -20,20 +20,18 @@ export default function DMDashboard() {
   const { data: characters, isLoading: isLoadingCharacters } =
     useGetTableCharactersResume({ id: tableId! });
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = () => {
     queryClient.invalidateQueries({
       queryKey: ['tables', tableId, 'characters'],
     });
-  }, [queryClient, tableId]);
+  };
 
-  const callback = useCallback(
-    (data: TableChannelCallback) => {
+  const callback = (data: TableChannelCallback) => {
       if (data.invalidate === 'table') {
         handleRefresh();
       }
     },
-    [handleRefresh],
-  );
+    [handleRefresh];
 
   useTableChannel({ tableId: table?.id, callback });
 

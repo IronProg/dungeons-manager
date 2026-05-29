@@ -51,13 +51,11 @@ export const CharactersDrawer = ({
     );
   };
 
-  const handleSelectCharacter = useCallback(
-    (item: Character) => {
+  const handleSelectCharacter = (item: Character) => {
       setCharacterId(item.id);
       navigation.navigate('(tabs)');
     },
-    [navigation, setCharacterId],
-  );
+    [navigation, setCharacterId];
 
   return (
     <>

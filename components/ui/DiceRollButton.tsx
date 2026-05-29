@@ -20,9 +20,9 @@ export const DiceRollButton = ({
 }) => {
   const { simpleRoll } = useDiceRoll();
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     simpleRoll(bonuses);
-  }, [bonuses, simpleRoll]);
+  };
 
   return (
     <TouchableOpacity

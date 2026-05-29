@@ -23,16 +23,14 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
 
   const ref = useRef<DisposableBottomSheetHandle<boolean>>(null);
 
-  const { hitDicesMaximum, hitDiceAmount } = useMemo(
-    () => ({
+  const { hitDicesMaximum, hitDiceAmount } = {
       hitDicesMaximum:
         characterClasses?.reduce((acc, item) => acc + item.level, 0) ?? 0,
       hitDiceAmount:
         characterClasses?.reduce((acc, item) => acc + item.hitDiceAmount, 0) ??
         0,
-    }),
-    [characterClasses],
-  );
+    },
+    [characterClasses];
 
   return (
     <>

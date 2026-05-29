@@ -54,14 +54,14 @@ export const SpellForm = ({
     }
   };
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     deleteSpell(initialData!.id, {
       onSuccess: () => {
         router.back();
       },
     });
     setDeleting(false);
-  }, [router, deleteSpell, initialData]);
+  };
 
   const isSubmitting = isCreating || isUpdating;
 

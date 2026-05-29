@@ -24,8 +24,7 @@ export const useDetailedCharacter = ({
 }: useDetailedCharacterProps): useDetailedCharacterResult => {
   const queryClient = useQueryClient();
 
-  const setDetailedCharacterData = useCallback(
-    (character: Character) => {
+  const setDetailedCharacterData = (character: Character) => {
       setInitialLoading(true);
 
       queryClient.setQueryData(
@@ -70,8 +69,7 @@ export const useDetailedCharacter = ({
 
       setInitialLoading(false);
     },
-    [queryClient, setInitialLoading],
-  );
+    [queryClient, setInitialLoading];
 
   return { setDetailedCharacterData };
 };

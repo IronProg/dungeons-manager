@@ -29,8 +29,7 @@ export const PassivePerceptionForm = ({
 
   const perceptionBonus = getSkillBonus('perception');
 
-  const onSubmit = useCallback(
-    (values: PassivePerceptionFormType) => {
+  const onSubmit = (values: PassivePerceptionFormType) => {
       updateCharacter(
         { characterId: characterId!, ...values },
         {
@@ -40,8 +39,7 @@ export const PassivePerceptionForm = ({
         },
       );
     },
-    [characterId, close, updateCharacter],
-  );
+    [characterId, close, updateCharacter];
 
   return (
     <View className="flex flex-col">

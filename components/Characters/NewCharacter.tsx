@@ -30,8 +30,7 @@ export const NewCharacter = () => {
 
   const { mutate: createCharacter, isPending } = useCreateCharacterMutation();
 
-  const onSubmit = useCallback(
-    (values: NewCharacterFormType) => {
+  const onSubmit = (values: NewCharacterFormType) => {
       createCharacter(values, {
         onSuccess: (data) => {
           setCharacterId(data.id);
@@ -39,8 +38,7 @@ export const NewCharacter = () => {
         },
       });
     },
-    [createCharacter, setCharacterId],
-  );
+    [createCharacter, setCharacterId];
 
   useEffect(() => {
     if (waitingForCharacter && character) {

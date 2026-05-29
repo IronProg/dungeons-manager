@@ -19,8 +19,7 @@ export default function SignUpScreen() {
 
   const { mutate: signUp, isPending } = useSignUpMutation();
 
-  const onSubmit = useCallback(
-    (values: RegisterFormType) => {
+  const onSubmit = (values: RegisterFormType) => {
       signUp(
         { user: values },
         {
@@ -30,8 +29,7 @@ export default function SignUpScreen() {
         },
       );
     },
-    [router, signUp],
-  );
+    [router, signUp];
 
   return (
     <AppKeyboardAvoidingView contentContainerClassName="pt-0">

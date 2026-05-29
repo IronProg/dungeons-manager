@@ -24,8 +24,7 @@ export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
   const { mutate: updateGeneralInfo, isPending } =
     useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: ArmorClassFormType) => {
+  const onSubmit = (values: ArmorClassFormType) => {
       updateGeneralInfo(
         { characterId: characterId!, ...values },
         {
@@ -35,8 +34,7 @@ export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
         },
       );
     },
-    [characterId, close, updateGeneralInfo],
-  );
+    [characterId, close, updateGeneralInfo];
 
   return (
     <View className="flex flex-col">

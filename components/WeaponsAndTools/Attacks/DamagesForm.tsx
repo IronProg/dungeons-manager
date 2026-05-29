@@ -19,7 +19,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
     name: 'damagesAttributes',
   });
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = () => {
     if (!fields.length) return;
 
     const lastVisible = [...fields]
@@ -39,7 +39,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
     } else {
       remove(index);
     }
-  }, [fields, remove, update]);
+  };
 
   return (
     <View className="flex flex-col items-stretch gap-8">

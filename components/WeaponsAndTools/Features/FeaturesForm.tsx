@@ -28,8 +28,7 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
   const { mutate: updateFeature, isPending: updatePending } =
     useUpdateFeatureMutation();
 
-  const onSubmit = useCallback(
-    (values: FeaturesFormType) => {
+  const onSubmit = (values: FeaturesFormType) => {
       if (feature) {
         updateFeature(
           { characterId: characterId!, id: feature.id!, ...values },
@@ -50,8 +49,7 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
         );
       }
     },
-    [feature, characterId, createFeature, close, updateFeature],
-  );
+    [feature, characterId, createFeature, close, updateFeature];
 
   return (
     <View className="flex flex-col">

@@ -28,8 +28,7 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
   const { mutate: updateEquipment, isPending: updatePending } =
     useUpdateEquipmentMutation();
 
-  const onSubmit = useCallback(
-    (values: EquipmentsFormType) => {
+  const onSubmit = (values: EquipmentsFormType) => {
       if (equipment) {
         updateEquipment(
           { characterId: characterId!, id: equipment.id!, ...values },
@@ -50,8 +49,7 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
         );
       }
     },
-    [equipment, characterId, createEquipment, close, updateEquipment],
-  );
+    [equipment, characterId, createEquipment, close, updateEquipment];
 
   return (
     <View className="flex flex-col">

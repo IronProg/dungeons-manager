@@ -32,25 +32,27 @@ export const CharacterDetailsMain = ({
   const { mutate: updateCharacter, isPending: characterPending } =
     useUpdateCharacterMutation();
 
-  const handleSaveBackground = useCallback(
-    (params: UpdateBackgroundFormData, callback: () => void) => {
+  const handleSaveBackground = (
+      params: UpdateBackgroundFormData,
+      callback: () => void,
+    ) => {
       updateBackground(
         { characterId, ...params },
         { onSuccess: () => callback() },
       );
     },
-    [characterId, updateBackground],
-  );
+    [characterId, updateBackground];
 
-  const handleSaveCharacter = useCallback(
-    (params: UpdateCharacterParams, callback: () => void) => {
+  const handleSaveCharacter = (
+      params: UpdateCharacterParams,
+      callback: () => void,
+    ) => {
       updateCharacter(
         { id: params.id, name: params.name },
         { onSuccess: () => callback() },
       );
     },
-    [updateCharacter],
-  );
+    [updateCharacter];
 
   if (!character) return;
 

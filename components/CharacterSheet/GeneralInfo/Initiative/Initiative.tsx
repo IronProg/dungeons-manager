@@ -31,9 +31,9 @@ export const Initiative = ({
     modifier += modifiers?.[generalInfo.initiativeExtraAttribute] || 0;
   }
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     simpleRoll([modifier]);
-  }, [modifier, simpleRoll]);
+  };
 
   return (
     <TouchableOpacity

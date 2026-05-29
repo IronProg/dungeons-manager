@@ -1,6 +1,5 @@
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useQueryClient } from '@tanstack/react-query';
-import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
@@ -22,23 +21,20 @@ export const ExperienceForm = ({ character }: ExperienceFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateCharacterMutation();
 
-  const onSubmit = useCallback(
-    (values: ExperienceFormType) => {
-      updateCharacter(
-        { id: character.id!, experience: values.experience },
-        {
-          onSuccess: () => {
-            queryClient.invalidateQueries({
-              queryKey: ['characters', character.id!],
-            });
+  const onSubmit = (values: ExperienceFormType) => {
+    updateCharacter(
+      { id: character.id!, experience: values.experience },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['characters', character.id!],
+          });
 
-            close();
-          },
+          close();
         },
-      );
-    },
-    [character.id, close, queryClient, updateCharacter],
-  );
+      },
+    );
+  };
 
   return (
     <View className="flex flex-col">

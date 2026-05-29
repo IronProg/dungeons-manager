@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
 import i18n from '@/i18n';
 import {
@@ -23,15 +21,15 @@ export const CharacterDetailsBackground = ({
 
   const { mutate: updateBackground, isPending } = useUpdateBackgroundMutation();
 
-  const handleSaveBackground = useCallback(
-    (params: UpdateBackgroundFormData, callback: () => void) => {
-      updateBackground(
-        { characterId: character.id!, ...params },
-        { onSuccess: () => callback() },
-      );
-    },
-    [character.id, updateBackground],
-  );
+  const handleSaveBackground = (
+    params: UpdateBackgroundFormData,
+    callback: () => void,
+  ) => {
+    updateBackground(
+      { characterId: character.id!, ...params },
+      { onSuccess: () => callback() },
+    );
+  };
 
   return (
     <>

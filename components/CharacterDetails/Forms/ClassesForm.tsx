@@ -1,6 +1,5 @@
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Trash2 } from 'lucide-react-native';
-import { useCallback } from 'react';
 import { Controller, useFieldArray } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -35,38 +34,32 @@ export const ClassesForm = ({
     keyName: 'fieldId',
   });
 
-  const handleDelete = useCallback(
-    (index: number) => {
-      const classes = getValues('classes');
-      const field = getValues(`classes.${index}`);
+  const handleDelete = (index: number) => {
+    const classes = getValues('classes');
+    const field = getValues(`classes.${index}`);
 
-      if (field.id) {
-        const newClasses = classes.map((item, i) => ({
-          ...item,
-          _destroy: i === index ? true : item._destroy,
-        }));
+    if (field.id) {
+      const newClasses = classes.map((item, i) => ({
+        ...item,
+        _destroy: i === index ? true : item._destroy,
+      }));
 
-        replace(newClasses);
-      } else {
-        remove(index);
-      }
-    },
-    [getValues, remove, replace],
-  );
+      replace(newClasses);
+    } else {
+      remove(index);
+    }
+  };
 
-  const onSubmit = useCallback(
-    (data: ClassesFormType) => {
-      updateAllClasses(
-        { characterId: character.id!, classes: data.classes },
-        {
-          onSuccess: () => {
-            close();
-          },
+  const onSubmit = (data: ClassesFormType) => {
+    updateAllClasses(
+      { characterId: character.id!, classes: data.classes },
+      {
+        onSuccess: () => {
+          close();
         },
-      );
-    },
-    [character.id, close, updateAllClasses],
-  );
+      },
+    );
+  };
 
   return (
     <View className="flex-1 flex flex-col gap-2 items-stretch">

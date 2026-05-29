@@ -23,8 +23,7 @@ export const InitiativeForm = ({ generalInfo }: InitiativeFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: InitiativeFormType) => {
+  const onSubmit = (values: InitiativeFormType) => {
       updateCharacter(
         { characterId: characterId!, ...values },
         {
@@ -34,8 +33,7 @@ export const InitiativeForm = ({ generalInfo }: InitiativeFormProps) => {
         },
       );
     },
-    [characterId, close, updateCharacter],
-  );
+    [characterId, close, updateCharacter];
 
   return (
     <View className="flex flex-col">

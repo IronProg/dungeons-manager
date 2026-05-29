@@ -37,7 +37,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
   const [detailedAttack, setDetailedAttack] = useState<Attack>();
   const [attackToDelete, setAttackToDelete] = useState<Attack>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (attackToDelete) {
       deleteAttack(
         { characterId: characterId!, id: attackToDelete.id! },
@@ -48,7 +48,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
         },
       );
     }
-  }, [attackToDelete, characterId, deleteAttack]);
+  };
 
   return (
     <>

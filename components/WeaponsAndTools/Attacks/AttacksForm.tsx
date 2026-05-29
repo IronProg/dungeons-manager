@@ -31,8 +31,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
   const { mutate: updateAttack, isPending: updatePending } =
     useUpdateAttackMutation();
 
-  const onSubmit = useCallback(
-    (values: AttacksFormType) => {
+  const onSubmit = (values: AttacksFormType) => {
       const params: CreateAttackParams = {
         characterId: characterId!,
         ...values,
@@ -56,8 +55,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
         });
       }
     },
-    [attack, characterId, createAttack, close, updateAttack],
-  );
+    [attack, characterId, createAttack, close, updateAttack];
 
   return (
     <View className="flex flex-col">

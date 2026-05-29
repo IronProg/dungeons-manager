@@ -21,7 +21,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
     name,
   });
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = () => {
     if (!fields.length) return;
 
     const lastVisible = [...fields]
@@ -38,7 +38,7 @@ export const SpellDamagesForm = ({ control, name }: DamagesFormProps) => {
     } else {
       remove(index);
     }
-  }, [fields, remove, update]);
+  };
 
   return (
     <View className="flex flex-col items-stretch gap-8">

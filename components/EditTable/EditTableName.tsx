@@ -16,8 +16,7 @@ export const EditTableName = () => {
   const { mutate: updateTable, isPending: isUpdating } =
     useUpdateTableMutation();
 
-  const onSubmit = useCallback(
-    (values: EditTableFormType) => {
+  const onSubmit = (values: EditTableFormType) => {
       if (!tableId) return;
 
       updateTable(
@@ -30,8 +29,7 @@ export const EditTableName = () => {
         },
       );
     },
-    [updateTable, tableId, reset],
-  );
+    [updateTable, tableId, reset];
 
   return (
     <View className="gap-4 mb-6">

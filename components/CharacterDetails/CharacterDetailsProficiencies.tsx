@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
 import i18n from '@/i18n';
 import {
@@ -24,15 +22,15 @@ export const CharacterDetailsProficiencies = ({
   const { mutate: udpateProficiency, isPending } =
     useUpdateProficiencyMutation();
 
-  const handleSaveProficiency = useCallback(
-    (params: UpdateProficiencyFormData, callback: () => void) => {
-      udpateProficiency(
-        { characterId: character.id!, ...params },
-        { onSuccess: () => callback() },
-      );
-    },
-    [character.id, udpateProficiency],
-  );
+  const handleSaveProficiency = (
+    params: UpdateProficiencyFormData,
+    callback: () => void,
+  ) => {
+    udpateProficiency(
+      { characterId: character.id!, ...params },
+      { onSuccess: () => callback() },
+    );
+  };
 
   return (
     <>

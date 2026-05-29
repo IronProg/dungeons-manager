@@ -34,14 +34,14 @@ export const Exhaustion = ({ generalInfo, canEdit }: ExhaustionProps) => {
     updateCharacter,
   ]);
 
-  const handleChangeExhaustion = useCallback(() => {
+  const handleChangeExhaustion = () => {
     let newExhaustion = 0;
     if (tempExhaustion < 6) {
       newExhaustion = tempExhaustion + 1;
     }
 
     setTempExhaustion(newExhaustion);
-  }, [tempExhaustion]);
+  };
 
   return (
     <TouchableOpacity

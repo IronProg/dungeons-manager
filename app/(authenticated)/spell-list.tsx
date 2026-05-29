@@ -23,9 +23,9 @@ export default function SpellListScreen() {
   const [downloadPromptVisible, setDownloadPromptVisible] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const currentUrl = useMemo(() => getCurrentExternalSpellsUrl(), []);
+  const currentUrl = getCurrentExternalSpellsUrl();
 
-  const checkDb = useCallback(async () => {
+  const checkDb = async () => {
     initExternalSpellsDb();
 
     const lastUrl = await getLastExternalSpellsUrl();
@@ -41,7 +41,7 @@ export default function SpellListScreen() {
     }
 
     setIsLoading(false);
-  }, [currentUrl]);
+  };
 
   useEffect(() => {
     checkDb();

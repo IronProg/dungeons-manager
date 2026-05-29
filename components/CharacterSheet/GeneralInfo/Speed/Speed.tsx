@@ -1,5 +1,5 @@
 import { Bird, Footprints, Mountain } from 'lucide-react-native';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import i18n from '@/i18n';
@@ -19,7 +19,7 @@ type SpeedProps = {
 export const Speed = ({ generalInfo, onLongPress, canEdit }: SpeedProps) => {
   const [speedIndex, setSpeedIndex] = useState<number>(0);
 
-  const activeSpeeds = useMemo(() => {
+  const activeSpeeds = (() => {
     const speeds: SpeedHighlight[] = [];
 
     if (generalInfo?.speed) {
@@ -35,19 +35,15 @@ export const Speed = ({ generalInfo, onLongPress, canEdit }: SpeedProps) => {
     }
 
     return speeds;
-  }, [
-    generalInfo?.speed,
-    generalInfo?.speedClimbing,
-    generalInfo?.speedFlying,
-  ]);
+  })();
 
-  const handleChangeSpeedType = useCallback(() => {
+  const handleChangeSpeedType = () => {
     if (activeSpeeds.length !== 0 && speedIndex < activeSpeeds.length - 1) {
       setSpeedIndex((prev) => prev + 1);
     } else {
       setSpeedIndex(0);
     }
-  }, [activeSpeeds.length, speedIndex]);
+  };
 
   const activeSpeed = activeSpeeds[speedIndex];
 

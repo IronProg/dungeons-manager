@@ -28,8 +28,7 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
   const { mutate: updateResource, isPending: updatePending } =
     useUpdateResourceMutation();
 
-  const onSubmit = useCallback(
-    (values: ResourcesFormType) => {
+  const onSubmit = (values: ResourcesFormType) => {
       if (resource) {
         updateResource(
           { characterId: characterId!, id: resource.id!, ...values },
@@ -50,8 +49,7 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
         );
       }
     },
-    [resource, characterId, createResource, close, updateResource],
-  );
+    [resource, characterId, createResource, close, updateResource];
 
   return (
     <View className="flex flex-col">

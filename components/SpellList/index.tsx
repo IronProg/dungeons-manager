@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Search } from 'lucide-react-native';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import colors from 'tailwindcss/colors';
 import { useDebounce } from 'use-debounce';
@@ -28,10 +28,10 @@ export const SpellList = () => {
     });
   };
 
-  const performSearch = useCallback((query: string) => {
+  const performSearch = (query: string) => {
     const list = searchExternalSpells(query);
     setResults(list);
-  }, []);
+  };
 
   useEffect(() => {
     performSearch(debouncedText);
@@ -72,18 +72,22 @@ export const SpellList = () => {
   );
 };
 
-const SpellListItem = memo(
-  ({ item, onPress }: { item: Spell; onPress: () => void }) => (
-    <TouchableOpacity
-      className="bg-gray-100 p-4 rounded-xl mb-2 flex-row justify-between items-center"
-      onPress={onPress}
-    >
-      <View className="flex-1 pr-4">
-        <Text className="font-bold text-lg text-gray-800">{item.name}</Text>
-        <Text className="text-gray-500 text-sm">
-          {i18n.t('spells.level')} {item.level}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  ),
+const SpellListItem = ({
+  item,
+  onPress,
+}: {
+  item: Spell;
+  onPress: () => void;
+}) => (
+  <TouchableOpacity
+    className="bg-gray-100 p-4 rounded-xl mb-2 flex-row justify-between items-center"
+    onPress={onPress}
+  >
+    <View className="flex-1 pr-4">
+      <Text className="font-bold text-lg text-gray-800">{item.name}</Text>
+      <Text className="text-gray-500 text-sm">
+        {i18n.t('spells.level')} {item.level}
+      </Text>
+    </View>
+  </TouchableOpacity>
 );

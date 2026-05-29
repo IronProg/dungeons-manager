@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'lucide-react-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
@@ -59,7 +59,7 @@ const Content = ({ onClose }: { onClose: () => void }) => {
     }
   }, [fetchedCharacterClasses]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     const updatedClasses = fetchedCharacterClasses?.map((cls) => {
       const characterClass = characterClasses?.find((c) => c.id === cls.id);
 
@@ -94,50 +94,38 @@ const Content = ({ onClose }: { onClose: () => void }) => {
         },
       },
     );
-  }, [
-    characterClasses,
-    characterId,
-    composeRoll,
-    constitutionModifier,
-    enabled,
-    fetchedCharacterClasses,
-    onClose,
-    updateAllClasses,
-  ]);
+  };
 
-  const handleAdd = useCallback(
-    ({ characterClass, full = false }: handleAlterFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleAdd = ({ characterClass, full = false }: handleAlterFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full
-              ? cls.level
-              : Math.min(cls.level, cls.hitDiceAmount + 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full
+            ? cls.level
+            : Math.min(cls.level, cls.hitDiceAmount + 1),
+        };
+      }),
+    );
+  };
 
-  const handleDecrease = useCallback(
-    ({ characterClass, full = false }: handleAlterFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleDecrease = ({
+    characterClass,
+    full = false,
+  }: handleAlterFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
+        };
+      }),
+    );
+  };
 
   return (
     <View className="flex flex-col items-center">

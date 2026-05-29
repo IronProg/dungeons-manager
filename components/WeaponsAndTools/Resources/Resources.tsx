@@ -34,7 +34,7 @@ export const Resources = ({ canEdit }: ResourcesProps) => {
 
   const [resourceToDelete, setResourceToDelete] = useState<Resource>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (resourceToDelete) {
       deleteResource(
         { characterId: characterId!, id: resourceToDelete.id! },
@@ -45,10 +45,9 @@ export const Resources = ({ canEdit }: ResourcesProps) => {
         },
       );
     }
-  }, [characterId, deleteResource, resourceToDelete]);
+  };
 
-  const handleQuickUpdate = useCallback(
-    (resource: Resource) => {
+  const handleQuickUpdate = (resource: Resource) => {
       if (!canEdit || resource.amount <= 0) return;
 
       updateResource({
@@ -57,8 +56,7 @@ export const Resources = ({ canEdit }: ResourcesProps) => {
         amount: resource.amount - 1,
       });
     },
-    [characterId, updateResource, canEdit],
-  );
+    [characterId, updateResource, canEdit];
 
   return (
     <>

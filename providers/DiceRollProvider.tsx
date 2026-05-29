@@ -21,23 +21,19 @@ export const DiceRollProvider = ({
 
   const [enabled, setEnabled] = useState(true);
 
-  const simpleRoll = useCallback(
-    (bonuses: number[]) => {
+  const simpleRoll = (bonuses: number[]) => {
       if (!enabled) return;
 
       sheetRef.current?.roll(bonuses, { diceSize: 20 });
     },
-    [enabled],
-  );
+    [enabled];
 
-  const composeRoll = useCallback(
-    (params: ComposeRollParams) => {
+  const composeRoll = (params: ComposeRollParams) => {
       if (!enabled) return;
 
       composeSheetRef.current?.roll(params);
     },
-    [enabled],
-  );
+    [enabled];
 
   return (
     <DiceRollContext.Provider

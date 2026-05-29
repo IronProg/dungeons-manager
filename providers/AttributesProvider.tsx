@@ -61,9 +61,9 @@ export const AttributesProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [characterAttributes]);
 
-  const updateAttributes = useCallback((newAttributes: Attribute[]) => {
+  const updateAttributes = (newAttributes: Attribute[]) => {
     setCharacterAttributes(newAttributes);
-  }, []);
+  };
 
   const value: AttributesProviderProps = {
     characterAttributes,

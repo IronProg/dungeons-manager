@@ -40,14 +40,14 @@ export const ImportCharacter = () => {
   const { mutateAsync: cloneCharacter, isPending } =
     useCloneCharacterMutation();
 
-  const cloneCharacterHandler = useCallback(async () => {
+  const cloneCharacterHandler = async () => {
     if (!selectedCharacter || !tableId) return;
 
     const data = await cloneCharacter({ id: selectedCharacter.id!, tableId });
 
     setCharacterId(data.id);
     setCharacterCloned(true);
-  }, [cloneCharacter, selectedCharacter, setCharacterId, tableId]);
+  };
 
   useEffect(() => {
     if (characterCloned && character) {

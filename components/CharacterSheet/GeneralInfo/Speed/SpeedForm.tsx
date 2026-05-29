@@ -22,8 +22,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: SpeedFormType) => {
+  const onSubmit = (values: SpeedFormType) => {
       updateCharacter(
         { characterId: characterId!, ...values },
         {
@@ -33,8 +32,7 @@ export const SpeedForm = ({ generalInfo }: SpeedFormProps) => {
         },
       );
     },
-    [characterId, close, updateCharacter],
-  );
+    [characterId, close, updateCharacter];
 
   return (
     <View className="flex flex-col">

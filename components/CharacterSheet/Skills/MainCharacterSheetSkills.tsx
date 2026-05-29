@@ -117,9 +117,9 @@ const SavingThrowCard = ({
     modifier += proficiencyBonus;
   }
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     simpleRoll([modifier]);
-  }, [modifier, simpleRoll]);
+  };
 
   return (
     <View className="flex items-center justify-center w-[50%] pr-2 mb-2">
@@ -159,9 +159,9 @@ const SkillCard = ({ skill, onLongPress, canEdit, isLeft }: SkillCardProps) => {
 
   const modifier = getSkillBonus(skill.name);
 
-  const handleRoll = useCallback(() => {
+  const handleRoll = () => {
     simpleRoll([modifier]);
-  }, [modifier, simpleRoll]);
+  };
 
   return (
     <View

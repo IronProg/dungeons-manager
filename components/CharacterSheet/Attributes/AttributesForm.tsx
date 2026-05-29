@@ -32,8 +32,7 @@ export const AttributesForm = ({
   const { mutate: updateAllAttributes, isPending } =
     useUpdateAllAttributesMutation();
 
-  const onSubmit = useCallback(
-    (values: AttributesFormType) => {
+  const onSubmit = (values: AttributesFormType) => {
       const newAttributes: Attribute[] =
         values.characterAttributesAttributes.map((attrVal) => {
           const hasTempValue =
@@ -55,8 +54,7 @@ export const AttributesForm = ({
         { onSuccess: () => close() },
       );
     },
-    [characterId, close, updateAllAttributes],
-  );
+    [characterId, close, updateAllAttributes];
 
   return (
     <BottomSheetScrollView

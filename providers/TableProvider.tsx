@@ -34,13 +34,13 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
     isError,
   } = useGetTable({ id: tableId });
 
-  const setTableId = useCallback((id: number) => {
+  const setTableId = (id: number) => {
     setTableIdState(id);
-  }, []);
+  };
 
-  const clearTableId = useCallback(() => {
+  const clearTableId = () => {
     setTableIdState(undefined);
-  }, []);
+  };
 
   useEffect(() => {
     queryClient.resetQueries({ queryKey: ['characters'] });

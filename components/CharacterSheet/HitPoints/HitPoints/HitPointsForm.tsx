@@ -22,8 +22,7 @@ export const HitPointsForm = ({ generalInfo }: HitPointsFormProps) => {
 
   const { mutate: updateCharacter, isPending } = useUpdateGeneralInfoMutation();
 
-  const onSubmit = useCallback(
-    (values: HitPointsFormType) => {
+  const onSubmit = (values: HitPointsFormType) => {
       updateCharacter(
         { characterId: characterId!, ...values },
         {
@@ -33,8 +32,7 @@ export const HitPointsForm = ({ generalInfo }: HitPointsFormProps) => {
         },
       );
     },
-    [characterId, close, updateCharacter],
-  );
+    [characterId, close, updateCharacter];
 
   return (
     <View className="flex flex-col items-center">

@@ -24,28 +24,26 @@ export function useTableChannel({
 }: useTableChannelProps) {
   const accessToken = getAccessTokenNonAsync();
 
-  useFocusEffect(
-    useCallback(() => {
-      if (!accessToken || !tableId) return;
+  useFocusEffect(() => {
+    if (!accessToken || !tableId) return;
 
-      const consumer = ActionCable.createConsumer(
-        `${process.env.EXPO_PUBLIC_WEBSOCKET_URL || ''}?access_token=${accessToken}`,
-      );
-      const cable = new Cable({});
+    const consumer = ActionCable.createConsumer(
+      `${process.env.EXPO_PUBLIC_WEBSOCKET_URL || ''}?access_token=${accessToken}`,
+    );
+    const cable = new Cable({});
 
-      const subscription = consumer.subscriptions.create({
-        channel: 'TableChannel',
-        id: tableId,
-      });
-      const channel = cable.setChannel('TableChannel', subscription);
-      channel
-        .on('received', callback)
-        .on('connected', () => onConnect?.())
-        .on('disconnected', () => onDisconnect?.());
-      return () => {
-        // This closes the socket and cleans up all subscriptions
-        consumer.disconnect();
-      };
-    }, [accessToken, callback, onConnect, onDisconnect, tableId]),
-  );
+    const subscription = consumer.subscriptions.create({
+      channel: 'TableChannel',
+      id: tableId,
+    });
+    const channel = cable.setChannel('TableChannel', subscription);
+    channel
+      .on('received', callback)
+      .on('connected', () => onConnect?.())
+      .on('disconnected', () => onDisconnect?.());
+    return () => {
+      // This closes the socket and cleans up all subscriptions
+      consumer.disconnect();
+    };
+  });
 }

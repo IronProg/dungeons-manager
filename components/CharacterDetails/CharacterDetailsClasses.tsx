@@ -1,5 +1,5 @@
 import { Edit } from 'lucide-react-native';
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
@@ -26,13 +26,13 @@ export const CharacterDetailsClasses = ({
 
   const { data: characterClasses, isPending } = useGetAllClasses();
 
-  const totalLevels = useMemo(() => {
+  const totalLevels = (() => {
     if (!characterClasses || characterClasses.length === 0) return 0;
 
     const levels = characterClasses.map((cls) => cls.level || 0);
 
     return levels.reduce((acc, item) => acc + item, 0);
-  }, [characterClasses]);
+  })();
 
   return (
     <>

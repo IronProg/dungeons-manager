@@ -65,8 +65,7 @@ export const EditTable = () => {
     setUserToKick(null);
   };
 
-  const renderPlayerItem = useCallback(
-    ({ item }: { item: TableUser }) => (
+  const renderPlayerItem = ({ item }: { item: TableUser }) => (
       <View className="flex-row items-center justify-between bg-white rounded-xl p-4 mb-3 shadow-sm border border-gray-100">
         <View className="flex-1">
           <Text className="font-medium text-gray-800">{item.email}</Text>
@@ -86,8 +85,7 @@ export const EditTable = () => {
         )}
       </View>
     ),
-    [currentUser],
-  );
+    [currentUser];
 
   const players = tableData?.tablesUsers || [];
 

@@ -18,8 +18,7 @@ export const NewTable = () => {
 
   const { mutate: createTable, isPending } = useCreateTableMutation();
 
-  const onSubmit = useCallback(
-    (values: NewTableFormType) => {
+  const onSubmit = (values: NewTableFormType) => {
       createTable(values, {
         onSuccess: () => {
           reset();
@@ -28,8 +27,7 @@ export const NewTable = () => {
         },
       });
     },
-    [createTable, reset, navigation],
-  );
+    [createTable, reset, navigation];
 
   return (
     <View className="flex-1 bg-slate-200">

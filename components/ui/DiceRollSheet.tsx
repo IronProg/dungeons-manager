@@ -9,7 +9,6 @@ import type {
 } from '@gorhom/bottom-sheet';
 import {
   forwardRef,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -51,46 +50,46 @@ export const DiceRollSheet = forwardRef<
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
 
-  const clearRolling = useCallback(() => {
+  const clearRolling = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (autoCloseTimeoutRef.current) clearTimeout(autoCloseTimeoutRef.current);
-  }, []);
+  };
 
   useEffect(() => {
     return () => clearRolling();
   }, [clearRolling]);
 
-  const startRoll = useCallback(
-    (currentBonuses: number[], { diceSize }: { diceSize: number }) => {
-      clearRolling();
-      const result = Math.floor(Math.random() * diceSize) + 1;
-      setIsRolling(true);
-      setFinalRoll(null);
-      setDisplayNumber(null);
-      setBonuses(currentBonuses);
-      scale.value = 0;
-      opacity.value = 0;
+  const startRoll = (
+    currentBonuses: number[],
+    { diceSize }: { diceSize: number },
+  ) => {
+    clearRolling();
+    const result = Math.floor(Math.random() * diceSize) + 1;
+    setIsRolling(true);
+    setFinalRoll(null);
+    setDisplayNumber(null);
+    setBonuses(currentBonuses);
+    scale.value = 0;
+    opacity.value = 0;
 
-      intervalRef.current = setInterval(() => {
-        setDisplayNumber(Math.floor(Math.random() * diceSize) + 1);
-      }, 80);
+    intervalRef.current = setInterval(() => {
+      setDisplayNumber(Math.floor(Math.random() * diceSize) + 1);
+    }, 80);
 
-      timeoutRef.current = setTimeout(() => {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        setIsRolling(false);
-        setDisplayNumber(result);
-        setFinalRoll(result);
+    timeoutRef.current = setTimeout(() => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setIsRolling(false);
+      setDisplayNumber(result);
+      setFinalRoll(result);
 
-        scale.value = withSequence(
-          withSpring(1.3, { duration: 200 }),
-          withSpring(1, { duration: 150 }),
-        );
-        opacity.value = withTiming(1, { duration: 200 });
-      }, ROLL_DURATION_MS);
-    },
-    [clearRolling, opacity, scale],
-  );
+      scale.value = withSequence(
+        withSpring(1.3, { duration: 200 }),
+        withSpring(1, { duration: 150 }),
+      );
+      opacity.value = withTiming(1, { duration: 200 });
+    }, ROLL_DURATION_MS);
+  };
 
   useImperativeHandle(ref, () => ({
     roll: (newBonuses: number[], { diceSize }: { diceSize: number }) => {
@@ -114,25 +113,18 @@ export const DiceRollSheet = forwardRef<
     return 'text-white';
   };
 
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
-    [],
+  const renderBackdrop = (props: BottomSheetBackdropProps) => (
+    <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
   );
 
-  const handleDismiss = useCallback(() => {
+  const handleDismiss = () => {
     clearRolling();
     setIsRolling(false);
     setFinalRoll(null);
     setDisplayNumber(null);
     scale.value = 0;
     opacity.value = 0;
-  }, [clearRolling, opacity, scale]);
+  };
 
   return (
     <BottomSheetModal

@@ -7,8 +7,7 @@ export const useGetSkillBonus = () => {
   const { modifiers, proficiencyBonus } = useCharacter();
   const { data: skills } = useGetAllSkills();
 
-  const getSkillBonus = useCallback(
-    (name: string): number => {
+  const getSkillBonus = (name: string): number => {
       const skill = skills?.find((skill) => skill.name === name);
 
       if (!skill || !modifiers) return 0;
@@ -25,8 +24,7 @@ export const useGetSkillBonus = () => {
 
       return bonus;
     },
-    [modifiers, proficiencyBonus, skills],
-  );
+    [modifiers, proficiencyBonus, skills];
 
   return { getSkillBonus };
 };

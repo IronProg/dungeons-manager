@@ -23,10 +23,8 @@ export const Spells = () => {
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
 
-  const spellHeader = useMemo(
-    () => <SpellsHeader level={level} canEdit={canEdit} />,
-    [level, canEdit],
-  );
+  const spellHeader = <SpellsHeader level={level} canEdit={canEdit} />,
+    [level, canEdit];
 
   return (
     <>

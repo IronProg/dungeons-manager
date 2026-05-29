@@ -29,7 +29,7 @@ export const Equipments = () => {
   const [detailedEquipment, setDetailedEquipment] = useState<Equipment>();
   const [equipmentToDelete, setEquipmentToDelete] = useState<Equipment>();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = () => {
     if (equipmentToDelete) {
       deleteEquipment(
         { characterId: characterId!, id: equipmentToDelete.id! },
@@ -40,32 +40,28 @@ export const Equipments = () => {
         },
       );
     }
-  }, [characterId, deleteEquipment, equipmentToDelete]);
+  };
 
-  const onCreate = useCallback(() => {
+  const onCreate = () => {
     if (!canEdit) return;
     ref.current?.show({});
-  }, [canEdit]);
+  };
 
-  const onEdit = useCallback(
-    (equipment: Equipment) => {
+  const onEdit = (equipment: Equipment) => {
       if (!canEdit) return;
       ref.current?.show({ equipment });
     },
-    [canEdit],
-  );
+    [canEdit];
 
-  const onDelete = useCallback(
-    (equipment: Equipment) => {
+  const onDelete = (equipment: Equipment) => {
       if (!canEdit) return;
       setEquipmentToDelete(equipment);
     },
-    [canEdit],
-  );
+    [canEdit];
 
-  const onShow = useCallback((equipment: Equipment) => {
+  const onShow = (equipment: Equipment) => {
     setDetailedEquipment(equipment);
-  }, []);
+  };
 
   return (
     <>

@@ -7,7 +7,7 @@ import {
   Edit,
   WandSparkles,
 } from 'lucide-react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import { Markdown } from 'react-native-remark';
 
@@ -64,7 +64,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
     });
   };
 
-  const componentsString = useMemo(() => {
+  const componentsString = (() => {
     const comps = [];
     if (spell.verbal) comps.push('V');
     if (spell.somatic) comps.push('S');
@@ -75,7 +75,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
       str += ` (${spell.components})`;
     }
     return str;
-  }, [spell.components, spell.material, spell.somatic, spell.verbal]);
+  })();
 
   const handleCast = () => {
     if (spell.level !== 0) {

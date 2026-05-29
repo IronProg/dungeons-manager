@@ -21,8 +21,7 @@ export default function LoginScreen() {
 
   const { mutate: signIn, isPending } = useSignInMutation();
 
-  const onSubmit = useCallback(
-    (values: LoginFormType) => {
+  const onSubmit = (values: LoginFormType) => {
       signIn(
         { user: values },
         {
@@ -32,8 +31,7 @@ export default function LoginScreen() {
         },
       );
     },
-    [router, signIn],
-  );
+    [router, signIn];
 
   return (
     <AppKeyboardAvoidingView contentContainerClassName="pt-0">

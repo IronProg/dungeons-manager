@@ -1,6 +1,6 @@
 import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { Minus, Plus } from 'lucide-react-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
@@ -38,7 +38,7 @@ export const HitDicesForm = () => {
     }
   }, [fetchedCharacterClasses]);
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     updateAllCharacters(
       { characterId: characterId!, classes: characterClasses },
       {
@@ -47,41 +47,38 @@ export const HitDicesForm = () => {
         },
       },
     );
-  }, [characterClasses, characterId, close, updateAllCharacters]);
+  };
 
-  const handleAdd = useCallback(
-    ({ characterClass, full = false }: handleAddFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleAdd = ({ characterClass, full = false }: handleAddFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full
-              ? cls.level
-              : Math.min(cls.level, cls.hitDiceAmount + 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full
+            ? cls.level
+            : Math.min(cls.level, cls.hitDiceAmount + 1),
+        };
+      }),
+    );
+  };
 
-  const handleDecrease = useCallback(
-    ({ characterClass, full = false }: handleAddFunction) => {
-      setCharacterClasses((prev) =>
-        prev?.map((cls) => {
-          if (cls.id !== characterClass.id) return cls;
+  const handleDecrease = ({
+    characterClass,
+    full = false,
+  }: handleAddFunction) => {
+    setCharacterClasses((prev) =>
+      prev?.map((cls) => {
+        if (cls.id !== characterClass.id) return cls;
 
-          return {
-            ...characterClass,
-            hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
-          };
-        }),
-      );
-    },
-    [],
-  );
+        return {
+          ...characterClass,
+          hitDiceAmount: full ? 0 : Math.max(0, cls.hitDiceAmount - 1),
+        };
+      }),
+    );
+  };
 
   return (
     <View className="flex flex-col items-center">

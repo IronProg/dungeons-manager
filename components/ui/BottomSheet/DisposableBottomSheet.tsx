@@ -7,14 +7,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import type { ReactNode, Ref } from 'react';
-import {
-  forwardRef,
-  memo,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -34,15 +27,8 @@ function DisposableBottomSheetInner<T>(
   const innerRef = useRef<BottomSheet>(null);
   const [params, setParams] = useState<T | null>(null);
 
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
-    [],
+  const renderBackdrop = (props: BottomSheetBackdropProps) => (
+    <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
   );
 
   useImperativeHandle(ref, () => {
@@ -85,9 +71,9 @@ function DisposableBottomSheetInner<T>(
   );
 }
 
-export const DisposableBottomSheet = memo(
-  forwardRef(DisposableBottomSheetInner),
-) as <T>(
+export const DisposableBottomSheet = forwardRef(DisposableBottomSheetInner) as <
+  T,
+>(
   props: DisposableBottomSheetProps<T> & {
     ref?: Ref<DisposableBottomSheetHandle<T>>;
   },

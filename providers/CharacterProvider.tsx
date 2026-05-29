@@ -35,7 +35,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     isFetching,
   } = useGetCharacter({ id: characterId });
 
-  const canEdit = useMemo(() => character?.isOwner ?? false, [character]);
+  const canEdit = character?.isOwner ?? false;
 
   useEffect(() => {
     if (!character) {

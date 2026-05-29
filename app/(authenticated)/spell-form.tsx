@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
 import { SpellForm } from '@/components/Spells/SpellForm/SpellForm';
@@ -33,7 +33,7 @@ export default function SpellFormScreen() {
 
   const onSuccess = () => router.back();
 
-  const importedSpell = useMemo(() => {
+  const importedSpell = (() => {
     if (!parsedImportedSpellId) return undefined;
 
     const data = getExternalSpellById(parsedImportedSpellId);
@@ -41,12 +41,9 @@ export default function SpellFormScreen() {
     if (data) return { ...data, id: undefined };
 
     return undefined;
-  }, [parsedImportedSpellId]);
+  })();
 
-  const spell = useMemo(
-    () => spells?.find((s) => s.id === spellId),
-    [spells, spellId],
-  );
+  const spell = spells?.find((s) => s.id === spellId);
 
   const initialData = spellId ? spell : importedSpell;
 
