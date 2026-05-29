@@ -36,7 +36,7 @@ export default function LoginScreen() {
       <View className="bg-indigo-600 pt-12 pb-16 px-6 rounded-b-[40px]">
         <View className="items-center">
           <View className="w-20 h-20 bg-white/20 rounded-full items-center justify-center mb-4 overflow-hidden">
-            <Image source={TransparentLogo} style={{ width: 80, height: 80 }} />
+            <Image source={TransparentLogo} className="w-20 h-20" />
           </View>
 
           <Text className="text-white text-3xl font-bold">

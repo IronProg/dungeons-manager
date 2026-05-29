@@ -1,4 +1,3 @@
-import type { ImageStyle } from 'expo-image';
 import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 
@@ -10,11 +9,11 @@ import { cn } from '@/core/helpers/cn';
 export const ComposeDiceRollButton = ({
   rolls,
   containerClassName = '',
-  style = {},
+  className = '',
 }: {
   rolls: ComposeRollParams;
   containerClassName?: string;
-  style?: ImageStyle;
+  className?: string;
 }) => {
   const { composeRoll } = useDiceRoll();
 
@@ -28,7 +27,7 @@ export const ComposeDiceRollButton = ({
       hitSlop={10}
       className={cn('bg-indigo-200 p-2 rounded-full', containerClassName)}
     >
-      <Image source={d20} style={{ width: 20, height: 20, ...style }} />
+      <Image source={d20} className={cn('w-5 h-5', className)} />
     </TouchableOpacity>
   );
 };

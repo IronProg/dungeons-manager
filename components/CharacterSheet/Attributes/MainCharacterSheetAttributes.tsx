@@ -31,54 +31,66 @@ export const MainCharacterSheetAttributes = () => {
             onLongPress={() =>
               ref.current?.show({ characterAttributes: characterAttributes })
             }
-            attribute={characterAttributes.find(
-              (attribute) => attribute.name === 'strength',
-            )}
+            attribute={
+              characterAttributes.find(
+                (attribute) => attribute.name === 'strength',
+              )!
+            }
             canEdit={canEdit}
           />
           <AttributeCard
             onLongPress={() =>
               ref.current?.show({ characterAttributes: characterAttributes })
             }
-            attribute={characterAttributes.find(
-              (attribute) => attribute.name === 'dexterity',
-            )}
+            attribute={
+              characterAttributes.find(
+                (attribute) => attribute.name === 'dexterity',
+              )!
+            }
             canEdit={canEdit}
           />
           <AttributeCard
             onLongPress={() =>
               ref.current?.show({ characterAttributes: characterAttributes })
             }
-            attribute={characterAttributes.find(
-              (attribute) => attribute.name === 'constitution',
-            )}
+            attribute={
+              characterAttributes.find(
+                (attribute) => attribute.name === 'constitution',
+              )!
+            }
             canEdit={canEdit}
           />
           <AttributeCard
             onLongPress={() =>
               ref.current?.show({ characterAttributes: characterAttributes })
             }
-            attribute={characterAttributes.find(
-              (attribute) => attribute.name === 'intelligence',
-            )}
+            attribute={
+              characterAttributes.find(
+                (attribute) => attribute.name === 'intelligence',
+              )!
+            }
             canEdit={canEdit}
           />
           <AttributeCard
             onLongPress={() =>
               ref.current?.show({ characterAttributes: characterAttributes })
             }
-            attribute={characterAttributes.find(
-              (attribute) => attribute.name === 'wisdom',
-            )}
+            attribute={
+              characterAttributes.find(
+                (attribute) => attribute.name === 'wisdom',
+              )!
+            }
             canEdit={canEdit}
           />
           <AttributeCard
             onLongPress={() =>
               ref.current?.show({ characterAttributes: characterAttributes })
             }
-            attribute={characterAttributes.find(
-              (attribute) => attribute.name === 'charisma',
-            )}
+            attribute={
+              characterAttributes.find(
+                (attribute) => attribute.name === 'charisma',
+              )!
+            }
             canEdit={canEdit}
           />
         </View>

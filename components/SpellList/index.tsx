@@ -54,10 +54,10 @@ export const SpellList = () => {
         renderItem={({ item }) => (
           <SpellListItem
             item={item}
-            onPress={() => handleSpellSelect(item.id)}
+            onPress={() => handleSpellSelect(item.id!)}
           />
         )}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerClassName="pb-5"
         keyboardShouldPersistTaps="handled"
         ListEmptyComponent={
           <Text className="text-center text-gray-500 mt-4">

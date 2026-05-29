@@ -5,7 +5,6 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import type { TabBarIndicatorProps, Route } from 'react-native-tab-view';
-import colors from 'tailwindcss/colors';
 
 export const CharactersTopBarIndicator = (
   props: TabBarIndicatorProps<Route>,
@@ -28,16 +27,8 @@ export const CharactersTopBarIndicator = (
 
   return (
     <Animated.View
-      style={[
-        {
-          width: tabWidth,
-          height: 2,
-          backgroundColor: colors.indigo[600],
-          position: 'absolute',
-          bottom: 0,
-        },
-        animatedStyle,
-      ]}
+      className="h-0.5 bg-indigo-600 absolute bottom-0"
+      style={[{ width: tabWidth }, animatedStyle]}
     />
   );
 };

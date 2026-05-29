@@ -30,7 +30,7 @@ export default function RootLayout() {
         navigationBarTranslucent={true}
       >
         <QueryClientProvider client={queryClient}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
+          <GestureHandlerRootView className="flex-1">
             <CharacterProvider>
               <TableProvider>
                 <BottomSheetModalProvider>

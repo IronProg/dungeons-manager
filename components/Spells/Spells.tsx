@@ -31,10 +31,8 @@ export const Spells = () => {
         {level > 0 && character && <SpellSlotsHeader level={level} />}
 
         <FlashList
-          contentContainerStyle={{
-            paddingHorizontal: 16,
-            paddingBottom: bottom + 64,
-          }}
+          contentContainerClassName="px-4 "
+          contentContainerStyle={{ paddingBottom: bottom + 64 }}
           data={spells}
           renderItem={({ item }) => (
             <SpellCard

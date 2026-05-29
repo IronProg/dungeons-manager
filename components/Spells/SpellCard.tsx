@@ -99,7 +99,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
                 </Text>
 
                 {spell.concentration && (
-                  <Image source={headIcon} style={{ width: 20, height: 20 }} />
+                  <Image source={headIcon} className="w-5 h-5" />
                 )}
 
                 {spell.ritual && (

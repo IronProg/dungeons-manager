@@ -139,7 +139,7 @@ export const Tables = () => {
               }
               ListEmptyComponent={TablesListEmpty}
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 20 }}
+              contentContainerClassName="pb-5"
             />
           )}
 

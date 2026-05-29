@@ -55,7 +55,9 @@ export const SpellForm = ({
   };
 
   const handleDelete = () => {
-    deleteSpell(initialData!.id, {
+    if (!initialData?.id) return;
+
+    deleteSpell(initialData.id, {
       onSuccess: () => {
         router.back();
       },

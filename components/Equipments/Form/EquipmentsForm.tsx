@@ -105,8 +105,7 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
             render={({ field, fieldState: { error } }) => (
               <>
                 <BottomSheetTextInput
-                  className="px-4 rounded-lg bg-gray-100"
-                  style={{ textAlignVertical: 'top' }}
+                  className="px-4 rounded-lg bg-gray-100 align-text-top"
                   onChangeText={field.onChange}
                   value={`${field.value ?? ''}`}
                   multiline

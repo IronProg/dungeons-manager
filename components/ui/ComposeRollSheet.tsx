@@ -15,7 +15,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -147,8 +147,8 @@ export const ComposeRollSheet = forwardRef<
       enablePanDownToClose
       enableDynamicSizing
       backdropComponent={renderBackdrop}
-      backgroundStyle={{ backgroundColor: 'white' }}
-      handleIndicatorStyle={{ backgroundColor: '#6366f1' }}
+      backgroundStyle={styles.background}
+      handleIndicatorStyle={styles.handleIndicator}
       onDismiss={handleDismiss}
     >
       <BottomSheetScrollView>
@@ -295,3 +295,8 @@ const Dice = ({
     </View>
   </View>
 );
+
+const styles = StyleSheet.create({
+  background: { backgroundColor: 'white' },
+  handleIndicator: { backgroundColor: '#6366f1' },
+});

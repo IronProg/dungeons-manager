@@ -95,7 +95,7 @@ export const EditTable = () => {
         renderItem={renderPlayerItem}
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
+        contentContainerClassName="p-4 pb-25"
         ListHeaderComponent={() => <EditTableName />}
         ListEmptyComponent={() => (
           <View className="items-center py-10">

@@ -114,7 +114,7 @@ export const CharactersDrawer = ({
             keyExtractor={(item: Character) => item.id!.toString()}
             ListEmptyComponent={CharactersDrawerListEmpty}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerClassName="pb-5"
           />
         </View>
 

@@ -1,6 +1,6 @@
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/Button';
 import type { FeaturesFormType } from '@/components/WeaponsAndTools/Features/useFeaturesForm';
@@ -106,9 +106,7 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
               <>
                 <BottomSheetTextInput
                   className="px-4 rounded-lg bg-gray-100"
-                  style={{
-                    textAlignVertical: 'top',
-                  }}
+                  style={styles.textTop}
                   onChangeText={field.onChange}
                   value={`${field.value || ''}`}
                   multiline
@@ -129,3 +127,5 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({ textTop: { textAlignVertical: 'top' } });

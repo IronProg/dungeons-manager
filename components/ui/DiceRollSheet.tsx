@@ -15,7 +15,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -134,8 +134,8 @@ export const DiceRollSheet = forwardRef<
       enablePanDownToClose
       enableDynamicSizing
       backdropComponent={renderBackdrop}
-      backgroundStyle={{ backgroundColor: 'white' }}
-      handleIndicatorStyle={{ backgroundColor: '#6366f1' }}
+      backgroundStyle={styles.background}
+      handleIndicatorStyle={styles.handleIndicator}
       onDismiss={handleDismiss}
     >
       <BottomSheetView>
@@ -152,11 +152,7 @@ export const DiceRollSheet = forwardRef<
             <View className="absolute inset-2 border border-indigo-500/20 rounded-[40px]" />
             <Text
               className={`text-8xl font-black ${isRolling ? 'text-indigo-400/50' : resultColor()}`}
-              style={{
-                textShadowColor: 'rgba(99, 102, 241, 0.3)',
-                textShadowOffset: { width: 0, height: 4 },
-                textShadowRadius: 12,
-              }}
+              style={styles.displayText}
             >
               {displayNumber ?? '?'}
             </Text>
@@ -187,11 +183,7 @@ export const DiceRollSheet = forwardRef<
                 <Text className="text-indigo-500 font-black text-xl">=</Text>
                 <Text
                   className={`text-6xl font-black ${resultColor()}`}
-                  style={{
-                    textShadowColor: 'rgba(0, 0, 0, 0.4)',
-                    textShadowOffset: { width: 0, height: 4 },
-                    textShadowRadius: 8,
-                  }}
+                  style={styles.resultText}
                 >
                   {finalRoll + bonuses.reduce((acc, curr) => acc + curr, 0)}
                 </Text>
@@ -219,4 +211,19 @@ export const DiceRollSheet = forwardRef<
       </BottomSheetView>
     </BottomSheetModal>
   );
+});
+
+const styles = StyleSheet.create({
+  background: { backgroundColor: 'white' },
+  handleIndicator: { backgroundColor: '#6366f1' },
+  displayText: {
+    textShadowColor: 'rgba(99, 102, 241, 0.3)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 12,
+  },
+  resultText: {
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 8,
+  },
 });

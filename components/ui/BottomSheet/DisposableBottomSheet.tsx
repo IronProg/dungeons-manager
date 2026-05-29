@@ -8,7 +8,7 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import type { ReactNode, Ref } from 'react';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export type DisposableBottomSheetHandle<T> = {
@@ -44,6 +44,8 @@ function DisposableBottomSheetInner<T>(
 
   if (params === null) return null;
 
+  const styles = buildStyles(bottom);
+
   return (
     <BottomSheet
       ref={innerRef}
@@ -60,8 +62,8 @@ function DisposableBottomSheetInner<T>(
       }}
     >
       <BottomSheetScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ padding: 24, paddingBottom: 24 + bottom }}
+        style={styles.flex}
+        contentContainerStyle={styles.contentContainer}
         keyboardShouldPersistTaps="handled"
       >
         {renderContent({
@@ -80,3 +82,9 @@ export const DisposableBottomSheet = forwardRef(DisposableBottomSheetInner) as <
     ref?: Ref<DisposableBottomSheetHandle<T>>;
   },
 ) => ReactNode;
+
+const buildStyles = (bottom: number) =>
+  StyleSheet.create({
+    flex: { flex: 1 },
+    contentContainer: { padding: 24, paddingBottom: 24 + bottom },
+  });

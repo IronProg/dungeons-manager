@@ -98,7 +98,7 @@ export default function DMDashboard() {
           )}
         </View>
       )}
-      contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+      contentContainerClassName="px-4 pb-8"
     />
   );
 }

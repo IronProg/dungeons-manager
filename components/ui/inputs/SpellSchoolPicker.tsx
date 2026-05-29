@@ -19,12 +19,9 @@ export const SpellSchoolPicker = ({
 }: SpellSchoolPickerProps) => {
   return (
     <View className="flex-1">
-      <View
-        className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-11"
-        style={{ width: '100%' }}
-      >
+      <View className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-11 w-full">
         <Picker
-          style={{ width: '100%', height: 50, color: colors.gray[900] }}
+          className="w-full h-[50px] color-gray-900"
           selectedValue={value}
           dropdownIconColor={colors.gray[900]}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}

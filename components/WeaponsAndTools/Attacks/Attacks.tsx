@@ -109,7 +109,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
                 </Text>
 
                 <ComposeDiceRollButton
-                  style={{ width: 14, height: 14 }}
+                  className="w-[14px] h-[14px]"
                   containerClassName="p-1.5"
                   rolls={attack.damages.map((damage) => {
                     const attributeBonus = damage.mainAttribute

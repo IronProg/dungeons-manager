@@ -27,7 +27,7 @@ export const DiceRollButton = ({
       hitSlop={10}
       className={cn('bg-indigo-200 p-2 rounded-full', containerClassName)}
     >
-      <Image source={d20} style={{ width: 20, height: 20, ...style }} />
+      <Image source={d20} className="w-5 h-5" style={style} />
     </TouchableOpacity>
   );
 };
