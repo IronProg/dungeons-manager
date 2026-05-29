@@ -1,4 +1,3 @@
-import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import {
   ChevronDown,
@@ -11,7 +10,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
 import { Markdown } from 'react-native-remark';
 
-import headIcon from '@/assets/icons/head.svg';
+import HeadIcon from '@/assets/icons/head.svg';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { colors } from '@/core/utils/colors';
@@ -98,9 +97,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
                   {i18n.t(`spells.schools.${spell.school}`)}
                 </Text>
 
-                {spell.concentration && (
-                  <Image source={headIcon} className="w-5 h-5" />
-                )}
+                {spell.concentration && <HeadIcon className="w-5 h-5" />}
 
                 {spell.ritual && (
                   <Text className="text-xs font-bold">
