@@ -1,6 +1,5 @@
-import api from 'core/api/api';
-
-import type { Character } from 'types/character';
+import api from '@/core/api/api';
+import type { Character } from '@/types/character';
 
 export const characterService = {
   fetchAll: (options: { params?: { tableId?: number } | null }) =>

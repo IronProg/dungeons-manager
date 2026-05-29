@@ -1,19 +1,17 @@
+import { Minus, Plus } from 'lucide-react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
 
-import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from '@/components/ui/Button';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import i18n from '@/i18n';
 import {
   useGetAllClasses,
   useUpdateAllClassesMutation,
-} from 'services/classes/class';
-
-import { Button } from 'components/ui/Button';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-
-import { CharacterClass } from 'types/character';
+} from '@/services/classes/class';
+import type { CharacterClass } from '@/types/character';
 
 type handleAlterFunction = {
   characterClass: CharacterClass;

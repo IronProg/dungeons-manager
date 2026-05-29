@@ -84,6 +84,30 @@ export default tseslint.config(
           message:
             'React.memo() é desnecessário com o React Compiler. Remova a memoização manual.',
         },
+        {
+          selector:
+            "ImportDeclaration[source.value=/^(assets|components|constants|contexts|core|hooks|i18n|modules|providers|services|types)($|[\\/.])/]",
+          message:
+            'Use @/ prefix for internal imports, e.g. @/components/Foo instead of components/Foo.',
+        },
+        {
+          selector:
+            "ExportNamedDeclaration[source.value=/^(assets|components|constants|contexts|core|hooks|i18n|modules|providers|services|types)($|[\\/.])/]",
+          message:
+            'Use @/ prefix for internal imports, e.g. @/components/Foo instead of components/Foo.',
+        },
+        {
+          selector:
+            "ExportAllDeclaration[source.value=/^(assets|components|constants|contexts|core|hooks|i18n|modules|providers|services|types)($|[\\/.])/]",
+          message:
+            'Use @/ prefix for internal imports, e.g. @/components/Foo instead of components/Foo.',
+        },
+        {
+          selector:
+            "ImportExpression[source.value=/^(assets|components|constants|contexts|core|hooks|i18n|modules|providers|services|types)($|[\\/.])/]",
+          message:
+            'Use @/ prefix for internal imports, e.g. @/components/Foo instead of components/Foo.',
+        },
       ],
 
       'react-hooks/rules-of-hooks': 'error',
@@ -131,6 +155,19 @@ export default tseslint.config(
           alphabetize: { order: 'asc', caseInsensitive: true },
           pathGroups: [
             { pattern: '@/**', group: 'internal' },
+          ],
+        },
+      ],
+
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['./**', '../**'],
+              message:
+                'Relative imports are not allowed. Use @/ prefix instead, e.g. @/components/Foo.',
+            },
           ],
         },
       ],

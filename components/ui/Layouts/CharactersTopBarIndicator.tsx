@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { TabBarIndicatorProps, Route } from 'react-native-tab-view';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import type { TabBarIndicatorProps, Route } from 'react-native-tab-view';
 import colors from 'tailwindcss/colors';
 
 export const CharactersTopBarIndicator = (

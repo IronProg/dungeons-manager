@@ -1,10 +1,9 @@
-import { CharacterDetailsBackground } from './CharacterDetailsBackground';
-import { CharacterDetailsProficiencies } from './CharacterDetailsProficiencies';
-import { CharacterDetailsMain } from './CharacterDetailsMain';
-import { CharacterDetailsClasses } from './CharacterDetailsClasses';
-
-import { Character } from 'types/character';
-import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
+import { CharacterDetailsBackground } from '@/components/CharacterDetails/CharacterDetailsBackground.tsx';
+import { CharacterDetailsClasses } from '@/components/CharacterDetails/CharacterDetailsClasses.tsx';
+import { CharacterDetailsMain } from '@/components/CharacterDetails/CharacterDetailsMain.tsx';
+import { CharacterDetailsProficiencies } from '@/components/CharacterDetails/CharacterDetailsProficiencies.tsx';
+import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
+import type { Character } from '@/types/character';
 
 type CharacterDetailsProps = {
   character: Character;
@@ -18,7 +17,7 @@ export const CharacterDetails = ({
   return (
     <AppKeyboardAvoidingView>
       <CharacterDetailsClasses character={character} canEdit={canEdit} />
-      <CharacterDetailsMain characterId={character.id!} canEdit={canEdit} />
+      <CharacterDetailsMain characterId={character.id} canEdit={canEdit} />
       <CharacterDetailsProficiencies character={character} canEdit={canEdit} />
       <CharacterDetailsBackground character={character} canEdit={canEdit} />
     </AppKeyboardAvoidingView>

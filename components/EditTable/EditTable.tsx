@@ -1,25 +1,23 @@
+import { useNavigation, useRouter } from 'expo-router';
+import { Trash2, UserX } from 'lucide-react-native';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { Text, TouchableOpacity, View, FlatList } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { Trash2, UserX } from 'lucide-react-native';
-import { useNavigation, useRouter } from 'expo-router';
-import i18n from 'i18n';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import colors from 'tailwindcss/colors';
 
+import { EditTableName } from '@/components/EditTable/EditTableName.tsx';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useTable } from '@/contexts/TableContext';
+import { showMessage } from '@/core/utils/messages';
+import i18n from '@/i18n';
+import { useGetCurrentUser } from '@/services/auth/auth.api';
 import {
   useDestroyTableMutation,
   useGetTable,
-} from 'services/tables/table.api';
-import { useTable } from 'contexts/TableContext';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { EditTableName } from './EditTableName';
-
-import type { TableUser } from 'types/table';
-import { useGetCurrentUser } from 'services/auth/auth.api';
-import colors from 'tailwindcss/colors';
-import { useDeleteTablesUserMutation } from 'services/tablesUsers/tablesUser.api';
-import { showMessage } from 'core/utils/messages';
+} from '@/services/tables/table.api';
+import { useDeleteTablesUserMutation } from '@/services/tablesUsers/tablesUser.api';
+import type { TableUser } from '@/types/table';
 
 export const EditTable = () => {
   const { table, tableId, clearTableId } = useTable();
@@ -94,43 +92,41 @@ export const EditTable = () => {
   const players = tableData?.tablesUsers || [];
 
   return (
-    <>
-      <View className="flex-1 bg-slate-200">
-        <FlatList
-          data={players}
-          renderItem={renderPlayerItem}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
-          ListHeaderComponent={() => <EditTableName />}
-          ListEmptyComponent={() => (
-            <View className="items-center py-10">
-              <Text className="text-gray-500 text-center">
-                {i18n.t('general.noDataFound')}
-              </Text>
-            </View>
-          )}
-        />
+    <View className="flex-1 bg-slate-200">
+      <FlatList
+        data={players}
+        renderItem={renderPlayerItem}
+        keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
+        ListHeaderComponent={() => <EditTableName />}
+        ListEmptyComponent={() => (
+          <View className="items-center py-10">
+            <Text className="text-gray-500 text-center">
+              {i18n.t('general.noDataFound')}
+            </Text>
+          </View>
+        )}
+      />
 
-        <KeyboardStickyView>
-          <View style={{ height: bottom }} />
-        </KeyboardStickyView>
+      <KeyboardStickyView>
+        <View style={{ height: bottom }} />
+      </KeyboardStickyView>
 
-        <ConfirmationModal
-          isVisible={!!userToKick}
-          onClose={() => setUserToKick(null)}
-          onConfirm={handleKickConfirm}
-          title={i18n.t('tables.kickPlayer')}
-          subTitle={i18n.t('tables.kickPlayerConfirm')}
-          buttonClassName="bg-red-500"
-        />
+      <ConfirmationModal
+        isVisible={!!userToKick}
+        onClose={() => setUserToKick(null)}
+        onConfirm={handleKickConfirm}
+        title={i18n.t('tables.kickPlayer')}
+        subTitle={i18n.t('tables.kickPlayerConfirm')}
+        buttonClassName="bg-red-500"
+      />
 
-        <ConfirmationModal
-          isVisible={deleting}
-          onClose={() => setDeleting(false)}
-          onConfirm={handleDeleteConfirm}
-        />
-      </View>
-    </>
+      <ConfirmationModal
+        isVisible={deleting}
+        onClose={() => setDeleting(false)}
+        onConfirm={handleDeleteConfirm}
+      />
+    </View>
   );
 };

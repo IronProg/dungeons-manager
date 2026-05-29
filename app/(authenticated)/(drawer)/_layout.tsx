@@ -1,21 +1,21 @@
-import { useEffect } from 'react';
-import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { ParamListBase } from '@react-navigation/native';
+import { DrawerActions } from '@react-navigation/native';
 import { useNavigation, useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
-import { DrawerActions, ParamListBase } from '@react-navigation/native';
 import { Menu } from 'lucide-react-native';
-import i18n from 'i18n';
+import { useEffect } from 'react';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 
-import { useGetAllCharacters } from 'services/characters/character.api';
-import { useSignOutMutation } from 'services/auth/auth.api';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useTable } from 'contexts/TableContext';
-
-import { DiceRollProvider } from 'providers/DiceRollProvider';
-import { CharactersDrawer } from 'components/Characters/CharactersDrawer';
-import { HintsModal } from 'components/CharacterSheet/HintsModal';
-import { RollToggleButton } from 'components/Roll/RollToggleButton';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { CharactersDrawer } from '@/components/Characters/CharactersDrawer';
+import { HintsModal } from '@/components/CharacterSheet/HintsModal';
+import { RollToggleButton } from '@/components/Roll/RollToggleButton';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useTable } from '@/contexts/TableContext';
+import i18n from '@/i18n';
+import { DiceRollProvider } from '@/providers/DiceRollProvider';
+import { useSignOutMutation } from '@/services/auth/auth.api';
+import { useGetAllCharacters } from '@/services/characters/character.api';
 
 export default function DrawerLayout() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function DrawerLayout() {
 
   useEffect(() => {
     if (!characterId && characters && characters.length > 0) {
-      setCharacterId(characters[0].id!);
+      setCharacterId(characters[0].id);
     } else if (characters?.length === 0) {
       if (table) {
         router.replace('/(authenticated)/(drawer)/new-character');

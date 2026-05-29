@@ -1,11 +1,10 @@
-import { Text, View } from 'react-native';
-import i18n from 'i18n';
-
-import { SPELL_SCHOOLS } from 'core/enums/spellSchool';
-
-import { SpellSchoolType } from 'types/character';
 import { Picker } from '@react-native-picker/picker';
-import { colors } from 'core/utils/colors';
+import { Text, View } from 'react-native';
+
+import { SPELL_SCHOOLS } from '@/core/enums/spellSchool';
+import { colors } from '@/core/utils/colors';
+import i18n from '@/i18n';
+import type { SpellSchoolType } from '@/types/character';
 
 type SpellSchoolPickerProps = {
   value?: SpellSchoolType;

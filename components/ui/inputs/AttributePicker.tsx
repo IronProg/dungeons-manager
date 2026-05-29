@@ -1,8 +1,9 @@
 import { Picker } from '@react-native-picker/picker';
-import { ATTRIBUTES } from 'core/enums/attributes';
-import { colors } from 'core/utils/colors';
-import i18n from 'i18n';
 import { Text, View } from 'react-native';
+
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import { colors } from '@/core/utils/colors';
+import i18n from '@/i18n';
 
 type AttributePickerProps = {
   value?: string | null;

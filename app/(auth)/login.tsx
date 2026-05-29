@@ -1,19 +1,18 @@
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import { Mail } from 'lucide-react-native';
 import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Controller } from 'react-hook-form';
-import { Mail } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
-import { Image } from 'expo-image';
-import i18n from 'i18n';
 
-import { LoginFormType, useLoginForm } from 'components/Auth/useLoginForm';
-import { useSignInMutation } from 'services/auth/auth.api';
-
-import { PasswordInput } from 'components/Auth/shared/PasswordInput';
-import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
-
-import TransparentLogo from 'assets/transparent-icon.png';
+import TransparentLogo from '@/assets/transparent-icon.png';
+import { PasswordInput } from '@/components/Auth/shared/PasswordInput';
+import { useLoginForm } from '@/components/Auth/useLoginForm';
+import type { LoginFormType } from '@/components/Auth/useLoginForm';
+import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
+import i18n from '@/i18n';
+import { useSignInMutation } from '@/services/auth/auth.api';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -120,7 +119,7 @@ export default function LoginScreen() {
           >
             {isPending ? (
               <View className="flex-row items-center">
-                <ActivityIndicator size={20} color={'white'} />
+                <ActivityIndicator size={20} color="white" />
 
                 <Text className="text-white font-bold text-base ml-2">
                   {i18n.t('auth.signingIn')}

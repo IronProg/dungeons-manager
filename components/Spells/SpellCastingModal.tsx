@@ -1,22 +1,20 @@
+import { Minus, Plus } from 'lucide-react-native';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
 
+import { Button } from '@/components/ui/Button';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { cn } from '@/core/helpers/cn';
+import { useDamageFormat } from '@/hooks/useDamageString';
+import { useSpellDamage } from '@/hooks/useSpellDamage';
+import i18n from '@/i18n';
 import {
   useGetAllCharacterSpellSlots,
   useUpdateSpellSlotMutation,
-} from 'services/spellSlots/spellSlot';
-import { cn } from 'core/helpers/cn';
-import { useDamageFormat } from 'hooks/useDamageString';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useSpellDamage } from 'hooks/useSpellDamage';
-
-import { Button } from 'components/ui/Button';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-
-import { Damage, Spell, SpellSlotLevelType } from 'types/character';
+} from '@/services/spellSlots/spellSlot';
+import type { Damage, Spell, SpellSlotLevelType } from '@/types/character';
 
 interface SpellCastingModalProps {
   spell?: Spell;

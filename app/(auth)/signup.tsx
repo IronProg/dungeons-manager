@@ -1,19 +1,16 @@
-import { useCallback } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { Controller } from 'react-hook-form';
-import { Mail, UserPlus } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
-import i18n from 'i18n';
-
-import {
-  RegisterFormType,
-  useRegisterForm,
-} from 'components/Auth/useRegisterForm';
-import { useSignUpMutation } from 'services/auth/auth.api';
-
+import { Mail, UserPlus } from 'lucide-react-native';
+import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { PasswordInput } from 'components/Auth/shared/PasswordInput';
-import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
+
+import { PasswordInput } from '@/components/Auth/shared/PasswordInput';
+import { useRegisterForm } from '@/components/Auth/useRegisterForm';
+import type { RegisterFormType } from '@/components/Auth/useRegisterForm';
+import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
+import i18n from '@/i18n';
+import { useSignUpMutation } from '@/services/auth/auth.api';
 
 export default function SignUpScreen() {
   const router = useRouter();

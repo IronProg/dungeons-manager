@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ATTRIBUTES } from 'core/enums/attributes';
-import { SKILLS } from 'core/enums/proficiencies';
 import { useForm } from 'react-hook-form';
-import { Skill } from 'types/character';
 import * as z from 'zod';
+
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import { SKILLS } from '@/core/enums/proficiencies';
+import type { Skill } from '@/types/character';
 
 export const schema = z.object({
   name: z.enum(SKILLS),

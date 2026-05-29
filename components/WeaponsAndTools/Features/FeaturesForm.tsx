@@ -1,19 +1,18 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { FeaturesFormType, useFeaturesForm } from './useFeaturesForm';
-import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from '@/components/ui/Button';
+import type { FeaturesFormType } from '@/components/WeaponsAndTools/Features/useFeaturesForm.tsx';
+import { useFeaturesForm } from '@/components/WeaponsAndTools/Features/useFeaturesForm.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateFeatureMutation,
   useUpdateFeatureMutation,
-} from 'services/features/feature';
-
-import { Button } from 'components/ui/Button';
-
-import { Feature } from 'types/character';
+} from '@/services/features/feature';
+import type { Feature } from '@/types/character';
 
 export type FeaturesFormProps = {
   feature?: Feature;
@@ -31,9 +30,9 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
 
   const onSubmit = useCallback(
     (values: FeaturesFormType) => {
-      if (!feature) {
-        createFeature(
-          { characterId: characterId!, ...values },
+      if (feature) {
+        updateFeature(
+          { characterId: characterId!, id: feature.id!, ...values },
           {
             onSuccess: () => {
               close();
@@ -41,8 +40,8 @@ export const FeaturesForm = ({ feature }: FeaturesFormProps) => {
           },
         );
       } else {
-        updateFeature(
-          { characterId: characterId!, id: feature.id!, ...values },
+        createFeature(
+          { characterId: characterId!, ...values },
           {
             onSuccess: () => {
               close();

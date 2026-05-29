@@ -1,22 +1,20 @@
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import i18n from 'i18n';
 
-import {
-  getCurrentExternalSpellsUrl,
-  getLastExternalSpellsUrl,
-  setLastExternalSpellsUrl,
-} from 'services/spellLists/spellList.store';
+import { SpellList } from '@/components/SpellList';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import i18n from '@/i18n';
 import {
   initExternalSpellsDb,
   getExternalSpellsCount,
   insertExternalSpells,
-} from 'services/spellLists/spellList.service';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-
-import { SpellList } from 'components/SpellList';
+} from '@/services/spellLists/spellList.service';
+import {
+  getCurrentExternalSpellsUrl,
+  getLastExternalSpellsUrl,
+  setLastExternalSpellsUrl,
+} from '@/services/spellLists/spellList.store';
 
 export default function SpellListScreen() {
   const router = useRouter();

@@ -1,12 +1,11 @@
-import {
-  KeyboardAwareScrollView,
-  KeyboardAwareScrollViewProps,
-} from 'react-native-keyboard-controller';
+import type { ReactNode } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { colors } from 'core/utils/colors';
+import type { KeyboardAwareScrollViewProps } from 'react-native-keyboard-controller';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import type { AnimatedScrollViewComponent } from 'react-native-keyboard-controller/lib/typescript/components/ScrollViewWithBottomPadding';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedScrollViewComponent } from 'react-native-keyboard-controller/lib/typescript/components/ScrollViewWithBottomPadding';
-import { ReactNode } from 'react';
+
+import { colors } from '@/core/utils/colors';
 
 type AppKeyboardAvoidingViewProps = {
   children: ReactNode;

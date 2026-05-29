@@ -1,14 +1,15 @@
-import { useCallback } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
-
-import { NewTableFormType, useNewTable } from './useNewTable';
-import { useCreateTableMutation } from 'services/tables/table.api';
 import { useRouter } from 'expo-router';
-import { showMessage } from 'core/utils/messages';
+import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import type { NewTableFormType } from '@/components/NewTable/useNewTable.tsx';
+import { useNewTable } from '@/components/NewTable/useNewTable.tsx';
+import { showMessage } from '@/core/utils/messages';
+import i18n from '@/i18n';
+import { useCreateTableMutation } from '@/services/tables/table.api';
 
 export const NewTable = () => {
   const { control, handleSubmit, reset } = useNewTable();

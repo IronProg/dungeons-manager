@@ -1,9 +1,8 @@
 import { useCallback, useMemo } from 'react';
 
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { ComposeRollParams } from 'contexts/DiceRollContext';
-import { Damage, Spell, SpellSlotLevelType } from 'types/character';
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { ComposeRollParams } from '@/contexts/DiceRollContext';
+import type { Damage, Spell, SpellSlotLevelType } from '@/types/character';
 
 type SpellDamageParams = { spell: Spell; levelCast: SpellSlotLevelType };
 type CantripDamageParams = { spell: Spell };
@@ -43,7 +42,7 @@ export const useSpellDamage = () => {
     (damagesArray: Damage[]) => {
       const allDices = damagesArray.map((damage) => {
         const attrBonus = damage.mainAttribute
-          ? [modifiers![damage.mainAttribute]!]
+          ? [modifiers![damage.mainAttribute]]
           : [];
         if (damage.customBonus) attrBonus.push(damage.customBonus);
 
@@ -61,10 +60,10 @@ export const useSpellDamage = () => {
 
         const foundDice = acc.find((dmg) => dmg.label === damageType);
 
-        if (!foundDice) {
-          acc.push(dice);
-        } else {
+        if (foundDice) {
           foundDice.amount = (foundDice.amount || 0) + (damageAmount || 0);
+        } else {
+          acc.push(dice);
         }
 
         return acc;

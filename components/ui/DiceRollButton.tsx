@@ -1,9 +1,10 @@
+import type { ImageStyle } from 'expo-image';
+import { Image } from 'expo-image';
 import { useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Image, ImageStyle } from 'expo-image';
 
-import { useDiceRoll } from 'contexts/DiceRollContext';
-import { cn } from 'core/helpers/cn';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { cn } from '@/core/helpers/cn';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const d20 = require('assets/icons/d20.svg');

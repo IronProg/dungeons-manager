@@ -1,13 +1,13 @@
-import { useCallback } from 'react';
-import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import { Control, Controller, useFieldArray } from 'react-hook-form';
 import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
+import { useCallback } from 'react';
+import type { Control } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
+import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 
-import { SpellFormValues } from './useSpellForm';
-
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { DamageDicePicker } from 'components/ui/inputs/DamageDicePicker';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { DamageDicePicker } from '@/components/ui/inputs/DamageDicePicker';
+import i18n from '@/i18n';
 
 type DamagesFormProps = {
   control: Control<SpellFormValues>;

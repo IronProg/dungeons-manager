@@ -1,17 +1,17 @@
-import i18n from 'i18n';
+import { CircleQuestionMark } from 'lucide-react-native';
+import { useState } from 'react';
 import {
   Text,
   TouchableOpacity,
   View,
   useWindowDimensions,
 } from 'react-native';
-import { CircleQuestionMark } from 'lucide-react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-import { useState } from 'react';
-import { colors } from 'core/utils/colors';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { colors } from '@/core/utils/colors';
+import i18n from '@/i18n';
 
 export const HintsModal = () => {
   const [hintsOpen, setHintsOpen] = useState(false);

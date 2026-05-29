@@ -1,13 +1,15 @@
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { SpeedFormType, useSpeedForm } from './useSpeedForm';
-import i18n from 'i18n';
-import { CharacterGeneralInfo } from 'types/character';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { SpeedFormType } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm.tsx';
+import { useSpeedForm } from '@/components/CharacterSheet/GeneralInfo/Speed/useSpeedForm.tsx';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type SpeedFormProps = {
   generalInfo: CharacterGeneralInfo;

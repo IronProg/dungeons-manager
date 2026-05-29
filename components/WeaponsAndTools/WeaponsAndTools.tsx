@@ -1,13 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { Attacks } from './Attacks/Attacks';
-import { Resources } from './Resources/Resources';
-import { Features } from './Features/Features';
+import { Attacks } from '@/components/WeaponsAndTools/Attacks/Attacks.tsx';
+import { Features } from '@/components/WeaponsAndTools/Features/Features.tsx';
+import { Resources } from '@/components/WeaponsAndTools/Resources/Resources.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
 
 export const WeaponsAndTools = () => {
   const { character, canEdit } = useCharacter();

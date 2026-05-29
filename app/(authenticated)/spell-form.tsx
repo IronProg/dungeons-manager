@@ -1,17 +1,15 @@
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import i18n from 'i18n';
 
-import { useGetCharacterSpells } from 'services/spells/spell.api';
+import { SpellForm } from '@/components/Spells/SpellForm/SpellForm';
+import i18n from '@/i18n';
 import {
   getExternalSpellById,
   initExternalSpellsDb,
-} from 'services/spellLists/spellList.service';
-
-import { SpellForm } from 'components/Spells/SpellForm/SpellForm';
-
-import { SpellSlotLevelType } from 'types/character';
+} from '@/services/spellLists/spellList.service';
+import { useGetCharacterSpells } from '@/services/spells/spell.api';
+import type { SpellSlotLevelType } from '@/types/character';
 
 export default function SpellFormScreen() {
   const router = useRouter();

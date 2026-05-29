@@ -1,14 +1,15 @@
 import { useRef, useCallback, useState } from 'react';
 
 import {
-  DiceRollSheet,
-  type DiceRollSheetHandle,
-} from 'components/ui/DiceRollSheet';
-import {
   ComposeRollSheet,
   type ComposeRollSheetHandle,
-} from 'components/ui/ComposeRollSheet';
-import { DiceRollContext, ComposeRollParams } from 'contexts/DiceRollContext';
+} from '@/components/ui/ComposeRollSheet';
+import {
+  DiceRollSheet,
+  type DiceRollSheetHandle,
+} from '@/components/ui/DiceRollSheet';
+import type { ComposeRollParams } from '@/contexts/DiceRollContext';
+import { DiceRollContext } from '@/contexts/DiceRollContext';
 
 export const DiceRollProvider = ({
   children,

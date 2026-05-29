@@ -1,11 +1,11 @@
-import {
+import type {
   Attribute,
   CharacterGeneralInfo,
   Currencies,
   Resource,
   SavingThrow,
   Skill,
-} from './character';
+} from '@/types/character.ts';
 
 export type TableCharacter = {
   id: number;

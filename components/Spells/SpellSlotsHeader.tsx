@@ -1,18 +1,16 @@
+import { Plus, Minus, RotateCcw } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { Plus, Minus, RotateCcw } from 'lucide-react-native';
-import i18n from 'i18n';
 
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useGetCharacterSpellSlots,
   useResetAllSpellSlotsMutation,
   useUpdateSpellSlotMutation,
-} from 'services/spellSlots/spellSlot';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-
-import { SpellSlot, SpellSlotLevelType } from 'types/character';
+} from '@/services/spellSlots/spellSlot';
+import type { SpellSlot, SpellSlotLevelType } from '@/types/character';
 
 interface SpellSlotsHeaderProps {
   level: SpellSlotLevelType;

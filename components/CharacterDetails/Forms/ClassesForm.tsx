@@ -1,18 +1,17 @@
-import { useCallback } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Controller, useFieldArray } from 'react-hook-form';
-import { Trash2 } from 'lucide-react-native';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { Trash2 } from 'lucide-react-native';
+import { useCallback } from 'react';
+import { Controller, useFieldArray } from 'react-hook-form';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useUpdateAllClassesMutation } from 'services/classes/class';
-
-import { Button } from 'components/ui/Button';
-import { CastingKindPicker } from 'components/ui/inputs/CastingKindPicker';
-import { HitDicePicker } from 'components/ui/inputs/HitDicePicker';
-
-import { ClassesFormType, useClassesForm } from './useClassesForm';
-import { Character, CharacterClass } from 'types/character';
+import { useClassesForm } from '@/components/CharacterDetails/Forms/useClassesForm.tsx';
+import type { ClassesFormType } from '@/components/CharacterDetails/Forms/useClassesForm.tsx';
+import { Button } from '@/components/ui/Button';
+import { CastingKindPicker } from '@/components/ui/inputs/CastingKindPicker';
+import { HitDicePicker } from '@/components/ui/inputs/HitDicePicker';
+import i18n from '@/i18n';
+import { useUpdateAllClassesMutation } from '@/services/classes/class';
+import type { Character, CharacterClass } from '@/types/character';
 
 export type ClassesFormProps = {
   character: Character;
@@ -157,7 +156,7 @@ export const ClassesForm = ({
                 onPress={() => handleDelete(index)}
                 hitSlop={10}
               >
-                <Trash2 size={18} color={'white'} />
+                <Trash2 size={18} color="white" />
               </TouchableOpacity>
             </View>
           </View>

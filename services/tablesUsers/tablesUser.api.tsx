@@ -1,9 +1,9 @@
-import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { tablesUserService } from './tablesUser.service';
-
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { tablesUserService } from '@/services/tablesUsers/tablesUser.service';
 
 export const useDeleteTablesUserMutation = () => {
   const queryClient = useQueryClient();

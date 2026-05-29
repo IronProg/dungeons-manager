@@ -1,19 +1,17 @@
+import { FlashList } from '@shopify/flash-list';
 import React, { useMemo, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlashList } from '@shopify/flash-list';
-import i18n from 'i18n';
 
-import { useCharacter } from 'contexts/CharacterContext';
-import { useGetCharacterSpells } from 'services/spells/spell.api';
-
-import { SpellCard } from './SpellCard';
-import { SpellLevelNavigator } from './SpellLevelNavigator';
-import { SpellSlotsHeader } from './SpellSlotsHeader';
-import { SpellsHeader } from './SpellsHeader';
-import { SpellCastingModal } from './SpellCastingModal';
-
-import { Spell, SpellSlotLevelType } from 'types/character';
+import { SpellCard } from '@/components/Spells/SpellCard.tsx';
+import { SpellCastingModal } from '@/components/Spells/SpellCastingModal.tsx';
+import { SpellLevelNavigator } from '@/components/Spells/SpellLevelNavigator.tsx';
+import { SpellsHeader } from '@/components/Spells/SpellsHeader.tsx';
+import { SpellSlotsHeader } from '@/components/Spells/SpellSlotsHeader.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useGetCharacterSpells } from '@/services/spells/spell.api';
+import type { Spell, SpellSlotLevelType } from '@/types/character';
 
 export const Spells = () => {
   const { bottom } = useSafeAreaInsets();

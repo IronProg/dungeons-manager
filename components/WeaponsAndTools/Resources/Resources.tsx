@@ -1,24 +1,21 @@
+import { Plus, Trash } from 'lucide-react-native';
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { Plus, Trash } from 'lucide-react-native';
-import i18n from 'i18n';
+import { Portal } from 'react-native-portalize';
 
-import { useCharacter } from 'contexts/CharacterContext';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import type { ResourcesFormProps } from '@/components/WeaponsAndTools/Resources/ResourcesForm.tsx';
+import { ResourcesForm } from '@/components/WeaponsAndTools/Resources/ResourcesForm.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useDeleteResourceMutation,
   useGetAllResources,
   useUpdateResourceMutation,
-} from 'services/resources/resource';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-
-import { Resource } from 'types/character';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { Portal } from 'react-native-portalize';
-import { ResourcesForm, ResourcesFormProps } from './ResourcesForm';
+} from '@/services/resources/resource';
+import type { Resource } from '@/types/character';
 
 type ResourcesProps = {
   canEdit: boolean;
@@ -77,7 +74,7 @@ export const Resources = ({ canEdit }: ResourcesProps) => {
             onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
-            <Plus size={16} color={'white'} />
+            <Plus size={16} color="white" />
           </TouchableOpacity>
         )}
       </View>

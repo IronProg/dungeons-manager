@@ -1,8 +1,8 @@
-import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { Text, View } from 'react-native';
 
-import { HIT_DICES } from 'core/enums/hitDices';
-import { colors } from 'core/utils/colors';
+import { HIT_DICES } from '@/core/enums/hitDices';
+import { colors } from '@/core/utils/colors';
 
 type HitDicePickerProps = {
   value?: string | null;

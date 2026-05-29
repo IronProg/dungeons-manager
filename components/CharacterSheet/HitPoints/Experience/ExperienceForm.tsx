@@ -1,16 +1,15 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { useUpdateCharacterMutation } from 'services/characters/character.api';
-import { ExperienceFormType, useExperienceForm } from './useExperienceForm';
-
-import { Button } from 'components/ui/Button';
-
-import type { Character } from 'types/character';
+import type { ExperienceFormType } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm.tsx';
+import { useExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/useExperienceForm.tsx';
+import { Button } from '@/components/ui/Button';
+import i18n from '@/i18n';
+import { useUpdateCharacterMutation } from '@/services/characters/character.api';
+import type { Character } from '@/types/character';
 
 export type ExperienceFormProps = { character: Character };
 

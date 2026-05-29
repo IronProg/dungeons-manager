@@ -1,20 +1,16 @@
-import i18n from 'i18n';
 import { Heart } from 'lucide-react-native';
 import { useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { CharacterGeneralInfo } from 'types/character';
-
-import { HitPointsForm, HitPointsFormProps } from './HitPointsForm';
-import {
-  HitPointsModifierForm,
-  HitPointsModifierFormProps,
-} from './HitPointsModifierForm';
+import type { HitPointsFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm.tsx';
+import { HitPointsForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm.tsx';
+import type { HitPointsModifierFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm.tsx';
+import { HitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm.tsx';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import i18n from '@/i18n';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 type HitPointsProps = {
   generalInfo: CharacterGeneralInfo;
@@ -40,7 +36,7 @@ export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
         onPress={() => modifierRef.current?.show({ generalInfo })}
         className="relative flex flex-col items-center justify-center w-[90px]"
       >
-        <Heart size={90} color={'#cbd5e1'} fill={'#e2e8f0'} />
+        <Heart size={90} color="#cbd5e1" fill="#e2e8f0" />
 
         <View className="absolute flex flex-col items-center justify-center h-full w-full">
           <Text className="text-gray-900 text-sm font-semibold text-center">

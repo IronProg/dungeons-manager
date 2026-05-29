@@ -1,11 +1,10 @@
-import { Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import i18n from 'i18n';
+import { Text, View } from 'react-native';
 
-import { SPELL_SLOT_LEVELS } from 'core/enums/spellSlotLevel';
-
-import { SpellSlotLevelType } from 'types/character';
-import { colors } from 'core/utils/colors';
+import { SPELL_SLOT_LEVELS } from '@/core/enums/spellSlotLevel';
+import { colors } from '@/core/utils/colors';
+import i18n from '@/i18n';
+import type { SpellSlotLevelType } from '@/types/character';
 
 type SpellLevelPickerProps = {
   value?: SpellSlotLevelType;

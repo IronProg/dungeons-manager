@@ -1,9 +1,9 @@
 import { Picker } from '@react-native-picker/picker';
-import i18n from 'i18n';
 import { Text, View } from 'react-native';
 
-import { CASTING_KINDS } from 'core/enums/castingKinds';
-import { colors } from 'core/utils/colors';
+import { CASTING_KINDS } from '@/core/enums/castingKinds';
+import { colors } from '@/core/utils/colors';
+import i18n from '@/i18n';
 
 type CastingKindPickerProps = {
   value?: string | null;

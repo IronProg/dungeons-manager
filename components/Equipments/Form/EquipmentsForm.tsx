@@ -1,19 +1,18 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { EquipmentsFormType, useEquipmentsForm } from './useEquipmentsForm';
-import { useCharacter } from 'contexts/CharacterContext';
+import type { EquipmentsFormType } from '@/components/Equipments/Form/useEquipmentsForm.tsx';
+import { useEquipmentsForm } from '@/components/Equipments/Form/useEquipmentsForm.tsx';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateEquipmentMutation,
   useUpdateEquipmentMutation,
-} from 'services/equipments/equipment.api';
-
-import { Button } from 'components/ui/Button';
-
-import { Equipment } from 'types/character';
+} from '@/services/equipments/equipment.api';
+import type { Equipment } from '@/types/character';
 
 export type EquipmentsFormProps = {
   equipment?: Equipment;
@@ -31,9 +30,9 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
 
   const onSubmit = useCallback(
     (values: EquipmentsFormType) => {
-      if (!equipment) {
-        createEquipment(
-          { characterId: characterId!, ...values },
+      if (equipment) {
+        updateEquipment(
+          { characterId: characterId!, id: equipment.id!, ...values },
           {
             onSuccess: () => {
               close();
@@ -41,8 +40,8 @@ export const EquipmentsForm = ({ equipment }: EquipmentsFormProps) => {
           },
         );
       } else {
-        updateEquipment(
-          { characterId: characterId!, id: equipment.id!, ...values },
+        createEquipment(
+          { characterId: characterId!, ...values },
           {
             onSuccess: () => {
               close();

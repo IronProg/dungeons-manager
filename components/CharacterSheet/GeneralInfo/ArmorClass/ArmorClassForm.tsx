@@ -1,14 +1,16 @@
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { ArmorClassFormType, useArmorClassForm } from './useArmorClassForm';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { CharacterGeneralInfo } from 'types/character';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { useCharacter } from 'contexts/CharacterContext';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { ArmorClassFormType } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/useArmorClassForm.ts';
+import { useArmorClassForm } from '@/components/CharacterSheet/GeneralInfo/ArmorClass/useArmorClassForm.ts';
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type ArmorClassFormProps = {
   generalInfo: CharacterGeneralInfo;
@@ -61,7 +63,7 @@ export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
               </>
             )}
           />
-          <Text className="text-center"></Text>
+          <Text className="text-center" />
         </View>
 
         <View className="min-w-0 flex-1">
@@ -73,7 +75,7 @@ export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
               <AttributePicker {...field} error={error?.message} />
             )}
           />
-          <Text className="text-center"></Text>
+          <Text className="text-center" />
         </View>
 
         <View className="min-w-0 flex-1">
@@ -85,7 +87,7 @@ export const ArmorClassForm = ({ generalInfo }: ArmorClassFormProps) => {
               <AttributePicker {...field} error={error?.message} />
             )}
           />
-          <Text className="text-center"></Text>
+          <Text className="text-center" />
         </View>
       </View>
 

@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Resolver, useForm } from 'react-hook-form';
+import type { Resolver } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { SPELL_SCHOOLS } from 'core/enums/spellSchool';
-import { ATTRIBUTES } from 'core/enums/attributes';
-import { damageSchema } from 'components/WeaponsAndTools/Attacks/useAttacksForm';
-
-import { Spell, SpellSlotLevelType } from 'types/character';
+import { damageSchema } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import { SPELL_SCHOOLS } from '@/core/enums/spellSchool';
+import type { Spell, SpellSlotLevelType } from '@/types/character';
 
 const spellAttackSchema = z.object({
   id: z.coerce.number<number>().optional(),

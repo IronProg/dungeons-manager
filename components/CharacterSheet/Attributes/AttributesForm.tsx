@@ -1,19 +1,22 @@
-import { Control, Controller } from 'react-hook-form';
-import { Text, View } from 'react-native';
-import { AttributesFormType, useAttributesForm } from './useAttributesForm';
-import { Attribute } from 'types/character';
-import { ATTRIBUTES } from 'core/enums/attributes';
-import { getModifier } from 'core/helpers/getModifier';
 import {
   BottomSheetScrollView,
   BottomSheetTextInput,
   useBottomSheet,
 } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
-import { useUpdateAllAttributesMutation } from 'services/attributes/attributes';
 import { useCallback } from 'react';
-import { Button } from 'components/ui/Button';
-import { useCharacter } from 'contexts/CharacterContext';
+import type { Control } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { AttributesFormType } from '@/components/CharacterSheet/Attributes/useAttributesForm.ts';
+import { useAttributesForm } from '@/components/CharacterSheet/Attributes/useAttributesForm.ts';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { ATTRIBUTES } from '@/core/enums/attributes';
+import { getModifier } from '@/core/helpers/getModifier';
+import i18n from '@/i18n';
+import { useUpdateAllAttributesMutation } from '@/services/attributes/attributes';
+import type { Attribute } from '@/types/character';
 
 export type AttributesFormProps = {
   characterAttributes: Attribute[];

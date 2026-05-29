@@ -1,11 +1,12 @@
+import { useCallback } from 'react';
+
+import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
+import i18n from '@/i18n';
 import {
   useGetBackground,
   useUpdateBackgroundMutation,
-} from 'services/backgrounds/background.api';
-import { Character } from 'types/character';
-import { DetailsEditableTextBox } from './shared/DetailsEditableTextBox';
-import { useCallback } from 'react';
-import i18n from 'i18n';
+} from '@/services/backgrounds/background.api';
+import type { Character } from '@/types/character';
 
 type UpdateBackgroundFormData = Omit<UpdateBackgroundParams, 'characterId'>;
 

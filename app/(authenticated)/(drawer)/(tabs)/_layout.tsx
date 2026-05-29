@@ -1,3 +1,5 @@
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { withLayoutContext, useNavigation } from 'expo-router';
 import { useEffect } from 'react';
 import {
   ActivityIndicator,
@@ -5,12 +7,10 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { withLayoutContext, useNavigation } from 'expo-router';
-import i18n from 'i18n';
 
-import { useCharacter } from 'contexts/CharacterContext';
-import { CharactersTopBarIndicator } from 'components/ui/Layouts/CharactersTopBarIndicator';
+import { CharactersTopBarIndicator } from '@/components/ui/Layouts/CharactersTopBarIndicator';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 
 const TopTabs = withLayoutContext(createMaterialTopTabNavigator().Navigator);
 
@@ -33,7 +33,7 @@ export default function TabLayout() {
           {i18n.t('loadings.characters')}
         </Text>
 
-        <ActivityIndicator color={'olive'} size={40} />
+        <ActivityIndicator color="olive" size={40} />
       </View>
     );
   }

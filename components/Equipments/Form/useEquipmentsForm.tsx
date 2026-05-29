@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Equipment } from 'types/character';
 import * as z from 'zod';
+
+import type { Equipment } from '@/types/character';
 
 const schema = z.object({
   name: z.string(),

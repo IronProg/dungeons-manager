@@ -1,14 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import { getAllAttacksKey } from 'services/attacks/attack';
-import { getAllAttributesKey } from 'services/attributes/attributes';
-import { getCharacterGeneralInfoKey } from 'services/generalInfos/generalInfos';
-import { getCharacterCurrencyKey } from 'services/currencies/currencies';
-import { getAllFeaturesKey } from 'services/features/feature';
-import { getAllResourcesKey } from 'services/resources/resource';
-import { getAllSavingThrowsKey } from 'services/savingThrows/savingThrow';
-import { getAllSkillsKey } from 'services/skills/skill';
-import { Character } from 'types/character';
+
+import { getAllAttacksKey } from '@/services/attacks/attack';
+import { getAllAttributesKey } from '@/services/attributes/attributes';
+import { getCharacterCurrencyKey } from '@/services/currencies/currencies';
+import { getAllFeaturesKey } from '@/services/features/feature';
+import { getCharacterGeneralInfoKey } from '@/services/generalInfos/generalInfos';
+import { getAllResourcesKey } from '@/services/resources/resource';
+import { getAllSavingThrowsKey } from '@/services/savingThrows/savingThrow';
+import { getAllSkillsKey } from '@/services/skills/skill';
+import type { Character } from '@/types/character';
 
 type useDetailedCharacterProps = {
   setInitialLoading: React.Dispatch<React.SetStateAction<boolean>>;

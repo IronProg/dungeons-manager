@@ -1,15 +1,15 @@
+import { useRouter } from 'expo-router';
+import { FileTextIcon } from 'lucide-react-native';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useRouter } from 'expo-router';
-import { FileTextIcon } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import i18n from 'i18n';
 
-import { MainCharacterSheetAttributes } from './Attributes/MainCharacterSheetAttributes';
-import { MainCharacterSheetGeneralInfo } from './GeneralInfo/MainCharacterSheetGeneralInfo';
-import { MainCharacterSheetHitPoints } from './HitPoints/MainCharacterSheetHitPoints';
-import { MainCharacterSheetSkills } from './Skills/MainCharacterSheetSkills';
+import { MainCharacterSheetAttributes } from '@/components/CharacterSheet/Attributes/MainCharacterSheetAttributes.tsx';
+import { MainCharacterSheetGeneralInfo } from '@/components/CharacterSheet/GeneralInfo/MainCharacterSheetGeneralInfo.tsx';
+import { MainCharacterSheetHitPoints } from '@/components/CharacterSheet/HitPoints/MainCharacterSheetHitPoints.tsx';
+import { MainCharacterSheetSkills } from '@/components/CharacterSheet/Skills/MainCharacterSheetSkills.tsx';
+import i18n from '@/i18n';
 
 export const MainCharacterSheet = () => {
   const { bottom } = useSafeAreaInsets();

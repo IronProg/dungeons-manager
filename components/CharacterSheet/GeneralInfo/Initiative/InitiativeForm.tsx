@@ -1,14 +1,16 @@
-import { Text, View } from 'react-native';
-import { InitiativeFormType, useInitiativeForm } from './useInitiativeForm';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
-import { CharacterGeneralInfo } from 'types/character';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { useUpdateGeneralInfoMutation } from 'services/generalInfos/generalInfos';
-import { useCharacter } from 'contexts/CharacterContext';
-import { Button } from 'components/ui/Button';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
+
+import type { InitiativeFormType } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm.ts';
+import { useInitiativeForm } from '@/components/CharacterSheet/GeneralInfo/Initiative/useInitiativeForm.ts';
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateGeneralInfoMutation } from '@/services/generalInfos/generalInfos';
+import type { CharacterGeneralInfo } from '@/types/character';
 
 export type InitiativeFormProps = {
   generalInfo: CharacterGeneralInfo;

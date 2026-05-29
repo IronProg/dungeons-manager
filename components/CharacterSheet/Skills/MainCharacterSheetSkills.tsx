@@ -1,25 +1,20 @@
 import React, { useCallback, useRef } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import i18n from 'i18n';
-
-import { useGetAllSkills } from 'services/skills/skill';
-import { useGetAllSavingThrows } from 'services/savingThrows/savingThrow';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useDiceRoll } from 'contexts/DiceRollContext';
-import { useGetSkillBonus } from 'hooks/useSkillBonus';
-
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
 import { Portal } from 'react-native-portalize';
-import {
-  SavingThrowForm,
-  SavingThrowFormProps,
-} from './SavingThrow/SavingThrowForm';
-import { SkillForm, SkillFormProps } from './Skill/SkillForm';
 
-import type { SavingThrow, Skill } from 'types/character';
+import type { SavingThrowFormProps } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm.tsx';
+import { SavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm.tsx';
+import type { SkillFormProps } from '@/components/CharacterSheet/Skills/Skill/SkillForm.tsx';
+import { SkillForm } from '@/components/CharacterSheet/Skills/Skill/SkillForm.tsx';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { useGetSkillBonus } from '@/hooks/useSkillBonus';
+import i18n from '@/i18n';
+import { useGetAllSavingThrows } from '@/services/savingThrows/savingThrow';
+import { useGetAllSkills } from '@/services/skills/skill';
+import type { SavingThrow, Skill } from '@/types/character';
 
 const snapPoints = [300, 600];
 

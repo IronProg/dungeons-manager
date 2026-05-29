@@ -1,12 +1,14 @@
-import { Control, Controller, useFieldArray } from 'react-hook-form';
-import { AttacksFormType } from './useAttacksForm';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Minus, Plus } from 'lucide-react-native';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+import { Minus, Plus } from 'lucide-react-native';
 import { useCallback } from 'react';
-import { DamageDicePicker } from 'components/ui/inputs/DamageDicePicker';
+import type { Control } from 'react-hook-form';
+import { Controller, useFieldArray } from 'react-hook-form';
+import { Text, TouchableOpacity, View } from 'react-native';
+
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { DamageDicePicker } from '@/components/ui/inputs/DamageDicePicker';
+import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm.ts';
+import i18n from '@/i18n';
 
 type DamagesFormProps = { control: Control<AttacksFormType> };
 

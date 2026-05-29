@@ -1,4 +1,4 @@
-import { SpellSchoolType } from 'types/character';
+import type { SpellSchoolType } from '@/types/character';
 
 export const SPELL_SCHOOLS: SpellSchoolType[] = [
   'abjuration',

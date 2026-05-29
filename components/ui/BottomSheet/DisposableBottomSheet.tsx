@@ -1,21 +1,22 @@
+import type {
+  BottomSheetBackdropProps,
+  BottomSheetProps,
+} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
+import type { ReactNode, Ref } from 'react';
 import {
   forwardRef,
   memo,
-  ReactNode,
-  Ref,
   useCallback,
   useImperativeHandle,
   useRef,
   useState,
 } from 'react';
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetBackdropProps,
-  BottomSheetProps,
-  BottomSheetScrollView,
-} from '@gorhom/bottom-sheet';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Keyboard } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export type DisposableBottomSheetHandle<T> = {
   show: (params: T) => void;

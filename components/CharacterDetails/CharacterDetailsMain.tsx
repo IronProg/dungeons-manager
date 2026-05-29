@@ -1,17 +1,16 @@
 import { useCallback } from 'react';
 import { View } from 'react-native';
-import i18n from 'i18n';
 
+import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
+import i18n from '@/i18n';
 import {
   useGetBackground,
   useUpdateBackgroundMutation,
-} from 'services/backgrounds/background.api';
+} from '@/services/backgrounds/background.api';
 import {
   useGetCharacter,
   useUpdateCharacterMutation,
-} from 'services/characters/character.api';
-
-import { DetailsEditableTextBox } from './shared/DetailsEditableTextBox';
+} from '@/services/characters/character.api';
 
 type UpdateBackgroundFormData = Omit<UpdateBackgroundParams, 'characterId'>;
 
@@ -56,63 +55,58 @@ export const CharacterDetailsMain = ({
   if (!character) return;
 
   return (
-    <>
-      <View className="flex flex-row items-between flex-wrap gap-y-4">
-        <View className="w-1/2 pr-2">
-          <DetailsEditableTextBox
-            disabled={!canEdit}
-            isLoading={characterPending}
-            text={character.name}
-            label={i18n.t('background.name')}
-            isPending={characterPending}
-            onSave={(newText, callback) =>
-              handleSaveCharacter(
-                { id: character.id!, name: newText },
-                callback,
-              )
-            }
-          />
-        </View>
-
-        <View className="w-1/2 pl-2">
-          <DetailsEditableTextBox
-            disabled={!canEdit}
-            isLoading={backgroundLoading}
-            text={background?.race}
-            label={i18n.t('background.race')}
-            isPending={backgroundPending}
-            onSave={(newText, callback) =>
-              handleSaveBackground({ race: newText }, callback)
-            }
-          />
-        </View>
-
-        <View className="w-1/2 pr-2">
-          <DetailsEditableTextBox
-            disabled={!canEdit}
-            isLoading={backgroundLoading}
-            text={background?.background}
-            label={i18n.t('background.background')}
-            isPending={backgroundPending}
-            onSave={(newText, callback) =>
-              handleSaveBackground({ background: newText }, callback)
-            }
-          />
-        </View>
-
-        <View className="w-1/2 pl-2">
-          <DetailsEditableTextBox
-            disabled={!canEdit}
-            isLoading={backgroundLoading}
-            text={background?.alignment}
-            label={i18n.t('background.alignment')}
-            isPending={backgroundPending}
-            onSave={(newText, callback) =>
-              handleSaveBackground({ alignment: newText }, callback)
-            }
-          />
-        </View>
+    <View className="flex flex-row items-between flex-wrap gap-y-4">
+      <View className="w-1/2 pr-2">
+        <DetailsEditableTextBox
+          disabled={!canEdit}
+          isLoading={characterPending}
+          text={character.name}
+          label={i18n.t('background.name')}
+          isPending={characterPending}
+          onSave={(newText, callback) =>
+            handleSaveCharacter({ id: character.id!, name: newText }, callback)
+          }
+        />
       </View>
-    </>
+
+      <View className="w-1/2 pl-2">
+        <DetailsEditableTextBox
+          disabled={!canEdit}
+          isLoading={backgroundLoading}
+          text={background?.race}
+          label={i18n.t('background.race')}
+          isPending={backgroundPending}
+          onSave={(newText, callback) =>
+            handleSaveBackground({ race: newText }, callback)
+          }
+        />
+      </View>
+
+      <View className="w-1/2 pr-2">
+        <DetailsEditableTextBox
+          disabled={!canEdit}
+          isLoading={backgroundLoading}
+          text={background?.background}
+          label={i18n.t('background.background')}
+          isPending={backgroundPending}
+          onSave={(newText, callback) =>
+            handleSaveBackground({ background: newText }, callback)
+          }
+        />
+      </View>
+
+      <View className="w-1/2 pl-2">
+        <DetailsEditableTextBox
+          disabled={!canEdit}
+          isLoading={backgroundLoading}
+          text={background?.alignment}
+          label={i18n.t('background.alignment')}
+          isPending={backgroundPending}
+          onSave={(newText, callback) =>
+            handleSaveBackground({ alignment: newText }, callback)
+          }
+        />
+      </View>
+    </View>
   );
 };

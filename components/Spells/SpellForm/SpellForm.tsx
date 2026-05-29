@@ -1,22 +1,21 @@
+import { useRouter } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import i18n from 'i18n';
 
+import { SpellAttackForm } from '@/components/Spells/SpellForm/SpellAttackForm.tsx';
+import { SpellFormInputs } from '@/components/Spells/SpellForm/SpellFormInputs.tsx';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import { useSpellForm } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateSpellMutation,
   useDeleteSpellMutation,
   useUpdateSpellMutation,
-} from 'services/spells/spell.api';
-import { useCharacter } from 'contexts/CharacterContext';
-import { SpellFormValues, useSpellForm } from './useSpellForm';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { SpellFormInputs } from './SpellFormInputs';
-import { SpellAttackForm } from './SpellAttackForm';
-import { AppKeyboardAvoidingView } from 'components/ui/AppKeyboardAvoidingView';
-
-import { Spell, SpellSlotLevelType } from 'types/character';
+} from '@/services/spells/spell.api';
+import type { Spell, SpellSlotLevelType } from '@/types/character';
 
 type SpellFormProps = {
   initialData?: Spell;
@@ -56,7 +55,7 @@ export const SpellForm = ({
   };
 
   const handleDelete = useCallback(() => {
-    deleteSpell(initialData!.id!, {
+    deleteSpell(initialData!.id, {
       onSuccess: () => {
         router.back();
       },
@@ -78,7 +77,7 @@ export const SpellForm = ({
               })
             }
             disabled={isSubmitting}
-            className={`bg-indigo-500 border border-indigo-600 p-4 rounded-xl items-center mb-2 mt-4`}
+            className="bg-indigo-500 border border-indigo-600 p-4 rounded-xl items-center mb-2 mt-4"
           >
             <Text className="text-white font-bold text-lg">
               {i18n.t('spellList.importFromExternalList')}

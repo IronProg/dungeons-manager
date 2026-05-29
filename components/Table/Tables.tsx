@@ -1,3 +1,5 @@
+import { useRouter } from 'expo-router';
+import { Users, Hash } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
   View,
@@ -6,24 +8,31 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { Users, Hash } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import i18n from 'i18n';
 
-import { showMessage } from 'core/utils/messages';
-import { useTable } from 'contexts/TableContext';
+import { TablesItem } from '@/components/Table/TablesItem.tsx';
+import { Button } from '@/components/ui/Button';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useTable } from '@/contexts/TableContext';
+import { showMessage } from '@/core/utils/messages';
+import i18n from '@/i18n';
 import {
   useGetAllTables,
   useJoinTableMutation,
   useLeaveTableMutation,
-} from 'services/tables/table.api';
+} from '@/services/tables/table.api';
+import type { Table } from '@/types/table';
 
-import { Button } from 'components/ui/Button';
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-
-import type { Table } from 'types/table';
-import { TablesItem } from './TablesItem';
+const TablesListEmpty = () => (
+  <View className="items-center py-10 px-4">
+    <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
+      <Users size={32} color="#9ca3af" />
+    </View>
+    <Text className="text-gray-500 text-center text-lg">
+      {i18n.t('tables.noTables') || "You don't belong to any tables yet."}
+    </Text>
+  </View>
+);
 
 export const Tables = () => {
   const { bottom } = useSafeAreaInsets();
@@ -74,17 +83,6 @@ export const Tables = () => {
       onSelect={() => setTableToSelect(item)}
       onDelete={() => setTableToDelete(item)}
     />
-  );
-
-  const ListEmptyComponent = () => (
-    <View className="items-center py-10 px-4">
-      <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
-        <Users size={32} color="#9ca3af" />
-      </View>
-      <Text className="text-gray-500 text-center text-lg">
-        {i18n.t('tables.noTables') || "You don't belong to any tables yet."}
-      </Text>
-    </View>
   );
 
   return (
@@ -139,7 +137,7 @@ export const Tables = () => {
               keyExtractor={(item, index) =>
                 item.id?.toString() || index.toString()
               }
-              ListEmptyComponent={ListEmptyComponent}
+              ListEmptyComponent={TablesListEmpty}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ paddingBottom: 20 }}
             />

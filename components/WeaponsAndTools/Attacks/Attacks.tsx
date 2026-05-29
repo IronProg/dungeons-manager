@@ -1,28 +1,25 @@
+import { Plus, Trash } from 'lucide-react-native';
 import { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
-import { Plus, Trash } from 'lucide-react-native';
-import i18n from 'i18n';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Portal } from 'react-native-portalize';
 
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { ComposeDiceRollButton } from '@/components/ui/ComposeDiceRollButton';
+import { DiceRollButton } from '@/components/ui/DiceRollButton';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import type { AttacksFormProps } from '@/components/WeaponsAndTools/Attacks/AttacksForm.tsx';
+import { AttacksForm } from '@/components/WeaponsAndTools/Attacks/AttacksForm.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useModalTextHeight } from '@/hooks/useModalTextHeight';
+import i18n from '@/i18n';
 import {
   useDeleteAttackMutation,
   useGetAllAttacks,
-} from 'services/attacks/attack';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-
-import { Attack } from 'types/character';
-import { DiceRollButton } from 'components/ui/DiceRollButton';
-import { ComposeDiceRollButton } from 'components/ui/ComposeDiceRollButton';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
-import { Portal } from 'react-native-portalize';
-import { AttacksForm, AttacksFormProps } from './AttacksForm';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useModalTextHeight } from 'hooks/useModalTextHeight';
+} from '@/services/attacks/attack';
+import type { Attack } from '@/types/character';
 
 type AttacksProps = { canEdit: boolean };
 
@@ -67,7 +64,7 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
             onPress={() => ref.current?.show({})}
             className="rounded-full bg-green-500 p-2"
           >
-            <Plus size={16} color={'white'} />
+            <Plus size={16} color="white" />
           </TouchableOpacity>
         )}
       </View>

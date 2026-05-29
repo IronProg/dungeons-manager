@@ -1,4 +1,13 @@
 import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import type {
+  BottomSheetBackdropProps,
+  BottomSheetModal as BottomSheetModalType,
+} from '@gorhom/bottom-sheet';
+import {
   forwardRef,
   useCallback,
   useEffect,
@@ -7,11 +16,6 @@ import {
   useState,
 } from 'react';
 import { Text, View } from 'react-native';
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -19,11 +23,8 @@ import Animated, {
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
-import type {
-  BottomSheetBackdropProps,
-  BottomSheetModal as BottomSheetModalType,
-} from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+
+import i18n from '@/i18n';
 
 const ROLL_DURATION_MS = 1500;
 

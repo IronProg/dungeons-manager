@@ -1,12 +1,12 @@
+import type { Control, UseFormWatch } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Controller, Control, UseFormWatch } from 'react-hook-form';
 import { Switch, TextInput } from 'react-native-gesture-handler';
-import i18n from 'i18n';
 
-import { SpellFormValues } from './useSpellForm';
-
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { SpellDamagesForm } from './SpellDamagesForm';
+import { SpellDamagesForm } from '@/components/Spells/SpellForm/SpellDamagesForm.tsx';
+import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm.ts';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import i18n from '@/i18n';
 
 interface SpellAttackFormProps {
   control: Control<SpellFormValues>;

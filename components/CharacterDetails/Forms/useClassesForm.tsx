@@ -2,9 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { HIT_DICES } from 'core/enums/hitDices';
-
-import { CharacterClass } from 'types/character';
+import { HIT_DICES } from '@/core/enums/hitDices';
+import type { CharacterClass } from '@/types/character';
 
 export const classSchema = z.object({
   id: z.coerce.number<number>().optional(),

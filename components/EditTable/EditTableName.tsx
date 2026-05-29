@@ -1,11 +1,13 @@
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useUpdateTableMutation } from 'services/tables/table.api';
-import { EditTableFormType, useEditTable } from './useEditTable';
-import { useTable } from 'contexts/TableContext';
 import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
-import { showMessage } from 'core/utils/messages';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+import type { EditTableFormType } from '@/components/EditTable/useEditTable.tsx';
+import { useEditTable } from '@/components/EditTable/useEditTable.tsx';
+import { useTable } from '@/contexts/TableContext';
+import { showMessage } from '@/core/utils/messages';
+import i18n from '@/i18n';
+import { useUpdateTableMutation } from '@/services/tables/table.api';
 
 export const EditTableName = () => {
   const { table, tableId } = useTable();

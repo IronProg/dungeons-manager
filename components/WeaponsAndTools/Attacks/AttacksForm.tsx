@@ -1,19 +1,21 @@
-import { Controller } from 'react-hook-form';
-import { Attack } from 'types/character';
-import { AttacksFormType, useAttacksForm } from './useAttacksForm';
-import { Text, View } from 'react-native';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
-import { DamagesForm } from './DamagesForm';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
+
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import { DamagesForm } from '@/components/WeaponsAndTools/Attacks/DamagesForm.tsx';
+import { useAttacksForm } from '@/components/WeaponsAndTools/Attacks/useAttacksForm.ts';
+import type { AttacksFormType } from '@/components/WeaponsAndTools/Attacks/useAttacksForm.ts';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateAttackMutation,
   useUpdateAttackMutation,
-} from 'services/attacks/attack';
-import { useCharacter } from 'contexts/CharacterContext';
-import { Button } from 'components/ui/Button';
+} from '@/services/attacks/attack';
+import type { Attack } from '@/types/character';
 
 export type AttacksFormProps = {
   attack?: Attack;
@@ -37,13 +39,7 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
         mainAttribute: values.mainAttribute,
       };
 
-      if (!attack) {
-        createAttack(params, {
-          onSuccess: () => {
-            close();
-          },
-        });
-      } else {
+      if (attack) {
         updateAttack(
           { ...params, id: attack.id! },
           {
@@ -52,6 +48,12 @@ export const AttacksForm = ({ attack }: AttacksFormProps) => {
             },
           },
         );
+      } else {
+        createAttack(params, {
+          onSuccess: () => {
+            close();
+          },
+        });
       }
     },
     [attack, characterId, createAttack, close, updateAttack],

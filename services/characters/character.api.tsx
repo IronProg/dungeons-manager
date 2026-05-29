@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { characterService } from './character.service';
-
-import type { Character } from 'types/character';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
-import { useTable } from 'contexts/TableContext';
+import { useTable } from '@/contexts/TableContext';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
+import { characterService } from '@/services/characters/character.service';
+import type { Character } from '@/types/character';
 
 interface useGetAllCharacterProps {
   useTableId?: boolean;

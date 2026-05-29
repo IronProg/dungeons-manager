@@ -1,5 +1,5 @@
-import api from 'core/api/api';
-import { Resource } from 'types/character';
+import api from '@/core/api/api';
+import type { Resource } from '@/types/character';
 
 export const resourcesService = {
   fetchAll: ({ characterId }: GetAllResourcesParams) =>

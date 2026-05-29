@@ -1,17 +1,17 @@
-import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+import refreshApi from '@/core/api/refresh-api.ts';
+import { queryClient } from '@/core/queryClient/queryClient';
 import {
   getAccessToken,
+  getRefreshToken,
   removeAccessToken,
   removeRefreshToken,
+  setAccessToken,
   setRefreshToken,
-} from 'core/utils/tokens';
-
-import { getRefreshToken, setAccessToken } from 'core/utils/tokens';
-
-import { jwtDecode } from 'jwt-decode';
-import { queryClient } from 'core/queryClient/queryClient';
-import { TokenResponse } from 'types/user';
-import refreshApi from '../refresh-api';
+} from '@/core/utils/tokens';
+import type { TokenResponse } from '@/types/user';
 
 let refreshPromise: Promise<TokenResponse> | null = null;
 let clockOffset = 0; // serverTime - localTime

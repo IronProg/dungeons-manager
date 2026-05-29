@@ -1,6 +1,7 @@
-import { useCharacter } from 'contexts/CharacterContext';
 import { useCallback } from 'react';
-import { useGetAllSkills } from 'services/skills/skill';
+
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useGetAllSkills } from '@/services/skills/skill';
 
 export const useGetSkillBonus = () => {
   const { modifiers, proficiencyBonus } = useCharacter();

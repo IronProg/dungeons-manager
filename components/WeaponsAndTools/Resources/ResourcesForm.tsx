@@ -1,19 +1,18 @@
-import { useCallback } from 'react';
-import { Text, View } from 'react-native';
-import { Controller } from 'react-hook-form';
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
+import { useCallback } from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { ResourcesFormType, useResourcesForm } from './useResourcesForm';
+import { Button } from '@/components/ui/Button';
+import type { ResourcesFormType } from '@/components/WeaponsAndTools/Resources/useResourcesForm.tsx';
+import { useResourcesForm } from '@/components/WeaponsAndTools/Resources/useResourcesForm.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useCreateResourceMutation,
   useUpdateResourceMutation,
-} from 'services/resources/resource';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import { Button } from 'components/ui/Button';
-
-import { Resource } from 'types/character';
+} from '@/services/resources/resource';
+import type { Resource } from '@/types/character';
 
 export type ResourcesFormProps = {
   resource?: Resource;
@@ -31,9 +30,9 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
 
   const onSubmit = useCallback(
     (values: ResourcesFormType) => {
-      if (!resource) {
-        createResource(
-          { characterId: characterId!, ...values },
+      if (resource) {
+        updateResource(
+          { characterId: characterId!, id: resource.id!, ...values },
           {
             onSuccess: () => {
               close();
@@ -41,8 +40,8 @@ export const ResourcesForm = ({ resource }: ResourcesFormProps) => {
           },
         );
       } else {
-        updateResource(
-          { characterId: characterId!, id: resource.id!, ...values },
+        createResource(
+          { characterId: characterId!, ...values },
           {
             onSuccess: () => {
               close();

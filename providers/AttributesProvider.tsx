@@ -1,7 +1,9 @@
-import { AttributesContext } from 'contexts/AttributesContext';
-import { useCharacter } from 'contexts/CharacterContext';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
-import { Attribute, Modifiers } from 'types/character';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { AttributesContext } from '@/contexts/AttributesContext';
+import { useCharacter } from '@/contexts/CharacterContext';
+import type { Attribute, Modifiers } from '@/types/character';
 
 const DEFAULT_MODIFIERS = {
   strength: 0,
@@ -35,25 +37,25 @@ export const AttributesProvider = ({ children }: { children: ReactNode }) => {
     if (characterAttributes.length === 6) {
       const newModifiers: Modifiers = {
         strength: characterAttributes.find((attr) => attr.name === 'strength')!
-          .modifier!,
+          .modifier,
         dexterity: characterAttributes.find(
           (attr) => attr.name === 'dexterity',
-        )!.modifier!,
+        )!.modifier,
         constitution: characterAttributes.find(
           (attr) => attr.name === 'constitution',
-        )!.modifier!,
+        )!.modifier,
         intelligence: characterAttributes.find(
           (attr) => attr.name === 'intelligence',
-        )!.modifier!,
+        )!.modifier,
         wisdom: characterAttributes.find((attr) => attr.name === 'wisdom')!
-          .modifier!,
+          .modifier,
         charisma: characterAttributes.find((attr) => attr.name === 'charisma')!
-          .modifier!,
+          .modifier,
       };
 
-      characterAttributes.forEach((attr) => {
+      for (const attr of characterAttributes) {
         newModifiers[attr.name] = attr.modifier;
-      });
+      }
 
       setModifiers(newModifiers);
     }

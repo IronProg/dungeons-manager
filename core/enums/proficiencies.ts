@@ -1,4 +1,4 @@
-import { SkillType } from 'types/character';
+import type { SkillType } from '@/types/character';
 
 export const PROFICIENCIES = [
   { name: 'acrobatics', attribute: 'dexterity' },

@@ -1,15 +1,16 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { TableContext } from 'contexts/TableContext';
-import { queryClient } from 'core/queryClient/queryClient';
-import { useGetTable } from 'services/tables/table.api';
-import { Table } from 'types/table';
-import { useGetCurrentUser } from 'services/auth/auth.api';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { TableContext } from '@/contexts/TableContext';
+import { queryClient } from '@/core/queryClient/queryClient';
 import {
   setTableId as setTableIdStorage,
   removeTableId,
-} from 'core/utils/table';
-import { useCharacter } from 'contexts/CharacterContext';
+} from '@/core/utils/table';
+import { useGetCurrentUser } from '@/services/auth/auth.api';
+import { useGetTable } from '@/services/tables/table.api';
+import type { Table } from '@/types/table';
 
 export type TableProviderProps = {
   tableId?: number;

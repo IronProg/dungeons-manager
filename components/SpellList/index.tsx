@@ -1,15 +1,14 @@
+import { FlashList } from '@shopify/flash-list';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Search } from 'lucide-react-native';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useDebounce } from 'use-debounce';
-import { FlashList } from '@shopify/flash-list';
-import { Search } from 'lucide-react-native';
-import i18n from 'i18n';
-
 import colors from 'tailwindcss/colors';
-import { searchExternalSpells } from 'services/spellLists/spellList.service';
+import { useDebounce } from 'use-debounce';
 
-import { Spell } from 'types/character';
+import i18n from '@/i18n';
+import { searchExternalSpells } from '@/services/spellLists/spellList.service';
+import type { Spell } from '@/types/character';
 
 export const SpellList = () => {
   const router = useRouter();
@@ -58,7 +57,7 @@ export const SpellList = () => {
         renderItem={({ item }) => (
           <SpellListItem
             item={item}
-            onPress={() => handleSpellSelect(item.id!)}
+            onPress={() => handleSpellSelect(item.id)}
           />
         )}
         contentContainerStyle={{ paddingBottom: 20 }}

@@ -1,11 +1,12 @@
-import { Character } from 'types/character';
-import { DetailsEditableTextBox } from './shared/DetailsEditableTextBox';
 import { useCallback } from 'react';
-import i18n from 'i18n';
+
+import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';
+import i18n from '@/i18n';
 import {
   useGetProficiency,
   useUpdateProficiencyMutation,
-} from 'services/proficiencies/proficiency.api';
+} from '@/services/proficiencies/proficiency.api';
+import type { Character } from '@/types/character';
 
 type UpdateProficiencyFormData = Omit<UpdateProficiencyParams, 'characterId'>;
 

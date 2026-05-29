@@ -1,4 +1,6 @@
+import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
+import { Controller } from 'react-hook-form';
 import {
   ActivityIndicator,
   Text,
@@ -6,18 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { Controller } from 'react-hook-form';
-import i18n from 'i18n';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { NewCharacterFormType, useNewCharacter } from './useNewCharacter';
-import { useCreateCharacterMutation } from 'services/characters/character.api';
-import { useRouter } from 'expo-router';
-import { useCharacter } from 'contexts/CharacterContext';
-import { useTable } from 'contexts/TableContext';
-
-import { Button } from 'components/ui/Button';
+import type { NewCharacterFormType } from '@/components/Characters/useNewCharacter.tsx';
+import { useNewCharacter } from '@/components/Characters/useNewCharacter.tsx';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useTable } from '@/contexts/TableContext';
+import i18n from '@/i18n';
+import { useCreateCharacterMutation } from '@/services/characters/character.api';
 
 export const NewCharacter = () => {
   const { character, setCharacterId } = useCharacter();
@@ -34,7 +34,7 @@ export const NewCharacter = () => {
     (values: NewCharacterFormType) => {
       createCharacter(values, {
         onSuccess: (data) => {
-          setCharacterId(data.id!);
+          setCharacterId(data.id);
           setWaitingForCharacter(true);
         },
       });

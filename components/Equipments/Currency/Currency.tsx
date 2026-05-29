@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Controller } from 'react-hook-form';
 import { ActivityIndicator, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Controller } from 'react-hook-form';
 import { useDebounce } from 'use-debounce';
-import i18n from 'i18n';
 
-import { useCurrencyForm } from './useCurrencyForm';
-import { useUpdateCurrenciesMutation } from 'services/currencies/currencies';
-import { useCharacter } from 'contexts/CharacterContext';
-
-import type { Currencies } from 'types/character';
+import { useCurrencyForm } from '@/components/Equipments/Currency/useCurrencyForm.tsx';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
+import { useUpdateCurrenciesMutation } from '@/services/currencies/currencies';
+import type { Currencies } from '@/types/character';
 
 type CurrencyProps = {
   currencies: Currencies;

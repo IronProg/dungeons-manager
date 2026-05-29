@@ -1,12 +1,14 @@
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import { Controller } from 'react-hook-form';
 import { Switch, Text, View } from 'react-native';
-import { SavingThrowFormType, useSavingThrowForm } from './useSavingThrowForm';
-import { SavingThrow } from 'types/character';
-import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import i18n from 'i18n';
-import { AttributePicker } from 'components/ui/inputs/AttributePicker';
-import { useUpdateSavingThrowMutation } from 'services/savingThrows/savingThrow';
-import { Button } from 'components/ui/Button';
+
+import type { SavingThrowFormType } from '@/components/CharacterSheet/Skills/SavingThrow/useSavingThrowForm.ts';
+import { useSavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/useSavingThrowForm.ts';
+import { Button } from '@/components/ui/Button';
+import { AttributePicker } from '@/components/ui/inputs/AttributePicker';
+import i18n from '@/i18n';
+import { useUpdateSavingThrowMutation } from '@/services/savingThrows/savingThrow';
+import type { SavingThrow } from '@/types/character';
 
 export type SavingThrowFormProps = {
   characterId: number;
@@ -44,7 +46,7 @@ export const SavingThrowForm = ({
         <View>
           <Controller
             control={control}
-            name={'proficiency'}
+            name="proficiency"
             render={({ field, fieldState: { error } }) => (
               <View className="flex flex-col items-start">
                 <Text>{i18n.t('general.proficiency')}</Text>
@@ -63,7 +65,7 @@ export const SavingThrowForm = ({
         <View className="min-w-0 flex-1">
           <Controller
             control={control}
-            name={'customBonus'}
+            name="customBonus"
             render={({ field, fieldState: { error } }) => (
               <View className="flex flex-col items-start">
                 <Text>{i18n.t('general.modifier')}</Text>
@@ -87,7 +89,7 @@ export const SavingThrowForm = ({
         <View className="min-w-0 flex-1">
           <Controller
             control={control}
-            name={'extraAttribute'}
+            name="extraAttribute"
             render={({ field, fieldState: { error } }) => (
               <>
                 <Text>{i18n.t('general.extraAttribute')}</Text>

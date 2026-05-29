@@ -1,24 +1,21 @@
+import { Plus } from 'lucide-react-native';
 import React, { useCallback, useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Plus } from 'lucide-react-native';
-import i18n from 'i18n';
-
-import { useCharacter } from 'contexts/CharacterContext';
-import { useDeleteEquipmentMutation } from 'services/equipments/equipment.api';
-
-import { EquipmentsForm, EquipmentsFormProps } from './Form/EquipmentsForm';
-import { EquipmentsList } from './EquipmentsList';
-import { ConfirmationModal } from 'components/ui/Modals/ConfirmationModal';
-import { BaseModal } from 'components/ui/Modals/BaseModal';
-import {
-  DisposableBottomSheet,
-  DisposableBottomSheetHandle,
-} from 'components/ui/BottomSheet/DisposableBottomSheet';
+import { ScrollView } from 'react-native-gesture-handler';
 import { Portal } from 'react-native-portalize';
 
-import { Equipment } from 'types/character';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useModalTextHeight } from 'hooks/useModalTextHeight';
+import { EquipmentsList } from '@/components/Equipments/EquipmentsList.tsx';
+import type { EquipmentsFormProps } from '@/components/Equipments/Form/EquipmentsForm.tsx';
+import { EquipmentsForm } from '@/components/Equipments/Form/EquipmentsForm.tsx';
+import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
+import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useModalTextHeight } from '@/hooks/useModalTextHeight';
+import i18n from '@/i18n';
+import { useDeleteEquipmentMutation } from '@/services/equipments/equipment.api';
+import type { Equipment } from '@/types/character';
 
 const snapPoints = [400];
 
@@ -83,7 +80,7 @@ export const Equipments = () => {
             className="rounded-full bg-green-500 p-2 absolute top-0 right-0"
             hitSlop={15}
           >
-            <Plus size={16} color={'white'} />
+            <Plus size={16} color="white" />
           </TouchableOpacity>
         )}
 

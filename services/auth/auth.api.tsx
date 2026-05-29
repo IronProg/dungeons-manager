@@ -1,17 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
-import { authService } from './auth.service';
-import { useAuthInvalidationAsync } from './auth.invalidate';
-
-import type { TokenResponse } from 'types/user';
+import type { ApiErrorResponse } from '@/core/error/handler';
+import { handleErrorMessage } from '@/core/error/handler';
 import {
   removeAccessToken,
   removeRefreshToken,
   setAccessToken,
   setRefreshToken,
-} from 'core/utils/tokens';
-import { ApiErrorResponse, handleErrorMessage } from 'core/error/handler';
-import { AxiosError } from 'axios';
+} from '@/core/utils/tokens';
+import { useAuthInvalidationAsync } from '@/services/auth/auth.invalidate';
+import { authService } from '@/services/auth/auth.service';
+import type { TokenResponse } from '@/types/user';
 
 export const authKey = ['auth'];
 

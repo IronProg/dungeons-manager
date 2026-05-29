@@ -1,24 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { FlashList } from '@shopify/flash-list';
 import { useRouter } from 'expo-router';
-import i18n from 'i18n';
 import { Check } from 'lucide-react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import colors from 'tailwindcss/colors';
 
+import { Skeleton } from '@/components/ui/Skeleton';
+import { useCharacter } from '@/contexts/CharacterContext';
+import { useTable } from '@/contexts/TableContext';
+import { cn } from '@/core/helpers/cn';
+import i18n from '@/i18n';
 import {
   useCloneCharacterMutation,
   useGetAllCharacters,
-} from 'services/characters/character.api';
-import { useCharacter } from 'contexts/CharacterContext';
-import { cn } from 'core/helpers/cn';
-import { useTable } from 'contexts/TableContext';
-import colors from 'tailwindcss/colors';
-
-import { Skeleton } from 'components/ui/Skeleton';
-
-import { Character } from 'types/character';
+} from '@/services/characters/character.api';
+import type { Character } from '@/types/character';
 
 export const ImportCharacter = () => {
   const { character, setCharacterId } = useCharacter();
@@ -47,7 +45,7 @@ export const ImportCharacter = () => {
 
     const data = await cloneCharacter({ id: selectedCharacter.id!, tableId });
 
-    setCharacterId(data.id!);
+    setCharacterId(data.id);
     setCharacterCloned(true);
   }, [cloneCharacter, selectedCharacter, setCharacterId, tableId]);
 

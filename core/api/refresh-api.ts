@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   camelizeRequestInterceptor,
   decamelizeResponseInterceptor,
-} from './interceptors/humps.interceptors';
+} from '@/core/api/interceptors/humps.interceptors';
 
 export const authHeader = 'Authorization';
 

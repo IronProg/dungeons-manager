@@ -1,10 +1,9 @@
 import { ActivityIndicator, Text, View } from 'react-native';
-import i18n from 'i18n';
 
-import { cn } from 'core/helpers/cn';
-
-import { BaseModal } from './BaseModal';
-import { Button } from '../Button';
+import { Button } from '@/components/ui/Button.tsx';
+import { BaseModal } from '@/components/ui/Modals/BaseModal.tsx';
+import { cn } from '@/core/helpers/cn';
+import i18n from '@/i18n';
 
 type ConfirmationModalProps = {
   isVisible: boolean;

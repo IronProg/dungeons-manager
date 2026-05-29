@@ -1,6 +1,3 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import i18n from 'i18n';
 import {
   Heart,
   Shield,
@@ -11,7 +8,11 @@ import {
   Package,
   Dna,
 } from 'lucide-react-native';
-import { TableCharacter } from 'types/table_character';
+import React from 'react';
+import { View, Text } from 'react-native';
+
+import i18n from '@/i18n';
+import type { TableCharacter } from '@/types/table_character';
 
 interface DMCharacterCardProps {
   character: TableCharacter;

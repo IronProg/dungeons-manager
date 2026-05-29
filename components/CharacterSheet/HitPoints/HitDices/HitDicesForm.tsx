@@ -1,18 +1,16 @@
+import { useBottomSheet } from '@gorhom/bottom-sheet';
+import { Minus, Plus } from 'lucide-react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Minus, Plus } from 'lucide-react-native';
-import i18n from 'i18n';
 
-import { useCharacter } from 'contexts/CharacterContext';
+import { Button } from '@/components/ui/Button';
+import { useCharacter } from '@/contexts/CharacterContext';
+import i18n from '@/i18n';
 import {
   useGetAllClasses,
   useUpdateAllClassesMutation,
-} from 'services/classes/class';
-
-import { Button } from 'components/ui/Button';
-
-import { CharacterClass } from 'types/character';
-import { useBottomSheet } from '@gorhom/bottom-sheet';
+} from '@/services/classes/class';
+import type { CharacterClass } from '@/types/character';
 
 type handleAddFunction = {
   characterClass: CharacterClass;

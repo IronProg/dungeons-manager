@@ -1,5 +1,5 @@
-import { AppState } from 'react-native';
 import { QueryClient, focusManager } from '@tanstack/react-query';
+import { AppState } from 'react-native';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
