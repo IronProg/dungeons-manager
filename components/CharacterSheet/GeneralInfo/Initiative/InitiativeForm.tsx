@@ -1,5 +1,4 @@
 import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 

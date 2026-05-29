@@ -3,7 +3,6 @@ import {
   BottomSheetTextInput,
   useBottomSheet,
 } from '@gorhom/bottom-sheet';
-import { useCallback } from 'react';
 import type { Control } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';

@@ -7,7 +7,7 @@ import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm
 import { SpellLevelPicker } from '@/components/ui/inputs/SpellLevelPicker';
 import { SpellSchoolPicker } from '@/components/ui/inputs/SpellSchoolPicker';
 import i18n from '@/i18n';
-import type { Spell, SpellSlotLevelType } from '@/types/character';
+import type { Spell } from '@/types/character';
 
 interface SpellFormInputsProps {
   spell?: Spell;

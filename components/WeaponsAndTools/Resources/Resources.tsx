@@ -1,5 +1,5 @@
 import { Plus, Trash } from 'lucide-react-native';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 

@@ -1,6 +1,5 @@
 import { ActionCable, Cable } from '@kesha-antonov/react-native-action-cable';
 import { useFocusEffect } from 'expo-router';
-import { useCallback } from 'react';
 
 import { getAccessTokenNonAsync } from '@/core/utils/tokens';
 

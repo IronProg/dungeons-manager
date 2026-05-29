@@ -1,6 +1,6 @@
 import { useNavigation, useRouter } from 'expo-router';
 import { Trash2, UserX } from 'lucide-react-native';
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

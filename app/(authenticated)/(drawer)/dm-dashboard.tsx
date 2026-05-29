@@ -2,7 +2,7 @@ import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
 import { Redirect, useRouter } from 'expo-router';
 import { Edit } from 'lucide-react-native';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 

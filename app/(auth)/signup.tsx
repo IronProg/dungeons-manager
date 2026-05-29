@@ -1,6 +1,5 @@
 import { useRouter } from 'expo-router';
 import { Mail, UserPlus } from 'lucide-react-native';
-import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';

@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 

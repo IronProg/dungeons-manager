@@ -1,5 +1,4 @@
 import { Zap } from 'lucide-react-native';
-import { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useCharacter } from '@/contexts/CharacterContext';

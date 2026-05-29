@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useCharacter } from '@/contexts/CharacterContext';
 import { TableContext } from '@/contexts/TableContext';

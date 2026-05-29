@@ -1,6 +1,5 @@
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Minus, Plus } from 'lucide-react-native';
-import { useCallback } from 'react';
 import type { Control } from 'react-hook-form';
 import { Controller, useFieldArray } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';

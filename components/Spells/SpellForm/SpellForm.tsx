@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import { SpellAttackForm } from '@/components/Spells/SpellForm/SpellAttackForm.tsx';

@@ -1,5 +1,5 @@
 import { Tent } from 'lucide-react-native';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 

@@ -1,5 +1,5 @@
 import { Skull } from 'lucide-react-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useDebounce } from 'use-debounce';
 

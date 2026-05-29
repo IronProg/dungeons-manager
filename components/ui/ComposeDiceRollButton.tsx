@@ -1,6 +1,5 @@
 import type { ImageStyle } from 'expo-image';
 import { Image } from 'expo-image';
-import { useCallback } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { useDiceRoll } from '@/contexts/DiceRollContext';

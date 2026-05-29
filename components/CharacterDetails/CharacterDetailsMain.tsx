@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { DetailsEditableTextBox } from '@/components/CharacterDetails/shared/DetailsEditableTextBox.tsx';

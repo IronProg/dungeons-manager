@@ -1,5 +1,5 @@
 import { Plus, Minus, RotateCcw } from 'lucide-react-native';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
