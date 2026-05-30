@@ -1,5 +1,3 @@
-import { api } from '@/i18n/locales/api/pt';
-
 export const pt = {
   tabs: {
     sheet: 'Ficha',
@@ -245,6 +243,7 @@ export const pt = {
     auth: 'Erro de autenticação',
     network_error: 'Erro de rede',
     unknown: 'Ocorreu um erro inesperado',
+    api_unknown_error: 'A API encontrou um erro desconhecido',
     min: 'Deve possuir ao menos %{min} caracteres',
     invalidEmail: 'Não é um email válido',
     passwordsDontMatch: 'As senhas não coincidem',
@@ -370,5 +369,4 @@ export const pt = {
     spellsSlotsButtons:
       'Você pode aumentar ou diminuir a quantidade de espaços de magia pressionando os botões nas laterais de cada nível de espaço de magia',
   },
-  api,
 };

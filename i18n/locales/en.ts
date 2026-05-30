@@ -1,5 +1,3 @@
-import { api } from '@/i18n/locales/api/en';
-
 export const en = {
   tabs: {
     sheet: 'Sheet',
@@ -244,6 +242,7 @@ export const en = {
     auth: 'Authentication error',
     network_error: 'Network error',
     unknown: 'An unknown error ocurred',
+    api_unknown_error: 'API encountered an unknown error',
     min: 'Must have at least %{min} characters',
     invalidEmail: 'Not a valid email',
     passwordsDontMatch: "Passwords don't match",
@@ -369,5 +368,4 @@ export const en = {
     spellsSlotsButtons:
       'You can raise or lower the amount of spell slots by pressing the buttons on the sides of each spell slot level',
   },
-  api,
 };
