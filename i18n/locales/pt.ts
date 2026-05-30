@@ -162,6 +162,21 @@ export const pt = {
     creating: 'Criando',
     register: 'Registrar-se',
     hasAccount: 'Já possui uma conta?',
+    forgotPassword: 'Esqueceu a senha',
+    forgotPasswordSubtitle:
+      'Digite seu e-mail e enviaremos instruções de redefinição',
+    sendInstructions: 'Enviar instruções',
+    sending: 'Enviando',
+    emailSent: 'E-mail enviado!',
+    emailSentSubtitle:
+      'Verifique seu e-mail para as instruções de redefinição de senha.',
+    backToLogin: 'Voltar ao login',
+    resetPassword: 'Redefinir senha',
+    resetPasswordSubtitle: 'Digite sua nova senha',
+    changePassword: 'Alterar senha',
+    changingPassword: 'Alterando senha',
+    passwordChanged: 'Senha alterada!',
+    passwordChangedSubtitle: 'Sua senha foi alterada com sucesso.',
   },
   background: {
     race: 'Raça',

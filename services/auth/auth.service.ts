@@ -15,4 +15,8 @@ export const authService = {
   },
   register: (data: SignUpParams) =>
     api.post<TokenResponse>('/signup', data).then((res) => res.data),
+  sendInstructions: (data: SendInstructionsParams) =>
+    api.post<void>('/password/send_instructions', data).then((res) => res.data),
+  changePassword: (data: ChangePasswordParams) =>
+    api.post<void>('/password/change', data).then((res) => res.data),
 };
