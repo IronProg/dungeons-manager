@@ -2,7 +2,12 @@ import { Redirect, Stack } from 'expo-router';
 
 import { useGetCurrentUser } from '@/services/auth/auth.api';
 
-export type AuthRoutesStack = { Login: undefined; SignUp: undefined };
+export type AuthRoutesStack = {
+  Login: undefined;
+  SignUp: undefined;
+  ForgotPassword: undefined;
+  ResetPassword: { token: string };
+};
 
 export default function AuthNavigator() {
   const { data: currentUser, isFetching } = useGetCurrentUser();
@@ -15,6 +20,8 @@ export default function AuthNavigator() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="login" />
       <Stack.Screen name="signup" />
+      <Stack.Screen name="forgot-password" />
+      <Stack.Screen name="reset-password" />
     </Stack>
   );
 }

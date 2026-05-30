@@ -15,3 +15,13 @@ type UserSignUpParams = {
   email: string;
   password: string;
 };
+
+type SendInstructionsParams = {
+  email: string;
+};
+
+type ChangePasswordParams = {
+  token: string;
+  password: string;
+  passwordConfirmation: string;
+};

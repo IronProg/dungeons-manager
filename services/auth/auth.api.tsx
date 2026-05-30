@@ -60,6 +60,30 @@ export const useSignOutMutation = () => {
   });
 };
 
+export const useSendInstructionsMutation = () => {
+  return useMutation<
+    void,
+    AxiosError<ApiErrorResponse>,
+    SendInstructionsParams
+  >({
+    mutationFn: (params: SendInstructionsParams) =>
+      authService.sendInstructions(params),
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
+  });
+};
+
+export const useChangePasswordMutation = () => {
+  return useMutation<void, AxiosError<ApiErrorResponse>, ChangePasswordParams>({
+    mutationFn: (params: ChangePasswordParams) =>
+      authService.changePassword(params),
+    onError: ({ response }) => {
+      handleErrorMessage(response?.data);
+    },
+  });
+};
+
 export const useSignUpMutation = () => {
   const { invalidateQueriesAsync } = useAuthInvalidationAsync();
   const queryClient = useQueryClient();
