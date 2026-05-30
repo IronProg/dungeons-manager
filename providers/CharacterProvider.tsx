@@ -59,7 +59,7 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
 
     setDetailedCharacterData(character);
 
-    const modifiers = buildModifiers(character.characterAttributes);
+    const modifiers = buildModifiers(character?.characterAttributes);
 
     setModifiers(modifiers);
   }, [character, setDetailedCharacterData]);

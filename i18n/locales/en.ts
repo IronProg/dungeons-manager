@@ -238,6 +238,7 @@ export const en = {
   },
   errors: {
     couldNotLoadCharacter: 'Error while loading character',
+    couldNotLoadCharacters: 'Error while loading characters',
     general: 'Error',
     auth: 'Authentication error',
     network_error: 'Network error',

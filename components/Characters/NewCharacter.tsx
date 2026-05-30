@@ -74,7 +74,7 @@ export const NewCharacter = () => {
         {!!table && (
           <View className="pt-20 px-10 gap-4">
             <Text className="font-medium text-center">
-              {i18n.t('characters.importActionText')}
+              {i18n.t('character.importActionText')}
             </Text>
 
             <Button
@@ -84,7 +84,7 @@ export const NewCharacter = () => {
                 )
               }
               className="bg-slate-600"
-              text={i18n.t('characters.importActionButton')}
+              text={i18n.t('character.importActionButton')}
             />
           </View>
         )}

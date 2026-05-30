@@ -239,6 +239,7 @@ export const pt = {
   },
   errors: {
     couldNotLoadCharacter: 'Erro ao carregar personagem',
+    couldNotLoadCharacters: 'Erro ao carregar personagens',
     general: 'Erro',
     auth: 'Erro de autenticação',
     network_error: 'Erro de rede',
