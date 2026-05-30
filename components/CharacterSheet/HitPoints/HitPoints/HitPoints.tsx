@@ -26,6 +26,7 @@ export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
   const modifierRef =
     useRef<DisposableBottomSheetHandle<HitPointsModifierFormProps>>(null);
   const hitPointsMaximum =
+    generalInfo.hitPointsLimitTemporary !== null &&
     generalInfo.hitPointsLimitTemporary === 0
       ? generalInfo.hitPointsLimit
       : generalInfo.hitPointsLimitTemporary;
