@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { CASTING_KINDS } from '@/core/enums/castingKinds';
 import { colors } from '@/core/utils/colors';
@@ -20,7 +20,7 @@ export const CastingKindPicker = ({
     <>
       <View className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-12 w-full">
         <Picker
-          className="w-full h-[50px] color-gray-900"
+          style={styles.picker}
           selectedValue={value}
           dropdownIconColor={colors.gray[900]}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
@@ -40,3 +40,11 @@ export const CastingKindPicker = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  picker: {
+    height: 50,
+    width: '100%',
+    color: colors.gray[900],
+  },
+});

@@ -28,7 +28,6 @@ export const useGetBackground = () => {
   >({
     queryKey: getBackgroundKey({ characterId: characterId! }),
     queryFn: () => backgroundService.fetch({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

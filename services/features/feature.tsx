@@ -28,7 +28,6 @@ export const useGetAllFeatures = () => {
   >({
     queryKey: getAllFeaturesKey({ characterId: characterId! }),
     queryFn: () => featuresService.fetchAll({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

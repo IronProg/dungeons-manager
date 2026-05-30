@@ -28,7 +28,6 @@ export const useGetProficiency = () => {
   >({
     queryKey: getProficiencyKey({ characterId: characterId! }),
     queryFn: () => proficiencyService.fetch({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

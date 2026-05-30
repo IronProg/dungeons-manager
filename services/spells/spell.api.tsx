@@ -37,7 +37,6 @@ export const useGetCharacterSpells = (level: SpellSlotLevelType) => {
   >({
     queryKey: getCharacterSpellsKey({ characterId: characterId!, level }),
     queryFn: () => spellService.fetchAll(characterId!, level),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

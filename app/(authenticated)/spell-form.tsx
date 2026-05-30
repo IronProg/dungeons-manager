@@ -1,13 +1,9 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
 import { SpellForm } from '@/components/Spells/SpellForm/SpellForm';
 import i18n from '@/i18n';
-import {
-  getExternalSpellById,
-  initExternalSpellsDb,
-} from '@/services/spellLists/spellList.service';
+import { getExternalSpellById } from '@/services/spellLists/spellList.service';
 import { useGetCharacterSpells } from '@/services/spells/spell.api';
 import type { SpellSlotLevelType } from '@/types/character';
 
@@ -24,10 +20,6 @@ export default function SpellFormScreen() {
   const parsedImportedSpellId = importedSpellId
     ? parseInt(importedSpellId, 10)
     : undefined;
-
-  useEffect(() => {
-    if (parsedImportedSpellId) initExternalSpellsDb();
-  }, [parsedImportedSpellId]);
 
   const { data: spells, isLoading } = useGetCharacterSpells(spellLevel);
 

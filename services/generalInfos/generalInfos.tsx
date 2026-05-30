@@ -28,7 +28,6 @@ export const useGetCharacterGeneralInfo = () => {
   >({
     queryKey: getCharacterGeneralInfoKey({ characterId: characterId! }),
     queryFn: () => generalInfoService.fetch({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

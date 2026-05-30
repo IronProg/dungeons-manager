@@ -6,7 +6,6 @@ import { SpellList } from '@/components/SpellList';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import i18n from '@/i18n';
 import {
-  initExternalSpellsDb,
   getExternalSpellsCount,
   insertExternalSpells,
 } from '@/services/spellLists/spellList.service';
@@ -27,9 +26,7 @@ export default function SpellListScreen() {
 
   useEffect(() => {
     const initDb = async () => {
-      initExternalSpellsDb();
-
-      const lastUrl = await getLastExternalSpellsUrl();
+      const lastUrl = getLastExternalSpellsUrl();
 
       if (lastUrl !== currentUrl) {
         setDownloadPromptVisible(true);

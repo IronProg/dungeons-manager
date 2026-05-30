@@ -1,17 +1,24 @@
-import { QueryClient, focusManager } from '@tanstack/react-query';
-import { AppState } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
+import {
+  QueryClient,
+  focusManager,
+  onlineManager,
+} from '@tanstack/react-query';
+import { AppState, Platform } from 'react-native';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 30_000,
-      gcTime: 5 * 60_000,
+      staleTime: 24 * 60 * 60 * 1000,
+      gcTime: 24 * 60 * 60 * 1000,
       retry: false,
       refetchOnReconnect: true,
       refetchOnWindowFocus: false,
+      networkMode: 'offlineFirst',
     },
     mutations: {
       retry: false,
+      networkMode: 'offlineFirst',
     },
   },
 });
@@ -24,3 +31,14 @@ focusManager.setEventListener((handleFocus) => {
 
   return () => subscription.remove();
 });
+
+// Offline detection for native platforms (web uses default browser events)
+if (Platform.OS !== 'web') {
+  onlineManager.setEventListener((setOnline) => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setOnline(!!state.isConnected);
+    });
+
+    return () => unsubscribe();
+  });
+}

@@ -28,7 +28,6 @@ export const useGetAllClasses = () => {
   >({
     queryKey: getAllClassesKey({ characterId: characterId! }),
     queryFn: () => classService.fetchAll({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

@@ -21,7 +21,6 @@ export const useGetAllCharacters = ({
   return useQuery({
     queryKey: ['characters', params],
     queryFn: () => characterService.fetchAll({ params }),
-    staleTime: 10 * 60_000,
   });
 };
 
@@ -29,7 +28,6 @@ export const useGetCharacter = ({ id }: GetCharacterParams) => {
   return useQuery<Character, Error, Character, ['characters', number]>({
     queryKey: ['characters', id!],
     queryFn: () => characterService.fetch({ id }),
-    staleTime: 10 * 60_000,
     enabled: !!id,
   });
 };

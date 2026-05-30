@@ -28,7 +28,6 @@ export const useGetAllEquipments = () => {
   >({
     queryKey: getAllEquipmentsKey({ characterId: characterId! }),
     queryFn: () => equipmentService.fetchAll({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

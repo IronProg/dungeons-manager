@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { SPELL_SCHOOLS } from '@/core/enums/spellSchool';
 import { colors } from '@/core/utils/colors';
@@ -21,7 +21,7 @@ export const SpellSchoolPicker = ({
     <View className="flex-1">
       <View className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-11 w-full">
         <Picker
-          className="w-full h-[50px] color-gray-900"
+          style={styles.picker}
           selectedValue={value}
           dropdownIconColor={colors.gray[900]}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
@@ -40,3 +40,11 @@ export const SpellSchoolPicker = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  picker: {
+    height: 50,
+    width: '100%',
+    color: colors.gray[900],
+  },
+});

@@ -1898,6 +1898,11 @@
   resolved "https://registry.yarnpkg.com/@radix-ui/react-use-layout-effect/-/react-use-layout-effect-1.1.1.tgz#0c4230a9eed49d4589c967e2d9c0d9d60a23971e"
   integrity sha512-RbJRS4UWQFkzHTTwVymMTUv8EqYhOp8dOOviLj2ugtTiXRaRQS7GLGxZTLL1jWhMeoSCf5zmcZkqTl9IiYfXcQ==
 
+"@react-native-community/netinfo@11.4.1":
+  version "11.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-11.4.1.tgz#a3c247aceab35f75dd0aa4bfa85d2be5a4508688"
+  integrity sha512-B0BYAkghz3Q2V09BF88RA601XursIEA111tnc2JOaN7axJWmNefmfjZqw/KdSxKZp7CZUuPpjBmz/WCR9uaHYg==
+
 "@react-native-picker/picker@2.11.4":
   version "2.11.4"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
@@ -2270,17 +2275,31 @@
   dependencies:
     "@typescript-eslint/utils" "^8.48.0"
 
-"@tanstack/query-core@5.94.5":
-  version "5.94.5"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.94.5.tgz#4857cb0b0add6089ad69a894afde019ad7aa17d4"
-  integrity sha512-Vx1JJiBURW/wdNGP45afjrqn0LfxYwL7K/bSrQvNRtyLGF1bxQPgUXCpzscG29e+UeFOh9hz1KOVala0N+bZiA==
+"@tanstack/query-core@5.100.14":
+  version "5.100.14"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.100.14.tgz#6bf11c9a6a33dbbbba21f05d880b93930d80000c"
+  integrity sha512-5X41dGpxgeaHISCRW2oYwcSycZeULZzAunaudXT9ov1KOTj9xwt0CH6hbwqP1/z74ZWF7rYFnDpyYH07XFcZew==
 
-"@tanstack/react-query@^5.90.20":
-  version "5.94.5"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.94.5.tgz#69f45ecae33e775e71fab212ff5aa72b570fd9da"
-  integrity sha512-1wmrxKFkor+q8l+ygdHmv0Sq5g84Q3p4xvuJ7AdSIAhQQ7udOt+ZSZ19g1Jea3mHqtlTslLGJsmC4vHFgP0P3A==
+"@tanstack/query-persist-client-core@5.100.14":
+  version "5.100.14"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.100.14.tgz#121e5e9a940e9797a384ef8c85cbcbf20b047cd3"
+  integrity sha512-mn60cqoQO/xB6aHxp/hxlSj5mcdcTO4tjj4SXSz5MKzkaMZnvcEGySz3+cGQOT8McREN56fL41L0eR//v5RwNw==
   dependencies:
-    "@tanstack/query-core" "5.94.5"
+    "@tanstack/query-core" "5.100.14"
+
+"@tanstack/react-query-persist-client@^5.100.14":
+  version "5.100.14"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.100.14.tgz#002815b3c93cbaf9072734bc72df0e1aaad2fc52"
+  integrity sha512-lQSnbJva85o7jGcJiIDrA8s3VGGx9zaBCgAljm0H1QcScU2iaDYnPuRLg/xI0k0dC45pgg9RTvpgJx5iVHRsjA==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.100.14"
+
+"@tanstack/react-query@^5.100.14":
+  version "5.100.14"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.100.14.tgz#799fe305421fd84bf2f6df40930c859c945b42ab"
+  integrity sha512-oOr6aRdSFEwWhzxEkD/9ZcItM3+LjBSkeVmadWKwUssAHTsqd/7bOjWrX4AbvEkoEhgAxzN0Xk6H/aYzXiYBAw==
+  dependencies:
+    "@tanstack/query-core" "5.100.14"
 
 "@tybys/wasm-util@^0.10.0":
   version "0.10.1"
@@ -3007,11 +3026,6 @@ available-typed-arrays@^1.0.7:
   integrity sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==
   dependencies:
     possible-typed-array-names "^1.0.0"
-
-await-lock@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/await-lock/-/await-lock-2.2.2.tgz#a95a9b269bfd2f69d22b17a321686f551152bcef"
-  integrity sha512-aDczADvlvTGajTDjcjpJMqRkOF6Qdz3YbPZm/PyW6tKPkx2hlYBzxMhEywM/tU72HrVZjgl5VCdRuMlA7pZ8Gw==
 
 axios@^1.13.3:
   version "1.13.6"
@@ -4596,13 +4610,6 @@ expo-server@^55.0.7:
   version "55.0.7"
   resolved "https://registry.yarnpkg.com/expo-server/-/expo-server-55.0.7.tgz#51bdb292daa87194ce19fe163e32d34b704d50b9"
   integrity sha512-Cc1btFyPsD9P4DT2xd1pG/uR96TLVMx0W+dPm9Gjk1uDV9xuzvMcUsY7nf9bt4U5pGyWWkCXmPJcKwWfdl51Pw==
-
-expo-sqlite@~55.0.13:
-  version "55.0.13"
-  resolved "https://registry.yarnpkg.com/expo-sqlite/-/expo-sqlite-55.0.13.tgz#df5f491d87f7566b3d6e36afe8953ccb8f518bd1"
-  integrity sha512-1iGQKuZZLnZ/jfa63j1klaOXyzYTu7C98oHqV1aiJisdauCVUEh3duADZ6pT3w5KYKT9ysDySgEHjUcgINojRg==
-  dependencies:
-    await-lock "^2.2.2"
 
 expo-status-bar@~55.0.5:
   version "55.0.5"
@@ -7478,6 +7485,11 @@ react-native-keyboard-controller@1.21.3:
   integrity sha512-Fv4lXoHZueU8E+BeI0t6d1YTU79F9KJoPvpfUJfJGGfT8EE3fEFq47RA5VEGj08Uh5+ZIIgWAbKuohY/Y0ARVw==
   dependencies:
     react-native-is-edge-to-edge "^1.2.1"
+
+react-native-mmkv@^3.2.0:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-3.3.3.tgz#1f0326f6314e23725af8145964343224d074e6cd"
+  integrity sha512-GMsfOmNzx0p5+CtrCFRVtpOOMYNJXuksBVARSQrCFaZwjUyHJdQzcN900GGaFFNTxw2fs8s5Xje//RDKj9+PZA==
 
 react-native-modal@^14.0.0-rc.1:
   version "14.0.0-rc.1"
