@@ -19,11 +19,11 @@ export const handleErrorMessage = (response?: ApiErrorResponse) => {
     return;
   }
 
-  messages.forEach((message) => {
+  for (const message of messages) {
     Toast.show({
       type: 'error',
       text1: i18n.t('errors.general'),
       text2: message,
     });
-  });
+  }
 };
