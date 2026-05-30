@@ -5,9 +5,9 @@ import { useGetCurrentUser } from '@/services/auth/auth.api';
 export type AuthRoutesStack = { Login: undefined; SignUp: undefined };
 
 export default function AuthNavigator() {
-  const { data: currentUser, isFetching, isError } = useGetCurrentUser();
+  const { data: currentUser, isFetching } = useGetCurrentUser();
 
-  if (currentUser && !isFetching && !isError) {
+  if (currentUser && !isFetching) {
     return <Redirect href="/(authenticated)/(drawer)/(tabs)" />;
   }
 

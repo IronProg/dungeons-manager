@@ -1,14 +1,13 @@
-import { getItemAsync, setItemAsync } from 'expo-secure-store';
-
+import { spellListStorage } from '@/core/storage/mmkv';
 import i18n from '@/i18n';
 
 const SPELL_LIST_URL_KEY = 'spell_list_url';
 
-export const getLastExternalSpellsUrl = async () =>
-  getItemAsync(SPELL_LIST_URL_KEY);
+export const getLastExternalSpellsUrl = () =>
+  spellListStorage.getString(SPELL_LIST_URL_KEY) ?? null;
 
-export const setLastExternalSpellsUrl = async (url: string) =>
-  setItemAsync(SPELL_LIST_URL_KEY, url);
+export const setLastExternalSpellsUrl = (url: string) =>
+  spellListStorage.set(SPELL_LIST_URL_KEY, url);
 
 export const getCurrentExternalSpellsUrl = () =>
   i18n.locale === 'pt'

@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { DAMAGE_DICES } from '@/core/enums/damageDices';
 import { colors } from '@/core/utils/colors';
@@ -19,7 +19,7 @@ export const DamageDicePicker = ({
     <>
       <View className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-12 w-full">
         <Picker
-          className="w-full h-[50px] color-gray-900"
+          style={styles.picker}
           selectedValue={value}
           dropdownIconColor={colors.gray[900]}
           onValueChange={(itemValue) => itemValue && onChange(itemValue)}
@@ -36,3 +36,11 @@ export const DamageDicePicker = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  picker: {
+    height: 50,
+    width: '100%',
+    color: colors.gray[900],
+  },
+});

@@ -28,7 +28,6 @@ export const useGetCharacterCurrency = () => {
   >({
     queryKey: getCharacterCurrencyKey({ characterId: characterId! }),
     queryFn: () => currenciesService.fetch({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

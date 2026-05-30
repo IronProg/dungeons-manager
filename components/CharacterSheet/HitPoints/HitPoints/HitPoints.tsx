@@ -26,7 +26,9 @@ export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
   const modifierRef =
     useRef<DisposableBottomSheetHandle<HitPointsModifierFormProps>>(null);
   const hitPointsMaximum =
-    generalInfo.hitPointsLimitTemporary ?? generalInfo.hitPointsLimit;
+    generalInfo.hitPointsLimitTemporary === 0
+      ? generalInfo.hitPointsLimit
+      : generalInfo.hitPointsLimitTemporary;
 
   return (
     <>
@@ -38,24 +40,11 @@ export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
       >
         <Heart size={90} color="#cbd5e1" fill="#e2e8f0" />
 
-        <View className="absolute flex flex-col items-center justify-center h-full w-full">
-          <Text className="text-gray-900 text-sm font-semibold text-center">
-            {i18n.t('titles.hp')}
-          </Text>
-
-          <View className="flex flex-col">
-            <Text className="text-2xl font-bold text-center">
-              {generalInfo.hitPoints} / {hitPointsMaximum}
-            </Text>
-
-            {generalInfo.temporaryHitPoints &&
-              generalInfo.temporaryHitPoints > 0 && (
-                <Text className="text-2xl font-bold text-center">
-                  ({generalInfo.temporaryHitPoints})
-                </Text>
-              )}
-          </View>
-        </View>
+        <HitPointsText
+          hitPoints={generalInfo.hitPoints}
+          hitPointsMaximum={hitPointsMaximum ?? 0}
+          temporaryHitPoints={generalInfo.temporaryHitPoints ?? 0}
+        />
       </TouchableOpacity>
 
       <Portal>
@@ -74,3 +63,31 @@ export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
     </>
   );
 };
+
+const HitPointsText = ({
+  hitPoints,
+  hitPointsMaximum,
+  temporaryHitPoints,
+}: {
+  hitPoints: number;
+  hitPointsMaximum: number;
+  temporaryHitPoints: number;
+}) => (
+  <View className="absolute flex flex-col items-center justify-center h-full w-full">
+    <Text className="text-gray-900 text-sm font-semibold text-center">
+      {i18n.t('titles.hp')}
+    </Text>
+
+    <View className="flex flex-col">
+      <Text className="text-2xl font-bold text-center">
+        {hitPoints} / {hitPointsMaximum}
+      </Text>
+
+      {temporaryHitPoints > 0 && (
+        <Text className="text-2xl font-bold text-center">
+          ({temporaryHitPoints})
+        </Text>
+      )}
+    </View>
+  </View>
+);

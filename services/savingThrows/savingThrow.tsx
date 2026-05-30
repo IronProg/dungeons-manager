@@ -28,7 +28,6 @@ export const useGetAllSavingThrows = () => {
   >({
     queryKey: getAllSavingThrowsKey({ characterId: characterId! }),
     queryFn: () => savingThrowService.fetchAll({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

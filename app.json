@@ -16,8 +16,7 @@
       "expo-localization",
       "expo-secure-store",
       "expo-build-properties",
-      "expo-image",
-      "expo-sqlite"
+      "expo-image"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",

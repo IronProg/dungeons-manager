@@ -11,7 +11,6 @@ export const useGetAllTables = () => {
   return useQuery({
     queryKey: ['tables'],
     queryFn: tableService.fetchAll,
-    staleTime: 10 * 60_000,
   });
 };
 
@@ -19,7 +18,6 @@ export const useGetTable = ({ id }: GetTableParams) => {
   return useQuery<Table, Error, Table, ['tables', number]>({
     queryKey: ['tables', id!],
     queryFn: () => tableService.fetch({ id }),
-    staleTime: 10 * 60_000,
     enabled: !!id,
   });
 };
@@ -33,7 +31,7 @@ export const useGetTableCharactersResume = ({ id }: GetTableParams) => {
   >({
     queryKey: ['tables', id!, 'characters'],
     queryFn: () => tableService.fetchCharactersResume({ id }),
-    staleTime: 10 * 60_000,
+    staleTime: 30_000,
     enabled: !!id,
   });
 };

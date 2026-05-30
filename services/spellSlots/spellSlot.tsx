@@ -42,7 +42,6 @@ export const useGetCharacterSpellSlots = (level: number) => {
   >({
     queryKey: getCharacterSpellSlotsKey({ characterId: characterId!, level }),
     queryFn: () => spellSlotService.fetchAll(characterId!, level),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };
@@ -58,7 +57,6 @@ export const useGetAllCharacterSpellSlots = () => {
   >({
     queryKey: getAllCharacterSpellSlotsKey({ characterId: characterId! }),
     queryFn: () => spellSlotService.fetchAll(characterId!),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };

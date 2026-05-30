@@ -19,7 +19,6 @@ export const useGetNote = () => {
   return useQuery<Note, Error, Note, ['characters', number, 'note']>({
     queryKey: getNoteKey({ characterId: characterId! }),
     queryFn: () => noteService.fetch({ characterId: characterId! }),
-    staleTime: 10 * 60_000,
     enabled: !!character,
   });
 };
