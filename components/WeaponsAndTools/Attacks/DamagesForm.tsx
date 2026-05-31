@@ -68,18 +68,18 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
             key={field.fieldId}
             className="flex flex-col gap-0 border-b border-gray-200 mb-2"
           >
-            <View className="flex flex-row gap-2">
+            <View className="flex flex-row gap-2 -mt-4">
               <View className="grow flex-1">
                 <Text>{i18n.t('general.dice')}</Text>
 
-                <View className="flex flex-row items-center gap-1">
+                <View className="flex flex-row items-start gap-1">
                   <Controller
                     control={control}
                     name={`damagesAttributes.${index}.diceAmount`}
                     render={({ field, fieldState: { error } }) => (
                       <>
                         <BottomSheetTextInput
-                          className="rounded-lg bg-gray-100 h-15 text-base grow"
+                          className="rounded-lg bg-gray-100 h-15 text-base flex-1 min-w-20"
                           onChangeText={field.onChange}
                           keyboardType="numeric"
                           value={`${field.value ?? ''}`}
@@ -92,13 +92,13 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                     )}
                   />
 
-                  <Text>d</Text>
+                  <Text className="mt-3">d</Text>
 
                   <Controller
                     control={control}
                     name={`damagesAttributes.${index}.diceSize`}
                     render={({ field, fieldState: { error } }) => (
-                      <>
+                      <View className="flex-1 min-w-40">
                         <DamageDicePicker
                           onChange={field.onChange}
                           value={field.value}
@@ -108,13 +108,13 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
                         <Text className="text-red-400 text-sm">
                           {error?.message}
                         </Text>
-                      </>
+                      </View>
                     )}
                   />
                 </View>
               </View>
 
-              <View className="w-16">
+              <View className="w-20">
                 <Text>{i18n.t('general.mod')}</Text>
 
                 <Controller
@@ -138,7 +138,7 @@ export const DamagesForm = ({ control }: DamagesFormProps) => {
               </View>
             </View>
 
-            <View className="flex flex-row gap-2">
+            <View className="flex flex-row gap-2 -mt-4">
               <View className="w-40">
                 <Text>{i18n.t('general.attribute')}</Text>
 

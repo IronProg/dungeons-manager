@@ -26,7 +26,7 @@ export const ComposeDiceRollButton = ({
       hitSlop={10}
       className={cn('bg-indigo-200 p-2 rounded-full', containerClassName)}
     >
-      <D20 className={cn('w-5 h-5', className)} />
+      <D20 width={20} height={20} className={cn('w-5 h-5', className)} />
     </TouchableOpacity>
   );
 };

@@ -116,7 +116,7 @@ export const ClassesForm = ({
                   field: { value, onChange },
                   fieldState: { error },
                 }) => (
-                  <View>
+                  <View className="w-[92]">
                     <Text className="font-medium">
                       {i18n.t('classes.hitDice')}
                     </Text>
