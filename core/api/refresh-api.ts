@@ -4,6 +4,7 @@ import {
   camelizeRequestInterceptor,
   decamelizeResponseInterceptor,
 } from '@/core/api/interceptors/humps.interceptors';
+import { localeRequestInterceptor } from '@/core/api/interceptors/locale.interceptors';
 
 export const authHeader = 'Authorization';
 
@@ -27,6 +28,7 @@ const refreshApi = axios.create({
 });
 
 refreshApi.interceptors.request.use(camelizeRequestInterceptor);
+refreshApi.interceptors.request.use(localeRequestInterceptor);
 
 refreshApi.interceptors.response.use(decamelizeResponseInterceptor);
 

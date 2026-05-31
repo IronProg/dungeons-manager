@@ -5,5 +5,5 @@ export type ApiCallbacks<T> = {
 
 export interface GlobalMutationVariables {
   supressError?: boolean;
-  [key: string]: unknown; // Permite outras propriedades (nome, email, etc)
+  [key: string]: unknown;
 }

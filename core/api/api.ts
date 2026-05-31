@@ -9,6 +9,7 @@ import {
   camelizeRequestInterceptor,
   decamelizeResponseInterceptor,
 } from '@/core/api/interceptors/humps.interceptors';
+import { localeRequestInterceptor } from '@/core/api/interceptors/locale.interceptors';
 import { tableRequestInterceptor } from '@/core/api/interceptors/table.interceptors';
 
 export const authHeader = 'Authorization';
@@ -33,6 +34,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(camelizeRequestInterceptor);
+api.interceptors.request.use(localeRequestInterceptor);
 api.interceptors.request.use(refreshTokenInterceptor);
 api.interceptors.request.use(authRequestInterceptor);
 api.interceptors.request.use(tableRequestInterceptor);

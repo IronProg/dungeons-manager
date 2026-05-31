@@ -19,7 +19,7 @@ export const useGetAllCharacters = ({
   const params = useTableId ? { tableId } : undefined;
 
   return useQuery({
-    queryKey: ['characters', params],
+    queryKey: ['characters', 'all', params],
     queryFn: () => characterService.fetchAll({ params }),
   });
 };

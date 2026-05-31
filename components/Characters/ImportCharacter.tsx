@@ -121,11 +121,11 @@ export const ImportCharacter = () => {
             </>
           ) : isError ? (
             <Text className="mt-10 font-medium text-lg">
-              Error while loading characters
+              {i18n.t('errors.couldNotLoadCharacters')}
             </Text>
           ) : (
             <Text className="mt-10 font-medium text-lg">
-              No characters found
+              {i18n.t('titles.noCharacters')}
             </Text>
           )
         }
