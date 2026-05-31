@@ -317,6 +317,7 @@ export const en = {
     noDescription: 'No description provided.',
     noSpellSlotAvailable: 'No spell slot available at this level.',
     hasAttack: 'Has attack',
+    originalName: 'Original name',
   },
   spellSlots: {
     pactMagic: 'Pact Magic',

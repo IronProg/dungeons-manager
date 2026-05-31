@@ -216,6 +216,7 @@ export type Spell = {
   attack?: Attack;
   damages: Damage[];
   higherLevelsDamages: Damage[];
+  originalName?: string;
 };
 
 export type SpellSlot = {

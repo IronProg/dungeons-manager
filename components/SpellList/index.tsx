@@ -82,6 +82,13 @@ const SpellListItem = ({
   >
     <View className="flex-1 pr-4">
       <Text className="font-bold text-lg text-gray-800">{item.name}</Text>
+
+      {item.originalName && (
+        <Text className="font-medium text- text-gray-500">
+          {i18n.t('spells.originalName')}: {item.originalName}
+        </Text>
+      )}
+
       <Text className="text-gray-500 text-sm">
         {i18n.t('spells.level')} {item.level}
       </Text>

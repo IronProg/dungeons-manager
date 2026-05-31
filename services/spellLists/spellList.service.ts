@@ -32,8 +32,10 @@ export const searchExternalSpells = (query: string): Spell[] => {
 
   if (query) {
     const lowerQuery = query.toLowerCase();
-    results = results.filter((spell) =>
-      spell.name.toLowerCase().includes(lowerQuery),
+    results = results.filter(
+      (spell) =>
+        spell.name.toLowerCase().includes(lowerQuery) ||
+        spell.originalName?.toLowerCase()?.includes(lowerQuery),
     );
   }
 

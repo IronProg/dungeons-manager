@@ -317,6 +317,7 @@ export const pt = {
     cast: 'Conjurar',
     noSpellSlotAvailable: 'Nenhum espaço de magia desse nível está disponível',
     hasAttack: 'Possui ataque',
+    originalName: 'Nome original',
   },
   spellSlots: {
     pactMagic: 'Magia de Pacto',
