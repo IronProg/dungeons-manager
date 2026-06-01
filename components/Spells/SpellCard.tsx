@@ -200,7 +200,9 @@ const SpellDescription = ({ spell }: { spell: Spell }) => {
       {expanded ? (
         <View>
           <Markdown
-            customStyles={{ text: { fontSize: 12, lineHeight: 14 } }}
+            customStyles={{
+              text: { color: 'black', fontSize: 12, lineHeight: 14 },
+            }}
             markdown={spell.description}
           />
 
@@ -211,7 +213,9 @@ const SpellDescription = ({ spell }: { spell: Spell }) => {
               </Text>
 
               <Markdown
-                customStyles={{ text: { fontSize: 12, lineHeight: 14 } }}
+                customStyles={{
+                  text: { color: 'black', fontSize: 12, lineHeight: 14 },
+                }}
                 markdown={spell.higherLevelDescription}
               />
             </View>
@@ -228,7 +232,7 @@ const SpellDescription = ({ spell }: { spell: Spell }) => {
           <Markdown
             customStyles={{
               container: { maxHeight: 80, overflow: 'hidden' },
-              text: { fontSize: 12, lineHeight: 14 },
+              text: { color: 'black', fontSize: 12, lineHeight: 14 },
             }}
             markdown={spell.description}
           />
