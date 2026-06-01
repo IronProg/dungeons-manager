@@ -1,16 +1,10 @@
 import { useRouter } from 'expo-router';
-import {
-  ChevronDown,
-  ChevronUp,
-  Crosshair,
-  Edit,
-  WandSparkles,
-} from 'lucide-react-native';
-import React, { useState } from 'react';
+import { Crosshair, Edit, WandSparkles } from 'lucide-react-native';
+import React from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
-import { Markdown } from 'react-native-remark';
 
 import HeadIcon from '@/assets/icons/head.svg';
+import { SpellCardDescription } from '@/components/Spells/SpellCardDescription';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { colors } from '@/core/utils/colors';
@@ -187,64 +181,7 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
         )}
       </View>
 
-      {spell.description && <SpellDescription spell={spell} />}
-    </View>
-  );
-};
-
-const SpellDescription = ({ spell }: { spell: Spell }) => {
-  const [expanded, setExpanded] = useState(false);
-
-  return (
-    <View className="mt-2">
-      {expanded ? (
-        <View>
-          <Markdown
-            customStyles={{
-              text: { color: 'black', fontSize: 12, lineHeight: 14 },
-            }}
-            markdown={spell.description}
-          />
-
-          {spell.higherLevelDescription && (
-            <View className="mt-2">
-              <Text className="text-xs font-bold">
-                {i18n.t('spells.higherLevelDescription')}:
-              </Text>
-
-              <Markdown
-                customStyles={{
-                  text: { color: 'black', fontSize: 12, lineHeight: 14 },
-                }}
-                markdown={spell.higherLevelDescription}
-              />
-            </View>
-          )}
-          <TouchableOpacity
-            onPress={() => setExpanded(false)}
-            className="mt-2 flex-row justify-center"
-          >
-            <ChevronUp size={20} color="gray" />
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View>
-          <Markdown
-            customStyles={{
-              container: { maxHeight: 80, overflow: 'hidden' },
-              text: { color: 'black', fontSize: 12, lineHeight: 14 },
-            }}
-            markdown={spell.description}
-          />
-
-          <TouchableOpacity
-            onPress={() => setExpanded(true)}
-            className="mt-1 flex-row justify-center"
-          >
-            <ChevronDown size={20} color="gray" />
-          </TouchableOpacity>
-        </View>
-      )}
+      {spell.description && <SpellCardDescription spell={spell} />}
     </View>
   );
 };

@@ -16,7 +16,8 @@
       "expo-localization",
       "expo-secure-store",
       "expo-build-properties",
-      "expo-image"
+      "expo-image",
+      "react-native-enriched-markdown"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
