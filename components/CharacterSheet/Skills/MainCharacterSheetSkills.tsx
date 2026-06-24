@@ -6,8 +6,8 @@ import type { SavingThrowFormProps } from '@/components/CharacterSheet/Skills/Sa
 import { SavingThrowForm } from '@/components/CharacterSheet/Skills/SavingThrow/SavingThrowForm';
 import type { SkillFormProps } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
 import { SkillForm } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { useGetSkillBonus } from '@/hooks/useSkillBonus';
@@ -15,8 +15,6 @@ import i18n from '@/i18n';
 import { useGetAllSavingThrows } from '@/services/savingThrows/savingThrow';
 import { useGetAllSkills } from '@/services/skills/skill';
 import type { SavingThrow, Skill } from '@/types/character';
-
-const snapPoints = [300, 600];
 
 export const MainCharacterSheetSkills = () => {
   const { characterId, canEdit } = useCharacter();
@@ -26,8 +24,8 @@ export const MainCharacterSheetSkills = () => {
   const { data: skills, isLoading: isLoadingSkills } = useGetAllSkills();
 
   const savingThrowRef =
-    useRef<DisposableBottomSheetHandle<SavingThrowFormProps>>(null);
-  const skillRef = useRef<DisposableBottomSheetHandle<SkillFormProps>>(null);
+    useRef<AdaptiveBottomSheetHandle<SavingThrowFormProps>>(null);
+  const skillRef = useRef<AdaptiveBottomSheetHandle<SkillFormProps>>(null);
 
   return (
     <>
@@ -76,15 +74,13 @@ export const MainCharacterSheetSkills = () => {
       </View>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={savingThrowRef}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <SavingThrowForm {...params} />}
         />
 
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={skillRef}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <SkillForm {...params} />}
         />
       </Portal>

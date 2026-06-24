@@ -56,15 +56,12 @@ export const AttributesForm = ({
   };
 
   return (
-    <BottomSheetScrollView
-      contentContainerClassName="grow flex flex-col gap-4"
-      keyboardShouldPersistTaps="handled"
-    >
+    <>
       <Text className="text-gray-900 font-bold text-2xl text-center">
         {i18n.t('titles.modifyAttributes')}
       </Text>
 
-      <View className="flex flex-row justify-between flex-wrap">
+      <View className="flex flex-row justify-between flex-wrap gap-y-4 mb-4">
         {ATTRIBUTES.map((attrName, index) => (
           <AttributeFormItem
             key={attrName}
@@ -76,7 +73,7 @@ export const AttributesForm = ({
       </View>
 
       <Button onPress={handleSubmit(onSubmit)} disabled={isPending} />
-    </BottomSheetScrollView>
+    </>
   );
 };
 

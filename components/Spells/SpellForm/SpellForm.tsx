@@ -41,7 +41,7 @@ export const SpellForm = ({
     useUpdateSpellMutation();
   const { mutate: deleteSpell } = useDeleteSpellMutation();
 
-  const { control, handleSubmit, watch } = useSpellForm({ spell: initialData });
+  const { control, handleSubmit } = useSpellForm({ spell: initialData });
 
   const onSubmit = (data: SpellFormValues) => {
     if (isEditing && initialData?.id) {
@@ -88,12 +88,11 @@ export const SpellForm = ({
         )}
 
         {editingAttack ? (
-          <SpellAttackForm control={control} watch={watch} />
+          <SpellAttackForm control={control} />
         ) : (
           <SpellFormInputs
             spell={initialData}
             control={control}
-            watch={watch}
             isEditing={isEditing}
             setDeleting={setDeleting}
           />

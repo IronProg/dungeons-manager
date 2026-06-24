@@ -16,28 +16,23 @@ import { Proficiency } from '@/components/CharacterSheet/GeneralInfo/Proficiency
 import { Speed } from '@/components/CharacterSheet/GeneralInfo/Speed/Speed';
 import type { SpeedFormProps } from '@/components/CharacterSheet/GeneralInfo/Speed/SpeedForm';
 import { SpeedForm } from '@/components/CharacterSheet/GeneralInfo/Speed/SpeedForm';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import { useGetCharacterGeneralInfo } from '@/services/generalInfos/generalInfos';
-
-const PASSIVE_PERCEPTION_SNAP_POINTS = [300];
-const INITIATIVE_SNAP_POINTS = [300];
-const SPEED_SNAP_POINTS = [300];
-const ARMOR_CLASS_SNAP_POINTS = [300];
 
 export const MainCharacterSheetGeneralInfo = () => {
   const { data: generalInfo, isLoading } = useGetCharacterGeneralInfo();
   const { canEdit } = useCharacter();
 
   const armorClassRef =
-    useRef<DisposableBottomSheetHandle<ArmorClassFormProps>>(null);
+    useRef<AdaptiveBottomSheetHandle<ArmorClassFormProps>>(null);
   const initiativeRef =
-    useRef<DisposableBottomSheetHandle<InitiativeFormProps>>(null);
-  const speedRef = useRef<DisposableBottomSheetHandle<SpeedFormProps>>(null);
+    useRef<AdaptiveBottomSheetHandle<InitiativeFormProps>>(null);
+  const speedRef = useRef<AdaptiveBottomSheetHandle<SpeedFormProps>>(null);
   const passivePerceptionRef =
-    useRef<DisposableBottomSheetHandle<PassivePerceptionFormProps>>(null);
+    useRef<AdaptiveBottomSheetHandle<PassivePerceptionFormProps>>(null);
 
   return (
     <View className="py-4 flex flex-col gap-2">
@@ -83,27 +78,23 @@ export const MainCharacterSheetGeneralInfo = () => {
       )}
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={armorClassRef}
-          snapPoints={ARMOR_CLASS_SNAP_POINTS}
           renderContent={({ params }) => <ArmorClassForm {...params} />}
         />
 
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={initiativeRef}
-          snapPoints={INITIATIVE_SNAP_POINTS}
           renderContent={({ params }) => <InitiativeForm {...params} />}
         />
 
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={speedRef}
-          snapPoints={SPEED_SNAP_POINTS}
           renderContent={({ params }) => <SpeedForm {...params} />}
         />
 
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={passivePerceptionRef}
-          snapPoints={PASSIVE_PERCEPTION_SNAP_POINTS}
           renderContent={({ params }) => <PassivePerceptionForm {...params} />}
         />
       </Portal>

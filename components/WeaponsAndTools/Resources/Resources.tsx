@@ -3,8 +3,8 @@ import { useRef, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { Portal } from 'react-native-portalize';
 
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import type { ResourcesFormProps } from '@/components/WeaponsAndTools/Resources/ResourcesForm';
 import { ResourcesForm } from '@/components/WeaponsAndTools/Resources/ResourcesForm';
@@ -21,14 +21,12 @@ type ResourcesProps = {
   canEdit: boolean;
 };
 
-const snapPoints = [600];
-
 export const Resources = ({ canEdit }: ResourcesProps) => {
   const { characterId } = useCharacter();
   const { data: resources, isLoading } = useGetAllResources();
   const { mutate: updateResource, isPending } = useUpdateResourceMutation();
 
-  const ref = useRef<DisposableBottomSheetHandle<ResourcesFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<ResourcesFormProps>>(null);
 
   const { mutate: deleteResource } = useDeleteResourceMutation();
 
@@ -123,9 +121,8 @@ export const Resources = ({ canEdit }: ResourcesProps) => {
       />
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <ResourcesForm {...params} />}
         />
       </Portal>

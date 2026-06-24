@@ -5,8 +5,8 @@ import { Portal } from 'react-native-portalize';
 
 import { HitDicesForm } from '@/components/CharacterSheet/HitPoints/HitDices/HitDicesForm';
 import { HitDicesRollForm } from '@/components/CharacterSheet/HitPoints/HitDices/HitDicesRollModal';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import i18n from '@/i18n';
 import { useGetAllClasses } from '@/services/classes/class';
 import type { CharacterGeneralInfo } from '@/types/character';
@@ -21,7 +21,7 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
 
   const [open, setOpen] = useState(false);
 
-  const ref = useRef<DisposableBottomSheetHandle<boolean>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<boolean>>(null);
 
   const { hitDicesMaximum, hitDiceAmount } = {
     hitDicesMaximum:
@@ -53,9 +53,8 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
       </TouchableOpacity>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          enableDynamicSizing
           renderContent={() => <HitDicesForm />}
         />
       </Portal>

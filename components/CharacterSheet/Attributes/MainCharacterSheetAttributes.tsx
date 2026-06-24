@@ -4,17 +4,15 @@ import { Portal } from 'react-native-portalize';
 
 import type { AttributesFormProps } from '@/components/CharacterSheet/Attributes/AttributesForm';
 import { AttributesForm } from '@/components/CharacterSheet/Attributes/AttributesForm';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 import { useGetAllAttributes } from '@/services/attributes/attributes';
 import type { Attribute } from '@/types/character';
 
-const SNAP_POINTS = [600];
-
 export const MainCharacterSheetAttributes = () => {
-  const ref = useRef<DisposableBottomSheetHandle<AttributesFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<AttributesFormProps>>(null);
   const { canEdit } = useCharacter();
 
   const { data: characterAttributes } = useGetAllAttributes();
@@ -97,9 +95,8 @@ export const MainCharacterSheetAttributes = () => {
       </View>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={SNAP_POINTS}
           renderContent={({ params }) => <AttributesForm {...params} />}
         />
       </Portal>

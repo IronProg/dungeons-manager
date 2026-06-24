@@ -4,8 +4,8 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Portal } from 'react-native-portalize';
 
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import type { FeaturesFormProps } from '@/components/WeaponsAndTools/Features/FeaturesForm';
@@ -21,13 +21,11 @@ import type { Feature } from '@/types/character';
 
 type FeaturesProps = { canEdit: boolean };
 
-const snapPoints = ['95%'];
-
 export const Features = ({ canEdit }: FeaturesProps) => {
   const { modalTextHeight } = useModalTextHeight();
   const { characterId } = useCharacter();
   const { data: features, isLoading } = useGetAllFeatures();
-  const ref = useRef<DisposableBottomSheetHandle<FeaturesFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<FeaturesFormProps>>(null);
   const { mutate: deleteFeature } = useDeleteFeatureMutation();
 
   const [detailedFeature, setDetailedFeature] = useState<Feature>();
@@ -147,9 +145,8 @@ export const Features = ({ canEdit }: FeaturesProps) => {
       </BaseModal>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <FeaturesForm {...params} />}
         />
       </Portal>

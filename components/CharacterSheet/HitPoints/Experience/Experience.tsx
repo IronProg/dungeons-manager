@@ -5,19 +5,17 @@ import { Portal } from 'react-native-portalize';
 
 import type { ExperienceFormProps } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm';
 import { ExperienceForm } from '@/components/CharacterSheet/HitPoints/Experience/ExperienceForm';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
 
 type ExperienceProps = { canEdit: boolean };
 
-const snapPoints = [260];
-
 export const Experience = ({ canEdit }: ExperienceProps) => {
   const { character } = useCharacter();
 
-  const ref = useRef<DisposableBottomSheetHandle<ExperienceFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<ExperienceFormProps>>(null);
 
   return (
     <>
@@ -39,9 +37,8 @@ export const Experience = ({ canEdit }: ExperienceProps) => {
       </TouchableOpacity>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <ExperienceForm {...params} />}
         />
       </Portal>

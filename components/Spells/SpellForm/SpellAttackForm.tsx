@@ -1,5 +1,5 @@
-import type { Control, UseFormWatch } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
+import type { Control } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Switch, TextInput } from 'react-native-gesture-handler';
 
@@ -10,11 +10,10 @@ import i18n from '@/i18n';
 
 interface SpellAttackFormProps {
   control: Control<SpellFormValues>;
-  watch: UseFormWatch<SpellFormValues>;
 }
 
-export const SpellAttackForm = ({ control, watch }: SpellAttackFormProps) => {
-  const hasAttack = watch('hasAttack');
+export const SpellAttackForm = ({ control }: SpellAttackFormProps) => {
+  const hasAttack = useWatch({ control, name: 'hasAttack' });
 
   return (
     <>

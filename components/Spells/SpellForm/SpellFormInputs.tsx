@@ -1,6 +1,6 @@
 import { Trash } from 'lucide-react-native';
-import { Controller } from 'react-hook-form';
-import type { Control, UseFormWatch } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
+import type { Control } from 'react-hook-form';
 import { Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import type { SpellFormValues } from '@/components/Spells/SpellForm/useSpellForm';
@@ -12,18 +12,16 @@ import type { Spell } from '@/types/character';
 interface SpellFormInputsProps {
   spell?: Spell;
   control: Control<SpellFormValues>;
-  watch: UseFormWatch<SpellFormValues>;
   isEditing: boolean;
   setDeleting: (deleting: boolean) => void;
 }
 
 export const SpellFormInputs = ({
   control,
-  watch,
   isEditing,
   setDeleting,
 }: SpellFormInputsProps) => {
-  const materialChecked = watch('material');
+  const materialChecked = useWatch({ control, name: 'material' });
 
   return (
     <>
@@ -166,6 +164,7 @@ export const SpellFormInputs = ({
             )}
           />
         </View>
+
         <View className="flex-row items-center gap-2">
           <Text className="text-xs font-bold">{i18n.t('spells.somatic')}</Text>
           <Controller
@@ -176,6 +175,7 @@ export const SpellFormInputs = ({
             )}
           />
         </View>
+
         <View className="flex-row items-center gap-2">
           <Text className="text-xs font-bold">{i18n.t('spells.material')}</Text>
           <Controller
@@ -186,6 +186,7 @@ export const SpellFormInputs = ({
             )}
           />
         </View>
+
         <View className="flex-row items-center gap-2">
           <Text className="text-xs font-bold">
             {i18n.t('spells.concentration')}
@@ -207,6 +208,8 @@ export const SpellFormInputs = ({
             )}
           />
         </View>
+
+        <View />
       </View>
 
       {materialChecked && (

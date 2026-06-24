@@ -7,8 +7,8 @@ import { Portal } from 'react-native-portalize';
 import { EquipmentsList } from '@/components/Equipments/EquipmentsList';
 import type { EquipmentsFormProps } from '@/components/Equipments/Form/EquipmentsForm';
 import { EquipmentsForm } from '@/components/Equipments/Form/EquipmentsForm';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { useCharacter } from '@/contexts/CharacterContext';
@@ -17,14 +17,12 @@ import i18n from '@/i18n';
 import { useDeleteEquipmentMutation } from '@/services/equipments/equipment.api';
 import type { Equipment } from '@/types/character';
 
-const snapPoints = [400];
-
 export const Equipments = () => {
   const { modalTextHeight } = useModalTextHeight();
   const { characterId, canEdit } = useCharacter();
   const { mutate: deleteEquipment } = useDeleteEquipmentMutation();
 
-  const ref = useRef<DisposableBottomSheetHandle<EquipmentsFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<EquipmentsFormProps>>(null);
 
   const [detailedEquipment, setDetailedEquipment] = useState<Equipment>();
   const [equipmentToDelete, setEquipmentToDelete] = useState<Equipment>();
@@ -116,9 +114,8 @@ export const Equipments = () => {
       </BaseModal>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <EquipmentsForm {...params} />}
         />
       </Portal>

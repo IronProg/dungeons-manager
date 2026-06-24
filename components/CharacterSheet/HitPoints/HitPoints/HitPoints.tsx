@@ -7,8 +7,8 @@ import type { HitPointsFormProps } from '@/components/CharacterSheet/HitPoints/H
 import { HitPointsForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsForm';
 import type { HitPointsModifierFormProps } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm';
 import { HitPointsModifierForm } from '@/components/CharacterSheet/HitPoints/HitPoints/HitPointsModifierForm';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import i18n from '@/i18n';
 import type { CharacterGeneralInfo } from '@/types/character';
 
@@ -17,14 +17,11 @@ type HitPointsProps = {
   canEdit: boolean;
 };
 
-const hitPointsSnapPoints = [350];
-const modifierSnapPoints = [290];
-
 export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
   const hitPointsRef =
-    useRef<DisposableBottomSheetHandle<HitPointsFormProps>>(null);
+    useRef<AdaptiveBottomSheetHandle<HitPointsFormProps>>(null);
   const modifierRef =
-    useRef<DisposableBottomSheetHandle<HitPointsModifierFormProps>>(null);
+    useRef<AdaptiveBottomSheetHandle<HitPointsModifierFormProps>>(null);
   const hitPointsMaximum =
     generalInfo.hitPointsLimitTemporary !== null &&
     generalInfo.hitPointsLimitTemporary === 0
@@ -49,15 +46,13 @@ export const HitPoints = ({ generalInfo, canEdit }: HitPointsProps) => {
       </TouchableOpacity>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={hitPointsRef}
-          snapPoints={hitPointsSnapPoints}
           renderContent={({ params }) => <HitPointsForm {...params} />}
         />
 
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={modifierRef}
-          snapPoints={modifierSnapPoints}
           renderContent={({ params }) => <HitPointsModifierForm {...params} />}
         />
       </Portal>

@@ -4,8 +4,8 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Portal } from 'react-native-portalize';
 
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { ComposeDiceRollButton } from '@/components/ui/ComposeDiceRollButton';
 import { DiceRollButton } from '@/components/ui/DiceRollButton';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
@@ -23,14 +23,12 @@ import type { Attack } from '@/types/character';
 
 type AttacksProps = { canEdit: boolean };
 
-const snapPoints = ['95%'];
-
 export const Attacks = ({ canEdit }: AttacksProps) => {
   const { modalTextHeight } = useModalTextHeight();
   const { characterId, modifiers, proficiencyBonus } = useCharacter();
   const { data: attacks, isLoading } = useGetAllAttacks();
 
-  const ref = useRef<DisposableBottomSheetHandle<AttacksFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<AttacksFormProps>>(null);
 
   const { mutate: deleteAttack } = useDeleteAttackMutation();
 
@@ -207,9 +205,8 @@ export const Attacks = ({ canEdit }: AttacksProps) => {
       </BaseModal>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <AttacksForm {...params} />}
         />
       </Portal>

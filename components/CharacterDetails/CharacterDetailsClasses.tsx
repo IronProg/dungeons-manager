@@ -5,13 +5,11 @@ import { Portal } from 'react-native-portalize';
 
 import type { ClassesFormProps } from '@/components/CharacterDetails/Forms/ClassesForm';
 import { ClassesForm } from '@/components/CharacterDetails/Forms/ClassesForm';
-import { DisposableBottomSheet } from '@/components/ui/BottomSheet/DisposableBottomSheet';
-import type { DisposableBottomSheetHandle } from '@/components/ui/BottomSheet/DisposableBottomSheet';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import i18n from '@/i18n';
 import { useGetAllClasses } from '@/services/classes/class';
 import type { Character, CharacterClass } from '@/types/character';
-
-const snapPoints = ['100%'];
 
 type CharacterDetailsProps = {
   character: Character;
@@ -22,7 +20,7 @@ export const CharacterDetailsClasses = ({
   character,
   canEdit,
 }: CharacterDetailsProps) => {
-  const ref = useRef<DisposableBottomSheetHandle<ClassesFormProps>>(null);
+  const ref = useRef<AdaptiveBottomSheetHandle<ClassesFormProps>>(null);
 
   const { data: characterClasses, isPending } = useGetAllClasses();
 
@@ -96,9 +94,8 @@ export const CharacterDetailsClasses = ({
       </View>
 
       <Portal>
-        <DisposableBottomSheet
+        <AdaptiveBottomSheet
           ref={ref}
-          snapPoints={snapPoints}
           renderContent={({ params }) => <ClassesForm {...params} />}
         />
       </Portal>
