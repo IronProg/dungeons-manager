@@ -3,18 +3,21 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { ATTRIBUTES } from '@/core/enums/attributes';
+import i18n from '@/i18n';
 import type { Attribute } from '@/types/character';
 
 export const attributeSchema = z.object({
-  id: z.coerce.number<number>(),
+  id: z.coerce.number<number>(i18n.t('validation.mustBeNumber')),
   name: z.enum(ATTRIBUTES),
-  value: z.coerce.number<number>().int(),
+  value: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger')),
   tempValue: z
     .any()
     .transform((v) =>
       v === '' || v === null || v === undefined ? null : Number(v),
     )
-    .pipe(z.number().int().nullable())
+    .pipe(z.number().int(i18n.t('validation.mustBeInteger')).nullable())
     .optional(),
 });
 

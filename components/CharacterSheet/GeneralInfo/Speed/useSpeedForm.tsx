@@ -2,12 +2,25 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import i18n from '@/i18n';
 import type { CharacterGeneralInfo } from '@/types/character';
 
 export const schema = z.object({
-  speed: z.coerce.number<number>().int().optional().nullable(),
-  speedClimbing: z.coerce.number<number>().int().optional().nullable(),
-  speedFlying: z.coerce.number<number>().int().optional().nullable(),
+  speed: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger'))
+    .optional()
+    .nullable(),
+  speedClimbing: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger'))
+    .optional()
+    .nullable(),
+  speedFlying: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger'))
+    .optional()
+    .nullable(),
 });
 
 export type SpeedFormType = z.infer<typeof schema>;

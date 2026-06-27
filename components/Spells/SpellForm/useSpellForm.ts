@@ -6,33 +6,41 @@ import z from 'zod';
 import { damageSchema } from '@/components/WeaponsAndTools/Attacks/useAttacksForm';
 import { ATTRIBUTES } from '@/core/enums/attributes';
 import { SPELL_SCHOOLS } from '@/core/enums/spellSchool';
+import i18n from '@/i18n';
 import type { Spell, SpellSlotLevelType } from '@/types/character';
 
 const spellAttackSchema = z.object({
-  id: z.coerce.number<number>().optional(),
+  id: z.coerce.number<number>(i18n.t('validation.mustBeNumber')).optional(),
   mainAttribute: z.enum(ATTRIBUTES).optional().nullable(),
   applyProficiency: z.boolean(),
-  customBonus: z.coerce.number<number>().optional(),
+  customBonus: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .optional(),
 });
 
 const schema = z.object({
   id: z.number().optional(),
-  name: z.string(),
-  level: z.coerce.number().min(0).max(9),
+  name: z.string({ error: i18n.t('validation.required') }),
+  level: z.coerce
+    .number(i18n.t('validation.mustBeNumber'))
+    .min(0, i18n.t('validation.numberMin', { min: 0 }))
+    .max(9, i18n.t('validation.numberMax', { max: 9 })),
   school: z.enum(SPELL_SCHOOLS),
-  castingTime: z.string(),
-  range: z.string(),
-  duration: z.string(),
-  target: z.string(),
-  components: z.string(),
+  castingTime: z.string({ error: i18n.t('validation.required') }),
+  range: z.string({ error: i18n.t('validation.required') }),
+  duration: z.string({ error: i18n.t('validation.required') }),
+  target: z.string({ error: i18n.t('validation.required') }),
+  components: z.string({ error: i18n.t('validation.required') }),
   verbal: z.boolean(),
   somatic: z.boolean(),
   material: z.boolean(),
   concentration: z.boolean(),
   ritual: z.boolean(),
-  description: z.string(),
-  higherLevelDescription: z.string(),
-  innateTotal: z.coerce.number<number>().optional(),
+  description: z.string({ error: i18n.t('validation.required') }),
+  higherLevelDescription: z.string({ error: i18n.t('validation.required') }),
+  innateTotal: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .optional(),
   hasAttack: z.boolean(),
   attackAttributes: spellAttackSchema.optional(),
   damagesAttributes: damageSchema.array(),

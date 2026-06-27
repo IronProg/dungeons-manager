@@ -4,6 +4,7 @@ import * as z from 'zod';
 
 import { ATTRIBUTES } from '@/core/enums/attributes';
 import { SKILLS } from '@/core/enums/proficiencies';
+import i18n from '@/i18n';
 import type { Skill } from '@/types/character';
 
 export const schema = z.object({
@@ -11,7 +12,10 @@ export const schema = z.object({
   mainAttribute: z.enum(ATTRIBUTES),
   proficiency: z.boolean(),
   expertise: z.boolean(),
-  customBonus: z.coerce.number<number>().int().optional(),
+  customBonus: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger'))
+    .optional(),
   extraAttribute: z.enum(ATTRIBUTES).optional().nullable(),
 });
 

@@ -2,13 +2,23 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import i18n from '@/i18n';
 import type { CharacterGeneralInfo } from '@/types/character';
 
 export const schema = z.object({
-  hitPoints: z.coerce.number<number>().int(),
-  hitPointsLimit: z.coerce.number<number>().int(),
-  hitPointsLimitTemporary: z.coerce.number<number>().int(),
-  temporaryHitPoints: z.coerce.number<number>().int().optional(),
+  hitPoints: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger')),
+  hitPointsLimit: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger')),
+  hitPointsLimitTemporary: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger')),
+  temporaryHitPoints: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger'))
+    .optional(),
 });
 
 export type HitPointsFormType = z.infer<typeof schema>;

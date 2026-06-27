@@ -3,12 +3,15 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { HIT_DICES } from '@/core/enums/hitDices';
+import i18n from '@/i18n';
 import type { CharacterClass } from '@/types/character';
 
 export const classSchema = z.object({
-  id: z.coerce.number<number>().optional(),
-  name: z.string(),
-  level: z.coerce.number<number>().int(),
+  id: z.coerce.number<number>(i18n.t('validation.mustBeNumber')).optional(),
+  name: z.string({ error: i18n.t('validation.required') }),
+  level: z.coerce
+    .number<number>(i18n.t('validation.mustBeNumber'))
+    .int(i18n.t('validation.mustBeInteger')),
   hitDice: z.enum(HIT_DICES),
   castingKind: z.string().optional().nullable(),
   _destroy: z.boolean().optional(),

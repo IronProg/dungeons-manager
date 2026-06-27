@@ -2,11 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import i18n from '@/i18n';
 import type { Feature } from '@/types/character';
 
 const schema = z.object({
-  title: z.string(),
-  description: z.string(),
+  title: z.string({ error: i18n.t('validation.required') }),
+  description: z.string({ error: i18n.t('validation.required') }),
   origin: z.string().optional(),
 });
 

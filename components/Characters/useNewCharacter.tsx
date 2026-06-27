@@ -2,7 +2,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-export const schema = z.object({ name: z.string() });
+import i18n from '@/i18n';
+
+export const schema = z.object({
+  name: z.string({ error: i18n.t('validation.required') }),
+});
 
 export type NewCharacterFormType = z.infer<typeof schema>;
 

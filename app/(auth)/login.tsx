@@ -54,34 +54,36 @@ export default function LoginScreen() {
           <Controller
             control={control}
             name="email"
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <View className="mb-4">
-                <Text className="text-gray-600 text-sm font-medium mb-2">
-                  {i18n.t('auth.email')}
-                </Text>
-                <View
-                  className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
-                >
-                  <Mail size={20} color="#9CA3AF" />
-
-                  <TextInput
-                    className="flex-1 py-4 px-3 text-gray-800"
-                    placeholder={i18n.t('auth.emailPlaceholder')}
-                    placeholderTextColor="#9CA3AF"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    value={value}
-                    onChangeText={onChange}
-                  />
-                </View>
-
-                {error?.message && (
-                  <Text className="text-red-500 text-xs mt-1">
-                    {error?.message}
+            render={({ field: { value, onChange }, fieldState: { error } }) => {
+              return (
+                <View className="mb-4">
+                  <Text className="text-gray-600 text-sm font-medium mb-2">
+                    {i18n.t('auth.email')}
                   </Text>
-                )}
-              </View>
-            )}
+                  <View
+                    className={`flex-row items-center bg-slate-50 rounded-xl px-4 border ${error?.message ? 'border-red-400' : 'border-slate-200'}`}
+                  >
+                    <Mail size={20} color="#9CA3AF" />
+
+                    <TextInput
+                      className="flex-1 py-4 px-3 text-gray-800"
+                      placeholder={i18n.t('auth.emailPlaceholder')}
+                      placeholderTextColor="#9CA3AF"
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      value={value}
+                      onChangeText={onChange}
+                    />
+                  </View>
+
+                  {error?.message && (
+                    <Text className="text-red-500 text-xs mt-1">
+                      {error?.message}
+                    </Text>
+                  )}
+                </View>
+              );
+            }}
           />
 
           <Controller
