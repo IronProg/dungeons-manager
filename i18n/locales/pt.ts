@@ -364,6 +364,14 @@ export const pt = {
     searchPlaceholder: 'Buscar magias...',
     downloading: 'Baixando magias...',
   },
+  placeholders: {
+    attribute: 'Selecionar atributo',
+    spellSchool: 'Selecionar escola',
+    level: 'Selecionar nível',
+    damageDice: 'Selecionar dado',
+    castingKind: 'Selecionar conjuração',
+    hitDice: 'Selecionar dado',
+  },
   hints: {
     title: 'Como usar',
     equipmentsBase:

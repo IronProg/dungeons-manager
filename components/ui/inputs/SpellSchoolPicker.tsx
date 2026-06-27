@@ -1,10 +1,20 @@
-import { Picker } from '@react-native-picker/picker';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
+import {
+  SelectPicker,
+  type SelectPickerItem,
+} from '@/components/ui/inputs/SelectPicker';
 import { SPELL_SCHOOLS } from '@/core/enums/spellSchool';
-import { colors } from '@/core/utils/colors';
 import i18n from '@/i18n';
 import type { SpellSchoolType } from '@/types/character';
+
+const SPELL_SCHOOLS_OPTIONS: SelectPickerItem[] = [
+  { id: null, label: i18n.t('general.none') },
+  ...SPELL_SCHOOLS.map((school) => ({
+    id: school,
+    label: i18n.t(`spells.schools.${school}`),
+  })),
+];
 
 type SpellSchoolPickerProps = {
   value?: SpellSchoolType;
@@ -18,33 +28,20 @@ export const SpellSchoolPicker = ({
   error,
 }: SpellSchoolPickerProps) => {
   return (
-    <View className="flex-1">
-      <View className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-11 w-full">
-        <Picker
-          style={styles.picker}
-          selectedValue={value}
-          dropdownIconColor={colors.gray[900]}
-          onValueChange={(itemValue) => itemValue && onChange(itemValue)}
-        >
-          {SPELL_SCHOOLS.map((school) => (
-            <Picker.Item
-              key={school}
-              label={i18n.t(`spells.schools.${school}`)}
-              value={school}
-            />
-          ))}
-        </Picker>
+    <>
+      <View className="flex items-center justify-center bg-gray-100 rounded-lg w-full">
+        <SelectPicker
+          value={value}
+          items={SPELL_SCHOOLS_OPTIONS}
+          error={error}
+          onChange={(newValue) => {
+            onChange(newValue as SpellSchoolType);
+          }}
+          placeholder={i18n.t('placeholders.spellSchool')}
+        />
       </View>
 
       {error && <Text className="text-red-400 text-sm">{error}</Text>}
-    </View>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  picker: {
-    height: 50,
-    width: '100%',
-    color: colors.gray[900],
-  },
-});

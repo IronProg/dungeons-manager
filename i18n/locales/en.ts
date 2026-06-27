@@ -364,6 +364,14 @@ export const en = {
     searchPlaceholder: 'Search spells...',
     downloading: 'Downloading spells...',
   },
+  placeholders: {
+    attribute: 'Select attribute',
+    spellSchool: 'Select school',
+    level: 'Select level',
+    damageDice: 'Select dice',
+    castingKind: 'Select casting',
+    hitDice: 'Select dice',
+  },
   hints: {
     title: 'How to use',
     equipmentsBase:
