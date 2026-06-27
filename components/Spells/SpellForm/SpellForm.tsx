@@ -104,7 +104,9 @@ export const SpellForm = ({
           className={`bg-purple-600 p-4 rounded-xl mt-4 items-center ${isSubmitting ? 'opacity-50' : ''}`}
         >
           <Text className="text-white font-bold text-lg">
-            {editingAttack ? 'Back' : 'Setup attack / damage'}
+            {editingAttack
+              ? i18n.t('spells.back')
+              : i18n.t('spells.setupAttack')}
           </Text>
         </TouchableOpacity>
 

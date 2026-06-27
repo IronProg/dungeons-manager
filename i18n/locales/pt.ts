@@ -338,6 +338,8 @@ export const pt = {
     noSpellSlotAvailable: 'Nenhum espaço de magia desse nível está disponível',
     hasAttack: 'Possui ataque',
     originalName: 'Nome original',
+    setupAttack: 'Configurar ataque/dano',
+    back: 'Voltar',
   },
   spellSlots: {
     pactMagic: 'Magia de Pacto',

@@ -338,6 +338,8 @@ export const en = {
     noSpellSlotAvailable: 'No spell slot available at this level.',
     hasAttack: 'Has attack',
     originalName: 'Original name',
+    setupAttack: 'Setup attack/damage',
+    back: 'Back',
   },
   spellSlots: {
     pactMagic: 'Pact Magic',
