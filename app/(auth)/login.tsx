@@ -1,8 +1,13 @@
-import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { Mail } from 'lucide-react-native';
 import { Controller } from 'react-hook-form';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import TransparentLogo from '@/assets/transparent-icon.png';

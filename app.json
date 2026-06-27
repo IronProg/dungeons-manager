@@ -16,7 +16,6 @@
       "expo-localization",
       "expo-secure-store",
       "expo-build-properties",
-      "expo-image",
       "react-native-enriched-markdown"
     ],
     "orientation": "portrait",
