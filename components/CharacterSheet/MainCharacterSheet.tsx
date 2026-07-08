@@ -1,19 +1,17 @@
-import { useRouter } from 'expo-router';
-import { FileTextIcon } from 'lucide-react-native';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MainCharacterSheetAttributes } from '@/components/CharacterSheet/Attributes/MainCharacterSheetAttributes';
 import { MainCharacterSheetGeneralInfo } from '@/components/CharacterSheet/GeneralInfo/MainCharacterSheetGeneralInfo';
+import { HintsModal } from '@/components/CharacterSheet/HintsModal';
 import { MainCharacterSheetHitPoints } from '@/components/CharacterSheet/HitPoints/MainCharacterSheetHitPoints';
 import { MainCharacterSheetSkills } from '@/components/CharacterSheet/Skills/MainCharacterSheetSkills';
 import i18n from '@/i18n';
 
 export const MainCharacterSheet = () => {
   const { bottom } = useSafeAreaInsets();
-  const router = useRouter();
 
   return (
     <ScrollView
@@ -27,13 +25,7 @@ export const MainCharacterSheet = () => {
         </Text>
 
         <View className="flex flex-row gap-2 flex-wrap">
-          <TouchableOpacity
-            hitSlop={10}
-            onPress={() => router.push('/character-details')}
-            className="bg-white rounded-full p-2"
-          >
-            <FileTextIcon size={24} />
-          </TouchableOpacity>
+          <HintsModal />
         </View>
       </View>
 

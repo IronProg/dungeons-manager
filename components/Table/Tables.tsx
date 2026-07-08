@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { Users, Hash } from 'lucide-react-native';
+import { Hash, Users } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
   View,
@@ -17,6 +17,7 @@ import { useTable } from '@/contexts/TableContext';
 import { showMessage } from '@/core/utils/messages';
 import i18n from '@/i18n';
 import {
+  useDestroyTableMutation,
   useGetAllTables,
   useJoinTableMutation,
   useLeaveTableMutation,
@@ -29,7 +30,7 @@ const TablesListEmpty = () => (
       <Users size={32} color="#9ca3af" />
     </View>
     <Text className="text-gray-500 text-center text-lg">
-      {i18n.t('tables.noTables') ?? "You don't belong to any tables yet."}
+      {i18n.t('tables.noTables')}
     </Text>
   </View>
 );
@@ -39,7 +40,12 @@ export const Tables = () => {
   const [inviteCode, setInviteCode] = useState<string>('');
   const [tableToSelect, setTableToSelect] = useState<Table | null>(null);
   const [tableToDelete, setTableToDelete] = useState<Table | null>(null);
+  const [tableToDeleteTable, setTableToDeleteTable] = useState<Table | null>(
+    null,
+  );
 
+  const { mutateAsync: destroyTable, isPending: isDestroying } =
+    useDestroyTableMutation();
   const { data: tables, isLoading: isLoadingTables } = useGetAllTables();
   const { mutateAsync: joinTable, isPending: isJoining } =
     useJoinTableMutation();
@@ -69,6 +75,38 @@ export const Tables = () => {
     setTableToDelete(null);
   };
 
+  const handleDeleteTable = async () => {
+    if (!tableToDeleteTable) return;
+
+    try {
+      await destroyTable({ id: tableToDeleteTable.id! });
+      showMessage(i18n.t('tables.tableDeleted'));
+      setTableToDeleteTable(null);
+    } catch {
+      showMessage(i18n.t('errors.couldNotDeleteTable'), 'error');
+    }
+  };
+
+  const handleDashboard = (table: Table) => {
+    setTableId(table.id!);
+    navigate('/(authenticated)/(drawer)/dm-dashboard');
+  };
+
+  const handleCharacters = (table: Table) => {
+    setTableId(table.id!);
+    navigate('/(authenticated)/(drawer)/my-characters');
+  };
+
+  const handleUsers = (table: Table) => {
+    setTableId(table.id!);
+    navigate('/(authenticated)/table-users');
+  };
+
+  const handleEdit = (table: Table) => {
+    setTableId(table.id!);
+    navigate('/(authenticated)/edit-table');
+  };
+
   const handleConfirmSelect = () => {
     if (tableToSelect?.id) {
       setTableId(tableToSelect.id);
@@ -81,7 +119,12 @@ export const Tables = () => {
     <TablesItem
       item={item}
       onSelect={() => setTableToSelect(item)}
-      onDelete={() => setTableToDelete(item)}
+      onLeave={() => setTableToDelete(item)}
+      onDelete={() => setTableToDeleteTable(item)}
+      onDashboard={() => handleDashboard(item)}
+      onCharacters={() => handleCharacters(item)}
+      onUsers={() => handleUsers(item)}
+      onEdit={() => handleEdit(item)}
     />
   );
 
@@ -90,7 +133,7 @@ export const Tables = () => {
       <View className="flex-1 bg-slate-200">
         <View className="px-5 pt-6 pb-4">
           <Text className="text-2xl font-bold text-gray-800 mb-2">
-            {i18n.t('tables.joinTable') ?? 'Join Table'}
+            {i18n.t('tables.joinTable')}
           </Text>
 
           <View className="flex-row items-center gap-3">
@@ -110,7 +153,7 @@ export const Tables = () => {
 
             <View>
               <Button
-                text={i18n.t('tables.join') ?? 'Join'}
+                text={i18n.t('tables.join')}
                 onPress={handleJoinTable}
                 disabled={isJoining || !inviteCode}
                 className="px-2"
@@ -123,7 +166,7 @@ export const Tables = () => {
 
         <View className="flex-1 px-5 mt-2">
           <Text className="text-xl font-bold text-gray-800 mb-4">
-            {i18n.t('tables.myTables') ?? 'My Tables'}
+            {i18n.t('tables.myTables')}
           </Text>
 
           {isLoadingTables ? (
@@ -146,7 +189,7 @@ export const Tables = () => {
           <View className="mt-auto py-4" style={{ marginBottom: bottom }}>
             <Button
               onPress={() => navigate('/(authenticated)/(drawer)/new-table')}
-              text={i18n.t('tables.createTable') ?? 'Create Table'}
+              text={i18n.t('tables.createTable')}
             />
           </View>
         </View>
@@ -169,6 +212,18 @@ export const Tables = () => {
         subTitle={i18n.t('tables.leaveText')}
         buttonClassName="bg-red-500"
         isPending={isLeaving}
+      />
+
+      <ConfirmationModal
+        isVisible={!!tableToDeleteTable}
+        onClose={() => setTableToDeleteTable(null)}
+        onConfirm={handleDeleteTable}
+        title={i18n.t('tables.deleteTitle', {
+          table: tableToDeleteTable?.name,
+        })}
+        subTitle={i18n.t('tables.deleteText')}
+        buttonClassName="bg-red-500"
+        isPending={isDestroying}
       />
     </>
   );

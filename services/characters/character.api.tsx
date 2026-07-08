@@ -9,14 +9,18 @@ import type { Character } from '@/types/character';
 
 interface useGetAllCharacterProps {
   useTableId?: boolean;
+  text?: string;
 }
 
 export const useGetAllCharacters = ({
   useTableId = true,
+  text,
 }: useGetAllCharacterProps = {}) => {
   const { tableId } = useTable();
 
-  const params = useTableId ? { tableId } : undefined;
+  const params: Record<string, unknown> = {};
+  if (useTableId && tableId) params.tableId = tableId;
+  if (text) params.text = text;
 
   return useQuery({
     queryKey: ['characters', 'all', params],
@@ -41,8 +45,8 @@ export const useCreateCharacterMutation = () => {
     AxiosError<ApiErrorResponse>,
     CreateCharacterParams
   >({
-    mutationFn: (params: CreateCharacterParams) =>
-      characterService.create({ ...params, tableId }),
+    mutationFn: ({ name, tableId: paramTableId }: CreateCharacterParams) =>
+      characterService.create({ name, tableId: paramTableId ?? tableId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
     },

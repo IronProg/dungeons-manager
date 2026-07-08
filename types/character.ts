@@ -32,6 +32,12 @@ export type SkillType =
   | 'stealth'
   | 'survival';
 
+export type CharacterClassSummary = {
+  id: number;
+  name: string;
+  level: number;
+};
+
 export type Character = {
   id?: number;
   name: string;
@@ -39,6 +45,7 @@ export type Character = {
   level: number;
   experience: number;
   table?: Table;
+  characterClasses?: CharacterClassSummary[];
   generalInfo: CharacterGeneralInfo;
   currencies: Currencies;
   characterAttributes: Attribute[];

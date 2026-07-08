@@ -6,6 +6,7 @@ import { TableContext } from '@/contexts/TableContext';
 import { queryClient } from '@/core/queryClient/queryClient';
 import {
   setTableId as setTableIdStorage,
+  getTableIdAsync,
   removeTableId,
 } from '@/core/utils/table';
 import { useGetCurrentUser } from '@/services/auth/auth.api';
@@ -33,6 +34,12 @@ export const TableProvider = ({ children }: { children: ReactNode }) => {
     isFetching,
     isError,
   } = useGetTable({ id: tableId });
+
+  useEffect(() => {
+    getTableIdAsync().then((id) => {
+      if (id) setTableIdState(Number(id));
+    });
+  }, []);
 
   const setTableId = (id: number) => {
     setTableIdState(id);

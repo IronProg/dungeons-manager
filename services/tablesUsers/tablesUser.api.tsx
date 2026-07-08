@@ -14,7 +14,12 @@ export const useDeleteTablesUserMutation = () => {
     DeleteTablesUserParams
   >({
     mutationFn: (params) => tablesUserService.deleteTablesUser(params),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tables'] }),
+    onSuccess: (_data, { tableId }) => {
+      queryClient.invalidateQueries({ queryKey: ['tables'] });
+      if (tableId) {
+        queryClient.invalidateQueries({ queryKey: ['tables', tableId] });
+      }
+    },
     onError: ({ response }) => {
       handleErrorMessage(response?.data);
     },

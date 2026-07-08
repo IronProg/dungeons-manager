@@ -11,15 +11,18 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Host } from 'react-native-portalize';
 import Toast from 'react-native-toast-message';
 
+import { useLanguage } from '@/contexts/LanguageContext';
 import { queryClient } from '@/core/queryClient/queryClient';
 import { queryPersister } from '@/core/storage';
 import { CharacterProvider } from '@/providers/CharacterProvider';
+import { LanguageProvider } from '@/providers/LanguageProvider';
 import { TableProvider } from '@/providers/TableProvider';
 
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
   const isRestoring = useIsRestoring();
+  const { locale } = useLanguage();
 
   useEffect(() => {
     if (!isRestoring) {
@@ -40,6 +43,7 @@ function AppContent() {
               <BottomSheetModalProvider>
                 <Host>
                   <Stack
+                    key={locale}
                     screenOptions={{
                       headerShown: false,
                       contentStyle: { backgroundColor: '#fff' },
@@ -61,15 +65,17 @@ function AppContent() {
 
 export default function RootLayout() {
   return (
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister: queryPersister,
-        maxAge: 24 * 60 * 60 * 1000,
-        buster: Constants.expoConfig?.version ?? '1.0.0',
-      }}
-    >
-      <AppContent />
-    </PersistQueryClientProvider>
+    <LanguageProvider>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{
+          persister: queryPersister,
+          maxAge: 24 * 60 * 60 * 1000,
+          buster: Constants.expoConfig?.version ?? '1.0.0',
+        }}
+      >
+        <AppContent />
+      </PersistQueryClientProvider>
+    </LanguageProvider>
   );
 }

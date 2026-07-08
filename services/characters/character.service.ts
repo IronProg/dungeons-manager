@@ -2,8 +2,9 @@ import api from '@/core/api/api';
 import type { Character } from '@/types/character';
 
 export const characterService = {
-  fetchAll: (options: { params?: { tableId?: number } | null }) =>
-    api.get<Character[]>('/characters', options).then((res) => res.data),
+  fetchAll: (options: {
+    params?: { tableId?: number; text?: string } | null;
+  }) => api.get<Character[]>('/characters', options).then((res) => res.data),
   fetch: ({ id }: GetCharacterParams) =>
     api.get<Character>(`/characters/${id}`).then((res) => res.data),
   create: ({ ...params }: CreateCharacterParams) =>

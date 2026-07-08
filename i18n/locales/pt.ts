@@ -48,6 +48,9 @@ export const pt = {
     modifyAttributes: 'Modificar Atributos',
     newTable: 'Nova mesa',
     editTable: 'Editar Mesa',
+    options: 'Opções',
+    notifications: 'Notificações',
+    members: 'Membros',
   },
   general: {
     noDataFound: 'Nenhum dado encontrado',
@@ -60,6 +63,7 @@ export const pt = {
     proficiency: 'Proficiência',
     prof: 'Prof?',
     name: 'Nome',
+    loading: 'Carregando',
     base: 'Base',
     temp: 'Temp',
     temporary: 'Temporário',
@@ -84,6 +88,11 @@ export const pt = {
     confirm: 'Confirmar',
     cancel: 'Cancelar',
     damageType: 'Tipo de dano',
+    next: 'Próximo',
+    add: 'Adicionar',
+    tryAgain: 'Tentar novamente',
+    delete: 'Excluir',
+    leave: 'Sair',
   },
   hitPoints: {
     tempMaxHP: 'PV Máximo Temporário',
@@ -191,6 +200,30 @@ export const pt = {
     importActionText:
       'Ou você pode import um de seus personagens para essa mesa:',
     importActionButton: 'Selecionar personagem',
+    addFirst: 'Adicione seu primeiro personagem',
+    chooseTable: 'Escolha uma mesa (opcional)',
+    whatsName: 'Como seu personagem se chama?',
+    enterName: 'Digite o nome...',
+    cloneCharacter: 'Clone um personagem existente (opcional)',
+    startFresh: 'Começar do zero — não importar',
+    createCharacter: 'Criar Personagem',
+    noCharactersToImport: 'Nenhum personagem disponível para importar.',
+    deleteConfirmation: 'Tem certeza que deseja excluir este personagem?',
+    steps: {
+      table: 'Qual mesa?',
+      name: 'Nome do personagem',
+      import: 'Importar de',
+    },
+    stepLabels: {
+      table: 'Mesa',
+      name: 'Nome',
+      import: 'Importar',
+    },
+  },
+  characters: {
+    searchPlaceholder: 'Buscar por nome ou mesa...',
+    filterByTable: 'Mostrando personagens de %{table}',
+    clearFilter: 'Limpar filtro',
   },
   classes: {
     title: 'Classes',
@@ -240,6 +273,9 @@ export const pt = {
   errors: {
     couldNotLoadCharacter: 'Erro ao carregar personagem',
     couldNotLoadCharacters: 'Erro ao carregar personagens',
+    couldNotLoadTables: 'Erro ao carregar mesas',
+    couldNotDeleteTable: 'Não foi possível excluir a mesa',
+    couldNotKickPlayer: 'Não foi possível remover o jogador',
     general: 'Erro',
     auth: 'Erro de autenticação',
     network_error: 'Erro de rede',
@@ -288,6 +324,9 @@ export const pt = {
     created: 'Mesa criada com sucesso!',
     saveName: 'Salvar Nome',
     players: 'Jogadores',
+    dashboard: 'Dashboard',
+    delete: 'Excluir',
+    leave: 'Sair',
     kickPlayer: 'Remover Jogador',
     kickPlayerConfirm: 'Tem certeza que deseja remover este jogador da mesa?',
     playerKicked: 'Jogador expulso com sucesso!',
@@ -296,6 +335,14 @@ export const pt = {
     leaveText:
       'Seus personagens serão removidos da mesa e atribuidos a você automaticamente',
     tableLeft: 'Saiu da mesa com sucesso!',
+    noTable: 'Nenhuma mesa (pular)',
+    tableDeleted: 'Mesa excluída',
+    deleteTitle: 'Excluir Mesa',
+    deleteText: 'Esta ação não pode ser desfeita.',
+    enterName: 'Digite o nome...',
+    renameTable: 'Renomear a mesa',
+    users: 'Usuários',
+    whatsName: 'Qual o nome da mesa?',
   },
   spells: {
     title: 'Magias',
@@ -386,7 +433,7 @@ export const pt = {
       'Iniciativa, testes de resistência e perícias podem ser rolados ao pressioná-los.',
     sheetEdit: 'Para editar um campo nesta tela, basta pressionar e segurar.',
     sheetDetails:
-      'O ícone de arquivo abre a ficha de detalhes do personagem, onde você pode editar suas classes no Ícone de Editar e configurar os antecedentes e proficiências do seu personagem',
+      'O ícone de arquivo na barra superior abre os detalhes do personagem, onde você pode editar suas classes no Ícone de Editar e configurar os antecedentes e proficiências do seu personagem',
     detailsAttacks:
       'Aqui você pode adicionar seus ataques, configurando muitos danos para cada ataque. O ícone de rolagem à esquerda rola o ataque, e os ícones de rolagem em cada dano rolam aquele dano específico.',
     detailsAttacksLongPress: 'Pressionar e segurar o ataque o edita.',
@@ -400,5 +447,12 @@ export const pt = {
       'Cada classe configurada nos detalhes do seu personagem define quantos espaços de magia você tem.',
     spellsSlotsButtons:
       'Você pode aumentar ou diminuir a quantidade de espaços de magia pressionando os botões nas laterais de cada nível de espaço de magia',
+  },
+  options: {
+    diceRolling: 'Rolagem de Dados',
+    enableDiceRolling: 'Habilitar rolagem de dados',
+    language: 'Idioma',
+    english: 'English',
+    portuguese: 'Português',
   },
 };

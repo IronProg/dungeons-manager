@@ -7,9 +7,8 @@ import { Menu } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 
-import { CharactersDrawer } from '@/components/Characters/CharactersDrawer';
-import { HintsModal } from '@/components/CharacterSheet/HintsModal';
-import { RollToggleButton } from '@/components/Roll/RollToggleButton';
+import { CharacterDetailsButton } from '@/components/CharacterSheet/CharacterDetailsButton';
+import { MainMenu } from '@/components/MainMenu';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { useTable } from '@/contexts/TableContext';
 import i18n from '@/i18n';
@@ -29,7 +28,7 @@ export default function DrawerLayout() {
       setCharacterId(characters[0].id);
     } else if (characters?.length === 0) {
       if (table) {
-        router.replace('/(authenticated)/(drawer)/new-character');
+        router.replace('/(authenticated)/(drawer)/my-characters');
       } else {
         router.replace('/(authenticated)/(drawer)/tables');
       }
@@ -47,14 +46,7 @@ export default function DrawerLayout() {
   return (
     <DiceRollProvider>
       <Drawer
-        drawerContent={(props) => (
-          <CharactersDrawer
-            {...props}
-            characters={characters ?? []}
-            onLogout={signOut}
-            onNewCharacter={() => props.navigation.navigate('new-character')}
-          />
-        )}
+        drawerContent={(props) => <MainMenu {...props} onLogout={signOut} />}
         screenOptions={{
           drawerPosition: 'right',
           headerStyle: { backgroundColor: '#4f46e5' },
@@ -70,12 +62,15 @@ export default function DrawerLayout() {
             title: i18n.t('titles.character'),
             headerLeft: () => (
               <View className="flex flex-row gap-2 ml-1">
-                <RollToggleButton />
-
-                <HintsModal />
+                <CharacterDetailsButton />
               </View>
             ),
           }}
+        />
+
+        <Drawer.Screen
+          name="my-characters"
+          options={{ title: i18n.t('titles.characters') }}
         />
 
         <Drawer.Screen
@@ -91,13 +86,13 @@ export default function DrawerLayout() {
         />
 
         <Drawer.Screen
-          name="import-character"
-          options={{ title: i18n.t('titles.importCharacter') }}
+          name="new-table"
+          options={{ title: i18n.t('titles.newTable') }}
         />
 
         <Drawer.Screen
-          name="new-table"
-          options={{ title: i18n.t('titles.newTable') }}
+          name="options"
+          options={{ title: i18n.t('titles.options') }}
         />
 
         <Drawer.Screen
