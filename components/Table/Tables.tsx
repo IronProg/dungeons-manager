@@ -13,8 +13,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TablesItem } from '@/components/Table/TablesItem';
 import { Button } from '@/components/ui/Button';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
-import { useTable } from '@/contexts/TableContext';
 import { showMessage } from '@/core/utils/messages';
+import { useTable } from '@/hooks/useTable';
 import i18n from '@/i18n';
 import {
   useDestroyTableMutation,
@@ -88,22 +88,22 @@ export const Tables = () => {
   };
 
   const handleDashboard = (table: Table) => {
-    setTableId(table.id!);
+    setTableId(table.id);
     navigate('/(authenticated)/(drawer)/dm-dashboard');
   };
 
   const handleCharacters = (table: Table) => {
-    setTableId(table.id!);
+    setTableId(table.id);
     navigate('/(authenticated)/(drawer)/my-characters');
   };
 
   const handleUsers = (table: Table) => {
-    setTableId(table.id!);
+    setTableId(table.id);
     navigate('/(authenticated)/table-users');
   };
 
   const handleEdit = (table: Table) => {
-    setTableId(table.id!);
+    setTableId(table.id);
     navigate('/(authenticated)/edit-table');
   };
 

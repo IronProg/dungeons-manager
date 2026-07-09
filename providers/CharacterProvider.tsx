@@ -3,10 +3,7 @@ import type { ReactNode } from 'react';
 
 import { CharacterContext } from '@/contexts/CharacterContext';
 import { buildModifiers } from '@/core/helpers/buildModifiers';
-import {
-  getPersistedCharacterId,
-  setPersistedCharacterId,
-} from '@/core/storage/mmkv';
+import { useCharacterStore } from '@/core/stores/characterStore';
 import { usePrefetchCharacterData } from '@/hooks/usePrefetchCharacterData';
 import { useDetailedCharacter } from '@/hooks/useSetDetailedCharacter';
 import { useGetCharacter } from '@/services/characters/character.api';
@@ -19,7 +16,7 @@ export type CharacterProviderProps = {
   proficiencyBonus: number;
   isLoading: boolean;
   isFetching: boolean;
-  setCharacterId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setCharacterId: (id?: number) => void;
   modifiers?: Modifiers;
   setModifiers: React.Dispatch<React.SetStateAction<Modifiers | undefined>>;
   canEdit: boolean;
@@ -27,14 +24,12 @@ export type CharacterProviderProps = {
 
 export const CharacterProvider = ({ children }: { children: ReactNode }) => {
   const [initialLoading, setInitialLoading] = useState<boolean>(false);
-  const [characterId, setCharacterId] = useState<number | undefined>(() =>
-    getPersistedCharacterId(),
-  );
   const [modifiers, setModifiers] = useState<Modifiers>();
 
-  useEffect(() => {
-    setPersistedCharacterId(characterId);
-  }, [characterId]);
+  const characterId = useCharacterStore((state) => state.selectedCharacterId);
+  const setCharacterId = useCharacterStore(
+    (state) => state.setSelectedCharacterId,
+  );
 
   const { setDetailedCharacterData } = useDetailedCharacter({
     setInitialLoading,
@@ -53,7 +48,6 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!character) {
       setInitialLoading(false);
-
       return;
     }
 

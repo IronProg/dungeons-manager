@@ -9,8 +9,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { EditTableFormType } from '@/components/EditTable/useEditTable';
 import { useEditTable } from '@/components/EditTable/useEditTable';
-import { useTable } from '@/contexts/TableContext';
 import { showMessage } from '@/core/utils/messages';
+import { useTable } from '@/hooks/useTable';
 import i18n from '@/i18n';
 import { useUpdateTableMutation } from '@/services/tables/table.api';
 

@@ -24,9 +24,9 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
-import type { ComposeRollParams } from '@/contexts/DiceRollContext';
 import { cn } from '@/core/helpers/cn';
 import i18n from '@/i18n';
+import type { ComposeRollParams } from '@/types/diceRoll';
 
 const ROLL_DURATION_MS = 1500;
 

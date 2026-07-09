@@ -7,7 +7,7 @@ import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
 import { DMCharacterCard } from '@/components/Characters/DMCharacterCard';
-import { useTable } from '@/contexts/TableContext';
+import { useTable } from '@/hooks/useTable';
 import type { TableChannelCallback } from '@/hooks/useTableChannel';
 import { useTableChannel } from '@/hooks/useTableChannel';
 import i18n from '@/i18n';

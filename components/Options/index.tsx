@@ -3,9 +3,9 @@ import { Switch, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useDiceRoll } from '@/contexts/DiceRollContext';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { colors } from '@/core/utils/colors';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
+import { useLanguage } from '@/hooks/useLanguage';
 import i18n from '@/i18n';
 
 export const Options = () => {

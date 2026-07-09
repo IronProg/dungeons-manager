@@ -9,7 +9,7 @@ import { useDebounce } from 'use-debounce';
 import { CharacterCard } from '@/components/Characters/MyCharacters/CharacterCard';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { useCharacter } from '@/contexts/CharacterContext';
-import { useTable } from '@/contexts/TableContext';
+import { useTable } from '@/hooks/useTable';
 import i18n from '@/i18n';
 import {
   useDestroyCharacterMutation,

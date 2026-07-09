@@ -1,6 +1,5 @@
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import {
-  Bell,
   LogOut,
   Settings,
   Table as TableIcon,
@@ -74,13 +73,6 @@ export const MainMenu = ({ navigation, onLogout }: MainMenuProps) => {
         icon={<Settings size={22} color="#4f46e5" />}
         label={i18n.t('titles.options', { defaultValue: 'Options' })}
         onPress={() => handleNavigate('options')}
-      />
-      <MenuItem
-        icon={<Bell size={22} color="#9ca3af" />}
-        label={i18n.t('titles.notifications', {
-          defaultValue: 'Notifications',
-        })}
-        disabled
       />
 
       <View className="flex-1" />

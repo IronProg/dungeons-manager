@@ -6,8 +6,8 @@ import colors from 'tailwindcss/colors';
 
 import { EditTableName } from '@/components/EditTable/EditTableName';
 import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
-import { useTable } from '@/contexts/TableContext';
 import { showMessage } from '@/core/utils/messages';
+import { useTable } from '@/hooks/useTable';
 import i18n from '@/i18n';
 import { useDestroyTableMutation } from '@/services/tables/table.api';
 

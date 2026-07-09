@@ -11,18 +11,19 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Host } from 'react-native-portalize';
 import Toast from 'react-native-toast-message';
 
-import { useLanguage } from '@/contexts/LanguageContext';
+import { DiceRollHost } from '@/components/DiceRollHost';
 import { queryClient } from '@/core/queryClient/queryClient';
 import { queryPersister } from '@/core/storage';
+import { clearLegacyStorage } from '@/core/storage/mmkv';
+import { useSettingsStore } from '@/core/stores/settingsStore';
 import { CharacterProvider } from '@/providers/CharacterProvider';
-import { LanguageProvider } from '@/providers/LanguageProvider';
-import { TableProvider } from '@/providers/TableProvider';
 
 SplashScreen.preventAutoHideAsync();
+clearLegacyStorage();
 
 function AppContent() {
   const isRestoring = useIsRestoring();
-  const { locale } = useLanguage();
+  const locale = useSettingsStore((state) => state.language);
 
   useEffect(() => {
     if (!isRestoring) {
@@ -39,21 +40,21 @@ function AppContent() {
       <KeyboardProvider navigationBarTranslucent={true}>
         <GestureHandlerRootView className="flex-1">
           <CharacterProvider>
-            <TableProvider>
-              <BottomSheetModalProvider>
-                <Host>
-                  <Stack
-                    key={locale}
-                    screenOptions={{
-                      headerShown: false,
-                      contentStyle: { backgroundColor: '#fff' },
-                    }}
-                  >
-                    <Stack.Screen name="(authenticated)" />
-                  </Stack>
-                </Host>
-              </BottomSheetModalProvider>
-            </TableProvider>
+            <BottomSheetModalProvider>
+              <Host>
+                <Stack
+                  key={locale}
+                  screenOptions={{
+                    headerShown: false,
+                    contentStyle: { backgroundColor: '#fff' },
+                  }}
+                >
+                  <Stack.Screen name="(authenticated)" />
+                </Stack>
+
+                <DiceRollHost />
+              </Host>
+            </BottomSheetModalProvider>
           </CharacterProvider>
         </GestureHandlerRootView>
       </KeyboardProvider>
@@ -65,17 +66,15 @@ function AppContent() {
 
 export default function RootLayout() {
   return (
-    <LanguageProvider>
-      <PersistQueryClientProvider
-        client={queryClient}
-        persistOptions={{
-          persister: queryPersister,
-          maxAge: 24 * 60 * 60 * 1000,
-          buster: Constants.expoConfig?.version ?? '1.0.0',
-        }}
-      >
-        <AppContent />
-      </PersistQueryClientProvider>
-    </LanguageProvider>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister: queryPersister,
+        maxAge: 24 * 60 * 60 * 1000,
+        buster: Constants.expoConfig?.version ?? '1.0.0',
+      }}
+    >
+      <AppContent />
+    </PersistQueryClientProvider>
   );
 }
