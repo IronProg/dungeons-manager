@@ -1,13 +1,17 @@
-import { FlashList } from '@shopify/flash-list';
 import { Check, ChevronDown } from 'lucide-react-native';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import type { Ref } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Portal } from 'react-native-portalize';
+import React, { useState } from 'react';
+import {
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import colors from 'tailwindcss/colors';
 
-import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
-import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { cn } from '@/core/helpers/cn';
 
 export type SelectPickerItem = {
@@ -28,32 +32,34 @@ type SelectPickerProps = {
   error?: string;
 };
 
-function SelectPickerInner(
-  { items, value, onChange, placeholder, error }: SelectPickerProps,
-  ref: Ref<SelectPickerHandle>,
-) {
-  const sheetRef = useRef<AdaptiveBottomSheetHandle<void>>(null);
+export const SelectPicker = ({
+  items,
+  value,
+  onChange,
+  placeholder,
+  error,
+}: SelectPickerProps) => {
+  const [visible, setVisible] = useState(false);
+  const { height } = useWindowDimensions();
+
+  const maxHeight = height * 0.8;
 
   const selectedItem = items.find((item) => item.id === value);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      show() {
-        sheetRef.current?.show();
-      },
-    }),
-    [],
-  );
+  const styles = buildStyle({ maxHeight });
 
   return (
     <View>
       <TouchableOpacity
         className="flex-row items-center bg-gray-100 rounded-lg h-12 w-full px-4"
-        onPress={() => sheetRef.current?.show()}
+        onPress={() => {
+          Keyboard.dismiss();
+          setVisible(true);
+        }}
       >
         <Text
-          className={'flex-1 '.concat(
+          className={cn(
+            'flex-1',
             selectedItem ? 'text-gray-800' : 'text-gray-400',
           )}
           numberOfLines={1}
@@ -70,48 +76,43 @@ function SelectPickerInner(
 
       {error && <Text className="text-red-400 text-sm mt-1">{error}</Text>}
 
-      <Portal>
-        <AdaptiveBottomSheet
-          ref={sheetRef}
-          renderContent={({ onClose }) => (
-            <FlashList
-              data={items}
-              keyExtractor={(item) => String(item.id)}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity
-                  className={cn('flex-row items-center py-3 px-2', {
-                    'bg-slate-200': index % 2 === 0,
-                    'bg-slate-50': index % 2 !== 0,
-                  })}
-                  onPress={() => {
-                    onChange?.(item.id);
-                    onClose();
-                  }}
-                >
-                  <View className="flex-1">
-                    <Text className="text-gray-800">{item.label}</Text>
-
-                    {item.description && (
-                      <Text className="text-gray-500 text-sm">
-                        {item.description}
-                      </Text>
-                    )}
-                  </View>
-
-                  {item.id === value && (
-                    <Check size={20} color={colors.indigo[600]} />
-                  )}
-                </TouchableOpacity>
+      <BaseModal visible={visible} onClose={() => setVisible(false)}>
+        <ScrollView style={styles.container} contentContainerClassName="gap-2">
+          {items.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              className={cn(
+                'flex-row items-center py-3 px-2 rounded-lg border border-slate-300 bg-slate-50',
+                {
+                  'bg-indigo-100 border-indigo-400':
+                    selectedItem?.id === item.id,
+                },
               )}
-              keyboardShouldPersistTaps="handled"
-            />
-          )}
-        />
-      </Portal>
+              onPress={() => {
+                onChange?.(item.id);
+                setVisible(false);
+              }}
+            >
+              <View className="flex-1">
+                <Text className="text-gray-800">{item.label}</Text>
+
+                {item.description && (
+                  <Text className="text-gray-500 text-sm">
+                    {item.description}
+                  </Text>
+                )}
+              </View>
+
+              {item.id === value && (
+                <Check size={20} color={colors.indigo[600]} />
+              )}
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </BaseModal>
     </View>
   );
-}
+};
 
-export const SelectPicker = forwardRef(SelectPickerInner) as (
-  props: SelectPickerProps & { ref?: Ref<SelectPickerHandle> },
-) => React.JSX.Element;
+const buildStyle = ({ maxHeight }: { maxHeight: number }) =>
+  StyleSheet.create({ container: { height: 'auto', maxHeight } });
