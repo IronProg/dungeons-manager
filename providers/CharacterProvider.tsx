@@ -4,7 +4,6 @@ import type { ReactNode } from 'react';
 import { CharacterContext } from '@/contexts/CharacterContext';
 import { buildModifiers } from '@/core/helpers/buildModifiers';
 import { useCharacterStore } from '@/core/stores/characterStore';
-import { usePrefetchCharacterData } from '@/hooks/usePrefetchCharacterData';
 import { useDetailedCharacter } from '@/hooks/useSetDetailedCharacter';
 import { useGetCharacter } from '@/services/characters/character.api';
 import type { Character, Modifiers } from '@/types/character';
@@ -40,8 +39,6 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     isLoading,
     isFetching,
   } = useGetCharacter({ id: characterId });
-
-  usePrefetchCharacterData({ character, characterId });
 
   const canEdit = character?.isOwner ?? false;
 

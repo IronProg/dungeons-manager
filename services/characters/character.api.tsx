@@ -29,9 +29,14 @@ export const useGetAllCharacters = ({
 };
 
 export const useGetCharacter = ({ id }: GetCharacterParams) => {
-  return useQuery<Character, Error, Character, ['characters', number]>({
-    queryKey: ['characters', id!],
-    queryFn: () => characterService.fetch({ id }),
+  return useQuery<
+    Character,
+    Error,
+    Character,
+    ['characters', number, 'preload']
+  >({
+    queryKey: ['characters', id!, 'preload'],
+    queryFn: () => characterService.fetch({ id, preload: true }),
     enabled: !!id,
   });
 };

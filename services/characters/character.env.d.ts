@@ -1,5 +1,6 @@
 type GetCharacterParams = {
   id?: number;
+  preload?: boolean;
 };
 
 type CreateCharacterParams = {

@@ -54,6 +54,11 @@ export type Character = {
   attacks: Attack[];
   resources: Resource[];
   features: Feature[];
+  equipments?: Equipment[];
+  spellSlots?: SpellSlot[];
+  note?: Note;
+  proficiency?: Proficiency;
+  background?: Background;
   isOwner?: boolean;
 };
 
