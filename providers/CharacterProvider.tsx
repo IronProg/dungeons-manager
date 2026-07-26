@@ -5,7 +5,10 @@ import { CharacterContext } from '@/contexts/CharacterContext';
 import { buildModifiers } from '@/core/helpers/buildModifiers';
 import { useCharacterStore } from '@/core/stores/characterStore';
 import { useDetailedCharacter } from '@/hooks/useSetDetailedCharacter';
-import { useGetCharacter } from '@/services/characters/character.api';
+import {
+  useGetCharacter,
+  usePreloadCharacter,
+} from '@/services/characters/character.api';
 import type { Character, Modifiers } from '@/types/character';
 
 export type CharacterProviderProps = {
@@ -34,6 +37,9 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
     setInitialLoading,
   });
 
+  const { data: preloadedCharacter, isLoading: isPreloading } =
+    usePreloadCharacter({ id: characterId });
+
   const {
     data: character,
     isLoading,
@@ -43,17 +49,34 @@ export const CharacterProvider = ({ children }: { children: ReactNode }) => {
   const canEdit = character?.isOwner ?? false;
 
   useEffect(() => {
-    if (!character) {
+    if (!characterId) {
       setInitialLoading(false);
       return;
     }
 
-    setDetailedCharacterData(character);
+    if (isPreloading) {
+      setInitialLoading(true);
+    } else if (!preloadedCharacter) {
+      setInitialLoading(false);
+    }
+  }, [characterId, isPreloading, preloadedCharacter, setInitialLoading]);
 
-    const modifiers = buildModifiers(character?.characterAttributes);
+  useEffect(() => {
+    if (!preloadedCharacter) return;
+
+    setDetailedCharacterData(preloadedCharacter);
+  }, [preloadedCharacter, setDetailedCharacterData]);
+
+  useEffect(() => {
+    const attributes =
+      character?.characterAttributes ?? preloadedCharacter?.characterAttributes;
+
+    if (!attributes) return;
+
+    const modifiers = buildModifiers(attributes);
 
     setModifiers(modifiers);
-  }, [character, setDetailedCharacterData]);
+  }, [character, preloadedCharacter, setModifiers]);
 
   const value: CharacterProviderProps = {
     initialLoading,

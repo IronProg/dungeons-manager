@@ -28,15 +28,24 @@ export const useGetAllCharacters = ({
   });
 };
 
+export const usePreloadCharacter = ({ id }: GetCharacterParams) => {
+  return useQuery<Character, Error, Character, ['preloadedCharacters', number]>(
+    {
+      queryKey: ['preloadedCharacters', id!],
+      queryFn: () => characterService.fetch({ id, preload: true }),
+      enabled: !!id,
+      gcTime: 0,
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
+};
+
 export const useGetCharacter = ({ id }: GetCharacterParams) => {
-  return useQuery<
-    Character,
-    Error,
-    Character,
-    ['characters', number, 'preload']
-  >({
-    queryKey: ['characters', id!, 'preload'],
-    queryFn: () => characterService.fetch({ id, preload: true }),
+  return useQuery<Character, Error, Character, ['characters', number]>({
+    queryKey: ['characters', id!],
+    queryFn: () => characterService.fetch({ id }),
     enabled: !!id,
   });
 };
