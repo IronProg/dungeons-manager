@@ -48,6 +48,9 @@ export const en = {
     modifyAttributes: 'Modify Attributes',
     newTable: 'New table',
     editTable: 'Edit Table',
+    options: 'Options',
+    notifications: 'Notifications',
+    members: 'Members',
   },
   general: {
     noDataFound: 'No data found',
@@ -60,6 +63,7 @@ export const en = {
     proficiency: 'Proficiency',
     prof: 'Prof?',
     name: 'Name',
+    loading: 'Loading',
     base: 'Base',
     temp: 'Temp',
     temporary: 'Temporary',
@@ -84,6 +88,11 @@ export const en = {
     confirm: 'Confirm',
     cancel: 'Cancel',
     damageType: 'Damage type',
+    add: 'Add',
+    next: 'Next',
+    tryAgain: 'Try again',
+    delete: 'Delete',
+    leave: 'Leave',
   },
   hitPoints: {
     tempMaxHP: 'Temp Max HP',
@@ -190,6 +199,30 @@ export const en = {
     importActionText:
       'Or you can import one of your other characters into the table:',
     importActionButton: 'Select character',
+    addFirst: 'Add your first character',
+    chooseTable: 'Choose a table (optional)',
+    whatsName: "What's your character called?",
+    enterName: 'Enter name...',
+    cloneCharacter: 'Clone an existing character (optional)',
+    startFresh: "Start fresh — don't import",
+    createCharacter: 'Create Character',
+    noCharactersToImport: 'No characters available to import.',
+    deleteConfirmation: 'Are you sure you want to delete this character?',
+    steps: {
+      table: 'Which table?',
+      name: 'Character name',
+      import: 'Import from',
+    },
+    stepLabels: {
+      table: 'Table',
+      name: 'Name',
+      import: 'Import',
+    },
+  },
+  characters: {
+    searchPlaceholder: 'Search by name or table...',
+    filterByTable: 'Showing characters from %{table}',
+    clearFilter: 'Clear filter',
   },
   classes: {
     title: 'Classes',
@@ -239,6 +272,9 @@ export const en = {
   errors: {
     couldNotLoadCharacter: 'Error while loading character',
     couldNotLoadCharacters: 'Error while loading characters',
+    couldNotLoadTables: 'Error while loading tables',
+    couldNotDeleteTable: 'Could not delete table',
+    couldNotKickPlayer: 'Could not remove player',
     general: 'Error',
     auth: 'Authentication error',
     network_error: 'Network error',
@@ -287,6 +323,9 @@ export const en = {
     created: 'Table created successfully',
     saveName: 'Save Name',
     players: 'Players',
+    dashboard: 'Dashboard',
+    delete: 'Delete',
+    leave: 'Leave',
     kickPlayer: 'Kick Player',
     kickPlayerConfirm:
       'Are you sure you want to remove this player from the table?',
@@ -296,6 +335,14 @@ export const en = {
     leaveText:
       'Your characters will be removed from the table and attached to you automatically',
     tableLeft: 'Table left succesfully',
+    noTable: 'No table (skip)',
+    tableDeleted: 'Table deleted',
+    deleteTitle: 'Delete Table',
+    deleteText: 'This action cannot be undone.',
+    enterName: 'Enter name...',
+    renameTable: 'Rename the table',
+    users: 'Users',
+    whatsName: "What's the table called?",
   },
   spells: {
     title: 'Spells',
@@ -385,7 +432,7 @@ export const en = {
       'Initiative, saving throws and skills can be rolled by pressing on them.',
     sheetEdit: 'For editing a field on this screen, simply long press on it.',
     sheetDetails:
-      'The file icon opens the character details sheet, where you can edit your classes on the Edit Icon an setup your character backgrounds and proficiencies',
+      'The file icon in the top bar opens the character details, where you can edit your classes on the Edit Icon an setup your character backgrounds and proficiencies',
     detailsAttacks:
       'Here you can add your attacks, configuring many damages for each attack. The roll icon on the left rolls the attack, and the rolls on each damage rolls for that specific damage.',
     detailsAttacksLongPress: 'Long pressing the attack edits it',
@@ -399,5 +446,12 @@ export const en = {
       'Each class configured on your character details define how many spell slots you have.',
     spellsSlotsButtons:
       'You can raise or lower the amount of spell slots by pressing the buttons on the sides of each spell slot level',
+  },
+  options: {
+    diceRolling: 'Dice Rolling',
+    enableDiceRolling: 'Enable dice rolling',
+    language: 'Language',
+    english: 'English',
+    portuguese: 'Português',
   },
 };

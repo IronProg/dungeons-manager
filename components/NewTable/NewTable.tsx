@@ -1,11 +1,17 @@
 import { useRouter } from 'expo-router';
 import { Controller } from 'react-hook-form';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { NewTableFormType } from '@/components/NewTable/useNewTable';
 import { useNewTable } from '@/components/NewTable/useNewTable';
+import { Button } from '@/components/ui/Button';
 import { showMessage } from '@/core/utils/messages';
 import i18n from '@/i18n';
 import { useCreateTableMutation } from '@/services/tables/table.api';
@@ -28,42 +34,47 @@ export const NewTable = () => {
   };
 
   return (
-    <View className="flex-1 bg-slate-200">
-      <View className="grow flex-col gap-4 p-4">
-        <View>
-          <Text className="text-lg font-medium">{i18n.t('general.name')}</Text>
-          <Controller
-            control={control}
-            name="name"
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <TextInput
-                  className="w-full px-4 text-xl h-15 bg-white rounded-lg"
-                  value={field.value}
-                  onChangeText={field.onChange}
-                />
-                {error?.message && (
-                  <Text className="text-red-400 text-sm">{error?.message}</Text>
-                )}
-              </>
-            )}
-          />
-        </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      className="flex-1 bg-slate-200"
+    >
+      <View className="flex-1 justify-center items-center px-4">
+        <Text className="text-gray-500 text-sm mb-6">
+          {i18n.t('tables.whatsName')}
+        </Text>
+
+        <Controller
+          control={control}
+          name="name"
+          render={({ field, fieldState: { error } }) => (
+            <View className="w-full max-w-xs">
+              <TextInput
+                value={field.value}
+                onChangeText={field.onChange}
+                placeholder={i18n.t('tables.enterName')}
+                className="bg-white border border-gray-200 rounded-xl py-3 px-4 text-center text-lg text-gray-800 w-full"
+                autoFocus
+                autoCapitalize="words"
+                maxLength={50}
+              />
+              {error?.message && (
+                <Text className="text-red-400 text-sm mt-2 text-center">
+                  {error.message}
+                </Text>
+              )}
+            </View>
+          )}
+        />
       </View>
 
-      <KeyboardStickyView>
-        <View className="mt-auto px-4" style={{ paddingBottom: 16 + bottom }}>
-          <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
-            disabled={isPending}
-            className={`bg-green-600 px-4 py-2 rounded-lg ${isPending ? 'opacity-75' : ''}`}
-          >
-            <Text className="text-2xl text-center text-white font-medium">
-              {i18n.t('tables.createTable')}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardStickyView>
-    </View>
+      <View className="px-4" style={{ paddingBottom: 16 + bottom }}>
+        <Button
+          text={i18n.t('tables.createTable')}
+          onPress={handleSubmit(onSubmit)}
+          disabled={isPending}
+          loading={isPending}
+        />
+      </View>
+    </KeyboardAvoidingView>
   );
 };

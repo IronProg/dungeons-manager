@@ -1,8 +1,8 @@
 import { TouchableOpacity } from 'react-native';
 
 import D20 from '@/assets/icons/d20.svg';
-import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { cn } from '@/core/helpers/cn';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
 
 export const DiceRollButton = ({
   bonuses = [],

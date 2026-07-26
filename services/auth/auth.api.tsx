@@ -3,7 +3,8 @@ import type { AxiosError } from 'axios';
 
 import type { ApiErrorResponse } from '@/core/error/handler';
 import { handleErrorMessage } from '@/core/error/handler';
-import { setPersistedCharacterId } from '@/core/storage/mmkv';
+import { useCharacterStore } from '@/core/stores/characterStore';
+import { useTableFilterStore } from '@/core/stores/tableFilterStore';
 import {
   removeAccessToken,
   removeRefreshToken,
@@ -50,7 +51,8 @@ export const useSignOutMutation = () => {
     onSuccess: async () => {
       await removeAccessToken();
       await removeRefreshToken();
-      setPersistedCharacterId(undefined);
+      useCharacterStore.getState().setSelectedCharacterId(undefined);
+      useTableFilterStore.getState().clearTableId();
       await queryClient.resetQueries();
       await queryClient.setQueryData(authKey, null);
     },

@@ -1,27 +1,45 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
-import { useTable } from '@/contexts/TableContext';
 import type { ApiErrorResponse } from '@/core/error/handler';
 import { handleErrorMessage } from '@/core/error/handler';
+import { useTable } from '@/hooks/useTable';
 import { characterService } from '@/services/characters/character.service';
 import type { Character } from '@/types/character';
 
 interface useGetAllCharacterProps {
   useTableId?: boolean;
+  text?: string;
 }
 
 export const useGetAllCharacters = ({
   useTableId = true,
+  text,
 }: useGetAllCharacterProps = {}) => {
   const { tableId } = useTable();
 
-  const params = useTableId ? { tableId } : undefined;
+  const params: Record<string, unknown> = {};
+  if (useTableId && tableId) params.tableId = tableId;
+  if (text) params.text = text;
 
   return useQuery({
     queryKey: ['characters', 'all', params],
     queryFn: () => characterService.fetchAll({ params }),
   });
+};
+
+export const usePreloadCharacter = ({ id }: GetCharacterParams) => {
+  return useQuery<Character, Error, Character, ['preloadedCharacters', number]>(
+    {
+      queryKey: ['preloadedCharacters', id!],
+      queryFn: () => characterService.fetch({ id, preload: true }),
+      enabled: !!id,
+      gcTime: 0,
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
 };
 
 export const useGetCharacter = ({ id }: GetCharacterParams) => {
@@ -41,8 +59,8 @@ export const useCreateCharacterMutation = () => {
     AxiosError<ApiErrorResponse>,
     CreateCharacterParams
   >({
-    mutationFn: (params: CreateCharacterParams) =>
-      characterService.create({ ...params, tableId }),
+    mutationFn: ({ name, tableId: paramTableId }: CreateCharacterParams) =>
+      characterService.create({ name, tableId: paramTableId ?? tableId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['characters'] });
     },

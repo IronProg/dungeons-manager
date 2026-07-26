@@ -5,9 +5,9 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import { Button } from '@/components/ui/Button';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { useCharacter } from '@/contexts/CharacterContext';
-import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { cn } from '@/core/helpers/cn';
 import { useDamageFormat } from '@/hooks/useDamageString';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
 import { useSpellDamage } from '@/hooks/useSpellDamage';
 import i18n from '@/i18n';
 import {

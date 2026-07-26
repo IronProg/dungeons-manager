@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Button } from '@/components/ui/Button';
 import { BaseModal } from '@/components/ui/Modals/BaseModal';
 import { useCharacter } from '@/contexts/CharacterContext';
-import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
 import i18n from '@/i18n';
 import {
   useGetAllClasses,

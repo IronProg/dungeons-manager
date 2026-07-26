@@ -4412,7 +4412,7 @@ expo-glass-effect@^55.0.10:
   resolved "https://registry.yarnpkg.com/expo-glass-effect/-/expo-glass-effect-55.0.10.tgz#5db7a154e8c7dd89a7fc91f87a1d5387364f0f20"
   integrity sha512-5kL/jATvgJWdrqPdxixrECJqD2l8cfQ4ALr1DK7qi9XkyI97ejXvUjB2VsfEePNy3Fg+/VwzA3n3L7Nv3tAPkw==
 
-expo-image@^55.0.8, expo-image@~55.0.8:
+expo-image@^55.0.8:
   version "55.0.8"
   resolved "https://registry.yarnpkg.com/expo-image/-/expo-image-55.0.8.tgz#0b23054041508e70948bd4ab5d3f6bdd71c53989"
   integrity sha512-fNdvdYVcGn3g1x6o5AXHKzk4xX8U6rg2W9vFdE1pQO80kWCNReh003ypqSrGy4dD+zA8FtZjrNF3oMDGnPpIGQ==
@@ -8368,3 +8368,8 @@ zod@^3.22.4, zod@^3.25.76:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
   integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
+
+zustand@^5.0.14:
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-5.0.14.tgz#18216c24fcb980cf36898f9c57520e67b1f77855"
+  integrity sha512-/8tAspM5LMPr28b3fwLYrtdj77ECpfZviaP75CMTnwO8ISyaE4GDIG/9rDDYq/cH9D2Xw2A2RXglLInmVBQB/g==

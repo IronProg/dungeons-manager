@@ -1,6 +1,6 @@
 import { useCharacter } from '@/contexts/CharacterContext';
-import type { ComposeRollParams } from '@/contexts/DiceRollContext';
 import type { Damage, Spell, SpellSlotLevelType } from '@/types/character';
+import type { ComposeRollParams } from '@/types/diceRoll';
 
 type SpellDamageParams = { spell: Spell; levelCast: SpellSlotLevelType };
 type CantripDamageParams = { spell: Spell };

@@ -2,7 +2,7 @@ import { Zap } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useCharacter } from '@/contexts/CharacterContext';
-import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
 import i18n from '@/i18n';
 import type { CharacterGeneralInfo } from '@/types/character';
 

@@ -1,5 +1,6 @@
 type GetCharacterParams = {
   id?: number;
+  preload?: boolean;
 };
 
 type CreateCharacterParams = {
@@ -17,7 +18,8 @@ type UpdateCharacterParams = {
 
 type CloneCharacterParams = {
   id: number;
-  tableId: number;
+  tableId?: number;
+  name?: string;
 };
 
 type DestroyCharacterParams = {

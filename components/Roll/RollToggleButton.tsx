@@ -1,8 +1,8 @@
 import { CircleOff, Dice6 } from 'lucide-react-native';
 import { TouchableOpacity, View } from 'react-native';
 
-import { useDiceRoll } from '@/contexts/DiceRollContext';
 import { colors } from '@/core/utils/colors';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
 
 export const RollToggleButton = () => {
   const { enabled, setEnabled } = useDiceRoll();

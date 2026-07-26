@@ -9,7 +9,7 @@ import { SkillForm } from '@/components/CharacterSheet/Skills/Skill/SkillForm';
 import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import { useCharacter } from '@/contexts/CharacterContext';
-import { useDiceRoll } from '@/contexts/DiceRollContext';
+import { useDiceRoll } from '@/hooks/useDiceRoll';
 import { useGetSkillBonus } from '@/hooks/useSkillBonus';
 import i18n from '@/i18n';
 import { useGetAllSavingThrows } from '@/services/savingThrows/savingThrow';

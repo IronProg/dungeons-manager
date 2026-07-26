@@ -1,5 +1,5 @@
-import { NewCharacter } from '@/components/Characters/NewCharacter';
+import { NewCharacterStepper } from '@/components/Characters/NewCharacterStepper';
 
 export default function NewCharacterScreen() {
-  return <NewCharacter />;
+  return <NewCharacterStepper />;
 }
