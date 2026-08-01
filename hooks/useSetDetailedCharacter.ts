@@ -37,81 +37,69 @@ export const useDetailedCharacter = ({
 
       const characterId = character.id!;
 
-      queryClient.setQueryData(
+      const setIfMissing = <T>(key: readonly unknown[], data: T) => {
+        if (queryClient.getQueryData(key) === undefined) {
+          queryClient.setQueryData(key, data);
+        }
+      };
+
+      setIfMissing(
         getAllAttributesKey({ characterId }),
         character.characterAttributes,
       );
 
-      queryClient.setQueryData(
+      setIfMissing(
         getAllClassesKey({ characterId }),
         character.characterClasses,
       );
 
-      queryClient.setQueryData(
+      setIfMissing(
         getAllSavingThrowsKey({ characterId }),
         character.savingThrows,
       );
 
-      queryClient.setQueryData(
-        getAllSkillsKey({ characterId }),
-        character.skills,
-      );
+      setIfMissing(getAllSkillsKey({ characterId }), character.skills);
 
-      queryClient.setQueryData(
-        getAllAttacksKey({ characterId }),
-        character.attacks,
-      );
+      setIfMissing(getAllAttacksKey({ characterId }), character.attacks);
 
-      queryClient.setQueryData(
-        getAllResourcesKey({ characterId }),
-        character.resources,
-      );
+      setIfMissing(getAllResourcesKey({ characterId }), character.resources);
 
-      queryClient.setQueryData(
-        getAllFeaturesKey({ characterId }),
-        character.features,
-      );
+      setIfMissing(getAllFeaturesKey({ characterId }), character.features);
 
-      queryClient.setQueryData(
+      setIfMissing(
         getCharacterGeneralInfoKey({ characterId }),
         character.generalInfo,
       );
 
-      queryClient.setQueryData(
+      setIfMissing(
         getCharacterCurrencyKey({ characterId }),
         character.currencies,
       );
 
       if (character.equipments) {
-        queryClient.setQueryData(
+        setIfMissing(
           getAllEquipmentsKey({ characterId }),
           character.equipments,
         );
       }
 
       if (character.spellSlots) {
-        queryClient.setQueryData(
+        setIfMissing(
           getAllCharacterSpellSlotsKey({ characterId }),
           character.spellSlots,
         );
       }
 
       if (character.background) {
-        queryClient.setQueryData(
-          getBackgroundKey({ characterId }),
-          character.background,
-        );
+        setIfMissing(getBackgroundKey({ characterId }), character.background);
       }
 
       if (character.proficiency) {
-        queryClient.setQueryData(
-          getProficiencyKey({ characterId }),
-          character.proficiency,
-        );
+        setIfMissing(getProficiencyKey({ characterId }), character.proficiency);
       }
 
       if (character.note) {
-        queryClient.setQueryData(getNoteKey({ characterId }), character.note);
+        setIfMissing(getNoteKey({ characterId }), character.note);
       }
 
       setInitialLoading(false);
