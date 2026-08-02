@@ -38,6 +38,7 @@ export const useGetCharacterSpells = (level: SpellSlotLevelType) => {
     queryKey: getCharacterSpellsKey({ characterId: characterId!, level }),
     queryFn: () => spellService.fetchAll(characterId!, level),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

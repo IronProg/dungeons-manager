@@ -53,10 +53,7 @@ export const HitDices = ({ canEdit }: HitDicesProps) => {
       </TouchableOpacity>
 
       <Portal>
-        <AdaptiveBottomSheet
-          ref={ref}
-          renderContent={() => <HitDicesForm />}
-        />
+        <AdaptiveBottomSheet ref={ref} renderContent={() => <HitDicesForm />} />
       </Portal>
     </>
   );

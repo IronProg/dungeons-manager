@@ -29,6 +29,7 @@ export const useGetAllSavingThrows = () => {
     queryKey: getAllSavingThrowsKey({ characterId: characterId! }),
     queryFn: () => savingThrowService.fetchAll({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

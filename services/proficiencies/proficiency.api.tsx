@@ -29,6 +29,7 @@ export const useGetProficiency = () => {
     queryKey: getProficiencyKey({ characterId: characterId! }),
     queryFn: () => proficiencyService.fetch({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

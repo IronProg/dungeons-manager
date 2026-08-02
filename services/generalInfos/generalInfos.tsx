@@ -29,6 +29,7 @@ export const useGetCharacterGeneralInfo = () => {
     queryKey: getCharacterGeneralInfoKey({ characterId: characterId! }),
     queryFn: () => generalInfoService.fetch({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

@@ -29,6 +29,7 @@ export const useGetAllClasses = () => {
     queryKey: getAllClassesKey({ characterId: characterId! }),
     queryFn: () => classService.fetchAll({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

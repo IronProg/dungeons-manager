@@ -14,12 +14,8 @@ export const queryClient = new QueryClient({
       retry: false,
       refetchOnReconnect: true,
       refetchOnWindowFocus: false,
-      networkMode: 'offlineFirst',
     },
-    mutations: {
-      retry: false,
-      networkMode: 'offlineFirst',
-    },
+    mutations: { retry: false },
   },
 });
 

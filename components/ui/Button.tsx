@@ -11,6 +11,8 @@ type ButtonProps = {
   onPress?: () => void;
   disabled?: boolean;
   loading?: boolean;
+  accessibilityRole?: 'button' | 'link';
+  accessibilityLabel?: string;
 };
 
 export const Button = ({
@@ -21,6 +23,8 @@ export const Button = ({
   hitSlop,
   disabled = false,
   loading = false,
+  accessibilityRole = 'button',
+  accessibilityLabel,
 }: ButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
@@ -33,6 +37,8 @@ export const Button = ({
     )}
     disabled={disabled}
     hitSlop={hitSlop}
+    accessibilityRole={accessibilityRole}
+    accessibilityLabel={accessibilityLabel ?? text}
   >
     {loading ? (
       <ActivityIndicator />

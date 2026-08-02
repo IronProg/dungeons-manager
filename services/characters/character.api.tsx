@@ -47,6 +47,7 @@ export const useGetCharacter = ({ id }: GetCharacterParams) => {
     queryKey: ['characters', id!],
     queryFn: () => characterService.fetch({ id }),
     enabled: !!id,
+    networkMode: 'offlineFirst',
   });
 };
 
