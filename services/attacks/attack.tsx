@@ -21,6 +21,7 @@ export const useGetAllAttacks = () => {
       queryKey: getAllAttacksKey({ characterId: characterId! }),
       queryFn: () => attacksService.fetchAll({ characterId: characterId! }),
       enabled: !!character,
+      networkMode: 'offlineFirst',
     },
   );
 };

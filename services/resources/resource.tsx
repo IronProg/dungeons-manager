@@ -29,6 +29,7 @@ export const useGetAllResources = () => {
     queryKey: getAllResourcesKey({ characterId: characterId! }),
     queryFn: () => resourcesService.fetchAll({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

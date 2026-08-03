@@ -29,6 +29,7 @@ export const useGetAllEquipments = () => {
     queryKey: getAllEquipmentsKey({ characterId: characterId! }),
     queryFn: () => equipmentService.fetchAll({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

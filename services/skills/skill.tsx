@@ -20,6 +20,7 @@ export const useGetAllSkills = () => {
     queryKey: getAllSkillsKey({ characterId: characterId! }),
     queryFn: () => skillsService.fetchAll({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

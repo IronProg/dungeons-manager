@@ -1,12 +1,13 @@
-import { useRouter } from 'expo-router';
-import { Hash, Users } from 'lucide-react-native';
-import React, { useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Bell, Hash, Users } from 'lucide-react-native';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   FlatList,
   TextInput,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -16,6 +17,7 @@ import { ConfirmationModal } from '@/components/ui/Modals/ConfirmationModal';
 import { showMessage } from '@/core/utils/messages';
 import { useTable } from '@/hooks/useTable';
 import i18n from '@/i18n';
+import { useGetTableRequestStats } from '@/services/tableRequests/tableRequest.api';
 import {
   useDestroyTableMutation,
   useGetAllTables,
@@ -47,24 +49,47 @@ export const Tables = () => {
   const { mutateAsync: destroyTable, isPending: isDestroying } =
     useDestroyTableMutation();
   const { data: tables, isLoading: isLoadingTables } = useGetAllTables();
-  const { mutateAsync: joinTable, isPending: isJoining } =
-    useJoinTableMutation();
+  const { mutate: joinTable, isPending: isJoining } = useJoinTableMutation();
   const { mutateAsync: leaveTable, isPending: isLeaving } =
     useLeaveTableMutation();
   const { setTableId } = useTable();
   const { navigate } = useRouter();
+  const { data: stats } = useGetTableRequestStats();
+  const { inviteCode: inviteCodeParam } = useLocalSearchParams<{
+    inviteCode?: string;
+  }>();
 
-  const handleJoinTable = async () => {
+  const handleJoinTable = () => {
     if (!inviteCode.trim()) {
       showMessage(i18n.t('tables.inviteCodeRequired'), 'error');
       return;
     }
 
-    await joinTable({ inviteCode: inviteCode.trim() });
-
-    setInviteCode('');
-    showMessage(i18n.t('tables.joinedTable'));
+    joinTable(
+      { inviteCode: inviteCode.trim() },
+      {
+        onSuccess: () => {
+          setInviteCode('');
+          showMessage(i18n.t('tables.requestSent'));
+        },
+      },
+    );
   };
+
+  useEffect(() => {
+    if (inviteCodeParam) {
+      setInviteCode(inviteCodeParam);
+      joinTable(
+        { inviteCode: inviteCodeParam.trim() },
+        {
+          onSuccess: () => {
+            setInviteCode('');
+            showMessage(i18n.t('tables.requestSent'));
+          },
+        },
+      );
+    }
+  }, [inviteCodeParam, joinTable, setInviteCode]);
 
   const handleLeaveTable = async () => {
     if (!tableToDelete) return;
@@ -141,6 +166,7 @@ export const Tables = () => {
               <View className="absolute left-3 z-10">
                 <Hash size={20} color="#9ca3af" />
               </View>
+
               <TextInput
                 value={inviteCode}
                 onChangeText={setInviteCode}
@@ -151,7 +177,7 @@ export const Tables = () => {
               />
             </View>
 
-            <View>
+            <View className="h-10">
               <Button
                 text={i18n.t('tables.join')}
                 onPress={handleJoinTable}
@@ -165,9 +191,28 @@ export const Tables = () => {
         </View>
 
         <View className="flex-1 px-5 mt-2">
-          <Text className="text-xl font-bold text-gray-800 mb-4">
-            {i18n.t('tables.myTables')}
-          </Text>
+          <View className="flex-row items-center justify-between mb-4">
+            <Text className="text-xl font-bold text-gray-800">
+              {i18n.t('tables.myTables')}
+            </Text>
+
+            <TouchableOpacity
+              onPress={() => navigate('/(authenticated)/table-requests')}
+              className="relative w-10 h-10 rounded-full bg-indigo-100 items-center justify-center"
+              hitSlop={10}
+              accessibilityRole="button"
+              accessibilityLabel={i18n.t('tableRequests.title')}
+            >
+              <Bell size={20} color="#4f46e5" />
+              {!!stats && stats.pendingInvites + stats.pendingJoins > 0 && (
+                <View className="absolute -top-1 -right-1 bg-red-500 rounded-full min-w-5 h-5 px-1 items-center justify-center">
+                  <Text className="text-white text-xs font-bold">
+                    {stats.pendingInvites + stats.pendingJoins}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </View>
 
           {isLoadingTables ? (
             <View className="flex-1 justify-center items-center">

@@ -29,6 +29,7 @@ export const useGetCharacterCurrency = () => {
     queryKey: getCharacterCurrencyKey({ characterId: characterId! }),
     queryFn: () => currenciesService.fetch({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

@@ -1,8 +1,10 @@
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { useRouter } from 'expo-router';
 import {
   LogOut,
   Settings,
   Table as TableIcon,
+  User,
   Users,
 } from 'lucide-react-native';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -40,6 +42,8 @@ const MenuItem = ({ icon, label, onPress, disabled }: MenuItemProps) => (
 const Divider = () => <View className="h-px bg-gray-200 mx-5 my-2" />;
 
 export const MainMenu = ({ navigation, onLogout }: MainMenuProps) => {
+  const router = useRouter();
+
   const handleNavigate = (route: string) => {
     navigation.navigate(route);
   };
@@ -73,6 +77,12 @@ export const MainMenu = ({ navigation, onLogout }: MainMenuProps) => {
         icon={<Settings size={22} color="#4f46e5" />}
         label={i18n.t('titles.options', { defaultValue: 'Options' })}
         onPress={() => handleNavigate('options')}
+      />
+
+      <MenuItem
+        icon={<User size={22} color="#4f46e5" />}
+        label={i18n.t('titles.profile')}
+        onPress={() => router.push('/(authenticated)/profile')}
       />
 
       <View className="flex-1" />

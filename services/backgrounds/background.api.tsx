@@ -29,6 +29,7 @@ export const useGetBackground = () => {
     queryKey: getBackgroundKey({ characterId: characterId! }),
     queryFn: () => backgroundService.fetch({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

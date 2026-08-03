@@ -3,8 +3,12 @@ import type { AxiosError } from 'axios';
 
 import type { ApiErrorResponse } from '@/core/error/handler';
 import { handleErrorMessage } from '@/core/error/handler';
+import {
+  tableRequestsKey,
+  tableRequestStatsKey,
+} from '@/services/tableRequests/tableRequest.api';
 import { tableService } from '@/services/tables/table.service';
-import type { Table } from '@/types/table';
+import type { Table, TableRequest } from '@/types/table';
 import type { TableCharacter } from '@/types/table_character';
 
 export const useGetAllTables = () => {
@@ -81,10 +85,15 @@ export const useDestroyTableMutation = () => {
 export const useJoinTableMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<null, AxiosError<ApiErrorResponse>, JoinTableParams>({
+  return useMutation<
+    TableRequest,
+    AxiosError<ApiErrorResponse>,
+    JoinTableParams
+  >({
     mutationFn: (params) => tableService.join(params),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tables'] });
+      queryClient.invalidateQueries({ queryKey: tableRequestsKey });
+      queryClient.invalidateQueries({ queryKey: tableRequestStatsKey });
     },
     onError: ({ response }) => {
       handleErrorMessage(response?.data);

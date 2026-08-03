@@ -44,6 +44,48 @@ export default function RootLayout() {
           headerTintColor: 'white',
         }}
       />
+
+      <Stack.Screen
+        name="profile/index"
+        options={{
+          headerTitle: i18n.t('titles.profile'),
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
+        name="profile/edit"
+        options={{
+          headerTitle: i18n.t('titles.editProfile'),
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
+        name="invite-user"
+        options={{
+          headerTitle: i18n.t('tableRequests.title'),
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
+        name="table-requests"
+        options={{
+          headerTitle: i18n.t('tableRequests.title'),
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen
+        name="table-invites"
+        options={{
+          headerTitle: i18n.t('tableRequests.pendingInvites'),
+          headerTintColor: 'white',
+        }}
+      />
+
+      <Stack.Screen name="table-users" options={{ headerTintColor: 'white' }} />
     </Stack>
   );
 }

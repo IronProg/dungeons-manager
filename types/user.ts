@@ -1,6 +1,8 @@
 export type User = {
   id?: number;
-  email: string;
+  email?: string;
+  nickname: string;
+  discriminator: string;
 };
 
 export type TokenResponse = {

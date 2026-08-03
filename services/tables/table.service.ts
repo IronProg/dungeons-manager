@@ -1,5 +1,5 @@
 import api from '@/core/api/api';
-import type { Table } from '@/types/table';
+import type { Table, TableRequest } from '@/types/table';
 import type { TableCharacter } from '@/types/table_character';
 
 export const tableService = {
@@ -17,7 +17,7 @@ export const tableService = {
   destroy: ({ ...params }: DestroyTableParams) =>
     api.delete<null>(`/tables/${params.id}`).then((res) => res.data),
   join: ({ ...params }: JoinTableParams) =>
-    api.post<null>(`/tables/join`, params).then((res) => res.data),
+    api.post<TableRequest>('/tables/join', params).then((res) => res.data),
   leave: ({ id }: GetTableParams) =>
     api.post<null>(`/tables/${id}/leave`).then((res) => res.data),
 };

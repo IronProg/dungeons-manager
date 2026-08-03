@@ -43,6 +43,7 @@ export const useGetCharacterSpellSlots = (level: number) => {
     queryKey: getCharacterSpellSlotsKey({ characterId: characterId!, level }),
     queryFn: () => spellSlotService.fetchAll(characterId!, level),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 
@@ -58,6 +59,7 @@ export const useGetAllCharacterSpellSlots = () => {
     queryKey: getAllCharacterSpellSlotsKey({ characterId: characterId! }),
     queryFn: () => spellSlotService.fetchAll(characterId!),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 

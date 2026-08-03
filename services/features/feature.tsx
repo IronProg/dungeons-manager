@@ -29,6 +29,7 @@ export const useGetAllFeatures = () => {
     queryKey: getAllFeaturesKey({ characterId: characterId! }),
     queryFn: () => featuresService.fetchAll({ characterId: characterId! }),
     enabled: !!character,
+    networkMode: 'offlineFirst',
   });
 };
 
