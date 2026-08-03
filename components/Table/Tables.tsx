@@ -166,6 +166,7 @@ export const Tables = () => {
               <View className="absolute left-3 z-10">
                 <Hash size={20} color="#9ca3af" />
               </View>
+
               <TextInput
                 value={inviteCode}
                 onChangeText={setInviteCode}
@@ -176,7 +177,7 @@ export const Tables = () => {
               />
             </View>
 
-            <View>
+            <View className="h-10">
               <Button
                 text={i18n.t('tables.join')}
                 onPress={handleJoinTable}

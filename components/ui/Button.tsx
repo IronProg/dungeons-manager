@@ -30,9 +30,7 @@ export const Button = ({
     onPress={onPress}
     className={cn(
       'w-full bg-green-600 rounded-lg py-2',
-      {
-        'opacity-75': disabled,
-      },
+      { 'opacity-75': disabled },
       className,
     )}
     disabled={disabled}

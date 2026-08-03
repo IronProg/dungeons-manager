@@ -106,7 +106,7 @@ export const TableUsers = () => {
           <Button
             text={i18n.t('tables.pendingInvites')}
             onPress={() => router.push('/(authenticated)/table-invites')}
-            className="bg-indigo-100"
+            className="bg-indigo-100 border-indigo-400 border"
             textClassName="text-indigo-700"
           />
         </View>

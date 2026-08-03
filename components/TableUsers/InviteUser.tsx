@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
-  Platform,
   Text,
   TextInput,
   View,
@@ -71,7 +70,7 @@ export const InviteUser = () => {
   };
 
   const renderResult = ({ item }: { item: SearchUserResult }) => (
-    <View className="flex-row items-center justify-between bg-white rounded-xl p-4 mb-3 shadow-sm">
+    <View className="flex flex-row items-center justify-between bg-white rounded-xl p-4 mb-3 shadow-sm h-20">
       <Text className="font-medium text-gray-800">
         {`${item.nickname}#${item.discriminator}`}
       </Text>
@@ -94,10 +93,7 @@ export const InviteUser = () => {
     : i18n.t('tableRequests.searchPlaceholder');
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-slate-200"
-    >
+    <KeyboardAvoidingView behavior="padding" className="flex-1 bg-slate-200">
       <View className="flex-1 p-4">
         <View className="bg-white rounded-xl p-4 mb-4 shadow-sm">
           <TextInput
@@ -122,6 +118,8 @@ export const InviteUser = () => {
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
+          className="flex-1"
+          contentContainerClassName="grow"
           ListEmptyComponent={() => (
             <View className="items-center py-10 px-4">
               <Text className="text-gray-500 text-center">{emptyText}</Text>

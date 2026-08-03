@@ -17,7 +17,7 @@ export const DmDashboardHeader = ({ table }: { table: Table }) => {
   };
 
   const shareCode = () => {
-    const url = `dungeons-manager-scheme://(authenticated)/(drawer)/tables?inviteCode=${table.inviteCode}`;
+    const url = `https://app.dungeons-manager.online/(authenticated)/(drawer)/tables?inviteCode=${table.inviteCode}`;
     const message = `${i18n.t('tables.inviteMessage')} ${url}`;
     Share.share({ url, message });
   };
