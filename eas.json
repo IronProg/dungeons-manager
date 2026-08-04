@@ -16,8 +16,8 @@
         "YARN_VERSION": "1.22.22",
         "EXPO_PUBLIC_API_URL": "https://api.dungeons-manager.online",
         "EXPO_PUBLIC_WEBSOCKET_URL": "wss://api.dungeons-manager.online/cable",
-        "EXPO_PUBLIC_JSON_EN_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/100c458f5f8572ab0b6d3cb2476cabe6be8ecd54/formatted_spells_en.json",
-        "EXPO_PUBLIC_JSON_PT_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/cf2fea5158155c93e2008456bfdb7ef6852f8e34/formatted_spells_pt.json"
+        "EXPO_PUBLIC_JSON_EN_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/f2681bea3811a00ae7d7cab39a69399d0db73b21/formatted_spells_en.json",
+        "EXPO_PUBLIC_JSON_PT_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/f2681bea3811a00ae7d7cab39a69399d0db73b21/formatted_spells_pt.json"
       },
       "distribution": "internal"
     },
@@ -26,8 +26,8 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.dungeons-manager.online",
         "EXPO_PUBLIC_WEBSOCKET_URL": "wss://api.dungeons-manager.online/cable",
-        "EXPO_PUBLIC_JSON_EN_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/100c458f5f8572ab0b6d3cb2476cabe6be8ecd54/formatted_spells_en.json",
-        "EXPO_PUBLIC_JSON_PT_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/cf2fea5158155c93e2008456bfdb7ef6852f8e34/formatted_spells_pt.json"
+        "EXPO_PUBLIC_JSON_EN_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/f2681bea3811a00ae7d7cab39a69399d0db73b21/formatted_spells_en.json",
+        "EXPO_PUBLIC_JSON_PT_URL": "https://gist.githubusercontent.com/IronProg/49815cd7b41140c50aef299adb97d183/raw/f2681bea3811a00ae7d7cab39a69399d0db73b21/formatted_spells_pt.json"
       }
     },
     "android": {
