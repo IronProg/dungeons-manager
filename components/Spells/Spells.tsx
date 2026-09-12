@@ -40,6 +40,7 @@ export const Spells = () => {
           contentContainerClassName="px-4 "
           contentContainerStyle={{ paddingBottom: bottom + 64 }}
           data={spells}
+          keyExtractor={(spell) => spell.id!.toString()}
           renderItem={({ item }) => (
             <SpellCard
               onCast={() => setSpellToCast(item)}

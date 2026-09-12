@@ -1,9 +1,9 @@
 import { ChevronDown, ChevronUp } from 'lucide-react-native';
-import { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import type { MarkdownStyle } from 'react-native-enriched-markdown';
 import { EnrichedMarkdownText } from 'react-native-enriched-markdown';
 
+import { useExpandable } from '@/hooks/useExpandable';
 import i18n from '@/i18n';
 import type { Spell } from '@/types/character';
 
@@ -32,13 +32,19 @@ export const blackMarkdownStyle: MarkdownStyle = {
   thematicBreak: { color: BLACK },
 };
 
+const MAX_HEIGHT = 120;
+
 export const SpellCardDescription = ({ spell }: { spell: Spell }) => {
-  const [expanded, setExpanded] = useState(false);
+  const { expanded, onLayout, overflow, toggle } = useExpandable({
+    maxHeight: MAX_HEIGHT,
+  });
+
+  const styles = buildStyle(expanded);
 
   return (
     <View className="mt-2">
-      {expanded ? (
-        <View>
+      <View style={styles.container}>
+        <View onLayout={onLayout}>
           <EnrichedMarkdownText
             markdown={spell.description}
             markdownStyle={blackMarkdownStyle}
@@ -56,28 +62,26 @@ export const SpellCardDescription = ({ spell }: { spell: Spell }) => {
               />
             </View>
           )}
-          <TouchableOpacity
-            onPress={() => setExpanded(false)}
-            className="mt-2 flex-row justify-center"
-          >
-            <ChevronUp size={20} color="gray" />
-          </TouchableOpacity>
         </View>
-      ) : (
-        <View>
-          <EnrichedMarkdownText
-            markdown={spell.description}
-            markdownStyle={blackMarkdownStyle}
-          />
+      </View>
 
-          <TouchableOpacity
-            onPress={() => setExpanded(true)}
-            className="mt-1 flex-row justify-center"
-          >
+      {overflow && (
+        <TouchableOpacity
+          onPress={() => toggle()}
+          className="mt-2 flex-row justify-center"
+        >
+          {expanded ? (
+            <ChevronUp size={20} color="gray" />
+          ) : (
             <ChevronDown size={20} color="gray" />
-          </TouchableOpacity>
-        </View>
+          )}
+        </TouchableOpacity>
       )}
     </View>
   );
 };
+
+const buildStyle = (expanded: boolean) =>
+  StyleSheet.create({
+    container: { maxHeight: expanded ? null : MAX_HEIGHT, overflow: 'hidden' },
+  });
