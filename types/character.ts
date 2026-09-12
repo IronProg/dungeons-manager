@@ -49,6 +49,7 @@ export type Character = {
   generalInfo: CharacterGeneralInfo;
   currencies: Currencies;
   characterAttributes: Attribute[];
+  spellAttribute?: AttributesType;
   savingThrows: SavingThrow[];
   skills: Skill[];
   attacks: Attack[];

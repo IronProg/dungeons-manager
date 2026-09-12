@@ -16,6 +16,7 @@ import { queryClient } from '@/core/queryClient/queryClient';
 import { queryPersister } from '@/core/storage';
 import { clearLegacyStorage } from '@/core/storage/mmkv';
 import { useSettingsStore } from '@/core/stores/settingsStore';
+import { AttributesProvider } from '@/providers/AttributesProvider';
 import { CharacterProvider } from '@/providers/CharacterProvider';
 
 SplashScreen.preventAutoHideAsync();
@@ -40,21 +41,23 @@ function AppContent() {
       <KeyboardProvider navigationBarTranslucent={true}>
         <GestureHandlerRootView className="flex-1">
           <CharacterProvider>
-            <BottomSheetModalProvider>
-              <Host>
-                <Stack
-                  key={locale}
-                  screenOptions={{
-                    headerShown: false,
-                    contentStyle: { backgroundColor: '#fff' },
-                  }}
-                >
-                  <Stack.Screen name="(authenticated)" />
-                </Stack>
+            <AttributesProvider>
+              <BottomSheetModalProvider>
+                <Host>
+                  <Stack
+                    key={locale}
+                    screenOptions={{
+                      headerShown: false,
+                      contentStyle: { backgroundColor: '#fff' },
+                    }}
+                  >
+                    <Stack.Screen name="(authenticated)" />
+                  </Stack>
 
-                <DiceRollHost />
-              </Host>
-            </BottomSheetModalProvider>
+                  <DiceRollHost />
+                </Host>
+              </BottomSheetModalProvider>
+            </AttributesProvider>
           </CharacterProvider>
         </GestureHandlerRootView>
       </KeyboardProvider>

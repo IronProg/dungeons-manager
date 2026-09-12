@@ -416,6 +416,9 @@ export const pt = {
     hasAttack: 'Possui ataque',
     originalName: 'Nome original',
     setupAttack: 'Configurar ataque/dano',
+    castingAttribute: 'Atributo de Conjuração',
+    attackBonus: 'Bônus de Ataque Mágico',
+    saveDc: 'CD de Resistência Mágica',
     back: 'Voltar',
   },
   spellSlots: {

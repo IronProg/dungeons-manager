@@ -56,8 +56,15 @@ export const useSignOutMutation = () => {
       await queryClient.resetQueries();
       await queryClient.setQueryData(authKey, null);
     },
-    onError: ({ response }) => {
+    onError: async ({ response }) => {
       handleErrorMessage(response?.data);
+
+      await removeAccessToken();
+      await removeRefreshToken();
+      useCharacterStore.getState().setSelectedCharacterId(undefined);
+      useTableFilterStore.getState().clearTableId();
+      await queryClient.resetQueries();
+      await queryClient.setQueryData(authKey, null);
     },
   });
 };

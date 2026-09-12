@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SpellCard } from '@/components/Spells/SpellCard';
 import { SpellCastingModal } from '@/components/Spells/SpellCastingModal';
+import { SpellCastingStats } from '@/components/Spells/SpellCastingStats';
 import { SpellLevelNavigator } from '@/components/Spells/SpellLevelNavigator';
 import { SpellsHeader } from '@/components/Spells/SpellsHeader';
 import { SpellSlotsHeader } from '@/components/Spells/SpellSlotsHeader';
@@ -23,7 +24,12 @@ export const Spells = () => {
   const { data: spells, isLoading: isLoadingSpells } =
     useGetCharacterSpells(level);
 
-  const spellHeader = <SpellsHeader level={level} canEdit={canEdit} />;
+  const spellHeader = (
+    <>
+      <SpellCastingStats />
+      <SpellsHeader level={level} canEdit={canEdit} />
+    </>
+  );
 
   return (
     <>

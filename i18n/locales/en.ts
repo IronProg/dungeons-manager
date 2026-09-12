@@ -415,6 +415,9 @@ export const en = {
     hasAttack: 'Has attack',
     originalName: 'Original name',
     setupAttack: 'Setup attack/damage',
+    castingAttribute: 'Casting Attribute',
+    attackBonus: 'Spell Attack Bonus',
+    saveDc: 'Spell Save DC',
     back: 'Back',
   },
   spellSlots: {

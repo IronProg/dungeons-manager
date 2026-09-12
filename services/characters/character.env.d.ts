@@ -14,6 +14,7 @@ type UpdateCharacterParams = {
   experience?: number;
   level?: number;
   proficiencyBonus?: number;
+  spellAttribute?: Attribute;
 };
 
 type CloneCharacterParams = {
