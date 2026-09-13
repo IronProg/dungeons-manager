@@ -15,8 +15,14 @@ import {
 import type { NpcSummary } from '@/types/npc';
 
 export const CharacterNpcs = () => {
-  const router = useRouter();
   const { characterId, canEdit } = useCharacter();
+  if (!canEdit || !characterId) return null;
+
+  return <EditableCharacterNpcs characterId={characterId} />;
+};
+
+const EditableCharacterNpcs = ({ characterId }: { characterId: number }) => {
+  const router = useRouter();
   const {
     data: npcs = [],
     isError,
@@ -32,8 +38,6 @@ export const CharacterNpcs = () => {
   const [selectedNpc, setSelectedNpc] = useState<NpcSummary>();
   const [npcToDelete, setNpcToDelete] = useState<NpcSummary>();
   const isActionPending = isCopyPending || isDestroyPending;
-
-  if (!characterId) return null;
 
   const openNpc = (npc: NpcSummary) =>
     router.push({
@@ -100,7 +104,7 @@ export const CharacterNpcs = () => {
               <TouchableOpacity
                 key={npc.id}
                 onPress={() => openNpc(npc)}
-                onLongPress={canEdit ? () => setSelectedNpc(npc) : undefined}
+                onLongPress={() => setSelectedNpc(npc)}
                 className="flex-row items-center rounded-lg border border-slate-200 p-3"
                 activeOpacity={0.7}
               >

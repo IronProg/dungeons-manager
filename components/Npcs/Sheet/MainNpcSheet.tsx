@@ -4,6 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { NpcActionDetails } from '@/components/Npcs/Sheet/NpcActionDetails';
 import { NpcAttributes } from '@/components/Npcs/Sheet/NpcAttributes';
 import { NpcGeneralInfo } from '@/components/Npcs/Sheet/NpcGeneralInfo';
 import { NpcHitPoints } from '@/components/Npcs/Sheet/NpcHitPoints';
@@ -162,6 +163,7 @@ const EntrySectionView = ({
               <Text className="text-gray-600 text-sm mt-1">
                 {entry.description}
               </Text>
+              {entry.kind === 'action' && <NpcActionDetails entry={entry} />}
             </TouchableOpacity>
           ))
         )}

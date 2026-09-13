@@ -41,7 +41,7 @@ export default function NpcSheetScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: npc.name }} />
+      <Stack.Screen options={{ headerTitle: npc.name }} />
       <MainNpcSheet npc={npc} />
     </>
   );

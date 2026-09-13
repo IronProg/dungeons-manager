@@ -3,6 +3,7 @@ import type { AxiosError } from 'axios';
 
 import type { ApiErrorResponse } from '@/core/error/handler';
 import { handleErrorMessage } from '@/core/error/handler';
+import { cacheUpdatedNpc, npcKeys } from '@/services/npcs/npc.cache';
 import { npcService } from '@/services/npcs/npc.service';
 import type {
   Npc,
@@ -12,12 +13,7 @@ import type {
   NpcUpdateParams,
 } from '@/types/npc';
 
-export const npcKeys = {
-  library: () => ['npcs', 'library'] as const,
-  byCharacter: (characterId: number) =>
-    ['npcs', 'character', characterId] as const,
-  detail: (id: number) => ['npcs', 'detail', id] as const,
-};
+export { npcKeys } from '@/services/npcs/npc.cache';
 
 type GetNpcsParams = {
   characterId?: number;
@@ -118,7 +114,7 @@ export const useUpdateNpcMutation = () => {
 
   return useMutation<Npc, AxiosError<ApiErrorResponse>, UpdateNpcParams>({
     mutationFn: ({ id, params }) => npcService.update(id, params),
-    onSuccess: (npc) => invalidateNpcDetailAndList(queryClient, npc),
+    onSuccess: (npc) => cacheUpdatedNpc(queryClient, npc),
     onError: ({ response }) => handleErrorMessage(response?.data),
   });
 };
