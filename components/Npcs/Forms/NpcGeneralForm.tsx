@@ -51,6 +51,13 @@ const npcGeneralSchema = z.object({
       optionalStringLimit,
       i18n.t('validation.stringMax', { max: optionalStringLimit }),
     ),
+  skills: z
+    .string()
+    .trim()
+    .max(
+      optionalStringLimit,
+      i18n.t('validation.stringMax', { max: optionalStringLimit }),
+    ),
   senses: z
     .string()
     .trim()
@@ -99,6 +106,7 @@ const getGeneralScalars = (
       temporaryHitPoints: npc.temporaryHitPoints ?? null,
       armorClass: npc.armorClass,
       speeds: npc.speeds ?? null,
+      skills: npc.skills ?? null,
       senses: npc.senses ?? null,
       languages: npc.languages ?? null,
       challengeRating: npc.challengeRating,
@@ -107,6 +115,7 @@ const getGeneralScalars = (
     {
       ...values,
       speeds: toOptionalString(values.speeds),
+      skills: toOptionalString(values.skills),
       senses: toOptionalString(values.senses),
       languages: toOptionalString(values.languages),
       challengeRatingInfo: toOptionalString(values.challengeRatingInfo),
@@ -253,6 +262,21 @@ export const NpcGeneralForm = ({ npc }: NpcGeneralFormProps) => {
           render={({ field, fieldState: { error } }) => (
             <FormInput
               label={i18n.t('npcs.senses')}
+              value={field.value}
+              onChangeText={field.onChange}
+              onBlur={field.onBlur}
+              error={error?.message}
+              maxLength={optionalStringLimit}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="skills"
+          render={({ field, fieldState: { error } }) => (
+            <FormInput
+              label={i18n.t('npcs.skills')}
               value={field.value}
               onChangeText={field.onChange}
               onBlur={field.onBlur}

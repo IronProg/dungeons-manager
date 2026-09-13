@@ -18,6 +18,15 @@ const changedValues = getChangedNpcScalars(
   { name: 'Mage', armorClass: 12, challengeRating: '1' },
 );
 
+const changedSkills = getChangedNpcScalars(
+  { skills: null },
+  { skills: 'Perception +5' },
+);
+
+if (changedSkills.skills !== 'Perception +5') {
+  throw new Error('Expected changed NPC skills to be included in the patch');
+}
+
 if (changedValues.name !== 'Mage' || changedValues.armorClass !== 12) {
   throw new Error('Expected a patch to contain only changed scalar fields');
 }
@@ -34,11 +43,16 @@ const nullableTemporaryHitPointDefaults = getNpcGeneralDefaultValues({
   temporaryHitPoints: null,
   armorClass: 11,
   speeds: null,
+  skills: 'Perception +5',
   senses: null,
   languages: null,
   challengeRating: '1',
   challengeRatingInfo: null,
 });
+
+if (nullableTemporaryHitPointDefaults.skills !== 'Perception +5') {
+  throw new Error('Expected NPC skills to populate the general form');
+}
 
 if (
   nullableTemporaryHitPointDefaults.hitPointsLimitTemporary !== null ||

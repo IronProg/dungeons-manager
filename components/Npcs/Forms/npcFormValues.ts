@@ -21,6 +21,7 @@ export const getNpcGeneralDefaultValues = (
     | 'temporaryHitPoints'
     | 'armorClass'
     | 'speeds'
+    | 'skills'
     | 'senses'
     | 'languages'
     | 'challengeRating'
@@ -34,6 +35,7 @@ export const getNpcGeneralDefaultValues = (
   temporaryHitPoints: npc.temporaryHitPoints,
   armorClass: npc.armorClass,
   speeds: npc.speeds ?? '',
+  skills: npc.skills ?? '',
   senses: npc.senses ?? '',
   languages: npc.languages ?? '',
   challengeRating: npc.challengeRating,

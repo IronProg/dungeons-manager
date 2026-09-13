@@ -236,6 +236,7 @@ export const pt = {
     clearFilter: 'Limpar filtro',
   },
   npcs: {
+    skills: 'Perícias',
     title: 'Meus NPCs',
     new: 'Novo NPC',
     addSheet: 'Adicionar Ficha de NPC',

@@ -35,6 +35,7 @@ export const NpcGeneralInfo = ({ npc, onLongPress }: NpcGeneralInfoProps) => (
 
     <View className="mt-5 gap-3">
       <GeneralValue label={i18n.t('titles.speed')} value={npc.speeds} />
+      <GeneralValue label={i18n.t('npcs.skills')} value={npc.skills} />
       <GeneralValue label={i18n.t('npcs.senses')} value={npc.senses} />
       <GeneralValue
         label={i18n.t('proficiency.languages')}

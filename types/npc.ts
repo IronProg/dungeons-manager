@@ -52,6 +52,7 @@ export type Npc = NpcSummary & {
   temporaryHitPoints?: number | null;
   armorClass: number;
   speeds?: string | null;
+  skills?: string | null;
   senses?: string | null;
   languages?: string | null;
   strength: number;
@@ -106,6 +107,7 @@ export type NpcScalars = Partial<
     | 'temporaryHitPoints'
     | 'armorClass'
     | 'speeds'
+    | 'skills'
     | 'senses'
     | 'languages'
     | 'strength'

@@ -235,6 +235,7 @@ export const en = {
     clearFilter: 'Clear filter',
   },
   npcs: {
+    skills: 'Skills',
     title: 'My NPCs',
     new: 'New NPC',
     addSheet: 'Add NPC Sheet',
