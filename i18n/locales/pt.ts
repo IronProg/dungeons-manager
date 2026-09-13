@@ -239,6 +239,7 @@ export const pt = {
     title: 'Meus NPCs',
     new: 'Novo NPC',
     addSheet: 'Adicionar Ficha de NPC',
+    attached: 'Fichas de NPC',
     existing: 'Existente',
     copyToMyNpcs: 'Copiar para Meus NPCs',
     noNpcs: 'Nenhum NPC encontrado',

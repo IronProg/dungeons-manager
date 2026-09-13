@@ -238,6 +238,7 @@ export const en = {
     title: 'My NPCs',
     new: 'New NPC',
     addSheet: 'Add NPC Sheet',
+    attached: 'NPC Sheets',
     existing: 'Existing',
     copyToMyNpcs: 'Copy to My NPCs',
     noNpcs: 'No NPCs found',
