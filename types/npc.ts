@@ -11,7 +11,7 @@ export type NpcAbilityName =
 export type NpcSummary = {
   id: number;
   name: string;
-  challengeRating: number;
+  challengeRating: string;
   hitPoints: number;
 };
 
@@ -39,9 +39,9 @@ export type NpcEntry = {
   kind: NpcEntryKind;
   title: string;
   description: string;
-  cost?: number | null;
+  cost?: string | null;
   npcAttack?: NpcAttack | null;
-  npcDamages: NpcDamage[];
+  npcDamages?: NpcDamage[] | null;
 };
 
 export type Npc = NpcSummary & {
@@ -50,7 +50,7 @@ export type Npc = NpcSummary & {
   hitPointsLimitTemporary?: number | null;
   temporaryHitPoints?: number | null;
   armorClass: number;
-  speed?: string | null;
+  speeds?: string | null;
   senses?: string | null;
   languages?: string | null;
   strength: number;
@@ -89,7 +89,7 @@ export type NpcEntryParams = {
   kind?: NpcEntryKind;
   title?: string;
   description?: string;
-  cost?: number | null;
+  cost?: string | null;
   npcAttackAttributes?: NpcAttackParams;
   npcDamagesAttributes?: NpcDamageParams[];
   _destroy?: true;
@@ -104,7 +104,7 @@ export type NpcScalars = Partial<
     | 'hitPointsLimitTemporary'
     | 'temporaryHitPoints'
     | 'armorClass'
-    | 'speed'
+    | 'speeds'
     | 'senses'
     | 'languages'
     | 'strength'

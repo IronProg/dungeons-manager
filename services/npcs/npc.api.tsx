@@ -41,6 +41,14 @@ type DestroyNpcParams = {
   id: number;
 };
 
+type NpcListKey =
+  | ReturnType<typeof npcKeys.library>
+  | ReturnType<typeof npcKeys.byCharacter>;
+
+type DestroyNpcContext = {
+  listKey?: NpcListKey;
+};
+
 const invalidateNpcList = (
   queryClient: ReturnType<typeof useQueryClient>,
   npc: Npc,
@@ -53,6 +61,25 @@ const invalidateNpcList = (
   queryClient.invalidateQueries({
     queryKey: npcKeys.byCharacter(npc.characterId),
   });
+};
+
+const getCachedNpcListKey = (
+  queryClient: ReturnType<typeof useQueryClient>,
+  id: number,
+): NpcListKey | undefined => {
+  const entry = queryClient
+    .getQueriesData<NpcSummary[]>({ queryKey: ['npcs'] })
+    .find(([, data]) => data?.some((npc) => npc.id === id));
+
+  return entry?.[0] as NpcListKey | undefined;
+};
+
+const invalidateNpcDetailAndList = (
+  queryClient: ReturnType<typeof useQueryClient>,
+  npc: Npc,
+) => {
+  queryClient.invalidateQueries({ queryKey: npcKeys.detail(npc.id) });
+  invalidateNpcList(queryClient, npc);
 };
 
 export const useGetNpcs = (params: GetNpcsParams = {}) => {
@@ -80,7 +107,7 @@ export const useCreateNpcMutation = () => {
 
   return useMutation<Npc, AxiosError<ApiErrorResponse>, NpcCreateParams>({
     mutationFn: (params) => npcService.create(params),
-    onSuccess: (npc) => invalidateNpcList(queryClient, npc),
+    onSuccess: (npc) => invalidateNpcDetailAndList(queryClient, npc),
     onError: ({ response }) => handleErrorMessage(response?.data),
   });
 };
@@ -90,10 +117,7 @@ export const useUpdateNpcMutation = () => {
 
   return useMutation<Npc, AxiosError<ApiErrorResponse>, UpdateNpcParams>({
     mutationFn: ({ id, params }) => npcService.update(id, params),
-    onSuccess: (npc) => {
-      queryClient.invalidateQueries({ queryKey: npcKeys.detail(npc.id) });
-      invalidateNpcList(queryClient, npc);
-    },
+    onSuccess: (npc) => invalidateNpcDetailAndList(queryClient, npc),
     onError: ({ response }) => handleErrorMessage(response?.data),
   });
 };
@@ -103,7 +127,7 @@ export const useImportNpcMutation = () => {
 
   return useMutation<Npc, AxiosError<ApiErrorResponse>, ImportNpcParams>({
     mutationFn: ({ id, params }) => npcService.import(id, params),
-    onSuccess: (npc) => invalidateNpcList(queryClient, npc),
+    onSuccess: (npc) => invalidateNpcDetailAndList(queryClient, npc),
     onError: ({ response }) => handleErrorMessage(response?.data),
   });
 };
@@ -115,13 +139,25 @@ export const useDestroyNpcMutation = () => {
     null,
     AxiosError<ApiErrorResponse>,
     DestroyNpcParams,
-    Npc | undefined
+    DestroyNpcContext
   >({
     mutationFn: ({ id }) => npcService.destroy(id),
-    onMutate: ({ id }) => queryClient.getQueryData<Npc>(npcKeys.detail(id)),
-    onSuccess: (_, { id }, npc) => {
+    onMutate: ({ id }) => {
+      const npc = queryClient.getQueryData<Npc>(npcKeys.detail(id));
+
+      return {
+        listKey: npc
+          ? npc.characterId == null
+            ? npcKeys.library()
+            : npcKeys.byCharacter(npc.characterId)
+          : getCachedNpcListKey(queryClient, id),
+      };
+    },
+    onSuccess: (_, { id }, context) => {
       queryClient.invalidateQueries({ queryKey: npcKeys.detail(id) });
-      if (npc) invalidateNpcList(queryClient, npc);
+      queryClient.invalidateQueries({
+        queryKey: context?.listKey ?? npcKeys.library(),
+      });
     },
     onError: ({ response }) => handleErrorMessage(response?.data),
   });

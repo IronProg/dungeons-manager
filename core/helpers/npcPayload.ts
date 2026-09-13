@@ -1,40 +1,11 @@
-type NpcEntryKind = 'trait' | 'reaction' | 'action' | 'legendaryAction';
-
-type NpcScalars = object;
-
-type NpcDamageParams = {
-  id?: number;
-  diceAmount?: number;
-  diceSize?: number;
-  mainAttribute?: string | null;
-  customBonus?: number | null;
-  kind?: string | null;
-  _destroy?: true;
-};
-
-type NpcAttackParams = {
-  id?: number;
-  mainAttribute?: string | null;
-  applyProficiency?: boolean;
-  customBonus?: number | null;
-  range?: string | null;
-  properties?: string | null;
-  description?: string | null;
-  _destroy?: true;
-};
-
-type NpcEntryParams = {
-  id?: number;
-  kind?: NpcEntryKind;
-  title?: string;
-  description?: string;
-  cost?: number | null;
-  npcAttackAttributes?: NpcAttackParams;
-  npcDamagesAttributes?: NpcDamageParams[];
-  _destroy?: true;
-};
-
-type NpcUpdateParams = NpcScalars & { entriesAttributes?: NpcEntryParams[] };
+// eslint-disable-next-line no-restricted-imports -- the isolated CommonJS payload test needs a resolvable type-only import.
+import type {
+  NpcAttackParams,
+  NpcDamageParams,
+  NpcEntryParams,
+  NpcScalars,
+  NpcUpdateParams,
+} from '../../types/npc';
 
 type NpcDamageEditorValues = Omit<NpcDamageParams, '_destroy'> & {
   deleted?: boolean;
@@ -56,9 +27,7 @@ export type NpcEditorValues = {
   entries?: NpcEntryEditorValues[];
 };
 
-const omitUndefined = <T extends Record<string, unknown>>(
-  value: T,
-): Partial<T> =>
+const omitUndefined = <T extends object>(value: T): Partial<T> =>
   Object.fromEntries(
     Object.entries(value).filter(([, fieldValue]) => fieldValue !== undefined),
   ) as Partial<T>;
@@ -97,7 +66,7 @@ const toEntryParams = ({
 export const buildNpcUpdatePayload = (
   values: NpcEditorValues,
 ): NpcUpdateParams => ({
-  ...omitUndefined(values.scalars as Record<string, unknown>),
+  ...omitUndefined(values.scalars),
   ...(values.entries
     ? { entriesAttributes: values.entries.map(toEntryParams) }
     : {}),
