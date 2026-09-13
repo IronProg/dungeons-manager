@@ -1,5 +1,7 @@
 import { Text, View } from 'react-native';
 
+import { ComposeDiceRollButton } from '@/components/ui/ComposeDiceRollButton';
+import { DiceRollButton } from '@/components/ui/DiceRollButton';
 import { getNpcAttackBonus, getNpcDamageBonus } from '@/core/helpers/npcCombat';
 import i18n from '@/i18n';
 import type { Npc, NpcEntry } from '@/types/npc';
@@ -14,9 +16,23 @@ export const NpcActionDetails = ({
   <View className="gap-2">
     {entry.npcAttack && (
       <View className="mt-2 rounded-lg bg-slate-100 p-3 gap-1">
-        <Text className="font-semibold text-gray-800">
-          {i18n.t('npcs.attack')}
-        </Text>
+        <View className="flex-row items-center justify-between">
+          <Text className="font-semibold text-gray-800">
+            {i18n.t('npcs.attack')}
+          </Text>
+          <DiceRollButton
+            bonuses={[
+              getNpcAttackBonus({
+                abilityScore: entry.npcAttack.mainAttribute
+                  ? npc[entry.npcAttack.mainAttribute]
+                  : undefined,
+                customBonus: entry.npcAttack.customBonus,
+                applyProficiency: entry.npcAttack.applyProficiency,
+                proficiencyBonus: npc.proficiencyBonus,
+              }),
+            ]}
+          />
+        </View>
         {entry.npcAttack.mainAttribute && (
           <Detail
             label={i18n.t('general.attribute')}
@@ -57,9 +73,26 @@ export const NpcActionDetails = ({
     )}
     {!!entry.npcDamages?.length && (
       <View className="mt-2 gap-2">
-        <Text className="font-semibold text-gray-800">
-          {i18n.t('titles.damages')}
-        </Text>
+        <View className="flex-row items-center justify-between">
+          <Text className="font-semibold text-gray-800">
+            {i18n.t('titles.damages')}
+          </Text>
+          <ComposeDiceRollButton
+            rolls={entry.npcDamages.map((damage) => ({
+              label: damage.kind ?? undefined,
+              amount: damage.diceAmount,
+              diceSize: damage.diceSize,
+              bonuses: [
+                getNpcDamageBonus({
+                  abilityScore: damage.mainAttribute
+                    ? npc[damage.mainAttribute]
+                    : undefined,
+                  customBonus: damage.customBonus,
+                }),
+              ],
+            }))}
+          />
+        </View>
         {entry.npcDamages.map((damage) => (
           <View key={damage.id} className="rounded-lg bg-slate-100 p-3 gap-1">
             <Text className="text-gray-800 font-medium">

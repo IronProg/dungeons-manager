@@ -64,18 +64,20 @@ export const MainNpcSheet = ({ npc }: MainNpcSheetProps) => {
       <View className="bg-white rounded-xl shadow-sm border border-slate-200">
         <TouchableOpacity onLongPress={openGeneralForm} className="px-4 py-5">
           <Text className="text-gray-900 text-2xl font-bold">{npc.name}</Text>
-          <Text className="text-indigo-600 text-base font-semibold mt-1">
-            {i18n.t('npcs.challengeRating', { rating: npc.challengeRating })}
-          </Text>
-          {npc.challengeRatingInfo && (
-            <Text className="text-gray-500 text-sm mt-2">
-              {npc.challengeRatingInfo}
+          <View className="flex-row items-center gap-3 mt-1">
+            <Text className="text-indigo-600 text-base font-semibold">
+              {i18n.t('npcs.challengeRating', { rating: npc.challengeRating })}
             </Text>
-          )}
+            {npc.challengeRatingInfo && (
+              <Text className="text-gray-500 text-sm">
+                {npc.challengeRatingInfo}
+              </Text>
+            )}
+          </View>
         </TouchableOpacity>
 
         <View className="border-t border-slate-200">
-          <NpcHitPoints npc={npc} />
+          <NpcHitPoints npc={npc} onLongPress={openGeneralForm} />
         </View>
 
         <View className="border-t border-slate-200">

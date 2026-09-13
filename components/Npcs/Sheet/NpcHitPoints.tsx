@@ -1,35 +1,29 @@
-import { Heart, Minus, Plus } from 'lucide-react-native';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Heart } from 'lucide-react-native';
+import { useRef } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Portal } from 'react-native-portalize';
 
-import { getNextNpcHitPoints } from '@/core/helpers/npcHitPoints';
+import { NpcHitPointsModifierForm } from '@/components/Npcs/Sheet/NpcHitPointsModifierForm';
+import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import i18n from '@/i18n';
-import { useUpdateNpcMutation } from '@/services/npcs/npc.api';
 import type { Npc } from '@/types/npc';
 
 type NpcHitPointsProps = {
   npc: Npc;
+  onLongPress: () => void;
 };
 
-export const NpcHitPoints = ({ npc }: NpcHitPointsProps) => {
-  const { mutate: updateNpc, isPending } = useUpdateNpcMutation();
-
-  const updateHitPoints = (change: number) => {
-    if (isPending) return;
-
-    const nextHitPoints = getNextNpcHitPoints(
-      npc.hitPoints,
-      npc.hitPointsLimit,
-      change,
-    );
-
-    if (nextHitPoints === npc.hitPoints) return;
-
-    updateNpc({ id: npc.id, params: { hitPoints: nextHitPoints } });
-  };
+export const NpcHitPoints = ({ npc, onLongPress }: NpcHitPointsProps) => {
+  const modifierRef = useRef<AdaptiveBottomSheetHandle<Npc>>(null);
 
   return (
     <View className="px-4 py-5">
-      <View className="items-center">
+      <TouchableOpacity
+        onPress={() => modifierRef.current?.show(npc)}
+        onLongPress={onLongPress}
+        className="items-center"
+      >
         <View className="relative h-28 w-28 items-center justify-center">
           <Heart size={112} color="#cbd5e1" fill="#e2e8f0" />
           <View className="absolute items-center">
@@ -41,31 +35,7 @@ export const NpcHitPoints = ({ npc }: NpcHitPointsProps) => {
             </Text>
           </View>
         </View>
-
-        <View className="flex-row gap-3 mt-3">
-          <TouchableOpacity
-            onPress={() => updateHitPoints(-1)}
-            disabled={isPending || npc.hitPoints === 0}
-            className="bg-red-500 h-11 w-24 rounded-xl flex-row items-center justify-center"
-            accessibilityLabel={i18n.t('general.damage')}
-          >
-            <Minus size={20} color="white" />
-            <Text className="text-white font-semibold ml-1">1</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => updateHitPoints(1)}
-            disabled={isPending || npc.hitPoints === npc.hitPointsLimit}
-            className="bg-green-600 h-11 w-24 rounded-xl flex-row items-center justify-center"
-            accessibilityLabel={i18n.t('general.healing')}
-          >
-            <Plus size={20} color="white" />
-            <Text className="text-white font-semibold ml-1">1</Text>
-          </TouchableOpacity>
-        </View>
-
-        {isPending && <ActivityIndicator className="mt-3" color="#4f46e5" />}
-      </View>
+      </TouchableOpacity>
 
       <View className="flex-row flex-wrap justify-between gap-y-3 mt-5">
         <HitPointValue
@@ -85,6 +55,14 @@ export const NpcHitPoints = ({ npc }: NpcHitPointsProps) => {
           value={npc.temporaryHitPoints ?? 0}
         />
       </View>
+      <Portal>
+        <AdaptiveBottomSheet
+          ref={modifierRef}
+          renderContent={({ params }) => (
+            <NpcHitPointsModifierForm npc={params} />
+          )}
+        />
+      </Portal>
     </View>
   );
 };
