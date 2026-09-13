@@ -249,6 +249,8 @@ export const pt = {
     reactions: 'Reações',
     actions: 'Ações',
     legendaryActions: 'Ações Lendárias',
+    challengeRating: 'ND %{rating}',
+    couldNotLoadNpcs: 'Não foi possível carregar os NPCs',
     deleteConfirmation: 'Tem certeza que deseja excluir este NPC?',
     copyConfirmation: 'Criar uma cópia deste NPC em Meus NPCs?',
   },

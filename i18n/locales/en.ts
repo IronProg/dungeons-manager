@@ -248,6 +248,8 @@ export const en = {
     reactions: 'Reactions',
     actions: 'Actions',
     legendaryActions: 'Legendary Actions',
+    challengeRating: 'CR %{rating}',
+    couldNotLoadNpcs: 'Could not load NPCs',
     deleteConfirmation: 'Are you sure you want to delete this NPC?',
     copyConfirmation: 'Create a copy of this NPC in My NPCs?',
   },

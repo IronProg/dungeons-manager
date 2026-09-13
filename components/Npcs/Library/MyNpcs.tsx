@@ -35,12 +35,35 @@ const EmptyNpcs = ({ onNewNpc }: { onNewNpc: () => void }) => (
   </View>
 );
 
+const NpcsLoadError = ({ onRetry }: { onRetry: () => void }) => (
+  <View className="items-center py-16 px-4">
+    <Text className="text-red-400 text-center text-lg mb-4">
+      {i18n.t('npcs.couldNotLoadNpcs')}
+    </Text>
+    <TouchableOpacity
+      onPress={onRetry}
+      className="bg-indigo-500 px-6 py-3 rounded-xl"
+      activeOpacity={0.8}
+    >
+      <Text className="text-white font-medium">
+        {i18n.t('general.tryAgain')}
+      </Text>
+    </TouchableOpacity>
+  </View>
+);
+
 export const MyNpcs = () => {
   const [searchText, setSearchText] = useState('');
   const [text] = useDebounce(searchText, 500);
   const router = useRouter();
   const { bottom } = useSafeAreaInsets();
-  const { data: npcs = [], isLoading, refetch, isRefetching } = useGetNpcs();
+  const {
+    data: npcs = [],
+    isError,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useGetNpcs();
 
   const filteredNpcs = npcs.filter((npc) =>
     npc.name.toLocaleLowerCase().includes(text.trim().toLocaleLowerCase()),
@@ -93,6 +116,8 @@ export const MyNpcs = () => {
         <View className="flex-1 items-center justify-center">
           <ActivityIndicator size="large" color="#4f46e5" />
         </View>
+      ) : isError ? (
+        <NpcsLoadError onRetry={refetch} />
       ) : (
         <FlashList
           className="flex-1 px-4"

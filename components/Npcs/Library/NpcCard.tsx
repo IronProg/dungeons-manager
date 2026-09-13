@@ -31,7 +31,7 @@ export const NpcCard = ({ item, onPress }: NpcCardProps) => (
 
       <View className="bg-indigo-50 rounded-full px-3 py-1">
         <Text className="text-indigo-600 text-xs font-semibold">
-          CR {item.challengeRating}
+          {i18n.t('npcs.challengeRating', { rating: item.challengeRating })}
         </Text>
       </View>
     </View>
