@@ -17,6 +17,11 @@ assert.equal(npc.entries[0].cost, '2');
 assert.equal(npc.entries[1].kind, 'action');
 assert.equal(response.entries[0].kind, 'legendary_action');
 
+assert.equal(
+  fromNpcResponse({ id: 2, entries: [], proficiencBonus: 3 }).proficiencyBonus,
+  3,
+);
+
 assert.deepEqual(
   toNpcUpdateRequest({
     entriesAttributes: [

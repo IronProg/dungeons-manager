@@ -15,20 +15,20 @@ export const NpcGeneralInfo = ({ npc, onLongPress }: NpcGeneralInfoProps) => (
       <View className="bg-slate-100 rounded-full h-14 w-14 items-center justify-center">
         <Shield size={30} color="#4f46e5" />
       </View>
-      <View className="bg-slate-100 rounded-xl px-4 py-2 items-center">
-        <Text className="text-gray-500 text-xs font-medium">
-          {i18n.t('general.proficiency')}
-        </Text>
-        <Text className="text-gray-900 text-2xl font-bold">
-          +{npc.proficiencyBonus}
-        </Text>
-      </View>
       <View>
         <Text className="text-gray-500 text-sm font-medium">
           {i18n.t('titles.armorClass')}
         </Text>
         <Text className="text-gray-900 text-3xl font-bold">
           {npc.armorClass}
+        </Text>
+      </View>
+      <View className="bg-slate-100 rounded-xl px-4 py-2 items-center">
+        <Text className="text-gray-500 text-xs font-medium">
+          {i18n.t('general.proficiency')}
+        </Text>
+        <Text className="text-gray-900 text-2xl font-bold">
+          +{npc.proficiencyBonus}
         </Text>
       </View>
     </View>

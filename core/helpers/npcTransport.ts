@@ -9,6 +9,7 @@ type NpcApiEntryKind = 'trait' | 'reaction' | 'action' | 'legendary_action';
 
 export type NpcResponse = Omit<Npc, 'entries'> & {
   entries: (Omit<NpcEntry, 'kind'> & { kind: NpcApiEntryKind })[];
+  proficiencBonus?: number;
 };
 
 type NpcUpdateRequest = Omit<NpcUpdateParams, 'entriesAttributes'> & {
@@ -17,8 +18,12 @@ type NpcUpdateRequest = Omit<NpcUpdateParams, 'entriesAttributes'> & {
   })[];
 };
 
-export const fromNpcResponse = (npc: NpcResponse): Npc => ({
+export const fromNpcResponse = ({
+  proficiencBonus,
+  ...npc
+}: NpcResponse): Npc => ({
   ...npc,
+  proficiencyBonus: npc.proficiencyBonus ?? proficiencBonus ?? 0,
   entries: npc.entries.map((entry) => ({
     ...entry,
     kind: entry.kind === 'legendary_action' ? 'legendaryAction' : entry.kind,
