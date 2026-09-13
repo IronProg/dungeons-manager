@@ -91,6 +91,7 @@ export const MainNpcSheet = ({ npc }: MainNpcSheetProps) => {
         <EntrySectionView
           key={section.kind}
           title={section.title}
+          npc={npc}
           entries={npc.entries.filter((entry) => entry.kind === section.kind)}
           onLongPress={openEntryForm}
           onAdd={() => createEntry(section.kind)}
@@ -120,11 +121,13 @@ const Section = ({
 
 const EntrySectionView = ({
   title,
+  npc,
   entries,
   onLongPress,
   onAdd,
 }: {
   title: string;
+  npc: Npc;
   entries: NpcEntry[];
   onLongPress: (entry: NpcEntry) => void;
   onAdd: () => void;
@@ -163,7 +166,9 @@ const EntrySectionView = ({
               <Text className="text-gray-600 text-sm mt-1">
                 {entry.description}
               </Text>
-              {entry.kind === 'action' && <NpcActionDetails entry={entry} />}
+              {entry.kind === 'action' && (
+                <NpcActionDetails entry={entry} npc={npc} />
+              )}
             </TouchableOpacity>
           ))
         )}

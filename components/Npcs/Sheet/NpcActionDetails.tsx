@@ -1,9 +1,16 @@
 import { Text, View } from 'react-native';
 
+import { getNpcAttackBonus, getNpcDamageBonus } from '@/core/helpers/npcCombat';
 import i18n from '@/i18n';
-import type { NpcEntry } from '@/types/npc';
+import type { Npc, NpcEntry } from '@/types/npc';
 
-export const NpcActionDetails = ({ entry }: { entry: NpcEntry }) => (
+export const NpcActionDetails = ({
+  entry,
+  npc,
+}: {
+  entry: NpcEntry;
+  npc: Npc;
+}) => (
   <View className="gap-2">
     {entry.npcAttack && (
       <View className="mt-2 rounded-lg bg-slate-100 p-3 gap-1">
@@ -26,7 +33,16 @@ export const NpcActionDetails = ({ entry }: { entry: NpcEntry }) => (
         />
         <Detail
           label={i18n.t('general.mod')}
-          value={entry.npcAttack.customBonus}
+          value={formatBonus(
+            getNpcAttackBonus({
+              abilityScore: entry.npcAttack.mainAttribute
+                ? npc[entry.npcAttack.mainAttribute]
+                : undefined,
+              customBonus: entry.npcAttack.customBonus,
+              applyProficiency: entry.npcAttack.applyProficiency,
+              proficiencyBonus: npc.proficiencyBonus,
+            }),
+          )}
         />
         <Detail label={i18n.t('general.range')} value={entry.npcAttack.range} />
         <Detail
@@ -56,13 +72,25 @@ export const NpcActionDetails = ({ entry }: { entry: NpcEntry }) => (
                 value={i18n.t(`attributes.${damage.mainAttribute}`)}
               />
             )}
-            <Detail label={i18n.t('general.mod')} value={damage.customBonus} />
+            <Detail
+              label={i18n.t('general.mod')}
+              value={formatBonus(
+                getNpcDamageBonus({
+                  abilityScore: damage.mainAttribute
+                    ? npc[damage.mainAttribute]
+                    : undefined,
+                  customBonus: damage.customBonus,
+                }),
+              )}
+            />
           </View>
         ))}
       </View>
     )}
   </View>
 );
+
+const formatBonus = (bonus: number) => (bonus >= 0 ? `+${bonus}` : `${bonus}`);
 
 const Detail = ({
   label,

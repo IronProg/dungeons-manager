@@ -46,6 +46,7 @@ export type NpcEntry = {
 
 export type Npc = NpcSummary & {
   characterId?: number | null;
+  proficiencyBonus: number;
   hitPointsLimit: number;
   hitPointsLimitTemporary?: number | null;
   temporaryHitPoints?: number | null;
