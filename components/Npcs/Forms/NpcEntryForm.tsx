@@ -9,6 +9,7 @@ import { NpcDamageFields } from '@/components/Npcs/Forms/NpcDamageFields';
 import {
   buildNpcEntryParams,
   getNpcEntryDefaultValues,
+  getNpcEntryRequiredFields,
   type NpcEntryFormValues,
 } from '@/components/Npcs/Forms/npcEntryFormValues';
 import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
@@ -131,6 +132,24 @@ const npcEntrySchema = z
       .optional(),
   })
   .superRefine((values, context) => {
+    const requiredFields = getNpcEntryRequiredFields(values);
+
+    if (requiredFields.description) {
+      context.addIssue({
+        code: 'custom',
+        message: i18n.t('validation.required'),
+        path: ['description'],
+      });
+    }
+
+    if (requiredFields.cost) {
+      context.addIssue({
+        code: 'custom',
+        message: i18n.t('validation.required'),
+        path: ['cost'],
+      });
+    }
+
     for (const [index, damage] of (values.damages ?? []).entries()) {
       if (damage.deleted) continue;
 
@@ -185,19 +204,7 @@ export const NpcEntryForm = ({ npc, entry, kind }: NpcEntryFormProps) => {
   };
 
   const onSubmit = handleSubmit((values) => {
-    const legendaryCost = values.cost?.trim();
-    const entryParams = buildNpcEntryParams({
-      ...values,
-      cost:
-        values.kind === 'legendaryAction'
-          ? legendaryCost?.length
-            ? legendaryCost
-            : null
-          : undefined,
-      ...(values.kind === 'action'
-        ? {}
-        : { attack: undefined, damages: undefined }),
-    });
+    const entryParams = buildNpcEntryParams(values);
 
     updateNpc(
       { id: npc.id, params: { entriesAttributes: [entryParams] } },

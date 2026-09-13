@@ -2,7 +2,8 @@
 import type { NpcEntryFormValues } from './npcEntryFormValues';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { buildNpcEntryParams } = require('./npcEntryFormValues');
+const npcEntryFormValues = require('./npcEntryFormValues');
+const { buildNpcEntryParams, getNpcEntryRequiredFields } = npcEntryFormValues;
 
 const values: NpcEntryFormValues = {
   id: 7,
@@ -24,6 +25,7 @@ if (actionParams.npcDamagesAttributes?.[0]?._destroy !== true) {
 const traitParams = buildNpcEntryParams({
   ...values,
   kind: 'trait',
+  cost: '1',
   attack: { id: 4, _destroy: true },
 });
 if (
@@ -31,4 +33,29 @@ if (
   'npcDamagesAttributes' in traitParams
 ) {
   throw new Error('Expected non-actions to omit attack and damage payloads');
+}
+
+if ('cost' in traitParams) {
+  throw new Error('Expected non-legendary entries to omit cost');
+}
+
+const blankDescription = getNpcEntryRequiredFields({
+  kind: 'trait',
+  title: 'Keen Smell',
+  description: '   ',
+});
+if (blankDescription.description !== 'required') {
+  throw new Error('Expected whitespace-only descriptions to be rejected');
+}
+
+const blankLegendaryCost = getNpcEntryRequiredFields({
+  kind: 'legendaryAction',
+  title: 'Tail Swipe',
+  description: 'The dragon makes a tail attack.',
+  cost: '  ',
+});
+if (blankLegendaryCost.cost !== 'required') {
+  throw new Error(
+    'Expected whitespace-only legendary action costs to be rejected',
+  );
 }

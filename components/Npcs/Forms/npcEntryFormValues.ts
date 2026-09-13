@@ -33,6 +33,25 @@ export type NpcEntryFormValues = Omit<
   damages?: NpcDamageFormValues[];
 };
 
+type NpcEntryRequiredValues = Pick<
+  NpcEntryFormValues,
+  'kind' | 'description' | 'cost'
+>;
+
+export const getNpcEntryRequiredFields = ({
+  kind,
+  description,
+  cost,
+}: NpcEntryRequiredValues): {
+  description?: 'required';
+  cost?: 'required';
+} => ({
+  ...(description.trim().length === 0 ? { description: 'required' } : {}),
+  ...(kind === 'legendaryAction' && (cost?.trim().length ?? 0) === 0
+    ? { cost: 'required' }
+    : {}),
+});
+
 const toAttackFormValues = (
   attack: NonNullable<NpcEntry['npcAttack']>,
 ): NpcAttackParams => ({
@@ -78,5 +97,13 @@ export const buildNpcEntryParams = (
 ): NpcEntryParams =>
   buildNpcUpdatePayload({
     scalars: {},
-    entries: [values as NonNullable<NpcEditorValues['entries']>[number]],
+    entries: [
+      {
+        ...values,
+        cost:
+          values.kind === 'legendaryAction' ? values.cost?.trim() : undefined,
+        attack: values.kind === 'action' ? values.attack : undefined,
+        damages: values.kind === 'action' ? values.damages : undefined,
+      } as NonNullable<NpcEditorValues['entries']>[number],
+    ],
   }).entriesAttributes?.[0] ?? {};
