@@ -39,6 +39,7 @@ type ImportNpcParams = {
 
 type DestroyNpcParams = {
   id: number;
+  characterId?: number;
 };
 
 type NpcListKey =
@@ -142,7 +143,7 @@ export const useDestroyNpcMutation = () => {
     DestroyNpcContext
   >({
     mutationFn: ({ id }) => npcService.destroy(id),
-    onMutate: ({ id }) => {
+    onMutate: ({ id, characterId }) => {
       const npc = queryClient.getQueryData<Npc>(npcKeys.detail(id));
 
       return {
@@ -150,7 +151,9 @@ export const useDestroyNpcMutation = () => {
           ? npc.characterId == null
             ? npcKeys.library()
             : npcKeys.byCharacter(npc.characterId)
-          : getCachedNpcListKey(queryClient, id),
+          : characterId == null
+            ? getCachedNpcListKey(queryClient, id)
+            : npcKeys.byCharacter(characterId),
       };
     },
     onSuccess: (_, { id }, context) => {
