@@ -5,7 +5,10 @@ import type { KeyboardTypeOptions } from 'react-native';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { z } from 'zod';
 
-import { getChangedNpcScalars } from '@/components/Npcs/Forms/npcFormValues';
+import {
+  getChangedNpcScalars,
+  getNpcGeneralDefaultValues,
+} from '@/components/Npcs/Forms/npcFormValues';
 import { AppKeyboardAvoidingView } from '@/components/ui/AppKeyboardAvoidingView';
 import { Button } from '@/components/ui/Button';
 import { buildNpcUpdatePayload } from '@/core/helpers/npcPayload';
@@ -34,14 +37,12 @@ const npcGeneralSchema = z.object({
     500,
     i18n.t('validation.numberMax', { max: 500 }),
   ),
-  hitPointsLimitTemporary: nonNegativeInteger.max(
-    500,
-    i18n.t('validation.numberMax', { max: 500 }),
-  ),
-  temporaryHitPoints: nonNegativeInteger.max(
-    500,
-    i18n.t('validation.numberMax', { max: 500 }),
-  ),
+  hitPointsLimitTemporary: nonNegativeInteger
+    .max(500, i18n.t('validation.numberMax', { max: 500 }))
+    .nullable(),
+  temporaryHitPoints: nonNegativeInteger
+    .max(500, i18n.t('validation.numberMax', { max: 500 }))
+    .nullable(),
   armorClass: nonNegativeInteger,
   speeds: z
     .string()
@@ -117,19 +118,7 @@ export const NpcGeneralForm = ({ npc }: NpcGeneralFormProps) => {
   const { mutate: updateNpc, isPending } = useUpdateNpcMutation();
   const { control, handleSubmit } = useForm<NpcGeneralFormValues>({
     resolver: zodResolver(npcGeneralSchema),
-    defaultValues: {
-      name: npc.name,
-      hitPoints: npc.hitPoints,
-      hitPointsLimit: npc.hitPointsLimit,
-      hitPointsLimitTemporary: npc.hitPointsLimitTemporary ?? 0,
-      temporaryHitPoints: npc.temporaryHitPoints ?? 0,
-      armorClass: npc.armorClass,
-      speeds: npc.speeds ?? '',
-      senses: npc.senses ?? '',
-      languages: npc.languages ?? '',
-      challengeRating: npc.challengeRating,
-      challengeRatingInfo: npc.challengeRatingInfo ?? '',
-    },
+    defaultValues: getNpcGeneralDefaultValues(npc),
   });
 
   const onSubmit = handleSubmit((values) => {
@@ -382,14 +371,14 @@ type NumberInputProps = Omit<
   FormInputProps,
   'value' | 'onChangeText' | 'keyboardType'
 > & {
-  value: number;
+  value: number | null;
   onChange: (value: number) => void;
 };
 
 const NumberInput = ({ value, onChange, ...props }: NumberInputProps) => (
   <FormInput
     {...props}
-    value={Number.isNaN(value) ? '' : value.toString()}
+    value={value == null || Number.isNaN(value) ? '' : value.toString()}
     onChangeText={(text) => onChange(text === '' ? Number.NaN : Number(text))}
     keyboardType="number-pad"
   />
