@@ -48,6 +48,12 @@ export const MainNpcSheet = ({ npc }: MainNpcSheetProps) => {
       params: { npcId: npc.id.toString(), entryId: entry.id.toString() },
     });
 
+  const createEntry = (kind: NpcEntryKind) =>
+    router.push({
+      pathname: '/(authenticated)/npc-entry-form',
+      params: { npcId: npc.id.toString(), kind },
+    });
+
   return (
     <ScrollView
       className="flex-1 bg-slate-200"
@@ -86,6 +92,7 @@ export const MainNpcSheet = ({ npc }: MainNpcSheetProps) => {
           title={section.title}
           entries={npc.entries.filter((entry) => entry.kind === section.kind)}
           onLongPress={openEntryForm}
+          onAdd={() => createEntry(section.kind)}
         />
       ))}
     </ScrollView>
@@ -95,14 +102,17 @@ export const MainNpcSheet = ({ npc }: MainNpcSheetProps) => {
 const Section = ({
   title,
   children,
+  action,
 }: {
   title: string;
   children: ReactNode;
+  action?: ReactNode;
 }) => (
   <View className="bg-white rounded-xl mt-4 shadow-sm border border-slate-200">
-    <Text className="text-gray-900 text-lg font-semibold px-4 pt-4">
-      {title}
-    </Text>
+    <View className="flex-row items-center justify-between px-4 pt-4">
+      <Text className="text-gray-900 text-lg font-semibold">{title}</Text>
+      {action}
+    </View>
     {children}
   </View>
 );
@@ -111,13 +121,28 @@ const EntrySectionView = ({
   title,
   entries,
   onLongPress,
+  onAdd,
 }: {
   title: string;
   entries: NpcEntry[];
   onLongPress: (entry: NpcEntry) => void;
+  onAdd: () => void;
 }) => {
   return (
-    <Section title={title}>
+    <Section
+      title={title}
+      action={
+        <TouchableOpacity
+          onPress={onAdd}
+          className="rounded-lg bg-indigo-500 px-3 py-2"
+          accessibilityLabel={i18n.t('npcs.addEntry', { kind: title })}
+        >
+          <Text className="text-sm font-semibold text-white">
+            {i18n.t('general.add')}
+          </Text>
+        </TouchableOpacity>
+      }
+    >
       <View className="px-4 pb-2">
         {entries.length === 0 ? (
           <Text className="text-gray-500 text-sm py-4">
