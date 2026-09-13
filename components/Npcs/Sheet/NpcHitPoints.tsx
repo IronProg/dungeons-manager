@@ -6,6 +6,7 @@ import { Portal } from 'react-native-portalize';
 import { NpcHitPointsModifierForm } from '@/components/Npcs/Sheet/NpcHitPointsModifierForm';
 import { AdaptiveBottomSheet } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
 import type { AdaptiveBottomSheetHandle } from '@/components/ui/BottomSheet/AdaptiveBottomSheet';
+import { getNpcTemporaryHitPointsText } from '@/core/helpers/npcHitPointDisplay';
 import i18n from '@/i18n';
 import type { Npc } from '@/types/npc';
 
@@ -33,6 +34,11 @@ export const NpcHitPoints = ({ npc, onLongPress }: NpcHitPointsProps) => {
             <Text className="text-gray-900 text-3xl font-bold">
               {npc.hitPoints} / {npc.hitPointsLimit}
             </Text>
+            {getNpcTemporaryHitPointsText(npc.temporaryHitPoints) && (
+              <Text className="text-gray-900 text-2xl font-bold">
+                {getNpcTemporaryHitPointsText(npc.temporaryHitPoints)}
+              </Text>
+            )}
           </View>
         </View>
       </TouchableOpacity>
