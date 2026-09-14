@@ -1,32 +1,21 @@
-import { useEffect, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
-import { useDebounce } from 'use-debounce';
 
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useCharacter } from '@/contexts/CharacterContext';
+import { useDebouncedNotePairing } from '@/hooks/notes/useDebouncedNotePairing';
 import i18n from '@/i18n';
 import { useGetNote, useUpdateNoteMutation } from '@/services/notes/note.api';
 
 export const Notes = () => {
   const { characterId, canEdit } = useCharacter();
-
   const { mutate: updateNote } = useUpdateNoteMutation();
-
   const { data: note, isPending } = useGetNote();
-
-  const [text, setText] = useState('');
-
-  const [debouncedText] = useDebounce(text, 5_000);
-
-  useEffect(() => {
-    setText(note?.text ?? '');
-  }, [note]);
-
-  useEffect(() => {
-    if (characterId && debouncedText.length > 0 && canEdit) {
-      updateNote({ characterId: characterId, text: debouncedText });
-    }
-  }, [characterId, debouncedText, updateNote, canEdit]);
+  const { text, updateText } = useDebouncedNotePairing({
+    characterId,
+    canEdit,
+    noteText: note?.text,
+    updateNote,
+  });
 
   return (
     <View>
@@ -41,7 +30,7 @@ export const Notes = () => {
           className="bg-white min-h-40 rounded-lg px-2"
           textAlignVertical="top"
           value={text}
-          onChangeText={canEdit ? setText : undefined}
+          onChangeText={canEdit ? updateText : undefined}
           multiline
           editable={canEdit}
         />
