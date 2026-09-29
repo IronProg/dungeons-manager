@@ -1,38 +1,17 @@
 import { ChevronDown, ChevronUp } from 'lucide-react-native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import type { MarkdownStyle } from 'react-native-enriched-markdown';
 import { EnrichedMarkdownText } from 'react-native-enriched-markdown';
 
+import { blackMarkdownStyle } from '@/constants/markdownStyle';
 import { useExpandable } from '@/hooks/useExpandable';
 import i18n from '@/i18n';
 import type { Spell } from '@/types/character';
 
-const BLACK = '#000000';
-
-export const blackMarkdownStyle: MarkdownStyle = {
-  paragraph: { color: BLACK, fontSize: 12 },
-  h1: { color: BLACK },
-  h2: { color: BLACK },
-  h3: { color: BLACK },
-  h4: { color: BLACK },
-  h5: { color: BLACK },
-  h6: { color: BLACK },
-  strong: { color: BLACK },
-  em: { color: BLACK },
-  strikethrough: { color: BLACK },
-  underline: { color: BLACK },
-  link: { color: BLACK },
-  code: { color: BLACK },
-  codeBlock: { color: BLACK },
-  blockquote: { color: BLACK, borderColor: '#555' },
-  list: { color: BLACK, bulletColor: BLACK, markerColor: BLACK },
-  table: { color: BLACK, headerTextColor: BLACK, borderColor: '#ccc' },
-  inlineMath: { color: BLACK },
-  math: { color: BLACK },
-  thematicBreak: { color: BLACK },
-};
-
 const MAX_HEIGHT = 120;
+
+// Spell descriptions sometimes indent paragraphs by four spaces, which Markdown treats as code.
+const normalizeDescription = (description: string) =>
+  description.replace(/^(?: {4,}|\t+)/gm, '');
 
 export const SpellCardDescription = ({ spell }: { spell: Spell }) => {
   const { expanded, onLayout, overflow, toggle } = useExpandable({
@@ -46,8 +25,10 @@ export const SpellCardDescription = ({ spell }: { spell: Spell }) => {
       <View style={styles.container}>
         <View onLayout={onLayout}>
           <EnrichedMarkdownText
-            markdown={spell.description}
+            markdown={normalizeDescription(spell.description)}
             markdownStyle={blackMarkdownStyle}
+            flavor="github"
+            md4cFlags={{ latexMath: false }}
           />
 
           {spell.higherLevelDescription && (
@@ -57,8 +38,10 @@ export const SpellCardDescription = ({ spell }: { spell: Spell }) => {
               </Text>
 
               <EnrichedMarkdownText
-                markdown={spell.higherLevelDescription}
+                markdown={normalizeDescription(spell.higherLevelDescription)}
                 markdownStyle={blackMarkdownStyle}
+                flavor="github"
+                md4cFlags={{ latexMath: false }}
               />
             </View>
           )}
