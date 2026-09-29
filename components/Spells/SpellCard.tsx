@@ -1,9 +1,8 @@
 import { useRouter } from 'expo-router';
-import { Crosshair, Edit, WandSparkles } from 'lucide-react-native';
+import { Brain, Crosshair, Edit, WandSparkles } from 'lucide-react-native';
 import React from 'react';
 import { View, Text, TouchableOpacity, Switch } from 'react-native';
 
-import HeadIcon from '@/assets/icons/head.svg';
 import { SpellCardDescription } from '@/components/Spells/SpellCardDescription';
 import { useCharacter } from '@/contexts/CharacterContext';
 import { colors } from '@/core/utils/colors';
@@ -91,8 +90,6 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
                   {i18n.t(`spells.schools.${spell.school}`)}
                 </Text>
 
-                {spell.concentration && <HeadIcon className="w-5 h-5" />}
-
                 {spell.ritual && (
                   <Text className="text-xs font-bold">
                     {i18n.t('spells.ritual')}
@@ -160,9 +157,17 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
           <Text className="text-sm">{spell.range}</Text>
         </View>
         <View>
-          <Text className="text-xs font-bold">
-            {i18n.t('spells.duration')}:
-          </Text>
+          <View className="flex flex-row gap-1">
+            <Text className="text-xs font-bold">
+              {i18n.t('spells.duration')}:
+            </Text>
+
+            {spell.concentration && (
+              <View className="-mt-0.5">
+                <Brain color={colors.black[900]} size={16} />
+              </View>
+            )}
+          </View>
           <Text className="text-sm">{spell.duration}</Text>
         </View>
         <View>
