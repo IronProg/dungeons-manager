@@ -64,7 +64,7 @@ export const SelectPicker = ({
           )}
           numberOfLines={1}
         >
-          {selectedItem?.id ? (
+          {selectedItem?.id !== null && selectedItem?.id !== undefined ? (
             selectedItem.label
           ) : (
             <Text className="text-gray-400">{placeholder ?? ''}</Text>
