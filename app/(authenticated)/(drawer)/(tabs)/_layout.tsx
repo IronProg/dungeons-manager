@@ -7,6 +7,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import colors from 'tailwindcss/colors';
 
 import type { IndicatorProps } from '@/components/ui/Layouts/CharactersTopBarIndicator';
 import { CharactersTopBarIndicator } from '@/components/ui/Layouts/CharactersTopBarIndicator';
@@ -56,6 +57,10 @@ export default function TabLayout() {
         swipeEnabled: true,
         lazy: true,
         animationEnabled: true,
+        tabBarActiveTintColor: colors.indigo[600],
+        tabBarInactiveTintColor: '#9ca3af',
+        tabBarPressColor: colors.indigo[100],
+        tabBarPressOpacity: 0.85,
         tabBarIndicator: (props: IndicatorProps) => (
           <CharactersTopBarIndicator
             getTabWidth={props.getTabWidth}
