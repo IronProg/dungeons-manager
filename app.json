@@ -16,16 +16,12 @@
       "expo-localization",
       "expo-secure-store",
       "expo-build-properties",
-      "react-native-enriched-markdown"
+      "react-native-enriched-markdown",
+      "expo-status-bar"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -34,7 +30,7 @@
       "bundleIdentifier": "com.ironprog.dungeonsmanager"
     },
     "android": {
-      "softwareKeyboardLayoutMode": "adjustResize",
+      "softwareKeyboardLayoutMode": "resize",
       "package": "com.ironprog.dungeonsmanager",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

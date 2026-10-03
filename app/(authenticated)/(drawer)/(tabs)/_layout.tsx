@@ -1,5 +1,5 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withLayoutContext, useNavigation } from 'expo-router';
+import { createMaterialTopTabNavigator } from 'expo-router/js-top-tabs';
 import { useEffect } from 'react';
 import {
   ActivityIndicator,
@@ -7,7 +7,9 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import colors from 'tailwindcss/colors';
 
+import type { IndicatorProps } from '@/components/ui/Layouts/CharactersTopBarIndicator';
 import { CharactersTopBarIndicator } from '@/components/ui/Layouts/CharactersTopBarIndicator';
 import { useCharacter } from '@/contexts/CharacterContext';
 import i18n from '@/i18n';
@@ -55,8 +57,15 @@ export default function TabLayout() {
         swipeEnabled: true,
         lazy: true,
         animationEnabled: true,
-        tabBarIndicator: (props) => (
-          <CharactersTopBarIndicator {...props} navigationState={props.state} />
+        tabBarActiveTintColor: colors.indigo[600],
+        tabBarInactiveTintColor: '#9ca3af',
+        tabBarPressColor: colors.indigo[100],
+        tabBarPressOpacity: 0.85,
+        tabBarIndicator: (props: IndicatorProps) => (
+          <CharactersTopBarIndicator
+            getTabWidth={props.getTabWidth}
+            state={props.state}
+          />
         ),
       }}
     >

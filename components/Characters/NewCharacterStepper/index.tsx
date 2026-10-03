@@ -1,5 +1,5 @@
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation, useRouter } from 'expo-router';
+import type { DrawerNavigationProp } from 'expo-router/drawer';
 import { ArrowLeft } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';

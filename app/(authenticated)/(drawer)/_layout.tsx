@@ -1,8 +1,8 @@
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
-import type { ParamListBase } from '@react-navigation/native';
-import { DrawerActions } from '@react-navigation/native';
 import { useNavigation, useRouter, useSegments } from 'expo-router';
+import type { DrawerNavigationProp } from 'expo-router/drawer';
 import { Drawer } from 'expo-router/drawer';
+import type { ParamListBase } from 'expo-router/react-navigation';
+import { DrawerActions } from 'expo-router/react-navigation';
 import { Menu } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native';

@@ -1,8 +1,4 @@
-import {
-  BottomSheetScrollView,
-  BottomSheetTextInput,
-  useBottomSheet,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetTextInput, useBottomSheet } from '@gorhom/bottom-sheet';
 import type { Control } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
