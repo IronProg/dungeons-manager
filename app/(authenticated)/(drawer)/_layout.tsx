@@ -66,6 +66,8 @@ export default function DrawerLayout() {
         options={{ title: i18n.t('titles.characters') }}
       />
 
+      <Drawer.Screen name="my-npcs" options={{ title: i18n.t('npcs.title') }} />
+
       <Drawer.Screen
         name="tables"
         options={{

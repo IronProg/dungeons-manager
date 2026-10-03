@@ -18,6 +18,60 @@ export default function RootLayout() {
     <Stack screenOptions={{ header: CustomHeader, headerShown: true }}>
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
       <Stack.Screen
+        name="npc-name"
+        options={{
+          headerTitle: i18n.t('npcs.new'),
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+      <Stack.Screen
+        name="npc-sheet"
+        options={{
+          headerTitle: i18n.t('npcs.title'),
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+      <Stack.Screen
+        name="npc-selector"
+        options={{
+          headerTitle: i18n.t('npcs.selectNpc'),
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+      <Stack.Screen
+        name="npc-general-form"
+        options={{
+          headerTitle: i18n.t('titles.general'),
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+      <Stack.Screen
+        name="npc-attributes-form"
+        options={{
+          headerTitle: i18n.t('titles.attributes'),
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+      <Stack.Screen
+        name="npc-entry-form"
+        options={{
+          headerTitle: i18n.t('npcs.actions'),
+          headerStyle: { backgroundColor: '#4f46e5' },
+          headerTitleStyle: { color: 'white' },
+          headerTintColor: 'white',
+        }}
+      />
+      <Stack.Screen
         name="spell-form"
         options={{
           headerStyle: { backgroundColor: '#4f46e5' },

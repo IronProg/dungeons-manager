@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import {
   LogOut,
   Settings,
+  Skull,
   Table as TableIcon,
   User,
   Users,
@@ -63,6 +64,11 @@ export const MainMenu = ({ navigation, onLogout }: MainMenuProps) => {
           icon={<Users size={22} color="#4f46e5" />}
           label={i18n.t('titles.characters')}
           onPress={() => handleNavigate('my-characters')}
+        />
+        <MenuItem
+          icon={<Skull size={22} color="#4f46e5" />}
+          label={i18n.t('npcs.title')}
+          onPress={() => handleNavigate('my-npcs')}
         />
         <MenuItem
           icon={<TableIcon size={22} color="#4f46e5" />}

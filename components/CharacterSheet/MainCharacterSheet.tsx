@@ -7,6 +7,8 @@ import { MainCharacterSheetAttributes } from '@/components/CharacterSheet/Attrib
 import { MainCharacterSheetGeneralInfo } from '@/components/CharacterSheet/GeneralInfo/MainCharacterSheetGeneralInfo';
 import { HintsModal } from '@/components/CharacterSheet/HintsModal';
 import { MainCharacterSheetHitPoints } from '@/components/CharacterSheet/HitPoints/MainCharacterSheetHitPoints';
+import { CharacterNpcs } from '@/components/CharacterSheet/Npcs/CharacterNpcs';
+import { NpcAddSheet } from '@/components/CharacterSheet/Npcs/NpcAddSheet';
 import { MainCharacterSheetSkills } from '@/components/CharacterSheet/Skills/MainCharacterSheetSkills';
 import i18n from '@/i18n';
 
@@ -25,6 +27,7 @@ export const MainCharacterSheet = () => {
         </Text>
 
         <View className="flex flex-row gap-2 flex-wrap">
+          <NpcAddSheet />
           <HintsModal />
         </View>
       </View>
@@ -56,6 +59,8 @@ export const MainCharacterSheet = () => {
 
         <MainCharacterSheetSkills />
       </View>
+
+      <CharacterNpcs />
     </ScrollView>
   );
 };
