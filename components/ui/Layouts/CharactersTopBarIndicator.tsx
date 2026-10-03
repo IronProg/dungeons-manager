@@ -4,22 +4,24 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import type { TabBarIndicatorProps, Route } from 'react-native-tab-view';
 
-export const CharactersTopBarIndicator = (
-  props: TabBarIndicatorProps<Route>,
-) => {
-  const { navigationState, getTabWidth } = props;
+export type IndicatorProps = {
+  state: { index: number };
+  getTabWidth: (index: number) => number;
+};
+
+export const CharactersTopBarIndicator = (props: IndicatorProps) => {
+  const { getTabWidth, state } = props;
   const tabWidth = getTabWidth(0);
-  const translateX = useSharedValue(navigationState.index * tabWidth);
+  const translateX = useSharedValue(state.index * tabWidth);
 
   useEffect(() => {
-    translateX.value = withSpring(navigationState.index * tabWidth, {
+    translateX.value = withSpring(state.index * tabWidth, {
       mass: 1,
       damping: 20,
       stiffness: 200,
     });
-  }, [navigationState.index, tabWidth, translateX]);
+  }, [state.index, tabWidth, translateX]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],

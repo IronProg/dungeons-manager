@@ -38,7 +38,7 @@ function AppContent() {
     <>
       <StatusBar style="auto" />
 
-      <KeyboardProvider navigationBarTranslucent={true}>
+      <KeyboardProvider>
         <GestureHandlerRootView className="flex-1">
           <CharacterProvider>
             <AttributesProvider>

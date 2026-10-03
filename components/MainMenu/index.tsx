@@ -1,5 +1,5 @@
-import type { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
+import type { DrawerContentComponentProps } from 'expo-router/drawer';
 import {
   LogOut,
   Settings,
