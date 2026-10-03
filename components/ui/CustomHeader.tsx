@@ -1,4 +1,4 @@
-import type { StackHeaderProps } from 'expo-router/js-stack';
+import type { NativeStackHeaderProps } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,7 +12,7 @@ export const CustomHeader = ({
   back,
   options,
   navigation,
-}: StackHeaderProps) => {
+}: NativeStackHeaderProps) => {
   const {
     headerTitle,
     headerStyle,
@@ -40,7 +40,6 @@ export const CustomHeader = ({
       : null;
 
   const canGoBack = !!back;
-  // const showBackButton = canGoBack && headerBackVisible !== false;
   const showBackButton = canGoBack;
 
   const backgroundStyle = {
@@ -96,7 +95,6 @@ export const CustomHeader = ({
           {resolvedTitleElement ?? (
             <Text
               className="text-[17px] font-semibold"
-              // style={[{ color: headerTintColor }, headerTitleStyle]}
               style={[{ color: headerTintColor }]}
               numberOfLines={1}
               accessibilityRole="header"
