@@ -186,7 +186,9 @@ export const SpellCard = ({ spell, onCast, canEdit }: SpellCardProps) => {
         )}
       </View>
 
-      {spell.description && <SpellCardDescription spell={spell} />}
+      {spell.description && (
+        <SpellCardDescription key={spell.id?.toString()} spell={spell} />
+      )}
     </View>
   );
 };
